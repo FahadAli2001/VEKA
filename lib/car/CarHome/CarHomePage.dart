@@ -16,7 +16,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:veka/ChooseOption.dart';
 import 'package:veka/car/CarHome/CarHomePageController.dart';
 
-import 'package:shimmer/shimmer.dart';
+
 class CarHomePage extends StatelessWidget {
   const CarHomePage({Key? key}) : super(key: key);
 

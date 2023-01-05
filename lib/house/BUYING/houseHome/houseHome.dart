@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:veka/ChooseOption.dart';
+import 'package:favorite_button/favorite_button.dart';
 
-
+import '../../RENT/HouseDetails/detailScreen.dart';
 import '../HouseDetails/houseDetails.dart';
 
 class houseHome extends StatelessWidget {
@@ -13,9 +15,7 @@ class houseHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var apartment_btn = true.obs;
-    var land_btn = false.obs;
-    var flats_btn = false.obs;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("VEKA",
@@ -47,208 +47,154 @@ class houseHome extends StatelessWidget {
         ],
       ),
       //--------
-      body: SingleChildScrollView(
-        child: SafeArea(child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 7),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text("Have a good day",
-                    style: TextStyle(
-                        fontSize: Get.height * 0.02,
-                        color: Colors.grey
-                    ),),
-                ),
-              ),
-              //
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 25),
-                child: TextField(
-                  decoration: InputDecoration(
-                      prefixIcon: Icon(CupertinoIcons.search),
-                      prefixIconColor: Colors.redAccent,
-                      hintText: "Find any house",
-                      helperStyle: TextStyle(
-                          color: Colors.grey
-                      ),
-                      border: OutlineInputBorder(
-
-                      ),
-                      fillColor: Colors.grey.shade100,
-                      filled: true
-                  ),
-                ),
-              ),
-              //
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 7),
+      body: SafeArea(child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 7),
+        child:ListView.builder(
+          scrollDirection: Axis.vertical,
+          itemCount: 2,
+          itemBuilder: (context,index){
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: (){
+                  Get.to(Get.to(houseDetails()));
+                },
                 child: Container(
-                  width: Get.width,
-                  height: Get.height * 0.17,
                   decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/home.png"),
-                      fit: BoxFit.cover,
-                    ),
+                    border: Border.all(
+                      color: Colors.grey
+                    )
+                  ),
+                  width: Get.width,
+                  height: Get.height * 0.35,
+                  //color: Colors.orange,
+                  child: Row(
 
+                    children: [
+                      Container(
+                        height:Get.height ,
+                        width: Get.width / 2.8,
+
+                        decoration: BoxDecoration(
+                            color: Colors.green,
+                          image: DecorationImage(image: AssetImage("assets/home.png"),
+                          fit: BoxFit.fill
+                          )
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: Get.width,
+                                height: Get.height * 0.04,
+                                color: Colors.green,
+                                child: Center(
+                                  child: Text("BreakFast included",
+                                    style: TextStyle(
+                                      color: Colors.white
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      //----
+                      Container(
+                        height: Get.height,
+                        width: Get.width * 0.53,
+                        //color: Colors.pink,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Luxury Hotel",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                          fontSize: Get.width * 0.05
+                                      ),),
+                                    FavoriteButton(
+                                      iconSize: 35,
+                                        valueChanged: (){})
+                                  ],
+                                ),
+                              ),
+                              //---------
+                          Padding(
+                            padding: const EdgeInsets.only(right: 1),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Container(
+                                child: RatingBar.builder(
+                                  initialRating: 1,
+                                  minRating: 1,
+                                  direction: Axis.horizontal,
+                                  //allowHalfRating: true,
+                                  itemCount: 5,
+                                  //itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                  itemBuilder: (context, _) => Icon(
+                                    Icons.star,
+                                    size: 20,
+                                    color: Colors.amber,
+                                  ),
+                                  onRatingUpdate: (rating) {
+                                    print(rating);
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                              //------------
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 4),
+                                child: Row(
+                                  children: [
+                                    Icon(CupertinoIcons.location_solid,color: Colors.black,),
+                                    Text("Bykoz - 9 miles from center")
+                                  ],
+                                ),
+                              ),
+                              //------------
+                              Padding(
+                                padding: const EdgeInsets.only(top: 25),
+                                child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: Text("price for 7 night 2 adults",
+                                  style: TextStyle(
+                                    fontSize: Get.width * 0.04,
+                                    color: Colors.black
+                                  ),),
+                                ),
+                              ),
+                              //
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Text("\$1300",
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                    fontSize: Get.width * 0.04,
+                                  ),),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text("Categories",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: Get.width * 0.05
-                ),),
-              ),
-              //-----
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 7),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Obx(
-                    ()=> GestureDetector(
-                        onTap:(){
-                          apartment_btn.value = true;
-                          land_btn.value = false;
-                          flats_btn.value = false;
-                        },
-                        child: Container(
-                          width: Get.width * 0.3,
-                          height: Get.height * 0.07,
-                          color:(apartment_btn.value == true)?Colors.black:Colors.grey.shade300,
-                          child: Center(
-                            child: Text("Apartments",
-                            style: TextStyle(
-                              color: (apartment_btn.value == true)?Colors.white:Colors.black,
-                            ),),
-                          ),
-                        ),
-                      ),
-                    ),
-                    //
-                    Obx(()=> GestureDetector(
-                        onTap: (){
-                          apartment_btn.value = false;
-                          land_btn.value = true;
-                          flats_btn.value = false;
-                        },
-                        child: Container(
-                          width: Get.width * 0.25,
-                          height: Get.height * 0.07,
-                          color:(land_btn.value == true)?Colors.black:Colors.grey.shade300,
-                          child: Center(
-                            child: Text("Land",
-                              style: TextStyle(
-                                  color:  (land_btn.value == true)?Colors.white:Colors.black,
-                              ),),
-                          ),
-                        ),
-                      ),
-                    ),
-                    //
-                    Obx(
-                      ()=> GestureDetector(
-                        onTap: (){
-                          apartment_btn.value = false;
-                          land_btn.value = false;
-                          flats_btn.value = true;
-                        },
-                        child: Container(
-                          width: Get.width * 0.25,
-                          height: Get.height * 0.07,
-                          color: (flats_btn.value == true)?Colors.black:Colors.grey.shade300,
-                          child: Center(
-                            child: Text("Flats",
-                              style: TextStyle(
-                                  color: (flats_btn.value == true)?Colors.white:Colors.black,
-                              ),),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              //---
-             Container(
-               width: Get.width,
-                 height: Get.height * 0.35,
-                // color: Colors.black,
-                 child:  ListView.builder(
-               scrollDirection: Axis.horizontal,
-               itemCount: 3,
-               itemBuilder: (context,index){
-                 return Padding(
-                   padding: const EdgeInsets.all(8.0),
-                   child: InkWell(
-                     onTap: (){
-                       Get.to(houseDetails());
-                     },
-                     child: Container(
-
-                       width: Get.width * 0.5,
-                       height: Get.height * 0.2,
-                       decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: Colors.grey
-                        )
-                        // color: Colors.teal,
-                       ),
-                       child: Column(
-                         crossAxisAlignment: CrossAxisAlignment.start,
-                         children: [
-                           Container(
-                             width: Get.width,
-                             height: Get.height * 0.15,
-                             decoration: BoxDecoration(
-                               borderRadius: BorderRadius.only(
-                                 topLeft: Radius.circular(20),
-                                 topRight: Radius.circular(20)
-                               ),
-                              //color: Colors.orange,
-                               image: DecorationImage(
-                                 image: AssetImage("assets/home.png"),
-                                 fit: BoxFit.fill
-                               )
-                             ),
-                           ),
-                           Padding(
-                             padding: const EdgeInsets.all(8.0),
-                             child: Text("Ibn e Manshion",
-                             style: TextStyle(
-                               fontWeight: FontWeight.bold,
-                               color: Colors.black,
-                               fontSize: Get.width * 0.045
-                             ),),
-                           ),
-                           Padding(
-                             padding: const EdgeInsets.only(left: 8),
-                             child: Text("Details will be upload here",
-                               style: TextStyle(
-
-                                   color: Colors.grey,
-                                   fontSize: Get.width * 0.038
-                               ),),
-                           )
-                         ],
-                       ),
-                     ),
-                   ),
-                 );
-               },
-             ))
-            ],
-          ),
-        )),
-      ),
+            );
+          },
+        )
+      )),
     );
   }
 }
