@@ -12,6 +12,10 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = Get.width;
     var SocialAppIconSize = Get.height * 0.03;
+    var _value = false.obs;
+    void _handleRadioValueChanged(val) {
+    _value.value = val;
+    }
     return Container(
       child : SingleChildScrollView(
         child: Padding(
@@ -47,22 +51,26 @@ class SignInScreen extends StatelessWidget {
                   height: Get.height * 0.06,
                   width: Get.width,
                   //color: Colors.red,
-                  child: Row(
-                    children: [
-                     Radio(value: 0,
-                         groupValue: null, onChanged: null),
-                      Text("Remember me",
-                        style: TextStyle(
-                          fontSize: width * 0.04
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 60),
-                        child: TextButton(onPressed: (){},
-                            child: Text("Forget Password?")),
-                      )
+                  child: Obx(() => Row(
+                      children: [
 
-                    ],
+                        Checkbox(
+                          value: _value.value,
+                          onChanged: _handleRadioValueChanged
+                        ), //Ch
+                        Text("Remember me",
+                          style: TextStyle(
+                            fontSize: width * 0.04
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 60),
+                          child: TextButton(onPressed: (){},
+                              child: Text("Forget Password?")),
+                        )
+
+                      ],
+                    ),
                   ),
                 ),
               ),

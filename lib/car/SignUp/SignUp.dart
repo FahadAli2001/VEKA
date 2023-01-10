@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 class SignUp extends StatelessWidget {
@@ -10,6 +11,10 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = Get.width;
     var SocialAppIconSize = Get.height * 0.03;
+    var _value = false.obs;
+    void _handleRadioValueChanged(val) {
+      _value.value = val;
+    }
     return Container(
       child : SingleChildScrollView(
         child: Padding(
@@ -56,18 +61,22 @@ class SignUp extends StatelessWidget {
                   height: Get.height * 0.06,
                   width: Get.width,
                   //color: Colors.red,
-                  child: Row(
-                    children: [
-                      Radio(value: 0,
-                          groupValue: null, onChanged: null),
-                      Text("I agree with Terms & Conditions",
-                        style: TextStyle(
-                            fontSize: width * 0.04
+                  child: Obx(
+                    ()=> Row(
+                      children: [
+                        Checkbox(
+                            value: _value.value,
+                            onChanged: _handleRadioValueChanged
+                        ), //Ch
+                        Text("I agree with Terms & Conditions",
+                          style: TextStyle(
+                              fontSize: width * 0.04
+                          ),
                         ),
-                      ),
 
 
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
