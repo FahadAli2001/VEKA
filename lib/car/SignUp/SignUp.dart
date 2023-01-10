@@ -4,6 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+
+import '../Dashboard/dashboardScreen.dart';
+import '../SignIn/SignInScreen.dart';
+import '../SignIn/SignupController.dart';
 class SignUp extends StatelessWidget {
   const SignUp({Key? key}) : super(key: key);
 
@@ -11,10 +15,7 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = Get.width;
     var SocialAppIconSize = Get.height * 0.03;
-    var _value = false.obs;
-    void _handleRadioValueChanged(val) {
-      _value.value = val;
-    }
+    SignUpController suc = Get.put(SignUpController());
     return Container(
       child : SingleChildScrollView(
         child: Padding(
@@ -65,8 +66,8 @@ class SignUp extends StatelessWidget {
                     ()=> Row(
                       children: [
                         Checkbox(
-                            value: _value.value,
-                            onChanged: _handleRadioValueChanged
+                            value: suc.Value.value,
+                            onChanged: suc.handleRadioValueChanged
                         ), //Ch
                         Text("I agree with Terms & Conditions",
                           style: TextStyle(
@@ -86,12 +87,15 @@ class SignUp extends StatelessWidget {
                   width: Get.width,
                   child: CupertinoButton(
                       color: Colors.black,
-                      child: Text("Sign In",
+                      child: Text("Sign Up",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: width * 0.05
                         ),),
-                      onPressed: (){}),
+                      onPressed: (){
+                        suc.checkIsAgree();
+                       // Get.to(SignInScreen());
+                      }),
                 ),
               ),
               //
@@ -125,11 +129,11 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
+             /* Padding(
                 padding: const EdgeInsets.only(top: 15),
                 child: RichText(
                   text: TextSpan(
-                    text: "Don't Have An Account? ",
+                    text: "Already Have An Account? ",
                     style: TextStyle(
                         fontSize: width * 0.04,
                         color: Colors.grey
@@ -143,7 +147,7 @@ class SignUp extends StatelessWidget {
                     ],
                   ),
                 ),
-              )
+              )*/
             ],
           ),
         ),

@@ -106,7 +106,7 @@ class reviewsubmission extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 35,
-                          backgroundImage: NetworkImage(data["carimage"]),
+                          backgroundImage: NetworkImage(data["carimage"].toString()),
                         ),
                         Container(
                           width: Get.width * 0.6,

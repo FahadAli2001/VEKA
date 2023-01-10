@@ -11,6 +11,8 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:veka/ChooseOption.dart';
 import 'package:veka/car/CarHome/CarHomePageController.dart';
 
+import '../bookingScreen/bookingScreen.dart';
+
 
 
 class CarHomePage extends StatelessWidget {
@@ -19,6 +21,7 @@ class CarHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CarHomePageController car = Get.put(CarHomePageController());
+
 
     return Scaffold(
         appBar: AppBar(
@@ -221,7 +224,8 @@ class CarHomePage extends StatelessWidget {
                             return product(car.rentData[index]["images"][index]["src"].toString(),
                                 car.rentData[index]["name"].toString(),
                                 car.rentData[index]["price"].toString(),
-                                snapshot.data[index]["short_description"].toString()
+                                snapshot.data[index]["short_description"].toString(),
+
                             );
                           },
                         ),
@@ -469,276 +473,7 @@ class CarHomePage extends StatelessWidget {
       child: GestureDetector(
         onTap: (){
           Get.bottomSheet(
-              Container(
-                width: Get.width,
-                height:Get.height * 0.9,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25)
-                    )
-                ),
-                child: ListView(
-                  children: [
-                    Container(
-                      // color: Colors.pinkAccent,
-                      width: Get.width,
-                      height: Get.height * 0.1,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 8),
-                        child: Padding(padding: EdgeInsets.all(8),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(carName,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        fontSize: Get.height * 0.02
-                                    ),),
-                                  LikeButton(
-                                    size: 30,
-                                    likeBuilder: (bool isLiked) {
-                                      return Icon(
-                                        CupertinoIcons.heart,
-                                        color: isLiked ? Colors.deepPurpleAccent : Colors.grey,
-
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Text("\$${carprice}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.green,
-                                      fontSize: Get.height * 0.02
-                                  ),),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    //----------------
-
-                    CarouselSlider.builder(
-                      itemCount: 2,
-                      itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
-                          Container(
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                              //color: Colors.orange,
-                                image: DecorationImage(
-                                    image: NetworkImage(carImage),
-                                    filterQuality: FilterQuality.high,
-                                    fit: BoxFit.cover
-                                )
-                            ),
-                            child: Text("1",
-                              style: TextStyle(
-                                  fontSize: 20
-                              ),),
-                          ), options:  CarouselOptions(
-                        autoPlay: false,
-                        enlargeCenterPage: true,
-                        //height: Get.height * 0.1,
-                        aspectRatio: 18/8,
-                        onPageChanged: (index, reason) {
-
-                        }),
-                    ),
-                    //--
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
-                        child: Text("About",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: Get.height * 0.025
-                          ),),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(cardescription,
-                          style: TextStyle(
-
-                              color: Colors.grey.shade700,
-                              fontSize: Get.height * 0.02
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
-                        child: Text("Car Specs",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: Get.height * 0.025
-                          ),),
-                      ),
-                    ),
-                    //
-                    Container(
-                      width: Get.width,
-                      height: Get.height * 0.2,
-                      //color: Colors.red,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 2,
-                        itemBuilder:(context,index){
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 7),
-                            child: Card(
-                              elevation: 7,
-                              child: Container(
-                                //   color: Colors.blue,
-                                width: Get.width * 0.3,
-                                height: Get.height * 0.2,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Max Power",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: Get.height *0.02
-                                        ),),
-                                      Text("350",
-                                        style: TextStyle(
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: Get.height *0.03
-                                        ),
-                                      ),
-                                      Text("hp",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: Get.height *0.02
-                                        ),)
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        } ,
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
-                        child: Text("Car Info",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: Get.height * 0.025
-                          ),),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
-                      child: Container(
-                        width: Get.width,
-                        height: Get.height * 0.2,
-                        // color: Colors.pink,
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width:Get.width * 0.4,
-                                  height: Get.height * 0.1,
-                                  child: ListTile(
-                                    title: Text("2015"),
-                                    leading: Icon(CupertinoIcons.calendar,
-                                      color: Colors.green,),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width:Get.width * 0.5,
-                                  height: Get.height * 0.1,
-                                  child: ListTile(
-                                    title: Text("Petrol"),
-                                    leading: Icon(Icons.local_gas_station,
-                                      color: Colors.green,),
-                                  ),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width:Get.width * 0.4,
-                                  height: Get.height * 0.1,
-                                  child: ListTile(
-                                    title: Text("2"),
-                                    leading: Icon(CupertinoIcons.person_2_fill,
-                                      color: Colors.green,),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width:Get.width * 0.5,
-                                  height: Get.height * 0.1,
-                                  child: ListTile(
-                                    title: Text("2500"),
-                                    leading: Icon(Icons.flash_on,
-                                      color: Colors.green,),
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    //
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onTap: (){
-                          Get.bottomSheet(
-                            BookingForm(Colors.grey),
-                            isScrollControlled: true,
-                          );
-                        },
-                        child: Container(
-                          width: Get.width * 0.5,
-                          height: Get.height * 0.07,
-                          color: Colors.green,
-                          child: Center(
-                            child: Text("NEXT",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: Get.width * 0.05
-                            ),),
-                          ),
-                        ),
-                      ),
-                    )
-
-                  ],
-                ),
-              ),
+              rentCardetail(carName, carImage, carprice, cardescription),
             isScrollControlled: true
           );
         },
@@ -770,6 +505,286 @@ class CarHomePage extends StatelessWidget {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget rentCardetail(carname,carimage,carprice,cardescription){
+    return  GestureDetector(
+      onTap: (){
+        Get.back();
+      },
+      child: Container(
+        width: Get.width,
+        height:Get.height * 0.9,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25)
+            )
+        ),
+        child: ListView(
+          children: [
+            Container(
+              // color: Colors.pinkAccent,
+              width: Get.width,
+              height: Get.height * 0.1,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 8),
+                child: Padding(padding: EdgeInsets.all(8),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(carname,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontSize: Get.height * 0.02
+                            ),),
+                          LikeButton(
+                            size: 30,
+                            likeBuilder: (bool isLiked) {
+                              return Icon(
+                                CupertinoIcons.heart,
+                                color: isLiked ? Colors.deepPurpleAccent : Colors.grey,
+
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text("\$${carprice}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green,
+                              fontSize: Get.height * 0.02
+                          ),),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            //----------------
+
+            CarouselSlider.builder(
+              itemCount: 2,
+              itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+                  Container(
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      //color: Colors.orange,
+                        image: DecorationImage(
+                            image: NetworkImage(carimage),
+                            filterQuality: FilterQuality.high,
+                            fit: BoxFit.cover
+                        )
+                    ),
+                    child: Text("1",
+                      style: TextStyle(
+                          fontSize: 20
+                      ),),
+                  ), options:  CarouselOptions(
+                autoPlay: false,
+                enlargeCenterPage: true,
+                //height: Get.height * 0.1,
+                aspectRatio: 18/8,
+                onPageChanged: (index, reason) {
+
+                }),
+            ),
+            //--
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                child: Text("About",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: Get.height * 0.025
+                  ),),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(cardescription,
+                  style: TextStyle(
+
+                      color: Colors.grey.shade700,
+                      fontSize: Get.height * 0.02
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                child: Text("Car Specs",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: Get.height * 0.025
+                  ),),
+              ),
+            ),
+            //
+            Container(
+              width: Get.width,
+              height: Get.height * 0.2,
+              //color: Colors.red,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 2,
+                itemBuilder:(context,index){
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 7),
+                    child: Card(
+                      elevation: 7,
+                      child: Container(
+                        //   color: Colors.blue,
+                        width: Get.width * 0.3,
+                        height: Get.height * 0.2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Max Power",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Get.height *0.02
+                                ),),
+                              Text("350",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Get.height *0.03
+                                ),
+                              ),
+                              Text("hp",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Get.height *0.02
+                                ),)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                } ,
+              ),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                child: Text("Car Info",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: Get.height * 0.025
+                  ),),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+              child: Container(
+                width: Get.width,
+                height: Get.height * 0.2,
+                // color: Colors.pink,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width:Get.width * 0.4,
+                          height: Get.height * 0.1,
+                          child: ListTile(
+                            title: Text("2015"),
+                            leading: Icon(CupertinoIcons.calendar,
+                              color: Colors.green,),
+                          ),
+                        ),
+                        SizedBox(
+                          width:Get.width * 0.5,
+                          height: Get.height * 0.1,
+                          child: ListTile(
+                            title: Text("Petrol"),
+                            leading: Icon(Icons.local_gas_station,
+                              color: Colors.green,),
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width:Get.width * 0.4,
+                          height: Get.height * 0.1,
+                          child: ListTile(
+                            title: Text("2"),
+                            leading: Icon(CupertinoIcons.person_2_fill,
+                              color: Colors.green,),
+                          ),
+                        ),
+                        SizedBox(
+                          width:Get.width * 0.5,
+                          height: Get.height * 0.1,
+                          child: ListTile(
+                            title: Text("2500"),
+                            leading: Icon(Icons.flash_on,
+                              color: Colors.green,),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+            //
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: (){
+
+                  Get.to(bookingScreen(),arguments:
+                  {"carimage": carimage.toString(),
+                  "carname":carname.toString(),
+                  "carprice":carprice.toString()}
+                  );
+                },
+                child: Container(
+                  width: Get.width * 0.5,
+                  height: Get.height * 0.06,
+                  color: Colors.green,
+                  child: Center(
+                    child: Text("Next",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: Get.width * 0.05
+                      ),),
+                  ),
+                ),
+              ),
+            )
+
+          ],
         ),
       ),
     );
@@ -1020,346 +1035,14 @@ class CarHomePage extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
+
 
           ],
         ),
       ),
     );
   }
-
-  BookingForm(Color color){
-    return Container(
-      width: Get.width,
-      height: Get.height * 0.9,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(50),
-              topRight: Radius.circular(50)
-          )
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Text("BOOKING FORM",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: Get.width * 0.07
-              ),),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Row(
-              children: [
-                Container(
-                  height: Get.height * 0.36,
-                  width: Get.width / 2,
-                  // color: Colors.orange,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Pick Up Location",
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: Get.width * 0.04
-                          ),),
-                        Card(
-                          elevation: 2,
-                          child: Container(
-                            color: color,
-                            width: Get.width / 0.2,
-                            height: Get.height * 0.07,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Set location"),
-                                  Icon(Icons.arrow_drop_down)
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        //
-                        SizedBox(height: 5,),
-                        //
-                        Text("Pick Up Date",
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: Get.width * 0.04
-                          ),),
-                        Card(
-                          elevation: 2,
-                          child: Container(
-                            color: color,
-                            width: Get.width / 0.2,
-                            height: Get.height * 0.07,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Select"),
-                                  Icon(Icons.arrow_drop_down)
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        //
-                        SizedBox(height: 5,),
-                        //
-                        Text("Total Person",
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: Get.width * 0.04
-                          ),),
-                        Card(
-                          elevation: 2,
-                          child: Container(
-                            color: color,
-                            width: Get.width / 0.2,
-                            height: Get.height * 0.07,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Select"),
-                                  Icon(Icons.arrow_drop_down)
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                //-----
-                Container(
-                  height: Get.height * 0.36,
-                  // color: Colors.green,
-                  width: Get.width / 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Drop Of Location",
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: Get.width * 0.04
-                          ),),
-                        Card(
-                          elevation: 2,
-                          child: Container(
-                            color: color,
-                            width: Get.width / 0.2,
-                            height: Get.height * 0.07,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Set location"),
-                                  Icon(Icons.arrow_drop_down)
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        //
-                        SizedBox(height: 5,),
-                        //
-                        Text("Drop Of Date",
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: Get.width * 0.04
-                          ),),
-                        Card(
-                          elevation: 2,
-                          child: Container(
-                            color: color,
-                            width: Get.width / 0.2,
-                            height: Get.height * 0.07,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Select"),
-                                  Icon(Icons.arrow_drop_down)
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        //
-                        SizedBox(height: 5,),
-                        //
-                        Text("Quantity",
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: Get.width * 0.04
-                          ),),
-                        Card(
-                          elevation: 2,
-                          child: Container(
-                            color: color,
-                            width: Get.width / 0.2,
-                            height: Get.height * 0.07,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Select"),
-                                  Icon(Icons.arrow_drop_down)
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-
-              ],
-            ),
-          ),
-          //
-          Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text("Payment",
-                style: TextStyle(
-                    color: Colors.green,
-                    fontSize: Get.width * 0.04
-                ),),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Card(
-                elevation: 2,
-                child: Container(
-                  color: color,
-                  width: Get.width / 2.2,
-                  height: Get.height * 0.07,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Cash On Delivery"),
-                        Icon(Icons.arrow_drop_down)
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          //
-          Padding(
-            padding: const EdgeInsets.only(left: 8,right: 8),
-            child: Container(
-              width: Get.width,
-              height: Get.height * 0.25,
-              color: Colors.grey,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Extra Service",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: Get.width * 0.05
-                          ),),
-                        Text("Charges",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: Get.width * 0.05
-                          ),)
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: Get.width * 0.5,
-                        child: ListTile(
-                          title: Text("Baby seat",
-                            style: TextStyle(
-                                fontSize: Get.width * 0.04
-                            ),
-                          ),
-                          leading:Radio(value: 0,
-                              groupValue: null, onChanged: null),
-                        ),
-                      ),
-                      Text("\$10.0/Total",
-                        style: TextStyle(
-                            fontSize: Get.width * 0.04
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: 7,),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8
-              ),
-              child: GestureDetector(
-                onTap: (){
-
-                },
-                child: Container(
-                  width: Get.width /1.5,
-                  height: Get.height * 0.05,
-                  color: Colors.green,
-                  child: Center(
-
-                    child:
-                    Text("Next",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: Get.width * 0.05
-                      ),),
-                  ),
-                ),
-              ),
-            ),
-          )
-
-        ],
-      ),
-    );
-  }
-
 
 }
 

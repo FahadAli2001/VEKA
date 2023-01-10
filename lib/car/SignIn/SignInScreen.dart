@@ -121,7 +121,7 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
+           /*   Padding(
                 padding: const EdgeInsets.only(top: 50),
                 child: InkWell(
                   onTap: (){
@@ -144,7 +144,7 @@ class SignInScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
+              )*/
             ],
           ),
         ),
