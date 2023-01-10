@@ -4,10 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:veka/car/SignUp/SignupController.dart';
 
-import '../Dashboard/dashboardScreen.dart';
-import '../SignIn/SignInScreen.dart';
-import '../SignIn/SignupController.dart';
+
+
 class SignUp extends StatelessWidget {
   const SignUp({Key? key}) : super(key: key);
 

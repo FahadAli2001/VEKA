@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../Dashboard/dashboardScreen.dart';
@@ -12,6 +13,7 @@ class SignUpController extends GetxController{
   void checkIsAgree (){
     if(Value.value == false){
       Get.defaultDialog(
+        buttonColor: Colors.green,
         title: "",
         middleText: "Please agree with our terms and condition",
         textConfirm: "Ok",

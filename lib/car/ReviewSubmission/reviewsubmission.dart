@@ -48,26 +48,13 @@ class reviewsubmission extends StatelessWidget {
             color: Colors.green,
             onPressed: (){
               Get.defaultDialog(
+                buttonColor: Colors.green,
                 title: "",
-
-                content: Column(
-                  children: [
-                    Text("Your booking has been successfully \n completed",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold
-                    ),),
-                    GestureDetector(
-                      onTap: (){
-                        Get.to(DashboardScreen());
-                      },
-                      child: CircleAvatar(
-                        backgroundColor: Colors.green,
-                        radius: 25,
-                        child: Text("Ok"),
-                      ),
-                    ),
-                  ],
-                )
+                //DashboardScreen()
+               middleText: "Your booking has been successfully completed",
+                onConfirm: (){
+                  Get.to(DashboardScreen());
+                                  }
               );
             },
             child: Text("Done",
