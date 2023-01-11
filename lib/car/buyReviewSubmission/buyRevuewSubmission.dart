@@ -2,18 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:veka/car/Dashboard/dashboardScreen.dart';
-import 'package:veka/car/bookingScreen/bookingScreenController.dart';
 
-import '../../ChooseOption.dart';
+import '../Dashboard/dashboardScreen.dart';
 
-class reviewsubmission extends StatelessWidget {
-  const reviewsubmission({Key? key}) : super(key: key);
+class buyReviewSubmission extends StatelessWidget {
+  const buyReviewSubmission({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    bookingScreenController bsc = Get.put(bookingScreenController());
     var data = Get.arguments;
     return Scaffold(
       appBar: AppBar(
@@ -44,28 +40,28 @@ class reviewsubmission extends StatelessWidget {
       bottomNavigationBar: Container(
         width: Get.width,
         height: Get.height * 0.09,
-       // color: Colors.grey,
+        // color: Colors.grey,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40,vertical: 10),
           child: CupertinoButton(
             color: Colors.green,
             onPressed: (){
               Get.defaultDialog(
-                buttonColor: Colors.green,
-                title: "",
-                //DashboardScreen()
-               middleText: "Your booking has been successfully completed",
-                onConfirm: (){
-                  Get.to(DashboardScreen());
-                                  }
+                  buttonColor: Colors.green,
+                  title: "",
+                  //DashboardScreen()
+                  middleText: "Your booking has been successfully completed",
+                  onConfirm: (){
+                    Get.to(DashboardScreen());
+                  }
               );
             },
             child: Text("Done",
-            style: TextStyle(
-              fontSize: Get.width * 0.04,
-              fontWeight: FontWeight.bold,
-              color: Colors.black
-            ),),
+              style: TextStyle(
+                  fontSize: Get.width * 0.04,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black
+              ),),
           ),
         ),
 
@@ -81,11 +77,11 @@ class reviewsubmission extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.topCenter,
                     child: Text("Review Submission",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: Get.width * 0.06
-                    ),),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: Get.width * 0.06
+                      ),),
                   ),
                 ),
                 //
@@ -99,26 +95,26 @@ class reviewsubmission extends StatelessWidget {
                           backgroundImage: NetworkImage(data["carimage"].toString()),
                         ),
                         Container(
-                          width: Get.width * 0.6,
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: ListTile(
-                              title: Text(data["carname"],
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: Get.width * 0.04
+                            width: Get.width * 0.6,
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: ListTile(
+                                title: Text(data["carname"],
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: Get.width * 0.04
+                                  ),
+                                ),
+                                subtitle: Text("\$ ${data["carprice"]}",
+                                  style: TextStyle(
+
+                                      color: Colors.green,
+                                      fontSize: Get.width * 0.04
+                                  ),
                                 ),
                               ),
-                              subtitle: Text("\$ ${data["carprice"]}",
-                                style: TextStyle(
-
-                                    color: Colors.green,
-                                    fontSize: Get.width * 0.04
-                                ),
-                            ),
-                          ),
-                        )
+                            )
                         )
                       ],
                     ),
@@ -167,7 +163,7 @@ class reviewsubmission extends StatelessWidget {
                                   fontSize: Get.width * 0.04
                               ),
                             ),
-                            Text(data["carqnty"],
+                            Text("1",
                               style: TextStyle(
 
                                   color: Colors.black,
@@ -188,9 +184,9 @@ class reviewsubmission extends StatelessWidget {
                                   fontSize: Get.width * 0.04
                               ),
                             ),
-                            Text("\$ ${data["totalprice"].toString()}",
+                            Text("\$ ${data["carprice"].toString()}",
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                   fontSize: Get.width * 0.04
                               ),
@@ -202,80 +198,7 @@ class reviewsubmission extends StatelessWidget {
                   ),
                 ),
                 //--------
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 7),
-                  child: Container(
-                    width: Get.width,
-                    height: Get.height * 0.1,
-                    color: Colors.grey.shade300,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text("Extra services",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: Get.width * 0.04
-                                ),
-                              ),
-                              Text("Baby Seat",
-                                style: TextStyle(
 
-                                    color: Colors.black,
-                                    fontSize: Get.width * 0.04
-                                ),
-                              ),
-                              Text("Car Seat for children",
-                                style: TextStyle(
-
-                                    color: Colors.black,
-                                    fontSize: Get.width * 0.04
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          //-------
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Price",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: Get.width * 0.04
-                                ),
-                              ),
-                              //
-                              Text((bsc.babyvalue.value == false)?"0":"\$10",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: Get.width * 0.04
-                                ),
-                              ),
-                              //
-                              Text((bsc.childrenvalue.value == false)?"0":"\$10",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: Get.width * 0.04
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
                 //
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 7),
@@ -338,12 +261,12 @@ class reviewsubmission extends StatelessWidget {
                     children: [
                       Text("Sub total",
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.bold,
                             color: Colors.black,
                             fontSize: Get.width * 0.04
                         ),
                       ),
-                      Text(data["subtotal"].toString(),
+                      Text("\$45",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,

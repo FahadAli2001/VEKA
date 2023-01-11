@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
 import '../ReviewSubmission/reviewsubmission.dart';
+import '../buyReviewSubmission/buyRevuewSubmission.dart';
 
 class BuyingCarsDetails extends StatelessWidget {
   const BuyingCarsDetails({Key? key}) : super(key: key);
@@ -55,7 +56,7 @@ class BuyingCarsDetails extends StatelessWidget {
               InkWell(
                 onTap: (){
                   //data["carname"],data["carImage"],data["carprice"]
-                  Get.to(reviewsubmission(),arguments: {
+                  Get.to(buyReviewSubmission(),arguments: {
                     "carname":data["carname"].toString(),
                     "carimage":data["carImage"].toString(),
                     "carprice":data["carprice"].toString()

@@ -17,7 +17,8 @@ class bookingScreen extends StatelessWidget {
     Color color = Colors.grey;
     var data = Get.arguments;
     bookingScreenController bsc = Get.put(bookingScreenController());
-
+    var cartotalprice = int.parse(bsc.carqntyvalue.value) * int.parse(data["carprice"]);
+   // var subtotal = bsc.subTotalofRent(int.parse(cartotalprice));
     var date = DateTime.now().obs;
 
     return Scaffold(
@@ -42,8 +43,18 @@ class bookingScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: GestureDetector(
           onTap: (){
+            
             Get.to(reviewsubmission(),arguments: {"carimage":data["carimage"].toString(),
-            "carname":data["carname"].toString(),"carprice":data["carprice"].toString()});
+            "carname":data["carname"].toString(),"carprice":data["carprice"].toString(),
+            "carqnty":bsc.carqntyvalue.value,
+              "totalprice":bsc.totalcarPrice(int.parse(data["carprice"])),
+              "subtotal":bsc.subTotalofRent(bsc.totalcarPrice(int.parse(data["carprice"])))
+            });
+            //print(cartotalprice.runtimeType);
+            //print(int.parse(bsc.subTotalofRent(cartotalprice)));
+            //print(bsc.totalcarPrice(int.parse(data["carprice"])));
+           // print(bsc.subTotalofRent(bsc.totalcarPrice(int.parse(data["carprice"]))));
+
           },
           child: Container(
             width: Get.width /1.4,

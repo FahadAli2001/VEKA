@@ -11,6 +11,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:veka/ChooseOption.dart';
 import 'package:veka/car/CarHome/CarHomePageController.dart';
 
+import '../RentCarDetails/RentCarDetails.dart';
 import '../bookingScreen/bookingScreen.dart';
 
 
@@ -472,10 +473,13 @@ class CarHomePage extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: (){
-          Get.bottomSheet(
-              rentCardetail(carName, carImage, carprice, cardescription),
-            isScrollControlled: true
-          );
+          Get.to(RentCarDetails(),
+          arguments: {
+            "carname":carName,
+            "carimage":carImage,
+            "carprice":carprice,
+            "cardescription":cardescription
+          });
         },
         child: Card(
           elevation: 5,
