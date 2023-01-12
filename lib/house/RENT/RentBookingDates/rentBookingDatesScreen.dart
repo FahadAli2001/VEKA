@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cupertino_icons/cupertino_icons.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 import 'package:veka/house/RENT/rentPayment/rentPaymnet.dart';
 
 
@@ -12,7 +14,8 @@ class rentBookingDatesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    var checkIndate = DateTime.now().obs;
+    var checkOutdate = DateTime.now().obs;
     return  SingleChildScrollView(
       child:  Column(
           children: [
@@ -55,22 +58,69 @@ class rentBookingDatesScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    width: Get.width / 2.8,
-                    height: Get.height * 0.06,
-                    color: Colors.red,
-                    child: Center(
-                      child: Text("CheckIn"),
-                    ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("CheckInDate",
+                        style: TextStyle(
+                          color: Colors.grey.shade900,
+                          fontWeight: FontWeight.bold,
+                          fontSize: Get.width * 0.04
+                        ),),
+                      ),
+                      //
+                      Container(
+                        width: Get.width / 2.8,
+                        height: Get.height * 0.06,
+                        color: Colors.grey.shade400,
+                        child:TimePickerSpinnerPopUp(
+                          mode: CupertinoDatePickerMode.date,
+                          initTime: checkIndate.value,
+                          minTime: DateTime.now().subtract(const Duration(days: 10)),
+                          maxTime: DateTime.now().add(const Duration(days: 10)),
+                          barrierColor: Colors.black12, //Barrier Color when pop up show
+                          onChange: (dateTime) {
+                            // Implement your logic with select dateTime
+                            checkIndate.value = dateTime;
+                          },
+
+                        ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    width: Get.width / 2.8,
-                    height: Get.height * 0.06,
-                    color: Colors.red,
-                    child: Center(
-                      child: Text("CheckOut"),
-                    ),
-                  )
+                  //
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("CheckOutDate",
+                          style: TextStyle(
+                              color: Colors.grey.shade900,
+                              fontWeight: FontWeight.bold,
+                              fontSize: Get.width * 0.04
+                          ),),
+                      ),
+                      //
+                      Container(
+                        width: Get.width / 2.8,
+                        height: Get.height * 0.06,
+                        color: Colors.grey.shade400,
+                        child:TimePickerSpinnerPopUp(
+                          mode: CupertinoDatePickerMode.date,
+                          initTime: checkOutdate.value,
+                          minTime: DateTime.now().subtract(const Duration(days: 10)),
+                          maxTime: DateTime.now().add(const Duration(days: 10)),
+                          barrierColor: Colors.black12, //Barrier Color when pop up show
+                          onChange: (dateTime) {
+                            // Implement your logic with select dateTime
+                            checkOutdate.value = dateTime;
+                          },
+
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

@@ -2,6 +2,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:readmore/readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -11,23 +12,22 @@ import 'package:veka/car/orderDetails/buying/buyingdetails.dart';
 import '../BuyingMeeting/buyingMeeting.dart';
 
 
-class houseDetails extends StatelessWidget {
-  const houseDetails({Key? key}) : super(key: key);
+class buyhouseDetails extends StatelessWidget {
+  const buyhouseDetails({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final PageController _pageController =
     PageController();
 
-    List<String> imagesUrl = [
-     "assets/home.png",
-     "assets/home.png",
-     "assets/home.png",
-
-    ];
+   var data = Get.arguments;
 
     return Scaffold(
       appBar: AppBar(
+        title: Text("buy",
+          style: TextStyle(
+              color: Colors.black
+          ),),
         elevation: 0,
         backgroundColor: Colors.white70,
         leading: IconButton(
@@ -81,7 +81,7 @@ class houseDetails extends StatelessWidget {
                   //
                   child: PageView.builder(
                     controller: _pageController,
-                    itemCount: imagesUrl.length,
+                    itemCount: 3,
                     itemBuilder: (_, index) => Container(
                       width: Get.width * 2,
                       height: Get.height,
@@ -90,9 +90,7 @@ class houseDetails extends StatelessWidget {
                         color: Colors.grey,
                         borderRadius: BorderRadius.circular(20),
                         image: DecorationImage(
-                            image: AssetImage(
-                              imagesUrl[index],
-                            ),
+                            image: NetworkImage(data["houseimage"].toString()),
                             fit: BoxFit.cover),
                       ),
 
@@ -101,7 +99,7 @@ class houseDetails extends StatelessWidget {
                 ),
                 SmoothPageIndicator(
                   controller: _pageController, // PageController
-                  count: imagesUrl.length,
+                  count: 3,
                   effect: ExpandingDotsEffect(
                     dotHeight: 10,
                       dotColor: Colors.grey,
@@ -115,14 +113,14 @@ class houseDetails extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Ibn E Manshion",
+                      Text(data["housename"],
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                         fontSize: Get.width * 0.06
                       ),),
                       //
-                      Text("\$10000",
+                      Text("\$${data['houseprice']}",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
@@ -144,7 +142,7 @@ class houseDetails extends StatelessWidget {
                             fontSize: Get.width * 0.03
                         ),),
                       //
-                      Text("\$900/month",
+                      Text("\$${data['houseprice']}",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
@@ -216,12 +214,21 @@ class houseDetails extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 6),
                   child: Align(
                     alignment: Alignment.topLeft,
-                    child: Text("WebSearch the world's information, including webpages, images, videos and more. Google has many special features to help you find exactly what you're looking for.",
+                    child:ReadMoreText(
+                      data["description"],
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
                           fontSize: Get.width * 0.036
-                      ),),
+                      ),
+                      trimLines: 2,
+                      colorClickableText: Colors.red,
+                      trimMode: TrimMode.Line,
+                      trimCollapsedText: 'Show more',
+                      trimExpandedText: 'Show less',
+                      moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,
+                      color: Colors.red),
+                    )
                   ),
                 ),
                 //

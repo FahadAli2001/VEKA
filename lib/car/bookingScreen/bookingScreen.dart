@@ -234,15 +234,17 @@ class bookingScreen extends StatelessWidget {
                               color: color,
                               width: Get.width / 0.2,
                               height: Get.height * 0.07,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("Select"),
-                                    Icon(Icons.arrow_drop_down)
-                                  ],
-                                ),
+                              child: TimePickerSpinnerPopUp(
+                                mode: CupertinoDatePickerMode.date,
+                                initTime: date.value,
+                                minTime: DateTime.now().subtract(const Duration(days: 10)),
+                                maxTime: DateTime.now().add(const Duration(days: 10)),
+                                barrierColor: Colors.black12, //Barrier Color when pop up show
+                                onChange: (dateTime) {
+                                  // Implement your logic with select dateTime
+                                  date.value = dateTime;
+                                },
+
                               ),
                             ),
                           ),

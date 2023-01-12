@@ -1,15 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:veka/car/Mybookmark/rents/rents.dart';
 
 import '../ReviewSubmission/RentReviewSubmission.dart';
+import 'rentPatmentController.dart';
 
 class rentPayment extends StatelessWidget {
   const rentPayment({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    rentPaymentController rpc = Get.put(rentPaymentController());
+
+    var payment = "cash".obs;
+
+    var _value = false.obs;
+    void _handleRadioValueChanged(val) {
+      _value.value = val;
+    }
     List<Step>step=[
       Step(
 
@@ -56,38 +68,53 @@ class rentPayment extends StatelessWidget {
                         //------
 
                         //-----
-                      Container(
-                        child: Row(
-                           children: [  Container(
-                             width: 70,
-                             height: 30,
-                             color: Colors.grey,
-                             child: Center(
-                               child: Icon(Icons.remove,color: Colors.black,),
+                      Obx(
+                        ()=> Container(
+                          child: Row(
+                             children: [
+                               InkWell(
+                                 onTap: (){
+                                   rpc.subAdults();
+                                 },
+                                 child: Container(
+                                 width: 70,
+                                 height: 30,
+                                 color: Colors.grey,
+                                 child: Center(
+                                   child: Icon(Icons.remove,color: Colors.black,),
+                                 ),
                              ),
-                           ),
-                             Padding(
-                               padding: const EdgeInsets.symmetric(horizontal: 15),
-                               child: Text("01",
-                                 style: TextStyle(
-                                     fontWeight: FontWeight.bold,
-                                     color: Colors.black,
-                                     fontSize: Get.width * 0.05
-                                 ),),
-                             ),
-                             Container(
-                               width: 70,
-                               height: 30,
-                               color: Colors.grey,
-                               child: Center(
-                                 child: Icon(Icons.add,color: Colors.black,),
                                ),
-                             ),
-                           ],
+                               //
+                               Padding(
+                                 padding: const EdgeInsets.symmetric(horizontal: 15),
+                                 child: Text(rpc.adultCount.value.toString(),
+                                   style: TextStyle(
+                                       fontWeight: FontWeight.bold,
+                                       color: Colors.black,
+                                       fontSize: Get.width * 0.05
+                                   ),),
+                               ),
+                               InkWell(
+                                 onTap: (){
+                                   rpc.addAdults();
+                                 },
+                                 child: Container(
+                                   width: 70,
+                                   height: 30,
+                                   color: Colors.grey,
+                                   child: Center(
+                                     child: Icon(Icons.add,color: Colors.black,),
+                                   ),
+                                 ),
+                               ),
+                             ],
+                          ),
                         ),
                       ),],
                         ),
                       ),
+                  //
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -115,40 +142,53 @@ class rentPayment extends StatelessWidget {
                         //------
 
                         //-----
-                       Container(
-                         child: Row(
-                           children: [
-                             Container(
-                               width: 70,
-                               height: 30,
-                               color: Colors.grey,
-                               child: Center(
-                                 child: Icon(Icons.remove,color: Colors.black,),
+                       Obx(
+                         ()=> Container(
+                           child: Row(
+                             children: [
+                               InkWell(
+                                 onTap:(){
+                                   rpc.subChildren();
+                                 },
+                                 child: Container(
+                                   width: 70,
+                                   height: 30,
+                                   color: Colors.grey,
+                                   child: Center(
+                                     child: Icon(Icons.remove,color: Colors.black,),
+                                   ),
+                                 ),
                                ),
-                             ),
-                             Padding(
-                               padding: const EdgeInsets.symmetric(horizontal: 15),
-                               child: Text("01",
-                                 style: TextStyle(
-                                     fontWeight: FontWeight.bold,
-                                     color: Colors.black,
-                                     fontSize: Get.width * 0.05
-                                 ),),
-                             ),
-                             Container(
-                               width: 70,
-                               height: 30,
-                               color: Colors.grey,
-                               child: Center(
-                                 child: Icon(Icons.add,color: Colors.black,),
+                               Padding(
+                                 padding: const EdgeInsets.symmetric(horizontal: 15),
+                                 child: Text(rpc.childrenCount.value.toString(),
+                                   style: TextStyle(
+                                       fontWeight: FontWeight.bold,
+                                       color: Colors.black,
+                                       fontSize: Get.width * 0.05
+                                   ),),
                                ),
-                             ),
-                           ],
+                               InkWell(
+                                 onTap: (){
+                                   rpc.addChildren();
+                                 },
+                                 child: Container(
+                                   width: 70,
+                                   height: 30,
+                                   color: Colors.grey,
+                                   child: Center(
+                                     child: Icon(Icons.add,color: Colors.black,),
+                                   ),
+                                 ),
+                               ),
+                             ],
+                           ),
                          ),
                        )
                       ],
                     ),
                   ),
+                  //
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -176,35 +216,48 @@ class rentPayment extends StatelessWidget {
                         //------
 
                         //-----
-                        Container(
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 70,
-                                height: 30,
-                                color: Colors.grey,
-                                child: Center(
-                                  child: Icon(Icons.remove,color: Colors.black,),
+                        Obx(
+                          ()=> Container(
+                            child: Row(
+                              children: [
+                                InkWell(
+                                  onTap: (){
+                                    rpc.subInfant();
+                                  },
+                                  child: Container(
+                                    width: 70,
+                                    height: 30,
+                                    color: Colors.grey,
+                                    child: Center(
+                                      child: Icon(Icons.remove,color: Colors.black,),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 15),
-                                child: Text("01",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      fontSize: Get.width * 0.05
-                                  ),),
-                              ),
-                              Container(
-                                width: 70,
-                                height: 30,
-                                color: Colors.grey,
-                                child: Center(
-                                  child: Icon(Icons.add,color: Colors.black,),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                                  child: Text(rpc.infantCount.toString(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: Get.width * 0.05
+                                    ),),
                                 ),
-                              ),
-                            ],
+                                //
+                                InkWell(
+                                  onTap: (){
+                                    rpc.addInfant();
+                                  },
+                                  child: Container(
+                                    width: 70,
+                                    height: 30,
+                                    color: Colors.grey,
+                                    child: Center(
+                                      child: Icon(Icons.add,color: Colors.black,),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         )
                       ],
@@ -226,40 +279,38 @@ class rentPayment extends StatelessWidget {
             //----
             Padding(
               padding: const EdgeInsets.symmetric(horizontal:5),
-              child: Container(
-                height: Get.height * 0.06,
-                width: Get.width,
-                //color: Colors.red,
-                child: Row(
-                  children: [
-                    Radio(value: 0,
-                        groupValue: null, onChanged: null),
-                    Text("Cash on delivery",
-                      style: TextStyle(
-                          fontSize: Get.width * 0.04
-                      ),
-                    ),
-                  ],
+              child: Obx(
+                ()=> Container(
+                  height: Get.height * 0.06,
+                  width: Get.width,
+                  //color: Colors.red,
+                  child:  RadioListTile(
+                    title: Text("Cash On Delivery"),
+                    value: "Cash On Delivery",
+                    groupValue: payment.value,
+                    onChanged: (val){
+                      payment.value = val.toString();
+                    },
+                  ),
                 ),
               ),
             ),
             //----------
             Padding(
               padding: const EdgeInsets.symmetric(horizontal:5),
-              child: Container(
-                height: Get.height * 0.06,
-                width: Get.width,
-                //color: Colors.red,
-                child: Row(
-                  children: [
-                    Radio(value: 0,
-                        groupValue: null, onChanged: null),
-                    Text("Visa ***********",
-                      style: TextStyle(
-                          fontSize: Get.width * 0.04
-                      ),
-                    ),
-                  ],
+              child: Obx(
+                ()=> Container(
+                  height: Get.height * 0.06,
+                  width: Get.width,
+                  //color: Colors.red,
+                  child: RadioListTile(
+                    title: Text("Online Payment"),
+                    value: "Online Payment",
+                    groupValue: payment.value,
+                    onChanged: (val){
+                      payment.value = val.toString();
+                    },
+                  ),
                 ),
               ),
             ),
@@ -288,7 +339,12 @@ class rentPayment extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 20),
         child: GestureDetector(
           onTap: (){
-            Get.to(RetReviewSubmission());
+            Get.to(RetReviewSubmission(),
+              arguments: {
+              "adultcount":rpc.adultCount.value,
+                "childcount":rpc.childrenCount.value
+              }
+            );
           },
           child: Container(
             width: Get.width,

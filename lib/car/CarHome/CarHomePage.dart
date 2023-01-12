@@ -219,10 +219,10 @@ class CarHomePage extends StatelessWidget {
                         width: Get.width,
                         height: Get.height * 0.4,
                         child: ListView.builder(
-                          itemCount:  1,
+                          itemCount:  snapshot.data.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context,index){
-                            return product(car.rentData[index]["images"][index]["src"].toString(),
+                            return product(car.rentData[index]["images"][0]["src"].toString(),
                                 car.rentData[index]["name"].toString(),
                                 car.rentData[index]["price"].toString(),
                                 snapshot.data[index]["short_description"].toString(),
@@ -256,10 +256,10 @@ class CarHomePage extends StatelessWidget {
                         width: Get.width,
                         height: Get.height * 0.4,
                         child: ListView.builder(
-                          itemCount:  1,
+                          itemCount:  snapshot.data.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context,index){
-                            return  products(car.selldata[index]["images"][index]["src"].toString(),
+                            return  products(car.selldata[index]["images"][0]["src"].toString(),
                                 car.selldata[index]["name"].toString(),
                                 car.selldata[index]["price"].toString()
                             );

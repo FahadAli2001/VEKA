@@ -106,13 +106,13 @@ class RentCarDetails extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-                            fontSize: Get.height * 0.03
+                            fontSize: Get.height * 0.025
                         ),),
                       Text("\$${data["carprice"]}",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
-                            fontSize: Get.height * 0.025
+                            fontSize: Get.height * 0.02
                         ),),
                     ],
                   ),

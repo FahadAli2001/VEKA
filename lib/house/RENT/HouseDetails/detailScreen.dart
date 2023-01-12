@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:readmore/readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../AvailableRooms/availableRooms.dart';
@@ -14,12 +15,9 @@ class detailScreen extends StatelessWidget {
     final PageController _pageController =
     PageController();
 
-    List<String> imagesUrl = [
-      "assets/home.png",
-      "assets/home.png",
-      "assets/home.png",
+    var data = Get.arguments;
 
-    ];
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -80,7 +78,7 @@ class detailScreen extends StatelessWidget {
                   //
                   child: PageView.builder(
                     controller: _pageController,
-                    itemCount: imagesUrl.length,
+                    itemCount: 3,
                     itemBuilder: (_, index) => Container(
                       width: Get.width * 2,
                       height: Get.height,
@@ -89,9 +87,7 @@ class detailScreen extends StatelessWidget {
                         color: Colors.grey,
                         borderRadius: BorderRadius.circular(20),
                         image: DecorationImage(
-                            image: AssetImage(
-                              imagesUrl[index],
-                            ),
+                            image:NetworkImage(data["houseimage"].toString()),
                             fit: BoxFit.cover),
                       ),
 
@@ -100,7 +96,7 @@ class detailScreen extends StatelessWidget {
                 ),
                 SmoothPageIndicator(
                   controller: _pageController, // PageController
-                  count: imagesUrl.length,
+                  count: 3,
                   effect: ExpandingDotsEffect(
                     dotHeight: 10,
                       dotColor: Colors.grey,
@@ -114,14 +110,14 @@ class detailScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Ibn E Manshion",
+                      Text(data["housename"],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                             fontSize: Get.width * 0.06
                         ),),
                       //
-                      Text("\$10000",
+                      Text("\$${data["houseprice"]}",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
@@ -143,7 +139,7 @@ class detailScreen extends StatelessWidget {
                             fontSize: Get.width * 0.03
                         ),),
                       //
-                      Text("\$900/month",
+                      Text("\$${data["houseprice"]}/month",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
@@ -213,15 +209,21 @@ class detailScreen extends StatelessWidget {
                 //
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 6),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text("WebSearch the world's information, including webpages, images, videos and more. Google has many special features to help you find exactly what you're looking for.",
+                  child:ReadMoreText(
+                      data["description"],
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
                           fontSize: Get.width * 0.036
-                      ),),
-                  ),
+                      ),
+                    trimLines: 2,
+                    colorClickableText: Colors.red,
+                    trimMode: TrimMode.Line,
+                    trimCollapsedText: 'Show more',
+                    trimExpandedText: 'Show less',
+                    moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold,
+                    color: Colors.red),
+                  )
                 ),
                 //
 

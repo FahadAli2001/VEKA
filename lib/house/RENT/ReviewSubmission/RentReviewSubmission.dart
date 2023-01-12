@@ -10,6 +10,9 @@ class RetReviewSubmission extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var data = Get.arguments;
+
     List<Step>step=[
       Step(
 
@@ -93,7 +96,7 @@ class RetReviewSubmission extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text("ABC"),
-                                      Icon(Icons.arrow_drop_down)
+
                                     ],
                                   ),
                                 ),
@@ -107,6 +110,7 @@ class RetReviewSubmission extends StatelessWidget {
                                   color: Colors.green,
                                   fontSize: Get.width * 0.04
                               ),),
+                            //
                             Card(
                               elevation: 2,
                               child: Container(
@@ -118,8 +122,8 @@ class RetReviewSubmission extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("2"),
-                                      Icon(Icons.arrow_drop_down)
+                                      Text(data["adultcount"].toString()),
+
                                     ],
                                   ),
                                 ),
@@ -144,8 +148,8 @@ class RetReviewSubmission extends StatelessWidget {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("4"),
-                                      Icon(Icons.arrow_drop_down)
+                                      Text(data["childcount"].toString()),
+
                                     ],
                                   ),
                                 ),

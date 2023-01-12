@@ -32,7 +32,7 @@ class CarHomePageController extends GetxController{
     }
     catch(e){
       print(e);
-      Get.snackbar("Error", e.toString(),
+      Get.snackbar("Error", "something went wrong",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.grey
       );
