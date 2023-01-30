@@ -53,6 +53,7 @@ dependencies:
   shimmer: ^2.0.0
   readmore: ^2.2.0
   time_picker_spinner_pop_up: ^1.0.3
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:

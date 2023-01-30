@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -81,10 +82,12 @@ class rentHome extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
                       onTap: (){
+                       // print(snapshot.data[index]["meta_data"][18]["value"][0].toString());
                         Get.to(Get.to(detailScreen(),
                         arguments: {
+                          "totalrooms":snapshot.data[index]["meta_data"][18]["value"][0].toString(),
                           "houseimage":snapshot.data[index]["images"][0]["src"],
-                          "housename":snapshot.data[index]["name"],
+                          "housename":snapshot.data[index]["name"].toString(),
                           "houseprice":snapshot.data[index]["price"],
                           "description":snapshot.data[index]["description"]
                         }));
@@ -99,37 +102,16 @@ class rentHome extends StatelessWidget {
                         height: Get.height * 0.35,
                         //color: Colors.orange,
                         child: Row(
-
                           children: [
                             Container(
                               height:Get.height ,
                               width: Get.width / 2.8,
-
                               decoration: BoxDecoration(
                                   color: Colors.grey.shade200,
                                   image: DecorationImage(
                                       image:NetworkImage(snapshot.data[index]["images"][0]["src"]),
                                       fit: BoxFit.fill
                                   )
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: Get.width,
-                                      height: Get.height * 0.04,
-                                      color: Colors.green,
-                                      child: Center(
-                                        child: Text("BreakFast included",
-                                          style: TextStyle(
-                                              color: Colors.white
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ),
                             ),
                             //----
@@ -146,12 +128,16 @@ class rentHome extends StatelessWidget {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(snapshot.data[index]["name"],
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                                fontSize: Get.width * 0.05
-                                            ),),
+                                          Expanded(
+                                            child: AutoSizeText(snapshot.data[index]["name"],
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black,
+                                                  //fontSize: Get.width * 0.05
+                                              ),
+                                              softWrap: true,
+                                            ),
+                                          ),
                                           FavoriteButton(
                                               iconSize: 30,
                                               valueChanged: (){})
@@ -173,7 +159,7 @@ class rentHome extends StatelessWidget {
                                             //itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                                             itemBuilder: (context, _) => Icon(
                                               Icons.star,
-                                              size: 20,
+                                              size: 15,
                                               color: Colors.amber,
                                             ),
                                             onRatingUpdate: (rating) {

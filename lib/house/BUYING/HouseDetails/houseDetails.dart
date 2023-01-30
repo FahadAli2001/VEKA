@@ -1,4 +1,5 @@
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -113,12 +114,13 @@ class buyhouseDetails extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(data["housename"],
+                      AutoSizeText(data["housename"],
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
-                        fontSize: Get.width * 0.06
-                      ),),
+                        //fontSize: Get.width * 0.06
+                      ),
+                      maxLines: 1,),
                       //
                       Text("\$${data['houseprice']}",
                         style: TextStyle(
@@ -177,7 +179,7 @@ class buyhouseDetails extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Icon(Icons.bed_sharp,color: Colors.red,size: 25,),
-                            Text("4")
+                            Text(data["totalrooms"].toString())
                           ],
                         ),
                       ),

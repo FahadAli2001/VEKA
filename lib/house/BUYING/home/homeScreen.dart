@@ -109,7 +109,7 @@ class homeScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Text("Buying",
+                                  Text("Rent",
                                     style: TextStyle(
 
                                         color: Colors.black,
@@ -140,7 +140,7 @@ class homeScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Text("Rent",
+                                  Text("Buy",
                                   style: TextStyle(
 
                                     color: Colors.black,

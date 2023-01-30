@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -85,12 +86,15 @@ class houseHome extends StatelessWidget {
                  padding: const EdgeInsets.all(8.0),
                  child: GestureDetector(
                    onTap: (){
+                     //print("rooms " + snapshot.data[index]["attributes"][0]["options"][0].toString());
+                     print("tapppp");
                      Get.to(Get.to(buyhouseDetails(),
                      arguments: {
-                       "housename":!snapshot.data[index]["name"],
+                       "totalrooms":snapshot.data[index]["attributes"][0]["options"][0].toString(),
+                       "housename":snapshot.data[index]["name"].toString(),
                        "houseimage": snapshot.data[index]["images"][0]["src"].toString(),
-                       "houseprice":snapshot.data[index]["price"],
-                       "description":snapshot.data[index]["description"]
+                       "houseprice":snapshot.data[index]["price"].toString(),
+                       "description":snapshot.data[index]["description"].toString()
                      }));
                    },
                    child: Container(
@@ -117,25 +121,7 @@ class houseHome extends StatelessWidget {
                                    fit: BoxFit.fill
                                )
                            ),
-                           child: Padding(
-                             padding: const EdgeInsets.only(top: 10),
-                             child: Column(
-                               children: [
-                                 Container(
-                                   width: Get.width,
-                                   height: Get.height * 0.04,
-                                   color: Colors.green,
-                                   child: Center(
-                                     child: Text("BreakFast included",
-                                       style: TextStyle(
-                                           color: Colors.white
-                                       ),
-                                     ),
-                                   ),
-                                 ),
-                               ],
-                             ),
-                           ),
+
                          ),
                          //----
                          Container(
@@ -151,12 +137,14 @@ class houseHome extends StatelessWidget {
                                    child: Row(
                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                      children: [
-                                       Text(snapshot.data[index]["name"],
-                                         style: TextStyle(
-                                             fontWeight: FontWeight.bold,
-                                             color: Colors.black,
-                                             fontSize: Get.width * 0.05
-                                         ),),
+                                       Expanded(
+                                         child: AutoSizeText(snapshot.data[index]["name"],
+                                           style: TextStyle(
+                                               fontWeight: FontWeight.bold,
+                                               color: Colors.black,
+                                               //fontSize: Get.width * 0.05
+                                           ),),
+                                       ),
                                        FavoriteButton(
                                            iconSize: 35,
                                            valueChanged: (){})

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -110,12 +111,13 @@ class detailScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(data["housename"],
+                      AutoSizeText(data["housename"],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-                            fontSize: Get.width * 0.06
-                        ),),
+
+                        ),
+                      maxLines: 1,),
                       //
                       Text("\$${data["houseprice"]}",
                         style: TextStyle(
@@ -174,7 +176,7 @@ class detailScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Icon(Icons.bed_sharp,color: Colors.red,size: 25,),
-                            Text("4")
+                            Text(data["totalrooms"])
                           ],
                         ),
                       ),
