@@ -98,11 +98,11 @@ class CarHomePage extends StatelessWidget {
                       );
                     }
                     else if (snapshot.connectionState == ConnectionState.waiting) {
-                      /*return Center(
+                      return Center(
                   child: CircularProgressIndicator(
                     color: Colors.grey,
                   ),
-                );*/
+                );
 
                       // isLoad.value = true;
                     }
@@ -113,7 +113,7 @@ class CarHomePage extends StatelessWidget {
                         height: Get.height * 0.35,
                         //color:Colors.orange ,
                         child: ListView.builder(
-                          itemCount: snapshot.data.length,
+                          itemCount: snapshot.data!.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return carCards(snapshot.data[index]["name"].toString(),

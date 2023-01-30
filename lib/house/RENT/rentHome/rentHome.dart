@@ -67,6 +67,13 @@ class rentHome extends StatelessWidget {
                   );
                 }
               }
+              if(snapshot.data == null){
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.grey,
+                  ),
+                );
+              }
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (context,index){
@@ -99,7 +106,7 @@ class rentHome extends StatelessWidget {
                               width: Get.width / 2.8,
 
                               decoration: BoxDecoration(
-                                  color: Colors.green,
+                                  color: Colors.grey.shade200,
                                   image: DecorationImage(
                                       image:NetworkImage(snapshot.data[index]["images"][0]["src"]),
                                       fit: BoxFit.fill

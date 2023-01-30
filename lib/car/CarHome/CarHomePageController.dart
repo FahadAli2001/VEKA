@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
 
 class CarHomePageController extends GetxController{
-  var allProduct;
+  var allProduct ;
   RxBool isLoad = false.obs;//for checking data is load
   RxBool rent = true.obs;
   RxBool buy = false.obs;

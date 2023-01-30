@@ -70,8 +70,16 @@ class houseHome extends StatelessWidget {
                );
              }
            }
+           if(snapshot.data ==null){
+             return Center(
+               child: CircularProgressIndicator(
+                 color: Colors.grey,
+               ) ,
+             );
+           }
+           //shc.buyproducts?.length
            return ListView.builder(
-             itemCount: snapshot.data.length,
+             itemCount:snapshot.data!.length ,
              itemBuilder: (context,index){
                return Padding(
                  padding: const EdgeInsets.all(8.0),
@@ -79,7 +87,7 @@ class houseHome extends StatelessWidget {
                    onTap: (){
                      Get.to(Get.to(buyhouseDetails(),
                      arguments: {
-                       "housename":snapshot.data[index]["name"],
+                       "housename":!snapshot.data[index]["name"],
                        "houseimage": snapshot.data[index]["images"][0]["src"].toString(),
                        "houseprice":snapshot.data[index]["price"],
                        "description":snapshot.data[index]["description"]
@@ -104,7 +112,7 @@ class houseHome extends StatelessWidget {
                            decoration: BoxDecoration(
                                color: Colors.green,
                                image: DecorationImage(image: NetworkImage(
-                                 snapshot.data[index]["images"][0]["src"].toString()
+                                 snapshot!.data[index]["images"][0]["src"].toString()
                                ),
                                    fit: BoxFit.fill
                                )
