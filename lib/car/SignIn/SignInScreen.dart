@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:veka/car/Dashboard/dashboardScreen.dart';
 import 'package:veka/car/SignUp/SignUp.dart';
 
+import 'SignInController.dart';
+
 class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
@@ -16,136 +18,169 @@ class SignInScreen extends StatelessWidget {
     void _handleRadioValueChanged(val) {
     _value.value = val;
     }
+    SignInController sic = Get.put(SignInController());
+    final _formKey = GlobalKey<FormState>();
     return Container(
       child : SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
-          child: Column
-            (
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: TextFormField(
-                    decoration: InputDecoration(
-                        hintText: "User Id",
-                        labelText: "User Id",
-                        suffixIcon: Icon(CupertinoIcons.mail),
-                      border: OutlineInputBorder()
-                    )
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-                child: TextFormField(
-                    decoration: InputDecoration(
-                        hintText: "Password",
-                        labelText: "Password",
-                        suffixIcon: Icon(CupertinoIcons.eye_slash_fill),
-                        border: OutlineInputBorder()
-                    )
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Container(
-                  height: Get.height * 0.06,
-                  width: Get.width,
-                  //color: Colors.red,
-                  child: Obx(() => Row(
-                      children: [
-
-                        Checkbox(
-                          value: _value.value,
-                          onChanged: _handleRadioValueChanged
-                        ), //Ch
-                        Text("Remember me",
-                          style: TextStyle(
-                            fontSize: width * 0.04
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 60),
-                          child: TextButton(onPressed: (){},
-                              child: Text("Forget Password?")),
-                        )
-
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
-                child: SizedBox(
-                  width: Get.width,
-                  child: CupertinoButton(
-                    color: Colors.black,
-                      child: Text("Sign In",
+          child: Form(
+            key: _formKey,
+            child: Column
+              (
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: TextFormField(
+                    controller: sic.username,
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: width * 0.05
-                      ),),
-                      onPressed: (){
-                      Get.to(DashboardScreen());
-                      }),
-                ),
-              ),
-              //
-              Align(
-                alignment: Alignment.center,
-                child: Text("or login with ",
-                style: TextStyle(
-                  fontSize: width * 0.05,
-                  color: Colors.grey
-                ),),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 118,vertical: 20),
-                child: Container(
-                  width: Get.width,
-                  //height: 100,
-                  //color: Colors.pink,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      FaIcon(FontAwesomeIcons.facebook,
-                      color: Colors.grey,
-                      size: SocialAppIconSize,),
-                      FaIcon(FontAwesomeIcons.instagram,
-                        color: Colors.grey,
-                        size: SocialAppIconSize,),
-                      FaIcon(FontAwesomeIcons.twitter,
-                        color: Colors.grey,
-                        size: SocialAppIconSize,),
-                    ],
-                  ),
-                ),
-              ),
-           /*   Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: InkWell(
-                  onTap: (){
-                    Get.to(SignUp());
-                  },
-                  child: RichText(
-                    text: TextSpan(
-                      text: "Don't Have An Account? ",
-                      style: TextStyle(
-                        fontSize: width * 0.04,
-                        color: Colors.grey
+                          height: 0.5
                       ),
-                      children: const <TextSpan>[
-                        TextSpan(text: 'Sign Up', style:
-                        TextStyle(fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        )),
+                      decoration: InputDecoration(
+                          errorStyle: TextStyle(
+                              color: Colors.red
+                          ),
+                          hintText: "User Id",
+                          labelText: "User Id",
+                          suffixIcon: Icon(CupertinoIcons.mail),
+                        border: OutlineInputBorder()
+                      ),
+                        validator: (val) {
+                          if (val!.isEmpty) {
+                            return "Please enter User-name";
+                          }
+                        }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                  child: TextFormField(
+                    style: TextStyle(
+                      height: 0.5
+                    ),
+                      obscureText: sic.isHidepass.value,
+                      validator: (String? val){
+                        if(val!.isEmpty){
+                          return "Enter password";
+                        }else if (val!.length < 8){
+                          return "Enter mini 8 digit password";
+                        }
+                      },
+                      controller: sic.password,
+                      decoration: InputDecoration(
+                          errorStyle: TextStyle(
+                              color: Colors.red
+                          ),
+                          hintText: "Password",
+                          labelText: "Password",
+                          suffixIcon: Icon(CupertinoIcons.eye_slash_fill),
+                          border: OutlineInputBorder()
+                      )
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Container(
+                    height: Get.height * 0.06,
+                    width: Get.width,
+                    //color: Colors.red,
+                    child: Obx(() => Row(
+                        children: [
 
+                          Checkbox(
+                            value: _value.value,
+                            onChanged: _handleRadioValueChanged
+                          ), //Ch
+                          Text("Remember me",
+                            style: TextStyle(
+                              fontSize: width * 0.04
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 60),
+                            child: TextButton(onPressed: (){},
+                                child: Text("Forget Password?")),
+                          )
+
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
+                  child: SizedBox(
+                    width: Get.width,
+                    child: CupertinoButton(
+                      color: Colors.black,
+                        child: Text("Sign In",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: width * 0.05
+                        ),),
+                        onPressed: (){
+                        if(_formKey.currentState!.validate()){
+                          sic.SignIn();
+                        }
+                        }),
+                  ),
+                ),
+                //
+                Align(
+                  alignment: Alignment.center,
+                  child: Text("or login with ",
+                  style: TextStyle(
+                    fontSize: width * 0.05,
+                    color: Colors.grey
+                  ),),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 118,vertical: 20),
+                  child: Container(
+                    width: Get.width,
+                    //height: 100,
+                    //color: Colors.pink,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        FaIcon(FontAwesomeIcons.facebook,
+                        color: Colors.grey,
+                        size: SocialAppIconSize,),
+                        FaIcon(FontAwesomeIcons.instagram,
+                          color: Colors.grey,
+                          size: SocialAppIconSize,),
+                        FaIcon(FontAwesomeIcons.twitter,
+                          color: Colors.grey,
+                          size: SocialAppIconSize,),
                       ],
                     ),
                   ),
                 ),
-              )*/
-            ],
+             /*   Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: InkWell(
+                    onTap: (){
+                      Get.to(SignUp());
+                    },
+                    child: RichText(
+                      text: TextSpan(
+                        text: "Don't Have An Account? ",
+                        style: TextStyle(
+                          fontSize: width * 0.04,
+                          color: Colors.grey
+                        ),
+                        children: const <TextSpan>[
+                          TextSpan(text: 'Sign Up', style:
+                          TextStyle(fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          )),
+
+                        ],
+                      ),
+                    ),
+                  ),
+                )*/
+              ],
+            ),
           ),
         ),
       ),

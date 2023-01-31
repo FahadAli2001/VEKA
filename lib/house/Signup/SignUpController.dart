@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'package:http/http.dart'as http;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../Dashboard/dashboardScreen.dart';
-
-class SignUpController extends GetxController{
+import 'package:http/http.dart' as http;
+class HouseSignUpController extends GetxController{
 
   TextEditingController username = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -23,16 +21,19 @@ class SignUpController extends GetxController{
   void checkIsAgree (){
     if(Value.value == false){
       Get.defaultDialog(
-        buttonColor: Colors.black,
-        title: "",
-        middleText: "Please agree with our terms and condition",
-        textConfirm: "Ok",
-        onConfirm: (){
-          Get.back();
-
-        }
+          buttonColor: Colors.black,
+          title: "",
+          middleText: "Please agree with our terms and condition",
+          textConfirm: "Ok",
+          onConfirm: (){
+            Get.back();
+          }
       );
     }else{
+      print("vvvvv");
+      print(username);
+      print(password);
+      print(email);
       SignUp();
       Value.value = false;
 
@@ -46,12 +47,11 @@ class SignUpController extends GetxController{
     String _conpassword = confirmpassword.text.toString();
 
     try{
-
       var response =await http.post(
-          Uri.parse("https://vekaautomobile.technopreneurssoftware.com/wp-json/wp/v2/users"),
+          Uri.parse("https://vekarealestate.technopreneurssoftware.com/wp-json/wp/v2/users"),
           headers: {
             'Authorization':
-            'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Zla2FhdXRvbW9iaWxlLnRlY2hub3ByZW5ldXJzc29mdHdhcmUuY29tIiwiaWF0IjoxNjc1MTUzNDU1LCJuYmYiOjE2NzUxNTM0NTUsImV4cCI6MTY3NTc1ODI1NSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoxLCJkZXZpY2UiOiIiLCJwYXNzIjoiOTI1OGYyNDI4NzQ3ODFkMTMyM2JjYTQxODA5YzI3YjYifX19.HCM5ZPH-eOqwKJEjtFLeuN3HFpoeeTHKXdKL_dZwgrE',
+            'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Zla2FyZWFsZXN0YXRlLnRlY2hub3ByZW5ldXJzc29mdHdhcmUuY29tIiwiaWF0IjoxNjc1MTU2OTcxLCJuYmYiOjE2NzUxNTY5NzEsImV4cCI6MTY3NTc2MTc3MSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoxLCJkZXZpY2UiOiIiLCJwYXNzIjoiY2IwMzRhNjc3YTEwYjEyY2NjZjJlNDExMDNiNGM5ZjgifX19.EUnqdbnzA1IPmqi14GF-YE4taKRqfgsmtsZVvNtamr4',
           },
           body: {
             "username":_username,
@@ -59,11 +59,11 @@ class SignUpController extends GetxController{
             "password":_password
           }
       );
-      print("method called");
-      if(response.statusCode==201){
 
+      if(response.statusCode==201){
+        print("method called");
         var data = jsonDecode(response.body.toString());
-        print(data);
+        //print(data);
         clearFileds();
         print("user created");
         Get.snackbar("","User Created Successfully",
