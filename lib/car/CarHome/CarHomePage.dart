@@ -226,8 +226,8 @@ class CarHomePage extends StatelessWidget {
                                 car.rentData[index]["name"].toString(),
                                 car.rentData[index]["price"].toString(),
                                 snapshot.data[index]["short_description"].toString(),
-                              snapshot.data[index]!["meta_data"][3]["value"],
-                              snapshot.data[index]!["meta_data"][5]["value"]
+                              snapshot.data[index]["meta_data"][3]["value"],
+                              snapshot.data[index]["meta_data"][5]["value"]
 
 
                             );

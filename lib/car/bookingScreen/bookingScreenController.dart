@@ -8,12 +8,15 @@ class bookingScreenController extends GetxController{
   var babyvalue = false.obs;
   RxInt total = 0.obs;
   RxInt subtotal = 0.obs;
+
+
   var persons = [
     '1',
     '2',
     '3',
     '4',
   ];
+
 
 
   void personSelected(String value){
@@ -52,23 +55,19 @@ class bookingScreenController extends GetxController{
     childrenvalue.value = val;
   }
 
-  int totalcarPrice(int val){
-    total.value = val*int.parse(carqntyvalue.value);
+  int totalcarPrice(List isSelected , List charges, carprice){
+     total.value = int.parse(carprice);
+    for (var entry in isSelected.asMap().entries) {
+      if (entry.value == true) {
+        print('Index ${entry.key} has value of true');
+        total.value +=  int.parse(charges[entry.key]);
+      }
+      /*else{
+        total.value = int.parse(carprice);
+      }*/
+    }
     return total.value;
   }
 
-  subTotalofRent(int carprice){
-    if(childrenvalue.value == false && babyvalue.value == false){
-      subtotal.value = total.value;
-    }
-    else if(childrenvalue.value == true && babyvalue.value==true){
-      subtotal.value = total.value + 20;
 
-    }
-    else{
-
-      subtotal.value = total.value + 10;
-    }
-    return subtotal.value;
-  }
 }

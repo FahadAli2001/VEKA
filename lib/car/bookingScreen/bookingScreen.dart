@@ -17,9 +17,10 @@ class bookingScreen extends StatelessWidget {
     Color color = Colors.grey;
     var data = Get.arguments;
     bookingScreenController bsc = Get.put(bookingScreenController());
-    var cartotalprice = int.parse(bsc.carqntyvalue.value) *
-        int.parse(data["carprice"]);
-    // var subtotal = bsc.subTotalofRent(int.parse(cartotalprice));
+
+    RxList<dynamic> rxisSelected=[].obs;
+    rxisSelected.value = RxList.generate(data["extraservices"].length, (_) => false);
+
     var date = DateTime
         .now()
         .obs;
@@ -46,21 +47,17 @@ class bookingScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () {
+
+              //print(data["extraservices"]);
               Get.to(reviewsubmission(),
                   arguments: {
                     "carimage": data["carimage"].toString(),
                     "carname": data["carname"].toString(),
                     "carprice": data["carprice"].toString(),
                     "carqnty": bsc.carqntyvalue.value,
-                    "totalprice": bsc.totalcarPrice(
-                        int.parse(data["carprice"])),
-                    "subtotal": bsc.subTotalofRent(
-                        bsc.totalcarPrice(int.parse(data["carprice"])))
+                    "totalprice": bsc.totalcarPrice(rxisSelected.toList(), data["extraservicescharges"], data["carprice"]),
+                    "extraservices":data["extraservices"]
                   });
-              //print(cartotalprice.runtimeType);
-              //print(int.parse(bsc.subTotalofRent(cartotalprice)));
-              //print(bsc.totalcarPrice(int.parse(data["carprice"])));
-              // print(bsc.subTotalofRent(bsc.totalcarPrice(int.parse(data["carprice"]))));
 
             },
             child: Container(
@@ -80,6 +77,7 @@ class bookingScreen extends StatelessWidget {
             ),
           ),
         ),
+
         body: SingleChildScrollView(
           child: Column(
               children: [
@@ -401,9 +399,12 @@ class bookingScreen extends StatelessWidget {
                                   ),
                                 ),
                                 leading:Checkbox(
-                                    value: bsc.babyvalue.value,
+                                    value:rxisSelected[i],
                                     onChanged:(val){
-                                      bsc.handleRadioValueChanged(val);
+                                      print(val);
+                                      rxisSelected[i] = val!;
+                                      /*print(val);
+                                      bsc.handleRadioValueChanged(val);*/
                                     }
                                 ),
                               ),

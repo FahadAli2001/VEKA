@@ -42,11 +42,11 @@ class RentCarDetails extends StatelessWidget {
           onTap: (){
            //print(data["extraservices"][1].toString());
             Get.to(bookingScreen(),arguments:
-            {"carimage": data["carimage"].toString(),
-              "carname":data["carname"].toString(),
-              "carprice":data["carprice"].toString(),
-              "extraservices":data["extraservices"],
-              "extraservicescharges":data["extraservicescharges"]
+            {"carimage": data!["carimage"].toString(),
+              "carname":data!["carname"].toString(),
+              "carprice":data!["carprice"].toString(),
+              "extraservices":data!["extraservices"],
+              "extraservicescharges":data!["extraservicescharges"]
             }
             );
           },
@@ -79,7 +79,7 @@ class RentCarDetails extends StatelessWidget {
                     decoration: BoxDecoration(
                       //color: Colors.orange,
                         image: DecorationImage(
-                            image: NetworkImage(data["carimage"].toString()),
+                            image: NetworkImage(data!["carimage"].toString()),
                             filterQuality: FilterQuality.high,
                             fit: BoxFit.cover
                         )
@@ -146,7 +146,6 @@ class RentCarDetails extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: Text(data["cardescription"],
                   style: TextStyle(
-
                       color: Colors.grey.shade700,
                       fontSize: Get.height * 0.02
                   ),

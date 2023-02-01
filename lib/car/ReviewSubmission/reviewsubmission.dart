@@ -14,6 +14,7 @@ class reviewsubmission extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bookingScreenController bsc = Get.put(bookingScreenController());
+
     var data = Get.arguments;
     return Scaffold(
       appBar: AppBar(
@@ -110,7 +111,7 @@ class reviewsubmission extends StatelessWidget {
                                     fontSize: Get.width * 0.04
                                 ),
                               ),
-                              subtitle: Text("\$ ${data["carprice"]}",
+                              subtitle: Text("\$ ${data["carprice"].toString()}",
                                 style: TextStyle(
 
                                     color: Colors.green,
@@ -188,7 +189,7 @@ class reviewsubmission extends StatelessWidget {
                                   fontSize: Get.width * 0.04
                               ),
                             ),
-                            Text("\$ ${data["totalprice"].toString()}",
+                            Text("\$ ${data["carprice"].toString()}",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                   color: Colors.black,
@@ -202,11 +203,11 @@ class reviewsubmission extends StatelessWidget {
                   ),
                 ),
                 //--------
-                Padding(
+               Padding(
                   padding: const EdgeInsets.symmetric(vertical: 7),
                   child: Container(
                     width: Get.width,
-                    height: Get.height * 0.1,
+                    //height: Get.height * 0.1,
                     color: Colors.grey.shade300,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -224,20 +225,15 @@ class reviewsubmission extends StatelessWidget {
                                     fontSize: Get.width * 0.04
                                 ),
                               ),
-                              Text("Baby Seat",
-                                style: TextStyle(
 
-                                    color: Colors.black,
-                                    fontSize: Get.width * 0.04
+                              for(var i = 0; i < data["extraservices"].length;i++)...[
+                                Text(data["extraservices"][i],
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: Get.width * 0.04
+                                  ),
                                 ),
-                              ),
-                              Text("Car Seat for children",
-                                style: TextStyle(
-
-                                    color: Colors.black,
-                                    fontSize: Get.width * 0.04
-                                ),
-                              ),
+                              ]
                             ],
                           ),
 
@@ -276,6 +272,8 @@ class reviewsubmission extends StatelessWidget {
                     ),
                   ),
                 ),
+
+
                 //
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 7),
@@ -343,7 +341,7 @@ class reviewsubmission extends StatelessWidget {
                             fontSize: Get.width * 0.04
                         ),
                       ),
-                      Text(data["subtotal"].toString(),
+                      Text(data["totalprice"].toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
@@ -390,7 +388,7 @@ class reviewsubmission extends StatelessWidget {
                             fontSize: Get.width * 0.04
                         ),
                       ),
-                      Text("\$50",
+                      Text("\$${data["totalprice"].toString()}",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
