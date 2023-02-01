@@ -40,11 +40,14 @@ class RentCarDetails extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: GestureDetector(
           onTap: (){
-
+           //print(data["extraservices"][1].toString());
             Get.to(bookingScreen(),arguments:
             {"carimage": data["carimage"].toString(),
               "carname":data["carname"].toString(),
-              "carprice":data["carprice"].toString()}
+              "carprice":data["carprice"].toString(),
+              "extraservices":data["extraservices"],
+              "extraservicescharges":data["extraservicescharges"]
+            }
             );
           },
           child: Container(
@@ -102,12 +105,16 @@ class RentCarDetails extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(data["carname"],
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: Get.height * 0.025
-                        ),),
+                      Expanded(
+                        child: Text(data["carname"],
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: Get.height * 0.02
+                          ),
+                          softWrap: true,
+                        ),
+                      ),
                       Text("\$${data["carprice"]}",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -124,12 +131,12 @@ class RentCarDetails extends StatelessWidget {
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
                 child: Text("About",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: Get.height * 0.025
+                      fontSize: Get.height * 0.02
                   ),),
               ),
             ),
@@ -154,7 +161,7 @@ class RentCarDetails extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: Get.height * 0.025
+                      fontSize: Get.height * 0.02
                   ),),
               ),
             ),
@@ -212,17 +219,17 @@ class RentCarDetails extends StatelessWidget {
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
                 child: Text("Car Info",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: Get.height * 0.025
+                      fontSize: Get.height * 0.02
                   ),),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 5),
               child: Container(
                 width: Get.width,
                 height: Get.height * 0.2,

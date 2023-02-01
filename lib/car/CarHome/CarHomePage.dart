@@ -226,6 +226,9 @@ class CarHomePage extends StatelessWidget {
                                 car.rentData[index]["name"].toString(),
                                 car.rentData[index]["price"].toString(),
                                 snapshot.data[index]["short_description"].toString(),
+                              snapshot.data[index]!["meta_data"][3]["value"],
+                              snapshot.data[index]!["meta_data"][5]["value"]
+
 
                             );
                           },
@@ -468,17 +471,20 @@ class CarHomePage extends StatelessWidget {
     );
   }
 
-  Widget product(carImage,carName,carprice,cardescription){
+  Widget product(carImage,carName,carprice,cardescription,List extraservices,List extraservicesCharges){
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: (){
+         // print(extraservices[1]);
           Get.to(RentCarDetails(),
           arguments: {
             "carname":carName,
             "carimage":carImage,
             "carprice":carprice,
-            "cardescription":cardescription
+            "cardescription":cardescription,
+            "extraservices":extraservices,
+            "extraservicescharges":extraservicesCharges
           });
         },
         child: Card(

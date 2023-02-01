@@ -142,9 +142,14 @@ class SignInScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        FaIcon(FontAwesomeIcons.facebook,
-                        color: Colors.grey,
-                        size: SocialAppIconSize,),
+                        GestureDetector(
+                          onTap: (){
+                            Get.to(DashboardScreen());
+                          },
+                          child: FaIcon(FontAwesomeIcons.facebook,
+                          color: Colors.grey,
+                          size: SocialAppIconSize,),
+                        ),
                         FaIcon(FontAwesomeIcons.instagram,
                           color: Colors.grey,
                           size: SocialAppIconSize,),
