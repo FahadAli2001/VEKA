@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:veka/car/welcome/welcomeScreen.dart';
 import 'package:veka/house/login/loginScreen.dart';
+
+import 'car/Dashboard/dashboardScreen.dart';
 
 class ChooseOption extends StatelessWidget {
   const ChooseOption({Key? key}) : super(key: key);
@@ -9,6 +12,7 @@ class ChooseOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     // appBar: AppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         //crossAxisAlignment: CrossAxisAlignment.center,
@@ -16,8 +20,10 @@ class ChooseOption extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: InkWell(
-              onTap: () {
-                Get.to(() => welcomeScreen());
+              onTap: () async{
+                SharedPreferences sp =await SharedPreferences.getInstance();
+                (sp.getString("username")!=null)?Get.to(() => DashboardScreen()): Get.to(welcomeScreen());
+
               },
               child: Center(
                 child: Container(

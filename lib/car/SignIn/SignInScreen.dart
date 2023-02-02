@@ -14,10 +14,7 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = Get.width;
     var SocialAppIconSize = Get.height * 0.03;
-    var _value = false.obs;
-    void _handleRadioValueChanged(val) {
-    _value.value = val;
-    }
+
     SignInController sic = Get.put(SignInController());
     final _formKey = GlobalKey<FormState>();
     return Container(
@@ -77,35 +74,37 @@ class SignInScreen extends StatelessWidget {
                       )
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
-                    height: Get.height * 0.06,
-                    width: Get.width,
-                    //color: Colors.red,
-                    child: Obx(() => Row(
-                        children: [
+                Obx(
+                    ()=> Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Container(
+                      height: Get.height * 0.06,
+                      width: Get.width,
+                      //color: Colors.red,
+                      child:  Row(
+                          children: [
 
-                          Checkbox(
-                            value: _value.value,
-                            onChanged: _handleRadioValueChanged
-                          ), //Ch
-                          Text("Remember me",
-                            style: TextStyle(
-                              fontSize: width * 0.04
+                            Checkbox(
+                              value: sic.isrem.value,
+                              onChanged: sic.handleRadioValueChanged
+                            ), //Ch
+                            Text("Remember me",
+                              style: TextStyle(
+                                fontSize: width * 0.04
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 60),
-                            child: TextButton(onPressed: (){},
-                                child: Text("Forget Password?")),
-                          )
+                            Padding(
+                              padding: const EdgeInsets.only(left: 60),
+                              child: TextButton(onPressed: (){},
+                                  child: Text("Forget Password?")),
+                            )
 
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
                   child: SizedBox(

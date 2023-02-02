@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart'as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Dashboard/dashboardScreen.dart';
 
@@ -40,6 +41,7 @@ class SignUpController extends GetxController{
   }
 
   void SignUp()async{
+    SharedPreferences signupshared =await SharedPreferences.getInstance();
     String _username = username.text.toString();
     String _email = email.text.toString();
     String _password = password.text.toString();
@@ -63,9 +65,11 @@ class SignUpController extends GetxController{
       if(response.statusCode==201){
 
         var data = jsonDecode(response.body.toString());
-        print(data);
+        signupshared.setString("username", _username);
+        signupshared.setString("email", _email);
+       // print(data);
         clearFileds();
-        print("user created");
+       // print("user created");
         Get.snackbar("","User Created Successfully",
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.grey,

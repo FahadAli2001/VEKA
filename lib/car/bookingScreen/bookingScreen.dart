@@ -46,6 +46,15 @@ class bookingScreen extends StatelessWidget {
                 color: Colors.black
             ),),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+
+            bsc.pricewidget(rxisSelected, data!["extraservicescharges"], data!["extraservices"]);
+
+           // print(bsc.checkboxes.length);
+
+          },
+        ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
@@ -60,7 +69,7 @@ class bookingScreen extends StatelessWidget {
                     "carqnty": bsc.carqntyvalue.value,
                     "totalprice": bsc.totalcarPrice(rxisSelected.toList(), data["extraservicescharges"], data["carprice"]),
                     "extraservices":data["extraservices"],
-                    "charges":bsc.widgets
+                    "charges":bsc.checkboxes
                   });
 
             },
@@ -405,7 +414,7 @@ class bookingScreen extends StatelessWidget {
                                 leading:Checkbox(
                                     value:rxisSelected[i],
                                     onChanged:(val){
-                                      print(val);
+                                     // print(val);
                                       rxisSelected[i] = val!;
                                       /*print(val);
                                       bsc.handleRadioValueChanged(val);*/

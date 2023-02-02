@@ -56,16 +56,13 @@ class bookingScreenController extends GetxController{
   void handleRadioValueChanged1(val) {
     childrenvalue.value = val;
   }
-  List<Widget> widgets = [];
-   pricewidget(List isSelected, List charges,List names){
-    for (var i = 0; i < names.length; i++) {
-      if (isSelected[i] == true) {
-        widgets.add(Text("${charges[i]}",
-            ));
-      } else {
-        widgets.add(Text("0"));
-      }
-    }
+  List checkboxes = [];
+   pricewidget(iselected, List charges,List names){
+     //widgets.clear();
+     for (int i = 0; i < names.length; i++) {
+       checkboxes.add(false);
+       print(checkboxes[i] ? charges[i].toString() : '0');
+     }
 
   }
 

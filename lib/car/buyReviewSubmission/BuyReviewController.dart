@@ -1,42 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart'as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
+
+import '../SignUp/SignupController.dart';
 class BuyReviewController extends GetxController{
 
 
-
   Future postProduct(carid,price) async {
+    SharedPreferences signupshared =await SharedPreferences.getInstance();
+
     Map<String, dynamic> data = {
       "status": "processing",
       "currency": "USD",
-      "total": price,
-      "customer_id": 0,
-      "order_key": "wc_order_SlqkcrTGAPyiF",
       "billing": {
-        "first_name": "fahad ali",
-        "last_name": "",
-        "address_1": "",
-        "address_2": "",
-        "city": "",
-        "state": "",
-        "postcode": "",
-        "country": "",
-        "email": "fahad@gmail.com",
-        "phone": ""
+        "first_name": signupshared.getString("username"),
+        "last_name":"",
+        "address_1": "karachi",
+        "address_2": "karachi",
+        "city": "karachi",
+        "state": "CA",
+        "country": "AE",
+        "email":  signupshared.getString("email"),
+        "phone": "123456789"
       },
-      "shipping": {
-        "first_name": "fahad",
-        "last_name": "ali",
-        "company": "",
-        "address_1": "",
-        "address_2": "",
-        "city": "",
-        "state": "",
-        "postcode": "",
-        "country": "",
-        "phone": ""
-      }
+      "payment_method": "cod",
+      "payment_method_title": "Cash on delivery",
+      "line_items": [
+        {
+          "product_id": carid,
+          "quantity": 1
+        }
+      ]
     };
     //print("called");
     try{

@@ -11,6 +11,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:veka/ChooseOption.dart';
 import 'package:veka/car/CarHome/CarHomePageController.dart';
 
+import '../Profile/Profile.dart';
 import '../RentCarDetails/RentCarDetails.dart';
 import '../bookingScreen/bookingScreen.dart';
 
@@ -46,10 +47,15 @@ class CarHomePage extends StatelessWidget {
           actions: [
             Padding(
               padding: EdgeInsets.only(right: 20),
-              child: CircleAvatar(
-                backgroundColor: Colors.white70,
-                child: Icon(CupertinoIcons.person_alt,
-                  color: Colors.black,),
+              child: GestureDetector(
+                onTap: (){
+                  Get.to(ProfileScreen());
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.white70,
+                  child: Icon(CupertinoIcons.person_alt,
+                    color: Colors.black,),
+                ),
               ),
             )
           ],
