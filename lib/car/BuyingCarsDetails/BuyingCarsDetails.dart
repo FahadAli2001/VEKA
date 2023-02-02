@@ -59,7 +59,8 @@ class BuyingCarsDetails extends StatelessWidget {
                   Get.to(buyReviewSubmission(),arguments: {
                     "carname":data["carname"].toString(),
                     "carimage":data["carImage"].toString(),
-                    "carprice":data["carprice"].toString()
+                    "carprice":data["carprice"].toString(),
+                    "id":data["id"]
                   });
                 },
                 child: Container(
@@ -180,56 +181,50 @@ class BuyingCarsDetails extends StatelessWidget {
 
                     ),
                   ),
+                  //
+                  SizedBox(height: 20,),
+                  //
                   Padding(
-                    padding: const EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 7,vertical: 5),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text("Car Specs",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: Get.width * 0.05
+                        ),),
+                    ),
+                  ),
+                  //
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Container(
                       width: Get.width,
-                      height: Get.height * 0.2,
+                      height: Get.height * 0.05,
                       //color: Colors.red,
-                      child: ListView.builder(
+                      child: ListView(
                         scrollDirection: Axis.horizontal,
-                        itemCount: 3,
-                        itemBuilder:(context,index){
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 7),
-                            child: Card(
-                              elevation: 7,
+                        children: [
+                          for(var i = 0 ; i < data["carspecs"].length ; i++)...[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5),
                               child: Container(
-                                //   color: Colors.blue,
-                                width: Get.width * 0.3,
-                                height: Get.height * 0.2,
+                                color: Colors.grey,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Max Power",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: Get.height *0.02
-                                        ),),
-                                      Text("350",
-                                        style: TextStyle(
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: Get.height *0.03
-                                        ),
-                                      ),
-                                      Text("hp",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: Get.height *0.02
-                                        ),)
-                                    ],
+                                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                                  child: Center(
+                                    child: Text(data["carspecs"][i],
+                                      softWrap:true,style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold
+                                      ),),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        } ,
+                            )
+                          ]
+                        ],
                       ),
                     ),
                   ),
@@ -249,51 +244,38 @@ class BuyingCarsDetails extends StatelessWidget {
                   //
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                    child: Column(
+                    child:Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Interior colors",
-                              style: TextStyle(
-                                  color: Colors.grey,
 
-                                  fontSize: Get.width * 0.04
-                              ),),
-                            Text("Grey",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: Get.width * 0.04
-                              ),),
+                            for(var i = 0 ; i < data["cardetails"].length ; i++)...[
+                              Text(data["cardetails"][i],
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: Get.width * 0.04
+                                ),),
+                            ],
                           ],
                         ),
-                        Divider(
-                          color: Colors.grey,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //
+
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Exterior colors",
-                              style: TextStyle(
-                                  color: Colors.grey,
-
-                                  fontSize: Get.width * 0.04
-                              ),),
-                            Text("Predawn White",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: Get.width * 0.04
-                              ),),
+                            for(var i = 0 ; i < data["cardetailsinfo"].length ; i++)...[
+                              Text(data["cardetailsinfo"][i],
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: Get.width * 0.04
+                                ),),
+                            ],
                           ],
-                        ),
-                        Divider(
-                          color: Colors.grey,
-                        ),
-
+                        )
                       ],
-                    ),
+                    )
                   ),
                   //
 

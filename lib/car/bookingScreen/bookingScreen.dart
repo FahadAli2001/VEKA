@@ -25,6 +25,9 @@ class bookingScreen extends StatelessWidget {
         .now()
         .obs;
 
+
+
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white70,
@@ -47,7 +50,7 @@ class bookingScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () {
-
+              bsc.pricewidget(rxisSelected.toList(), data!["extraservicescharges"], data!["extraservices"]);
               //print(data["extraservices"]);
               Get.to(reviewsubmission(),
                   arguments: {
@@ -56,7 +59,8 @@ class bookingScreen extends StatelessWidget {
                     "carprice": data["carprice"].toString(),
                     "carqnty": bsc.carqntyvalue.value,
                     "totalprice": bsc.totalcarPrice(rxisSelected.toList(), data["extraservicescharges"], data["carprice"]),
-                    "extraservices":data["extraservices"]
+                    "extraservices":data["extraservices"],
+                    "charges":bsc.widgets
                   });
 
             },

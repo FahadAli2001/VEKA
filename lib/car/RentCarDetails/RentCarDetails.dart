@@ -1,9 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:like_button/like_button.dart';
+
 
 import '../bookingScreen/bookingScreen.dart';
 
@@ -167,54 +169,33 @@ class RentCarDetails extends StatelessWidget {
             //
             Container(
               width: Get.width,
-              height: Get.height * 0.2,
+              height: Get.height * 0.05,
               //color: Colors.red,
-              child: ListView.builder(
+              child: ListView(
                 scrollDirection: Axis.horizontal,
-                itemCount: 2,
-                itemBuilder:(context,index){
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 7),
-                    child: Card(
-                      elevation: 7,
+                children: [
+                  for(var i = 0 ; i < data["carspecs"].length ; i++)...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Container(
-                        //   color: Colors.blue,
-                        width: Get.width * 0.3,
-                        height: Get.height * 0.2,
+                        color: Colors.grey,
                         child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Max Power",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Get.height *0.02
-                                ),),
-                              Text("350",
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Get.height *0.03
-                                ),
-                              ),
-                              Text("hp",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Get.height *0.02
-                                ),)
-                            ],
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Center(
+                            child: Text(data["carspecs"][i],
+                              softWrap:true,style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold
+                              ),),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                } ,
+                    )
+                  ]
+                ],
               ),
             ),
+            //
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
@@ -223,67 +204,61 @@ class RentCarDetails extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: Get.height * 0.02
+                      fontSize: Get.height * 0.025
                   ),),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 5),
-              child: Container(
-                width: Get.width,
-                height: Get.height * 0.2,
-                // color: Colors.pink,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                          width:Get.width * 0.4,
-                          height: Get.height * 0.1,
-                          child: ListTile(
-                            title: Text("2015"),
-                            leading: Icon(CupertinoIcons.calendar,
-                              color: Colors.green,),
-                          ),
-                        ),
-                        SizedBox(
-                          width:Get.width * 0.5,
-                          height: Get.height * 0.1,
-                          child: ListTile(
-                            title: Text("Petrol"),
-                            leading: Icon(Icons.local_gas_station,
-                              color: Colors.green,),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width:Get.width * 0.4,
-                          height: Get.height * 0.1,
-                          child: ListTile(
-                            title: Text("2"),
-                            leading: Icon(CupertinoIcons.person_2_fill,
-                              color: Colors.green,),
-                          ),
-                        ),
-                        SizedBox(
-                          width:Get.width * 0.5,
-                          height: Get.height * 0.1,
-                          child: ListTile(
-                            title: Text("2500"),
-                            leading: Icon(Icons.flash_on,
-                              color: Colors.green,),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
             //
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                 /* Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for(var i = 0 ; i < data["cardetailicon"].length ; i++) ... [
+                            Icon(
+                            data["cardetailicon"][i],
+                              size: 32.0,
+                              color: Colors.green,
+                            )
+                      ]
+
+                    ],
+                  ),*/
+                  //
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                     for(var i = 0 ; i < data["cardetail"].length ; i++)...[
+                       Text(data["cardetail"][i],
+                         style: TextStyle(
+                             color: Colors.grey,
+                           fontSize: Get.width * 0.045
+                         ),),
+
+                     ]
+                    ],
+                  ),
+                  //
+
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for(var i = 0 ; i < data["cardetailinfo"].length ; i++)...[
+                        Text(data["cardetailinfo"][i],
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: Get.width * 0.045
+                          ),)
+                      ]
+                    ],
+                  ),
+
+                ],
+              ),
+            )
 
 
           ],

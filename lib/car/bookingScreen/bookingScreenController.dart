@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class bookingScreenController extends GetxController{
@@ -53,6 +55,18 @@ class bookingScreenController extends GetxController{
 
   void handleRadioValueChanged1(val) {
     childrenvalue.value = val;
+  }
+  List<Widget> widgets = [];
+   pricewidget(List isSelected, List charges,List names){
+    for (var i = 0; i < names.length; i++) {
+      if (isSelected[i] == true) {
+        widgets.add(Text("${charges[i]}",
+            ));
+      } else {
+        widgets.add(Text("0"));
+      }
+    }
+
   }
 
   int totalcarPrice(List isSelected , List charges, carprice){

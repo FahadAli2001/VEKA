@@ -4,12 +4,15 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../Dashboard/dashboardScreen.dart';
+import 'BuyReviewController.dart';
 
 class buyReviewSubmission extends StatelessWidget {
   const buyReviewSubmission({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
+    BuyReviewController brc  = Get.put(BuyReviewController());
     var data = Get.arguments;
     return Scaffold(
       appBar: AppBar(
@@ -46,15 +49,8 @@ class buyReviewSubmission extends StatelessWidget {
           child: CupertinoButton(
             color: Colors.green,
             onPressed: (){
-              Get.defaultDialog(
-                  buttonColor: Colors.green,
-                  title: "",
-                  //DashboardScreen()
-                  middleText: "Your booking has been successfully completed",
-                  onConfirm: (){
-                    Get.to(DashboardScreen());
-                  }
-              );
+              print("tap");
+              brc.postProduct(data["id"],data["carprice"]);
             },
             child: Text("Done",
               style: TextStyle(

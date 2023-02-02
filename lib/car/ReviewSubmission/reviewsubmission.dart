@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -105,6 +106,7 @@ class reviewsubmission extends StatelessWidget {
                             alignment: Alignment.topLeft,
                             child: ListTile(
                               title: Text(data["carname"],
+                                softWrap: true,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -129,10 +131,10 @@ class reviewsubmission extends StatelessWidget {
                 //
                 Container(
                   width: Get.width,
-                  height: Get.height * 0.1,
+                  //height: Get.height * 0.1,
                   color: Colors.grey.shade300,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -147,11 +149,13 @@ class reviewsubmission extends StatelessWidget {
                                   fontSize: Get.width * 0.04
                               ),
                             ),
-                            Text(data["carname"],
+                            AutoSizeText(data["carname"],
+                              maxLines: 2,
+                              softWrap: true,
                               style: TextStyle(
 
                                   color: Colors.black,
-                                  fontSize: Get.width * 0.04
+                                //  fontSize: Get.width * 0.04
                               ),
                             ),
                           ],
@@ -250,21 +254,9 @@ class reviewsubmission extends StatelessWidget {
                                 ),
                               ),
                               //
-                              Text((bsc.babyvalue.value == false)?"0":"\$10",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: Get.width * 0.04
-                                ),
-                              ),
-                              //
-                              Text((bsc.childrenvalue.value == false)?"0":"\$10",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize: Get.width * 0.04
-                                ),
-                              ),
+                             for(var i = 0 ; i < data!["charges"].length;i++)...[
+                               data["charges"][i]
+                             ]
                             ],
                           ),
                         ],

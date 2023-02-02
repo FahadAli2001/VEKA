@@ -50,10 +50,12 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   table_calendar:
   flutter_rating_bar: ^4.0.1
-  shimmer: ^2.0.0
   readmore: ^2.2.0
   time_picker_spinner_pop_up: ^1.0.3
   auto_size_text: ^3.0.0
+  shared_preferences: ^2.0.17
+
+
 
 dev_dependencies:
   flutter_test:

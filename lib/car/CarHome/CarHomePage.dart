@@ -54,6 +54,7 @@ class CarHomePage extends StatelessWidget {
             )
           ],
         ),
+
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -119,7 +120,11 @@ class CarHomePage extends StatelessWidget {
                             return carCards(snapshot.data[index]["name"].toString(),
                                 snapshot.data[index]["images"][0]["src"].toString(),
                                 snapshot.data[index]["price"].toString(),
-                                snapshot.data[index]["short_description"].toString());
+                                snapshot.data[index]["short_description"].toString(),
+                              snapshot.data[index]["meta_data"][11]["value"],
+                              snapshot.data![index]["meta_data"][10]["value"],
+                              snapshot.data![index]["meta_data"][20]["value"]
+                            );
                           },
 
                         ),
@@ -227,7 +232,11 @@ class CarHomePage extends StatelessWidget {
                                 car.rentData[index]["price"].toString(),
                                 snapshot.data[index]["short_description"].toString(),
                               snapshot.data[index]["meta_data"][3]["value"],
-                              snapshot.data[index]["meta_data"][5]["value"]
+                              snapshot.data[index]["meta_data"][5]["value"],
+                              snapshot.data[index]["meta_data"][11]["value"],
+                              snapshot.data![index]["meta_data"][10]["value"],
+                              snapshot.data![index]["meta_data"][12]["value"],
+                                snapshot.data![index]["meta_data"][20]["value"]
 
 
                             );
@@ -264,7 +273,11 @@ class CarHomePage extends StatelessWidget {
                           itemBuilder: (context,index){
                             return  products(car.selldata[index]["images"][0]["src"].toString(),
                                 car.selldata[index]["name"].toString(),
-                                car.selldata[index]["price"].toString()
+                                car.selldata[index]["price"].toString(),
+                                snapshot.data![index]["meta_data"][20]["value"],
+                              snapshot.data[index]["meta_data"][11]["value"],
+                              snapshot.data![index]["meta_data"][10]["value"],
+                              snapshot.data[index]["id"]
                             );
                           },
                         ),
@@ -348,7 +361,7 @@ class CarHomePage extends StatelessWidget {
       );
   }
 
-  Widget carCards(String carname,String carimage,carprice,cardescription){
+  Widget carCards(String carname,String carimage,carprice,cardescription,cardetails,cardetailsinfo, carmoreinfo){
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -403,8 +416,10 @@ class CarHomePage extends StatelessWidget {
                 child: SizedBox(
                     child:InkWell(
                       onTap: (){
+                        //print(carmoreinfo);
                         Get.bottomSheet(
-                          carDetails(carname,carimage,carprice,cardescription),
+                          carDetails(carname,carimage,carprice,cardescription,
+                              cardetails,cardetailsinfo, carmoreinfo),
                           isScrollControlled: true,
                         );
                       },
@@ -427,15 +442,20 @@ class CarHomePage extends StatelessWidget {
     );
   }
 
-  Widget products(carImage,carName,carprice){
+  Widget products(carImage,carName,carprice,carspecs, cardetails, cardetailsinfo,id){
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: (){
+          //print(id);
           Get.to(()=>BuyingCarsDetails(),arguments: {
             "carname":carName.toString(),
             "carImage":carImage.toString(),
-            "carprice":carprice.toString()
+            "carprice":carprice.toString(),
+            "carspecs":carspecs,
+            "cardetails":cardetails,
+            "cardetailsinfo":cardetailsinfo,
+            "id":id.toString()
           });
         },
         child: Card(
@@ -471,7 +491,8 @@ class CarHomePage extends StatelessWidget {
     );
   }
 
-  Widget product(carImage,carName,carprice,cardescription,List extraservices,List extraservicesCharges){
+  Widget product(carImage,carName,carprice,cardescription,List extraservices,List extraservicesCharges,
+      List cardetail,List cardetailinfo,List cardeatailicon,carspecs){
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -484,7 +505,11 @@ class CarHomePage extends StatelessWidget {
             "carprice":carprice,
             "cardescription":cardescription,
             "extraservices":extraservices,
-            "extraservicescharges":extraservicesCharges
+            "extraservicescharges":extraservicesCharges,
+            "cardetail":cardetail,
+            "cardetailinfo":cardetailinfo,
+            "cardetailicon":cardeatailicon,
+            "carspecs":carspecs
           });
         },
         child: Card(
@@ -800,7 +825,7 @@ class CarHomePage extends StatelessWidget {
     );
   }
 
-  Widget carDetails(carname,carimage,carprice,cardescription){
+  Widget carDetails(carname,carimage,carprice,cardescription,cardetail,cardetailinfo,List carmoreinfo){
     return  GestureDetector(
       onTap: (){
         Get.back();
@@ -928,56 +953,45 @@ class CarHomePage extends StatelessWidget {
               ),
             ),
             //
-            Container(
+           /* Row(
+              children: [
+                for(var i = 0 ; i <carmoreinfo.length ; i++)...[
+                  Text(carmoreinfo[i],
+                    softWrap:true,style: TextStyle(
+                        color: Colors.black
+                    ),)
+                ]
+              ],
+            ),*/
+           Container(
               width: Get.width,
-              height: Get.height * 0.2,
+              height: Get.height * 0.05,
               //color: Colors.red,
-              child: ListView.builder(
+              child: ListView(
                 scrollDirection: Axis.horizontal,
-                itemCount: 2,
-                itemBuilder:(context,index){
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 7),
-                    child: Card(
-                      elevation: 7,
+                children: [
+                  for(var i = 0 ; i <carmoreinfo.length ; i++)...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Container(
-                        //   color: Colors.blue,
-                        width: Get.width * 0.3,
-                        height: Get.height * 0.2,
+                        color: Colors.grey,
                         child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Max Power",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Get.height *0.02
-                                ),),
-                              Text("350",
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Get.height *0.03
-                                ),
-                              ),
-                              Text("hp",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: Get.height *0.02
-                                ),)
-                            ],
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Center(
+                            child: Text(carmoreinfo[i],
+                              softWrap:true,style: TextStyle(
+                                  color: Colors.black,
+                                fontWeight: FontWeight.bold
+                              ),),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                } ,
+                    )
+                  ]
+                ],
               ),
             ),
+            //
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
@@ -991,61 +1005,61 @@ class CarHomePage extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
-              child: Container(
-                width: Get.width,
-                height: Get.height * 0.2,
-                // color: Colors.pink,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                          width:Get.width * 0.4,
-                          height: Get.height * 0.1,
-                          child: ListTile(
-                            title: Text("2015"),
-                            leading: Icon(CupertinoIcons.calendar,
-                              color: Colors.green,),
-                          ),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  /* Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for(var i = 0 ; i < data["cardetailicon"].length ; i++) ... [
+                            Icon(
+                            data["cardetailicon"][i],
+                              size: 32.0,
+                              color: Colors.green,
+                            )
+                      ]
+
+                    ],
+                  ),*/
+                  //
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for(var i = 0 ; i < cardetail.length ; i++)...[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(cardetail[i],
+                            style: TextStyle(
+                                color: Colors.green.shade900,
+                                fontSize: Get.width * 0.045
+                            ),),
                         ),
-                        SizedBox(
-                          width:Get.width * 0.5,
-                          height: Get.height * 0.1,
-                          child: ListTile(
-                            title: Text("Petrol"),
-                            leading: Icon(Icons.local_gas_station,
-                              color: Colors.green,),
-                          ),
+
+                      ]
+                    ],
+                  ),
+                  //
+
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for(var i = 0 ; i < cardetailinfo.length ; i++)...[
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(cardetailinfo[i],
+                            style: TextStyle(
+                                color: Colors.green.shade800,
+                                fontSize: Get.width * 0.045
+                            ),),
                         )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width:Get.width * 0.4,
-                          height: Get.height * 0.1,
-                          child: ListTile(
-                            title: Text("2"),
-                            leading: Icon(CupertinoIcons.person_2_fill,
-                              color: Colors.green,),
-                          ),
-                        ),
-                        SizedBox(
-                          width:Get.width * 0.5,
-                          height: Get.height * 0.1,
-                          child: ListTile(
-                            title: Text("2500"),
-                            leading: Icon(Icons.flash_on,
-                              color: Colors.green,),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
+                      ]
+                    ],
+                  ),
+
+                ],
               ),
-            ),
+            )
 
 
           ],
