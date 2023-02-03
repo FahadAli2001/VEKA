@@ -6,12 +6,18 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 
 import '../ReviewSubmission/reviewsubmission.dart';
+import '../Text.dart';
 import 'bookingScreenController.dart';
 
 
-class bookingScreen extends StatelessWidget {
+class bookingScreen extends StatefulWidget {
   const bookingScreen({Key? key}) : super(key: key);
 
+  @override
+  State<bookingScreen> createState() => _bookingScreenState();
+}
+
+class _bookingScreenState extends State<bookingScreen> {
   @override
   Widget build(BuildContext context) {
     Color color = Colors.grey;
@@ -20,11 +26,6 @@ class bookingScreen extends StatelessWidget {
 
     RxList<dynamic> rxisSelected=[].obs;
     rxisSelected.value = RxList.generate(data["extraservices"].length, (_) => false);
-
-    var date = DateTime
-        .now()
-        .obs;
-
 
 
 
@@ -46,30 +47,23 @@ class bookingScreen extends StatelessWidget {
                 color: Colors.black
             ),),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){
 
-            bsc.pricewidget(rxisSelected, data!["extraservicescharges"], data!["extraservices"]);
-
-           // print(bsc.checkboxes.length);
-
-          },
-        ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () {
-              bsc.pricewidget(rxisSelected.toList(), data!["extraservicescharges"], data!["extraservices"]);
+              //bsc.pricewidget(rxisSelected.toList(), data!["extraservicescharges"], data!["extraservices"]);
               //print(data["extraservices"]);
               Get.to(reviewsubmission(),
                   arguments: {
-                    "carimage": data["carimage"].toString(),
-                    "carname": data["carname"].toString(),
-                    "carprice": data["carprice"].toString(),
+                    "carimage": data!["carimage"].toString(),
+                    "carname": data!["carname"].toString(),
+                    "carprice": data!["carprice"].toString(),
                     "carqnty": bsc.carqntyvalue.value,
                     "totalprice": bsc.totalcarPrice(rxisSelected.toList(), data["extraservicescharges"], data["carprice"]),
                     "extraservices":data["extraservices"],
-                    "charges":bsc.checkboxes
+                    "charges": bsc.pricewidget(rxisSelected, data!["extraservicescharges"], data!["extraservices"]),
+                    "id":data!["id"]
                   });
 
             },
@@ -100,7 +94,7 @@ class bookingScreen extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                height: Get.height * 0.35,
+                //height: Get.height * 0.35,
                 width: Get.width / 2,
                 // color: Colors.orange,
                 child: Padding(
@@ -113,23 +107,54 @@ class bookingScreen extends StatelessWidget {
                             color: Colors.green,
                             fontSize: Get.width * 0.04
                         ),),
-                      Card(
-                        elevation: 2,
-                        child: Container(
-                          color: color,
-                          width: Get.width / 0.2,
-                          height: Get.height * 0.07,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Set location"),
-                                Icon(Icons.arrow_drop_down)
-                              ],
-                            ),
+                      //
+                      FutureBuilder(
+
+                        future: bsc.getpicklocation(),
+                        builder: (context,snapshot){
+                          List<String> element= [] ;
+                          for(var i = 0 ;i < bsc.picklocation!.length ; i++){
+                            element.add(snapshot.data![i]["title"]['rendered'].toString());
+                          }
+                          bsc.pick.value = element[0].toString();
+                          if(snapshot.connectionState == ConnectionState.waiting){
+                            return SizedBox();
+                          }
+                          if(snapshot.hasData == null){
+                            return SizedBox();
+                          }
+                          return
+                                Obx(
+                                  ()=> Card(
+                                    elevation: 2,
+                                    child:  Container(
+                                        color: color,
+                                        width: Get.width / 0.2,
+                                        height: Get.height * 0.07,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: DropdownButton(
+                                              value:bsc.pick.toString(),
+                                              icon: const Icon(
+                                                Icons.keyboard_arrow_down,
+                                                color: Colors.black,),
+                                              items: element.map((String items) {
+                                                return DropdownMenuItem(
+                                                  value: items,
+                                                  child: Text(items),
+                                                );
+                                              }).toList(),
+                                              onChanged: (val) {
+                                              bsc.pick.value = val.toString();
+                                              }
+                                          ),
+                                        ),
+
+                                    ),
+
                           ),
-                        ),
+                                );
+                        },
                       ),
                       //
                       SizedBox(height: 5,),
@@ -147,7 +172,7 @@ class bookingScreen extends StatelessWidget {
                           height: Get.height * 0.07,
                           child: TimePickerSpinnerPopUp(
                             mode: CupertinoDatePickerMode.date,
-                            initTime: date.value,
+                            initTime: bsc.pickupdate.value,
                             minTime: DateTime.now().subtract(const Duration(
                                 days: 10)),
                             maxTime: DateTime.now().add(const Duration(
@@ -156,7 +181,7 @@ class bookingScreen extends StatelessWidget {
                             //Barrier Color when pop up show
                             onChange: (dateTime) {
                               // Implement your logic with select dateTime
-                              date.value = dateTime;
+                              bsc.pickupdate.value = dateTime;
                             },
 
                           ),
@@ -181,15 +206,12 @@ class bookingScreen extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: DropdownButton(
-
                                     // Initial Value
                                       value: bsc.persondropdownvalue.value,
-
                                       // Down Arrow Icon
                                       icon: const Icon(
                                         Icons.keyboard_arrow_down,
                                         color: Colors.black,),
-
                                       // Array list of items
                                       items: bsc.persons.map((String items) {
                                         return DropdownMenuItem(
@@ -197,8 +219,6 @@ class bookingScreen extends StatelessWidget {
                                           child: Text(items),
                                         );
                                       }).toList(),
-                                      // After selecting the desired option,it will
-                                      // change button value to selected value
                                       onChanged: (val) {
                                         bsc.personSelected(val.toString());
                                       }
@@ -213,7 +233,7 @@ class bookingScreen extends StatelessWidget {
               ),
               //-----
               Container(
-                height: Get.height * 0.36,
+                //height: Get.height * 0.36,
                 // color: Colors.green,
                 width: Get.width / 2,
                 child: Padding(
@@ -226,23 +246,49 @@ class bookingScreen extends StatelessWidget {
                             color: Colors.green,
                             fontSize: Get.width * 0.04
                         ),),
-                      Card(
-                        elevation: 2,
-                        child: Container(
-                          color: color,
-                          width: Get.width / 0.2,
-                          height: Get.height * 0.07,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Set location"),
-                                Icon(Icons.arrow_drop_down)
-                              ],
-                            ),
-                          ),
-                        ),
+                      FutureBuilder(
+
+                        future: bsc.getdroplocation(),
+                        builder: (context,snapshot){
+                          List<String> element= [] ;
+                          for(var i = 0 ;i < bsc.droplocation!.length ; i++){
+                            element.add(snapshot.data![i]["title"]['rendered'].toString());
+                          }
+                          bsc.drop.value= element[0].toString();
+                          if(snapshot.connectionState == ConnectionState.waiting){
+                            return Container();
+                          }
+                          return
+                            Obx(
+                                  ()=> Card(
+                                elevation: 2,
+                                child: Container(
+                                  color: color,
+                                  width: Get.width / 0.2,
+                                  height: Get.height * 0.07,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: DropdownButton(
+                                        value:bsc.drop.value.toString(),
+                                        icon: const Icon(
+                                          Icons.keyboard_arrow_down,
+                                          color: Colors.black,),
+                                        items: element.map((String items) {
+                                          return DropdownMenuItem(
+                                            value: items,
+                                            child: Text(items),
+                                          );
+                                        }).toList(),
+                                        onChanged: (val) {
+                                          bsc.drop.value = val.toString();
+                                        }
+                                    ),
+                                  ),
+                                ),
+
+                              ),
+                            );
+                        },
                       ),
                       //
                       SizedBox(height: 5,),
@@ -260,7 +306,7 @@ class bookingScreen extends StatelessWidget {
                           height: Get.height * 0.07,
                           child: TimePickerSpinnerPopUp(
                             mode: CupertinoDatePickerMode.date,
-                            initTime: date.value,
+                            initTime: bsc.dropOfdate.value,
                             minTime: DateTime.now().subtract(const Duration(
                                 days: 10)),
                             maxTime: DateTime.now().add(const Duration(
@@ -269,7 +315,7 @@ class bookingScreen extends StatelessWidget {
                             //Barrier Color when pop up show
                             onChange: (dateTime) {
                               // Implement your logic with select dateTime
-                              date.value = dateTime;
+                              bsc.dropOfdate.value = dateTime;
                             },
 
                           ),
@@ -351,7 +397,7 @@ class bookingScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: DropdownButton(
 
-                            value: bsc.paymenttypevalue.value,
+                            value: bsc.paymenttypevalue.value.toString(),
 
                             icon: const Icon(
                               Icons.keyboard_arrow_down, color: Colors.black,),
@@ -406,7 +452,7 @@ class bookingScreen extends StatelessWidget {
                             width: Get.width * 0.5,
                             child: Obx(
                                   ()=> ListTile(
-                                title: Text(data["extraservices"][i],
+                                title: Text(data["extraservices"][i].toString(),
                                   style: TextStyle(
                                       fontSize: Get.width * 0.04
                                   ),

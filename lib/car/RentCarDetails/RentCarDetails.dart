@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -25,14 +26,12 @@ class RentCarDetails extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: LikeButton(
-              size: 30,
-              likeBuilder: (bool isLiked) {
-                return Icon(
-                  CupertinoIcons.heart,
-                  color: isLiked ? Colors.deepPurpleAccent : Colors.grey,
-
-                );
+            child: FavoriteButton(
+              iconSize: 40,
+              isFavorite: false,
+              // iconDisabledColor: Colors.white,
+              valueChanged: (_isFavorite) {
+                print('Is Favorite : $_isFavorite');
               },
             ),
           ),
@@ -48,7 +47,8 @@ class RentCarDetails extends StatelessWidget {
               "carname":data!["carname"].toString(),
               "carprice":data!["carprice"].toString(),
               "extraservices":data!["extraservices"],
-              "extraservicescharges":data!["extraservicescharges"]
+              "extraservicescharges":data!["extraservicescharges"],
+              "id":data!["id"]
             }
             );
           },
@@ -108,7 +108,7 @@ class RentCarDetails extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Text(data["carname"],
+                        child: Text(data!["carname"].toString(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
@@ -117,7 +117,7 @@ class RentCarDetails extends StatelessWidget {
                           softWrap: true,
                         ),
                       ),
-                      Text("\$${data["carprice"]}",
+                      Text("\$${data!["carprice"].toString()}",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
@@ -146,7 +146,7 @@ class RentCarDetails extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Align(
                 alignment: Alignment.topLeft,
-                child: Text(data["cardescription"],
+                child: Text(data!["cardescription"].toString(),
                   style: TextStyle(
                       color: Colors.grey.shade700,
                       fontSize: Get.height * 0.02
@@ -174,7 +174,7 @@ class RentCarDetails extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  for(var i = 0 ; i < data["carspecs"].length ; i++)...[
+                  for(var i = 0 ; i < data!["carspecs"].length ; i++)...[
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Container(
@@ -182,7 +182,7 @@ class RentCarDetails extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: Center(
-                            child: Text(data["carspecs"][i],
+                            child: Text(data!["carspecs"][i],
                               softWrap:true,style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold
@@ -231,8 +231,8 @@ class RentCarDetails extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                     for(var i = 0 ; i < data["cardetail"].length ; i++)...[
-                       Text(data["cardetail"][i],
+                     for(var i = 0 ; i < data!["cardetail"].length ; i++)...[
+                       Text(data["cardetail"][i].toString(),
                          style: TextStyle(
                              color: Colors.grey,
                            fontSize: Get.width * 0.045
@@ -246,8 +246,8 @@ class RentCarDetails extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      for(var i = 0 ; i < data["cardetailinfo"].length ; i++)...[
-                        Text(data["cardetailinfo"][i],
+                      for(var i = 0 ; i < data!["cardetailinfo"].length ; i++)...[
+                        Text(data["cardetailinfo"][i].toString(),
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: Get.width * 0.045

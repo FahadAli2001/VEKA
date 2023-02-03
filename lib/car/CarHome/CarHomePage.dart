@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:like_button/like_button.dart';
@@ -123,7 +124,7 @@ class CarHomePage extends StatelessWidget {
                           itemCount: snapshot.data!.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-                            return carCards(snapshot.data[index]["name"].toString(),
+                            return carCards(snapshot.data![index]["name"].toString(),
                                 snapshot.data[index]["images"][0]["src"].toString(),
                                 snapshot.data[index]["price"].toString(),
                                 snapshot.data[index]["short_description"].toString(),
@@ -230,19 +231,20 @@ class CarHomePage extends StatelessWidget {
                         width: Get.width,
                         height: Get.height * 0.4,
                         child: ListView.builder(
-                          itemCount:  snapshot.data.length,
+                          itemCount:  snapshot.data!.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context,index){
-                            return product(car.rentData[index]["images"][0]["src"].toString(),
-                                car.rentData[index]["name"].toString(),
-                                car.rentData[index]["price"].toString(),
-                                snapshot.data[index]["short_description"].toString(),
-                              snapshot.data[index]["meta_data"][3]["value"],
-                              snapshot.data[index]["meta_data"][5]["value"],
-                              snapshot.data[index]["meta_data"][11]["value"],
+                            return product(car.rentData![index]["images"][0]["src"].toString(),
+                                car.rentData![index]["name"].toString(),
+                                car.rentData![index]["price"].toString(),
+                                snapshot.data![index]["short_description"].toString(),
+                              snapshot.data![index]["meta_data"][3]["value"],
+                              snapshot.data![index]["meta_data"][5]["value"],
+                              snapshot.data![index]["meta_data"][11]["value"],
                               snapshot.data![index]["meta_data"][10]["value"],
                               snapshot.data![index]["meta_data"][12]["value"],
-                                snapshot.data![index]["meta_data"][20]["value"]
+                                snapshot.data![index]["meta_data"][20]["value"],
+                              snapshot.data![index]["id"]
 
 
                             );
@@ -274,7 +276,7 @@ class CarHomePage extends StatelessWidget {
                         width: Get.width,
                         height: Get.height * 0.4,
                         child: ListView.builder(
-                          itemCount:  snapshot.data.length,
+                          itemCount:  snapshot.data!.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context,index){
                             return  products(car.selldata[index]["images"][0]["src"].toString(),
@@ -498,7 +500,7 @@ class CarHomePage extends StatelessWidget {
   }
 
   Widget product(carImage,carName,carprice,cardescription,List extraservices,List extraservicesCharges,
-      List cardetail,List cardetailinfo,List cardeatailicon,carspecs){
+      List cardetail,List cardetailinfo,List cardeatailicon,carspecs,id){
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -515,7 +517,8 @@ class CarHomePage extends StatelessWidget {
             "cardetail":cardetail,
             "cardetailinfo":cardetailinfo,
             "cardetailicon":cardeatailicon,
-            "carspecs":carspecs
+            "carspecs":carspecs,
+            "id":id
           });
         },
         child: Card(
@@ -586,14 +589,12 @@ class CarHomePage extends StatelessWidget {
                                 color: Colors.black,
                                 fontSize: Get.height * 0.02
                             ),),
-                          LikeButton(
-                            size: 30,
-                            likeBuilder: (bool isLiked) {
-                              return Icon(
-                                CupertinoIcons.heart,
-                                color: isLiked ? Colors.deepPurpleAccent : Colors.grey,
-
-                              );
+                          FavoriteButton(
+                            iconSize: 40,
+                            isFavorite: true,
+                            // iconDisabledColor: Colors.white,
+                            valueChanged: (_isFavorite) {
+                              print('Is Favorite : $_isFavorite');
                             },
                           ),
                         ],

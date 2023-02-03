@@ -34,11 +34,12 @@ class BuyingCarsDetails extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: StarButton(
-              isStarred: false,
+            child:  FavoriteButton(
+              iconSize: 40,
+              isFavorite: true,
               // iconDisabledColor: Colors.white,
-              valueChanged: (_isStarred) {
-                print('Is Starred : $_isStarred');
+              valueChanged: (_isFavorite) {
+                print('Is Favorite : $_isFavorite');
               },
             ),
           )

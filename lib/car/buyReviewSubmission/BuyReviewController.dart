@@ -30,7 +30,7 @@ class BuyReviewController extends GetxController{
       "line_items": [
         {
           "product_id": carid,
-          "quantity": 1
+          "quantity": "1"
         }
       ]
     };
@@ -43,8 +43,10 @@ class BuyReviewController extends GetxController{
 
       // Post data using the "products" endpoint
       var response = await wooCommerceAPI.postAsync("orders",data);
+
      // print("called");
      // print(carid);
+
        print(response);
         Get.defaultDialog(
             buttonColor: Colors.green,

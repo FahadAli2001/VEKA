@@ -8,15 +8,19 @@ import 'package:veka/car/Dashboard/dashboardScreen.dart';
 import 'package:veka/car/bookingScreen/bookingScreenController.dart';
 
 import '../../ChooseOption.dart';
+import 'RentReviewSubmissionController.dart';
 
 class reviewsubmission extends StatelessWidget {
   const reviewsubmission({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    RentReviewSubmissionController rrsc = Get.put(RentReviewSubmissionController());
     bookingScreenController bsc = Get.put(bookingScreenController());
 
     var data = Get.arguments;
+
+    var totalprice = int.parse(data["carprice"]) * int.parse(bsc.carqntyvalue.value);
     return Scaffold(
       appBar: AppBar(
 
@@ -52,15 +56,7 @@ class reviewsubmission extends StatelessWidget {
           child: CupertinoButton(
             color: Colors.green,
             onPressed: (){
-              Get.defaultDialog(
-                buttonColor: Colors.green,
-                title: "",
-                //DashboardScreen()
-               middleText: "Your booking has been successfully completed",
-                onConfirm: (){
-                  Get.to(DashboardScreen());
-                                  }
-              );
+            rrsc.postRentOrder(data["id"]);
             },
             child: Text("Done",
             style: TextStyle(
@@ -193,7 +189,7 @@ class reviewsubmission extends StatelessWidget {
                                   fontSize: Get.width * 0.04
                               ),
                             ),
-                            Text("\$ ${data["carprice"].toString()}",
+                            Text("\$ ${totalprice.toString()}",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                   color: Colors.black,
@@ -254,9 +250,14 @@ class reviewsubmission extends StatelessWidget {
                                 ),
                               ),
                               //
-                             for(var i = 0 ; i < data!["charges"].length;i++)...[
-                               data["charges"][i]
-                             ]
+                              for(var i = 0; i < data["charges"].length;i++)...[
+                                Text(data["charges"][i].toString(),
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: Get.width * 0.04
+                                  ),
+                                ),
+                              ]
                             ],
                           ),
                         ],
