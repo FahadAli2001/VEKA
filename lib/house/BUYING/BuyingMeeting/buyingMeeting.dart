@@ -6,14 +6,15 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 
 import '../MeetingSuccess/meetingSuccessScreen.dart';
+import 'buyingMeetingController.dart';
 
 class buyingMeeting extends StatelessWidget {
   const buyingMeeting({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var meetingdate = DateTime.now().obs;
-    var meetingtime = DateTime.now().obs;
+    buyingMeetingController bmc = Get.put(buyingMeetingController());
+    var data = Get.arguments;
 
     return Scaffold(
       bottomNavigationBar: Container(
@@ -25,7 +26,7 @@ class buyingMeeting extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 8),
             child: InkWell(
               onTap: (){
-                Get.to(meetingSuccessScreen());
+                bmc.requestForBuyHouse(data["id"]);
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -47,7 +48,7 @@ class buyingMeeting extends StatelessWidget {
         ),
       ),
       appBar: AppBar(
-        title: Text("meeting",
+        title: Text("buy meeting",
         style: TextStyle(
           color: Colors.black
         ),),
@@ -93,13 +94,11 @@ class buyingMeeting extends StatelessWidget {
                           height: Get.height * 0.05,
                           child:TimePickerSpinnerPopUp(
                             mode: CupertinoDatePickerMode.date,
-                            initTime: meetingdate.value,
-                            minTime: DateTime.now().subtract(const Duration(days: 10)),
-                            maxTime: DateTime.now().add(const Duration(days: 10)),
+                            initTime: bmc.meetingdate.value,
                             barrierColor: Colors.black12, //Barrier Color when pop up show
                             onChange: (dateTime) {
                               // Implement your logic with select dateTime
-                              meetingdate.value = dateTime;
+                              bmc.meetingdate.value = dateTime;
                             },
 
                           ),
@@ -135,13 +134,11 @@ class buyingMeeting extends StatelessWidget {
                           height: Get.height * 0.05,
                           child: TimePickerSpinnerPopUp(
                             mode: CupertinoDatePickerMode.time,
-                            initTime: meetingtime.value,
-                            minTime: DateTime.now().subtract(const Duration(days: 10)),
-                            maxTime: DateTime.now().add(const Duration(days: 10)),
+                            initTime: bmc.meetingtime.value,
                             barrierColor: Colors.black12, //Barrier Color when pop up show
                             onChange: (dateTime) {
                               // Implement your logic with select dateTime
-                              meetingtime.value = dateTime;
+                              bmc.meetingtime.value = dateTime;
                             },
 
                           ),

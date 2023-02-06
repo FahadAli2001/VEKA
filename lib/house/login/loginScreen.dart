@@ -8,6 +8,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:veka/house/Signup/signUpScreen.dart';
 
 
+import '../BUYING/dashboard/houseDashboard.dart';
 import '../BUYING/home/homeScreen.dart';
 import 'LoginController.dart';
 
@@ -173,9 +174,14 @@ class loginSxreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          FaIcon(FontAwesomeIcons.facebook,
-                            color: Colors.grey,
-                            size: SocialAppIconSize,),
+                          GestureDetector(
+                            onTap: (){
+                              Get.to(homeScreen());
+                            },
+                            child: FaIcon(FontAwesomeIcons.facebook,
+                              color: Colors.grey,
+                              size: SocialAppIconSize,),
+                          ),
                           FaIcon(FontAwesomeIcons.instagram,
                             color: Colors.grey,
                             size: SocialAppIconSize,),

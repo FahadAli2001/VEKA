@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart'as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../BUYING/home/homeScreen.dart';
 class loginController extends GetxController{
@@ -32,8 +33,11 @@ class loginController extends GetxController{
       );
 
       if(response.statusCode==200){
-        print("method called");
+       // print("method called");
         var data = jsonDecode(response.body.toString());
+        SharedPreferences homesp =await SharedPreferences.getInstance();
+        homesp.setString("username",_username );
+        homesp.setString("password",_password );
         Get.to(homeScreen());
 
       }

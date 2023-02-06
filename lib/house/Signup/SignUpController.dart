@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 class HouseSignUpController extends GetxController{
 
   TextEditingController username = TextEditingController();
@@ -20,6 +21,7 @@ class HouseSignUpController extends GetxController{
 
   void checkIsAgree (){
     if(Value.value == false){
+
       Get.defaultDialog(
           buttonColor: Colors.black,
           title: "",
@@ -30,10 +32,7 @@ class HouseSignUpController extends GetxController{
           }
       );
     }else{
-      print("vvvvv");
-      print(username);
-      print(password);
-      print(email);
+
       SignUp();
       Value.value = false;
 
@@ -41,6 +40,7 @@ class HouseSignUpController extends GetxController{
   }
 
   void SignUp()async{
+    SharedPreferences homesignup =await SharedPreferences.getInstance();
     String _username = username.text.toString();
     String _email = email.text.toString();
     String _password = password.text.toString();
@@ -63,6 +63,8 @@ class HouseSignUpController extends GetxController{
       if(response.statusCode==201){
         print("method called");
         var data = jsonDecode(response.body.toString());
+        homesignup.setString("username", _username);
+        homesignup.setString("email", _email);
         //print(data);
         clearFileds();
         print("user created");

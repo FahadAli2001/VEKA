@@ -170,47 +170,29 @@ class rentHome extends StatelessWidget {
                                       ),
                                     ),
                                     //------------
+
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text("\$${snapshot.data[index]["price"]}",
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: Get.width * 0.045,
+                                        ),),
+                                    ),
+                                    //--
                                     Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 4),
                                       child: Row(
                                         children: [
                                           Icon(CupertinoIcons.location_solid,color: Colors.black,),
-                                          Text("Bykoz - 9 miles from center")
+                                          Expanded(
+                                            child: Text('snapshot.data![index]["attributes"][1]["options"].toString()',
+                                            softWrap: true,),
+                                          )
                                         ],
                                       ),
                                     ),
                                     //------------
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 25),
-                                              child: Align(
-                                                alignment: Alignment.topRight,
-                                                child: Text("price for 7 night 2 adults",
-                                                  style: TextStyle(
-                                                      fontSize: Get.width * 0.04,
-                                                      color: Colors.black
-                                                  ),),
-                                              ),
-                                            ),
-                                            //
-                                            Align(
-                                              alignment: Alignment.topRight,
-                                              child: Text("\$${snapshot.data[index]["price"]}",
-                                                style: TextStyle(
-                                                  color: Colors.red,
-                                                  fontSize: Get.width * 0.04,
-                                                ),),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    )
                                   ],
                                 ),
                               ),

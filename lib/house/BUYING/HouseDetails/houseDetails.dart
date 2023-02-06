@@ -39,6 +39,7 @@ class buyhouseDetails extends StatelessWidget {
           color: Colors.black,
         ),
       ),
+
       bottomNavigationBar: Container(
         width: Get.width,
         height: Get.height * 0.09,
@@ -48,7 +49,12 @@ class buyhouseDetails extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 8),
             child: InkWell(
               onTap: (){
-                Get.to(buyingMeeting());
+                //print(data["id"].toString());
+                Get.to(buyingMeeting(),arguments: {
+                  "id":data!["id"]
+                }
+                );
+                print(data["id"]);
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -114,7 +120,7 @@ class buyhouseDetails extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      AutoSizeText(data["housename"],
+                      AutoSizeText(data!["housename"],
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -122,7 +128,7 @@ class buyhouseDetails extends StatelessWidget {
                       ),
                       maxLines: 1,),
                       //
-                      Text("\$${data['houseprice']}",
+                      Text("\$${data!['houseprice']}",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
@@ -137,19 +143,19 @@ class buyhouseDetails extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("location karachi",
+                      Text(data["location"],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                             fontSize: Get.width * 0.03
                         ),),
                       //
-                      Text("\$${data['houseprice']}",
+                     /* Text("\$${data['houseprice']}",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.red,
                             fontSize: Get.width * 0.04
-                        ),),
+                        ),),*/
                     ],
                   ),
                 ),
@@ -234,6 +240,35 @@ class buyhouseDetails extends StatelessWidget {
                   ),
                 ),
                 //
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("Facilities",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: Get.width * 0.05
+                      ),),
+                  ),
+                ),
+                //
+                for(var i = 0 ; i < data["facilities"].length ; i++)...[
+                  Row(
+                    children: [
+                      Icon(CupertinoIcons.check_mark,color: Colors.grey,),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(data["facilities"][i],
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                              fontSize: Get.width * 0.04
+                          ),),
+                      ),
+                    ],
+                  ),
+                ]
 
               ],
             ),

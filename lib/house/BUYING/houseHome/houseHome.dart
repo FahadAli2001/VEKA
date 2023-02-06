@@ -86,15 +86,19 @@ class houseHome extends StatelessWidget {
                  padding: const EdgeInsets.all(8.0),
                  child: GestureDetector(
                    onTap: (){
+                    // print(snapshot.data![index]["id"].toString());
                      //print("rooms " + snapshot.data[index]["attributes"][0]["options"][0].toString());
-                     print("tapppp");
+                     //print("tapppp");
                      Get.to(Get.to(buyhouseDetails(),
                      arguments: {
                        "totalrooms":snapshot.data[index]["attributes"][0]["options"][0].toString(),
                        "housename":snapshot.data[index]["name"].toString(),
                        "houseimage": snapshot.data[index]["images"][0]["src"].toString(),
                        "houseprice":snapshot.data[index]["price"].toString(),
-                       "description":snapshot.data[index]["description"].toString()
+                       "description":snapshot.data[index]["description"].toString(),
+                       "facilities":snapshot.data![index]["meta_data"][22]["value"],
+                       "location":snapshot.data![index]["attributes"][1]["options"][0].toString(),
+                       "id":snapshot.data![index]["id"].toString()
                      }));
                    },
                    child: Container(
@@ -107,14 +111,12 @@ class houseHome extends StatelessWidget {
                      height: Get.height * 0.35,
                      //color: Colors.orange,
                      child: Row(
-
                        children: [
                          Container(
                            height:Get.height ,
                            width: Get.width / 2.8,
-
                            decoration: BoxDecoration(
-                               color: Colors.green,
+                               color: Colors.grey.shade300,
                                image: DecorationImage(image: NetworkImage(
                                  snapshot!.data[index]["images"][0]["src"].toString()
                                ),
@@ -176,18 +178,27 @@ class houseHome extends StatelessWidget {
                                      ),
                                    ),
                                  ),
+                                 //
+                                 Align(
+                                   alignment: Alignment.topLeft,
+                                   child: Text("\$${snapshot.data[index]["price"].toString()}",
+                                     style: TextStyle(
+                                       color: Colors.red,
+                                       fontSize: Get.width * 0.045,
+                                     ),),
+                                 ),
                                  //------------
                                  Padding(
-                                   padding: const EdgeInsets.symmetric(vertical: 4),
+                                   padding: const EdgeInsets.symmetric(vertical: 15),
                                    child: Row(
                                      children: [
                                        Icon(CupertinoIcons.location_solid,color: Colors.black,),
-                                       Text("Bykoz - 9 miles from center")
+                                       Text(snapshot.data![index]["attributes"][1]["options"][0].toString())
                                      ],
                                    ),
                                  ),
                                  //------------
-                                 Padding(
+                                /* Padding(
                                    padding: const EdgeInsets.only(top: 25),
                                    child: Align(
                                      alignment: Alignment.topRight,
@@ -197,16 +208,9 @@ class houseHome extends StatelessWidget {
                                            color: Colors.black
                                        ),),
                                    ),
-                                 ),
+                                 ),*/
                                  //
-                                 Align(
-                                   alignment: Alignment.topRight,
-                                   child: Text("\$${snapshot.data[index]["price"].toString()}",
-                                     style: TextStyle(
-                                       color: Colors.red,
-                                       fontSize: Get.width * 0.04,
-                                     ),),
-                                 )
+
                                ],
                              ),
                            ),

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:veka/car/welcome/welcomeScreen.dart';
 import 'package:veka/house/login/loginScreen.dart';
+import 'package:veka/house/BUYING/home/homeScreen.dart';
 
 import 'car/Dashboard/dashboardScreen.dart';
 
@@ -43,8 +44,9 @@ class ChooseOption extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 2),
             child: InkWell(
-              onTap: () {
-                Get.to(loginSxreen());
+              onTap: ()async {
+               SharedPreferences homesp =await SharedPreferences.getInstance();
+               (homesp.getString("username")!=null)?Get.to(homeScreen()):Get.to(loginSxreen());
               },
               child: Center(
                 child: Container(

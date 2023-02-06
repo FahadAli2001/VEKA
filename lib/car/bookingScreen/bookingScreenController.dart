@@ -16,6 +16,13 @@ class bookingScreenController extends GetxController{
   var babyvalue = false.obs;
   RxInt total = 0.obs;
   RxInt subtotal = 0.obs;
+  //var nofdays = 1.obs;
+
+  /*checkdays(){
+    var difference = dropOfdate.value.difference(pickupdate.value).obs;
+    var nofdays = difference.value.inDays;
+    return nofdays;
+  }*/
 
 
 
@@ -80,8 +87,14 @@ class bookingScreenController extends GetxController{
      return checkboxes;
   }
 
+
+
   int totalcarPrice(List isSelected , List charges, carprice){
-     total.value = int.parse(carprice)* int.parse(carqntyvalue.value);
+    var difference = dropOfdate.value.difference(pickupdate.value).obs;
+    var nofdays = difference.value.inDays;
+
+     total.value = int.parse(carprice)* int.parse(carqntyvalue.value) * nofdays ;
+     print(total.value);
     for (var entry in isSelected.asMap().entries) {
       if (entry.value == true) {
         print('Index ${entry.key} has value of true');

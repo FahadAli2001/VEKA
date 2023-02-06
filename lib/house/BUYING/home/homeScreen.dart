@@ -83,7 +83,7 @@ class homeScreen extends StatelessWidget {
                         child: Container(
                           width: Get.width,
                           height: Get. height * 0.28,
-                       //  color: Colors.blue,
+                         //color: Colors.blue,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -109,7 +109,7 @@ class homeScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Text("Rent",
+                                  Text("Buy",
                                     style: TextStyle(
 
                                         color: Colors.black,
@@ -129,7 +129,7 @@ class homeScreen extends StatelessWidget {
                                       width: Get.width * 0.4,
                                       height: Get.height * 0.18,
                                       decoration: BoxDecoration(
-                                      //    color: Colors.green,
+                                          //color: Colors.green,
                                           borderRadius: BorderRadius.circular(20),
                                         image: DecorationImage(
                                             image: AssetImage(
@@ -140,7 +140,7 @@ class homeScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Text("Buy",
+                                  Text("Rent",
                                   style: TextStyle(
 
                                     color: Colors.black,
