@@ -11,6 +11,7 @@ class availableRooms extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var data = Get.arguments;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -37,7 +38,14 @@ class availableRooms extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 onTap: (){
-                  Get.to(roomDetails());
+                  //print(data["houseprice"]);
+                 Get.to(roomDetails(),
+                  arguments: {
+                    "extraservices":data["extraservices"],
+                    "extraservicescharges":data["extraservicescharges"],
+                    "houseprice":data["houseprice"],
+                    "id":data["id"]
+                  });
                 },
                 child: Container(
                   width: Get.width,

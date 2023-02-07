@@ -30,7 +30,7 @@ class detailScreen extends StatelessWidget {
           icon: Icon(CupertinoIcons.back),
           color: Colors.black,
         ),
-        title: Text("Details",
+        title: Text("Rent Details",
           style: TextStyle(
               color: Colors.black
           ),),
@@ -45,7 +45,14 @@ class detailScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 8),
             child: InkWell(
               onTap: (){
-                Get.to(availableRooms());
+                //print(data["houseprice"]);
+                Get.to(availableRooms(),
+                arguments: {
+                  "houseprice":data["houseprice"],
+                  "extraservices":data["extraservices"],
+                  "extraservicescharges":data["extraservicescharges"],
+                  "id":data["id"]
+                });
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -134,7 +141,7 @@ class detailScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("location karachi",
+                      Text(data["location"],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -227,7 +234,37 @@ class detailScreen extends StatelessWidget {
                     color: Colors.red),
                   )
                 ),
+
+                //----
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text("Facilities",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: Get.width * 0.05
+                      ),),
+                  ),
+                ),
                 //
+                for(var i = 0 ; i < data["facilities"].length ; i++)...[
+                  Row(
+                    children: [
+                      Icon(CupertinoIcons.check_mark,color: Colors.grey,),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Text(data["facilities"][i],
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey,
+                              fontSize: Get.width * 0.04
+                          ),),
+                      ),
+                    ],
+                  ),
+                ]
 
               ],
             ),

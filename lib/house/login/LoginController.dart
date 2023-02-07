@@ -17,7 +17,7 @@ class loginController extends GetxController{
   void handleRadioValueChanged(val) {
     Value.value = val;
   }
-
+  var data;
   void SignIn()async{
     String _username = username.text.trim().toString();
     String _password = password.text.trim().toString();
@@ -34,13 +34,23 @@ class loginController extends GetxController{
 
       if(response.statusCode==200){
        // print("method called");
-        var data = jsonDecode(response.body.toString());
-        SharedPreferences homesp =await SharedPreferences.getInstance();
-        homesp.setString("username",_username );
-        homesp.setString("password",_password );
-        Get.to(homeScreen());
+        data = jsonDecode(response.body.toString());
 
+        Get.to(homeScreen());
       }
+      else if(response.statusCode ==403 && data['code']=='incorrect_password'){
+        Get.snackbar("Error","Invalid password, please enter a valid password",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.grey,
+            colorText: Colors.black);
+      }
+      else if (response.statusCode ==403 && data["code"] == "invalid_username") {
+        Get.snackbar("Error","Invalid email, please enter a valid email address",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.grey,
+            colorText: Colors.black);
+      }
+      //print(data["code"]);
     }catch(e){
       print(e.toString()+"errorrrrrrrrrrrrrrrrrrrrrrrr");
       Get.snackbar(e.toString(),"SomeThing went wrong",

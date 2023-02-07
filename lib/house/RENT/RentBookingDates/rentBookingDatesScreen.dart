@@ -8,14 +8,24 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 import 'package:veka/house/RENT/rentPayment/rentPaymnet.dart';
 
+import '../rentPayment/rentPatmentController.dart';
+
 
 class rentBookingDatesScreen extends StatelessWidget {
-  const rentBookingDatesScreen({Key? key}) : super(key: key);
+  var extraservices;
+  var extraservicescharges;
+  var houseprice;
+  var id;
+   rentBookingDatesScreen(  {Key? key,required this.extraservices, required this.extraservicescharges
+     ,required this.houseprice, required this.id }) : super(key: key );
 
   @override
   Widget build(BuildContext context) {
-    var checkIndate = DateTime.now().obs;
-    var checkOutdate = DateTime.now().obs;
+
+    rentPaymentController rpc = Get.put(rentPaymentController());
+    RxList<dynamic> rxisSelected=[].obs;
+    rxisSelected.value = RxList.generate(extraservices.length, (_) => false);
+
     return  SingleChildScrollView(
       child:  Column(
           children: [
@@ -76,13 +86,11 @@ class rentBookingDatesScreen extends StatelessWidget {
                         color: Colors.grey.shade400,
                         child:TimePickerSpinnerPopUp(
                           mode: CupertinoDatePickerMode.date,
-                          initTime: checkIndate.value,
-                          minTime: DateTime.now().subtract(const Duration(days: 10)),
-                          maxTime: DateTime.now().add(const Duration(days: 10)),
+                          initTime: rpc.checkIndate.value,
                           barrierColor: Colors.black12, //Barrier Color when pop up show
                           onChange: (dateTime) {
                             // Implement your logic with select dateTime
-                            checkIndate.value = dateTime;
+                            rpc.checkIndate.value = dateTime;
                           },
 
                         ),
@@ -108,13 +116,13 @@ class rentBookingDatesScreen extends StatelessWidget {
                         color: Colors.grey.shade400,
                         child:TimePickerSpinnerPopUp(
                           mode: CupertinoDatePickerMode.date,
-                          initTime: checkOutdate.value,
-                          minTime: DateTime.now().subtract(const Duration(days: 10)),
-                          maxTime: DateTime.now().add(const Duration(days: 10)),
+                          initTime: rpc.checkOutdate.value.add(Duration(days: 3)),
+                          minTime:  rpc.checkOutdate.value.add(Duration(days: 3)),
                           barrierColor: Colors.black12, //Barrier Color when pop up show
                           onChange: (dateTime) {
                             // Implement your logic with select dateTime
-                            checkOutdate.value = dateTime;
+                            rpc.checkOutdate.value = dateTime;
+                            print(rpc.checkOutdate.value.toString());
                           },
 
                         ),
@@ -124,11 +132,71 @@ class rentBookingDatesScreen extends StatelessWidget {
                 ],
               ),
             ),
+            //
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text("Extra Services",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Get.width * 0.045
+                ),),
+            ),
+            //
+            for(var i = 0 ; i < extraservices.length;i++)...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Container(
+                  width: Get.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: Get.width * 0.5,
+                        child: Obx(
+                              ()=> ListTile(
+                            title: Text(extraservices[i].toString(),
+                              style: TextStyle(
+                                  fontSize: Get.width * 0.04
+                              ),
+                            ),
+                            leading:Checkbox(
+                                value:rxisSelected[i],
+                                onChanged:(val){
+                                  // print(val);
+                                  rxisSelected[i] = val!;
+                                  /*print(val);
+                                      bsc.handleRadioValueChanged(val);*/
+                                }
+                            ),
+                          ),
+                        ),
+                      ),
+                      Text("\$${extraservicescharges[i].toString()}",
+                        style: TextStyle(
+                            fontSize: Get.width * 0.04
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+            //
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 25),
               child: GestureDetector(
                 onTap: (){
-                  Get.to(rentPayment());
+                 // rpc.totalhomePrice(rxisSelected, extraservicescharges, houseprice).toString();
+                 // print(houseprice);
+                 // print(;
+                 // print(rpc.total.value);
+                 /* Get.to(rentPayment(),
+                  arguments: {
+                    "totalprice":rpc.totalhomePrice(rxisSelected, extraservicescharges, houseprice).toString(),
+                    "id":id
+                  });*/
+                  print(rpc.totalhomePrice(rxisSelected, extraservicescharges, houseprice).toString());
                 },
                 child: Container(
                   width: Get.width,
@@ -143,7 +211,9 @@ class rentBookingDatesScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
+            //
+
         ]
             ),
 

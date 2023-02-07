@@ -21,7 +21,10 @@ class rentPayment extends StatelessWidget {
     var _value = false.obs;
     void _handleRadioValueChanged(val) {
       _value.value = val;
+
+
     }
+    var data = Get.arguments;
     List<Step>step=[
       Step(
 
@@ -342,7 +345,9 @@ class rentPayment extends StatelessWidget {
             Get.to(RetReviewSubmission(),
               arguments: {
               "adultcount":rpc.adultCount.value,
-                "childcount":rpc.childrenCount.value
+                "childcount":rpc.childrenCount.value,
+                "totalprice":data["totalprice"],
+                "id":data["id"]
               }
             );
           },

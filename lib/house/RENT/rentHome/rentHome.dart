@@ -82,14 +82,20 @@ class rentHome extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
                       onTap: (){
+                       //print(snapshot.data![index]["meta_data"][12]["value"]);
                        // print(snapshot.data[index]["meta_data"][18]["value"][0].toString());
-                        Get.to(Get.to(detailScreen(),
+                       Get.to(Get.to(detailScreen(),
                         arguments: {
-                          "totalrooms":snapshot.data[index]["meta_data"][18]["value"][0].toString(),
-                          "houseimage":snapshot.data[index]["images"][0]["src"],
+                          "totalrooms":snapshot.data![index]["meta_data"][18]["value"][0].toString(),
+                          "houseimage":snapshot.data![index]["images"][0]["src"],
                           "housename":snapshot.data[index]["name"].toString(),
-                          "houseprice":snapshot.data[index]["price"],
-                          "description":snapshot.data[index]["description"]
+                          "houseprice":snapshot.data![index]["price"],
+                          "description":snapshot.data[index]["description"],
+                          "location":snapshot.data![index]["meta_data"][18]["value"][1],
+                          "facilities":snapshot.data![index]["meta_data"][22]["value"],
+                          "extraservices":snapshot.data![index]["meta_data"][9]["value"],
+                          "extraservicescharges":snapshot.data![index]["meta_data"][12]["value"],
+                          "id":snapshot.data![index]["id"]
                         }));
                       },
                       child: Container(
@@ -171,22 +177,26 @@ class rentHome extends StatelessWidget {
                                     ),
                                     //------------
 
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: Text("\$${snapshot.data[index]["price"]}",
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                          fontSize: Get.width * 0.045,
-                                        ),),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 10),
+                                      child: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text("\$${snapshot.data[index]["price"]}",
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: Get.width * 0.045,
+                                          ),),
+                                      ),
                                     ),
                                     //--
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 4),
+                                      padding: const EdgeInsets.symmetric(vertical: 15),
                                       child: Row(
                                         children: [
                                           Icon(CupertinoIcons.location_solid,color: Colors.black,),
                                           Expanded(
-                                            child: Text('snapshot.data![index]["attributes"][1]["options"].toString()',
+                                            child: Text(
+                                              snapshot.data![index]["meta_data"][18]["value"][1],
                                             softWrap: true,),
                                           )
                                         ],

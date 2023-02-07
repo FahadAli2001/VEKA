@@ -11,10 +11,12 @@ class rentStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var data = Get.arguments;
     List<Step>step=[
       Step(
         isActive: true,
-        title: Text(""), content: rentBookingDatesScreen(),),
+        title: Text(""), content: rentBookingDatesScreen( extraservices:  data["extraservices"],
+          extraservicescharges:data["extraservicescharges"],houseprice: data["houseprice"],id:data["id"]),),
       Step(title: Text(""), content: Text(""),
       ),
       Step(title: Text(""), content: Text(""),),

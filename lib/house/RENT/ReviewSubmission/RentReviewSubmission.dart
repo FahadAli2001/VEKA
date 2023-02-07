@@ -233,7 +233,7 @@ class RetReviewSubmission extends StatelessWidget {
                           fontSize: Get.width * 0.04
                       ),
                     ),
-                    Text("\$50",
+                    Text("\$${data["totalprice"]}",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.green,
@@ -267,7 +267,9 @@ class RetReviewSubmission extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 20),
         child: GestureDetector(
           onTap: (){
-            Get.to(bookingSucessfully());
+            print(data["id"]);
+            //print(data["totalprice"]);
+          //  Get.to(bookingSucessfully());
           },
           child: Container(
             width: Get.width,

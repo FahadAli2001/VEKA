@@ -11,6 +11,7 @@ class roomDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var data = Get.arguments;
     final PageController _pageController =
     PageController();
 
@@ -46,7 +47,14 @@ class roomDetails extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 8),
             child: InkWell(
               onTap: (){
-                Get.to(rentStepper());
+               // print(data["houseprice"]);
+               Get.to(rentStepper(),
+                arguments: {
+                  "extraservices":data["extraservices"],
+                  "extraservicescharges":data["extraservicescharges"],
+                  "houseprice":data["houseprice"],
+                  "id":data["id"]
+                });
               },
               child: Container(
                 decoration: BoxDecoration(

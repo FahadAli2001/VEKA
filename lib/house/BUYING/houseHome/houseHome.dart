@@ -10,6 +10,7 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:veka/house/BUYING/houseHome/sellHomeController.dart';
 import 'package:veka/house/RENT/rentHome/rentHome.dart';
 
+import '../../Profile/Profile.dart';
 import '../../RENT/HouseDetails/detailScreen.dart';
 import '../../RENT/rentHome/rentHomeController.dart';
 import '../HouseDetails/houseDetails.dart';
@@ -43,10 +44,15 @@ class houseHome extends StatelessWidget {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 20),
-            child: CircleAvatar(
-              backgroundColor: Colors.white70,
-              child: Icon(CupertinoIcons.person_alt,
-                color: Colors.black,),
+            child: InkWell(
+              onTap: (){
+                Get.to(HomeProfileScreen());
+              },
+              child: CircleAvatar(
+                backgroundColor: Colors.white70,
+                child: Icon(CupertinoIcons.person_alt,
+                  color: Colors.black,),
+              ),
             ),
           )
         ],
