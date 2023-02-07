@@ -38,18 +38,13 @@ class loginController extends GetxController{
 
         Get.to(homeScreen());
       }
-      else if(response.statusCode ==403 && data['code']=='incorrect_password'){
-        Get.snackbar("Error","Invalid password, please enter a valid password",
+      else if(response.statusCode ==403){
+        Get.snackbar("Error","Authentication failed, please login again",
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.grey,
             colorText: Colors.black);
       }
-      else if (response.statusCode ==403 && data["code"] == "invalid_username") {
-        Get.snackbar("Error","Invalid email, please enter a valid email address",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.grey,
-            colorText: Colors.black);
-      }
+
       //print(data["code"]);
     }catch(e){
       print(e.toString()+"errorrrrrrrrrrrrrrrrrrrrrrrr");
