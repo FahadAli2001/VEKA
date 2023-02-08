@@ -1,15 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
-import '../bookingSuccessfully/bookingSccessfully.dart';
+import '../rentPayment/rentPatmentController.dart';
 
 class RetReviewSubmission extends StatelessWidget {
   const RetReviewSubmission({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    rentPaymentController rpc = Get.put(rentPaymentController());
 
     var data = Get.arguments;
 
@@ -267,7 +269,10 @@ class RetReviewSubmission extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 20),
         child: GestureDetector(
           onTap: (){
-            print(data["id"]);
+            print("tapp");
+            //print(data["isSelected"]);
+            rpc.requestForBuyHouse(data["id"],data["isSelected"]);
+            //print(data["id"]);
             //print(data["totalprice"]);
           //  Get.to(bookingSucessfully());
           },

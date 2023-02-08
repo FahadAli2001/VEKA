@@ -116,8 +116,8 @@ class rentBookingDatesScreen extends StatelessWidget {
                         color: Colors.grey.shade400,
                         child:TimePickerSpinnerPopUp(
                           mode: CupertinoDatePickerMode.date,
-                          initTime: rpc.checkOutdate.value.add(Duration(days: 3)),
-                          minTime:  rpc.checkOutdate.value.add(Duration(days: 3)),
+                          //initTime: rpc.checkOutdate.value.add(Duration(days: 3)),
+                          //minTime:  rpc.checkOutdate.value.add(Duration(days: 3)),
                           barrierColor: Colors.black12, //Barrier Color when pop up show
                           onChange: (dateTime) {
                             // Implement your logic with select dateTime
@@ -191,12 +191,13 @@ class rentBookingDatesScreen extends StatelessWidget {
                  // print(houseprice);
                  // print(;
                  // print(rpc.total.value);
-                 /* Get.to(rentPayment(),
+                  Get.to(rentPayment(),
                   arguments: {
+                    "isSelected":rxisSelected.value,
                     "totalprice":rpc.totalhomePrice(rxisSelected, extraservicescharges, houseprice).toString(),
                     "id":id
-                  });*/
-                  print(rpc.totalhomePrice(rxisSelected, extraservicescharges, houseprice).toString());
+                  });
+                 // print(rpc.totalhomePrice(rxisSelected, extraservicescharges, houseprice).toString());
                 },
                 child: Container(
                   width: Get.width,

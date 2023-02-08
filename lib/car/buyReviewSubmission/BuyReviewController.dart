@@ -47,7 +47,7 @@ class BuyReviewController extends GetxController{
      // print("called");
      // print(carid);
 
-       print(response);
+      // print(response);
         Get.defaultDialog(
             buttonColor: Colors.green,
             title: "",

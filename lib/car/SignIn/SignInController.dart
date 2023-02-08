@@ -32,18 +32,37 @@ class SignInController extends GetxController{
 
       if(response.statusCode==200){
         //print("method called");
-        var data = jsonDecode(response.body.toString());
+        //print("login");
+        var data = jsonDecode(response.body);
         if(isrem.value == true){
           SharedPreferences sp =await SharedPreferences.getInstance();
           sp.setString("username",_username );
           sp.setString("password",_password );
           //print(sp.getString("username" ));
           Get.off(DashboardScreen());
-        }else{
+        }
+
+         // dynamic error =jsonDecode(response.body);
+          /*if (data["error"] == "incorrect_email") {
+            print("Incorrect email. Please try again.");
+          } else if (data["error"] == "incorrect_password") {
+            print("Incorrect password. Please try again.");
+          }*/
+         /* Get.snackbar("Error","Authentication failed, please login again",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.grey,
+              colorText: Colors.black);*/
+
+        else{
           Get.to(DashboardScreen());
         }
 
 
+      } else if(response.statusCode ==403){
+        Get.snackbar("Error","Authentication failed, please login again",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.grey,
+            colorText: Colors.black);
       }
     }catch(e){
       print(e.toString()+"errorrrrrrrrrrrrrrrrrrrrrrrr");

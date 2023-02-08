@@ -48,7 +48,7 @@ class buyingMeetingController extends GetxController{
       // Post data using the "products" endpoint
       var response = await wooCommerceAPI.postAsync("orders",data);
 
-      print(meetingdate.value.toString());
+      //print(meetingdate.value.toString());
      // print(response);
       Get.to(meetingSuccessScreen());
 

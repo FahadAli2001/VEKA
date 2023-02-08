@@ -38,16 +38,17 @@ class loginController extends GetxController{
 
         Get.to(homeScreen());
       }
-      else if(response.statusCode ==403){
+     /* else if(response.statusCode ==403){
         Get.snackbar("Error","Authentication failed, please login again",
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.grey,
             colorText: Colors.black);
-      }
+      }*/
+
 
       //print(data["code"]);
     }catch(e){
-      print(e.toString()+"errorrrrrrrrrrrrrrrrrrrrrrrr");
+      //print(e.toString()+"errorrrrrrrrrrrrrrrrrrrrrrrr");
       Get.snackbar(e.toString(),"SomeThing went wrong",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.grey,

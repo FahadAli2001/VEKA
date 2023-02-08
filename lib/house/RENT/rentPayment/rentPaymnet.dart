@@ -346,8 +346,9 @@ class rentPayment extends StatelessWidget {
               arguments: {
               "adultcount":rpc.adultCount.value,
                 "childcount":rpc.childrenCount.value,
-                "totalprice":data["totalprice"],
-                "id":data["id"]
+                "totalprice":data!["totalprice"],
+                "id":data!["id"],
+                "isSelected":data["isSelected"]
               }
             );
           },

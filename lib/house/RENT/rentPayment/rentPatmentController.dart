@@ -4,11 +4,14 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
 
+import '../dashboard/dashboard.dart';
+
 class rentPaymentController extends GetxController{
 
   var checkIndate = DateTime.now().obs;
   var checkOutdate = DateTime.now().obs;
   var total = 0.obs;
+
 
   var adultCount = 1.obs;
   var childrenCount = 1.obs;
@@ -63,45 +66,104 @@ class rentPaymentController extends GetxController{
     var difference = checkOutdate.value.difference(checkIndate.value).obs;
     var nofdays =  difference.value.inDays;
 
-    total.value = int.parse(homeprice)  *nofdays ;
+     total.value = int.parse(homeprice)  * nofdays ;
    // total.value = total.value * nofdays;
-    print(total.value);
+    //print(total.value);
     for (var entry in isSelected.asMap().entries) {
       if (entry.value == true) {
         print('Index ${entry.key} has value of true');
         total.value += (int.parse(charges[entry.key]));
       }
-
     }
     return total.value;
   }
 
-  Future requestForBuyHouse(houseid) async {
+  Future requestForBuyHouse(houseid ,List isSelected) async {
     SharedPreferences homesignup =await SharedPreferences.getInstance();
 
     Map<String, dynamic> data = {
       "status": "processing",
-      "currency": "USD",
-      "date_created": checkIndate.value.toString(),
-      "date_modified": checkOutdate.value.toString(),
       "billing": {
-        "first_name": "",//homesignup.getString("username")
-        "last_name":"",
-        "address_1": "karachi",
-        "address_2": "karachi",
-        "city": "karachi",
-        "state": "CA",
-        "country": "AE",
-        "email":  "test@gmail.com",//homesignup.getString("email")
-        "phone": "123456789"
+        "first_name": "test",
+        "last_name": "test1234",
+        "company": "23",
+        "address_1": "123",
+        "address_2": "123",
+        "city": "123",
+        "state": "SD",
+        "postcode": "76550",
+        "country": "PK",
+        "email": "13@gmail.com",
+        "phone": "74643"
       },
-      "payment_method": "cod",
-      "payment_method_title": "Cash on delivery",
+      "payment_method": "bacs",
+      "payment_method_title": "Direct Bank Transfer",
+      "created_via": "rest-api",
       "line_items": [
         {
           "product_id": houseid,
-          "quantity": "1"
+          "quantity": 1,
+          "total": total.value.toString(),
+          "meta_data": [
+            {
+              "key": "ovacrs_pickup_date",
+              "value": checkIndate.value.toString(),
+              "display_key": "Pick-up date"
+            },
+            {
+              "key": "ovacrs_pickoff_date",
+              "value": checkOutdate.value.toString(),
+              "display_key": "Drop-off date"
+            },
+            {
+              "key": "ovacrs_total_days",
+              "value": ""
+
+            },
+            {
+              "key": "ovacrs_price_detail",
+              "value": ""
+            },
+            {
+              "key": "Snacks",
+              "value": isSelected[0].toString()
+            },
+            {
+              "key": "Beverages",
+              "value": isSelected[1].toString()
+            },
+            {
+              "key": "rental_type",
+              "value": "day"
+            },
+            {
+              "key": "ovacrs_deposit_amount_product",
+              "value": ""
+
+            },
+            {
+              "key": "ovacrs_remaining_amount_product",
+              "value": "0"
+
+            },
+            {
+              "key": "id_vehicle",
+              "value": ""
+
+            },
+            {
+              "key": "ovacrs_quantity",
+              "value": "1"
+
+            }
+          ]       }   ],
+      "shipping_lines": [
+        {
+          "method_id": "flat_rate",
+          "method_title": "Flat Rate",
+          "total": ""
         }
+
       ]
     };
     //print("called");
@@ -113,10 +175,21 @@ class rentPaymentController extends GetxController{
 
       // Post data using the "products" endpoint
       var response = await wooCommerceAPI.postAsync("orders",data);
+      Get.defaultDialog(
+          buttonColor: Colors.green,
+          title: "",
+          //DashboardScreen()
+          middleText: "Your booking has been successfully completed",
+          onConfirm: (){
+           Get.to(dashboard());
+            //Get.to(DashboardScreen());
+          }
+      );
 
      // print(meetingdate.value.toString());
       // print(response);
       //Get.to(meetingSuccessScreen());
+      //print("done");
 
 
     }catch(e){
