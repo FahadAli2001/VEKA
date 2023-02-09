@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,15 +44,17 @@ class RentCarDetails extends StatelessWidget {
         child: GestureDetector(
           onTap: (){
            //print(data["extraservices"][1].toString());
+
             Get.to(bookingScreen(),arguments:
             {"carimage": data!["carimage"].toString(),
               "carname":data!["carname"].toString(),
               "carprice":data!["carprice"].toString(),
               "extraservices":data!["extraservices"],
               "extraservicescharges":data!["extraservicescharges"],
-              "id":data!["id"]
+              "id":data["id"]
             }
             );
+          /* */
           },
           child: Container(
             width: Get.width * 0.5,

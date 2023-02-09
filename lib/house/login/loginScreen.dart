@@ -82,28 +82,38 @@ class loginSxreen extends StatelessWidget {
                   //
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-                    child: TextFormField(
-                        obscureText: lc.isHidepass.value,
-                        validator: (String? val){
-                          if(val!.isEmpty){
-                            return "Enter password";
-                          }else if (val!.length < 8){
-                            return "Enter mini 8 digit password";
-                          }
-                        },
-                        style: TextStyle(
-                            height: 0.5
-                        ),
-                        controller: lc.password,
-                        decoration: InputDecoration(
-                          errorStyle: TextStyle(
-                            color: Colors.red
+                    child: Obx(()=>
+                       TextFormField(
+                          obscureText: lc.isHidepass.value,
+                          validator: (String? val){
+                            if(val!.isEmpty){
+                              return "Enter password";
+                            }
+                          },
+                          style: TextStyle(
+                              height: 0.5
                           ),
-                            hintText: "Password",
-                            labelText: "Password",
-                            suffixIcon: Icon(CupertinoIcons.eye_slash_fill),
-                            border: OutlineInputBorder()
-                        )
+                          controller: lc.password,
+                          decoration: InputDecoration(
+                            errorStyle: TextStyle(
+                              color: Colors.red
+                            ),
+                              hintText: "Password",
+                              labelText: "Password",
+                              suffixIcon: InkWell(
+                                onTap: (){
+                                  if(lc.isHidepass.value == true){
+                                    lc.isHidepass.value = false;
+                                  }else{
+                                    lc.isHidepass.value = true;
+                                  }
+                                },
+                                  child: (lc.isHidepass.value == true)?Icon(CupertinoIcons.eye_slash_fill):
+                                      Icon(CupertinoIcons.eye)
+                              ),
+                              border: OutlineInputBorder()
+                          )
+                      ),
                     ),
                   ),
                   //

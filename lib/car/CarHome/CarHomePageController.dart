@@ -32,7 +32,7 @@ class CarHomePageController extends GetxController{
     }
     catch(e){
       print(e);
-      Get.snackbar("Error", "something went wrong",
+      Get.snackbar("Error", e.toString(),
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.grey
       );
@@ -79,7 +79,7 @@ class CarHomePageController extends GetxController{
       selldata = await wooCommerceAPI.getAsync("products?type=simple");
     }catch(e){
       print("sell api : ${e.toString()}");
-      Get.snackbar("Error", "Something went wrong",
+      Get.snackbar("Error", e.toString(),
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.grey);
     }

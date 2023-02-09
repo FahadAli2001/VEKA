@@ -169,13 +169,7 @@ class SignUp extends StatelessWidget {
                                 ):Icon(CupertinoIcons.eye)
                             ),
                             border: OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green)
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green)
-                            ),
-                            focusColor: Colors.green
+
                         )
                     ),
                   ),

@@ -80,7 +80,11 @@ class CarHomePage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 25),
                 child: TextField(
+                  style: TextStyle(
+                    height:  0.5
+                  ),
                   decoration: InputDecoration(
+
                       prefixIcon: Icon(CupertinoIcons.search),
                       prefixIconColor: Colors.grey,
                       hintText: "Find any car",

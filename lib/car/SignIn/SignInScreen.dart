@@ -39,7 +39,7 @@ class SignInScreen extends StatelessWidget {
                           ),
                           hintText: "User Id",
                           labelText: "User Id",
-                          suffixIcon: Icon(CupertinoIcons.mail),
+                          suffixIcon: Icon(CupertinoIcons.person),
                         border: OutlineInputBorder()
                       ),
                         validator: (val) {
@@ -50,28 +50,40 @@ class SignInScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-                  child: TextFormField(
-                    style: TextStyle(
-                      height: 0.5
+                  child: Obx(()=>
+                     TextFormField(
+                      style: TextStyle(
+                        height: 0.5
+                      ),
+                        obscureText: sic.isHidepass.value,
+                        validator: (String? val){
+                          if(val!.isEmpty){
+                            return "Enter password";
+                          }else if (val!.length < 8){
+                            return "Enter mini 8 digit password";
+                          }
+                        },
+                        controller: sic.password,
+                        decoration: InputDecoration(
+                            errorStyle: TextStyle(
+                                color: Colors.red
+                            ),
+                            hintText: "Password",
+                            labelText: "Password",
+                            suffixIcon: InkWell(
+                              onTap: (){
+                                if(sic.isHidepass.value == true){
+                                  sic.isHidepass.value = false;
+                                }else{
+                                  sic.isHidepass.value = true;
+                                }
+                              },
+                                child: (sic.isHidepass.value == true)?Icon(CupertinoIcons.eye_slash_fill):
+                                    Icon(CupertinoIcons.eye)
+                            ),
+                            border: OutlineInputBorder()
+                        )
                     ),
-                      obscureText: sic.isHidepass.value,
-                      validator: (String? val){
-                        if(val!.isEmpty){
-                          return "Enter password";
-                        }else if (val!.length < 8){
-                          return "Enter mini 8 digit password";
-                        }
-                      },
-                      controller: sic.password,
-                      decoration: InputDecoration(
-                          errorStyle: TextStyle(
-                              color: Colors.red
-                          ),
-                          hintText: "Password",
-                          labelText: "Password",
-                          suffixIcon: Icon(CupertinoIcons.eye_slash_fill),
-                          border: OutlineInputBorder()
-                      )
                   ),
                 ),
                 Obx(
@@ -118,7 +130,7 @@ class SignInScreen extends StatelessWidget {
                         ),),
                         onPressed: (){
                         if(_formKey.currentState!.validate()){
-                          print("tapp");
+                         // print("tapp");
                           sic.SignIn();
                         }
                         }),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:veka/SplashScreen.dart';
-
-void main() {
+import 'dart:ui';
+void main() async{
+  ErrorWidget.builder = (FlutterErrorDetails details) => Container();
   runApp(const MyApp());
 }
 
