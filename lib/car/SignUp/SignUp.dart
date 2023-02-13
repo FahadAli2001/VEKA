@@ -205,15 +205,17 @@ class SignUp extends StatelessWidget {
                     width: Get.width,
                     child: CupertinoButton(
                         color: Colors.black,
-                        child: Text("Sign Up",
+                        child: Text("Sign - Up",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: width * 0.05
                           ),),
                         onPressed: (){
+
                           if(_formKey.currentState!.validate()){
-                            suc.checkIsAgree();
                             print("tap");
+                            suc.checkIsAgree();
+                            //suc.UserSignUp();
                           }
                         }),
                   ),
@@ -236,9 +238,14 @@ class SignUp extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        FaIcon(FontAwesomeIcons.facebook,
-                          color: Colors.grey,
-                          size: SocialAppIconSize,),
+                        InkWell(
+                          onTap: (){
+
+                          },
+                          child: FaIcon(FontAwesomeIcons.facebook,
+                            color: Colors.grey,
+                            size: SocialAppIconSize,),
+                        ),
                         FaIcon(FontAwesomeIcons.instagram,
                           color: Colors.grey,
                           size: SocialAppIconSize,),

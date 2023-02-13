@@ -10,6 +10,7 @@ class HouseSignUpController extends GetxController{
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController confirmpassword = TextEditingController();
+  var accessToken;
 
   RxBool isHidepass = true.obs;
   var isHideconpass = true.obs;
@@ -38,7 +39,7 @@ class HouseSignUpController extends GetxController{
 
     }
   }
-
+  //https://vekarealestate.technopreneurssoftware.com/wp-json/wp/v2/users
   void SignUp()async{
     SharedPreferences homesignup =await SharedPreferences.getInstance();
     String _username = username.text.toString();
@@ -47,11 +48,13 @@ class HouseSignUpController extends GetxController{
     String _conpassword = confirmpassword.text.toString();
 
     try{
+      getAcessToken();
+      //print(accessToken);
       var response =await http.post(
           Uri.parse("https://vekarealestate.technopreneurssoftware.com/wp-json/wp/v2/users"),
           headers: {
             'Authorization':
-            'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Zla2FyZWFsZXN0YXRlLnRlY2hub3ByZW5ldXJzc29mdHdhcmUuY29tIiwiaWF0IjoxNjc1MTU2OTcxLCJuYmYiOjE2NzUxNTY5NzEsImV4cCI6MTY3NTc2MTc3MSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoxLCJkZXZpY2UiOiIiLCJwYXNzIjoiY2IwMzRhNjc3YTEwYjEyY2NjZjJlNDExMDNiNGM5ZjgifX19.EUnqdbnzA1IPmqi14GF-YE4taKRqfgsmtsZVvNtamr4',
+            'Bearer $accessToken',
           },
           body: {
             "username":_username,
@@ -71,16 +74,49 @@ class HouseSignUpController extends GetxController{
         Get.snackbar("","User Created Successfully",
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.grey,
-            colorText: Colors.black);//print(_email);
+            colorText: Colors.black);
+      }else {
+        Map<String, dynamic> error = jsonDecode(response.body);
+        String errorCode = error["code"];
+        if (errorCode == "existing_user_login") {
+          Get.snackbar("Error", "Sorry, that username already exists!",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.grey,
+              colorText: Colors.black);
+        }else if (errorCode == "existing_user_email"){
+          Get.snackbar("Error", "Sorry, that email address is already used!",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.grey,
+              colorText: Colors.black);
+        }
       }
     }catch(e){
       print(e.toString()+"errorrrrrrrrrrrrrrrrrrrrrrrr");
-      Get.snackbar("","SomeThing went wrong",
+      Get.snackbar("Error","SomeThing went wrong",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.grey,
           colorText: Colors.black);//print(_email);
     }
 
+  }
+  Future getAcessToken ()async{
+    try{
+      var response =await http.post(
+          Uri.parse("https://vekarealestate.technopreneurssoftware.com/wp-json/jwt-auth/v1/token"),
+          body: {
+            "username":"cveru",
+            "password":"I&Ljfv2MfW:wc"
+          }
+      );
+      if(response.statusCode == 200){
+        var data = jsonDecode(response.body.toString());
+        accessToken = data["data"]['token'];
+
+      }
+    }catch (e){
+      print("access token" + e.toString());
+    }
+    return accessToken;
   }
 
 
