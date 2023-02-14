@@ -156,7 +156,7 @@ class SignInScreen extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: (){
-                            Get.to(DashboardScreen());
+                            sic.signInWithFacebook();
                           },
                           child: FaIcon(FontAwesomeIcons.facebook,
                           color: Colors.grey,

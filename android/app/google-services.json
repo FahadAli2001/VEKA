@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "386333287452",
+    "project_id": "veka-4752f",
+    "storage_bucket": "veka-4752f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386333287452:android:e53c510747a724d33b6bd9",
+        "android_client_info": {
+          "package_name": "com.example.veka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "386333287452-du6vd7n5u89fpn71qk1v7gc8ftet6aef.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoFU260TQ1nPGurZWpto8oT7mD7liwi9I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "386333287452-du6vd7n5u89fpn71qk1v7gc8ftet6aef.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

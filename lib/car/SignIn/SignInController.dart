@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:http/http.dart'as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Dashboard/dashboardScreen.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class SignInController extends GetxController{
   TextEditingController username = TextEditingController();
@@ -71,5 +74,25 @@ class SignInController extends GetxController{
           backgroundColor: Colors.grey,
           colorText: Colors.black);
     }
+  }
+
+  void signInWithFacebook ()async{
+    try{
+
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+
+      if (loginResult.status == LoginStatus.success) {
+        var cd_accessToken = loginResult.accessToken;
+        final userInfo = await FacebookAuth.instance.getUserData();
+        //_userData = userInfo;
+      }
+
+   /*   final LoginResult result = await FacebookAuth.instance.login();
+      final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(result.accessToken!.token);
+      return await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);*/
+    }catch (e){
+      print("error"+e.toString());
+    }
+
   }
 }
