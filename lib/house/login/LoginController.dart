@@ -13,9 +13,9 @@ class loginController extends GetxController{
   TextEditingController password = TextEditingController();
   RxBool isHidepass = true.obs;
 
-  var Value = false.obs;
+  var isremember = false.obs;
   void handleRadioValueChanged(val) {
-    Value.value = val;
+    isremember.value = val;
   }
   var data;
   void SignIn()async{
@@ -33,20 +33,39 @@ class loginController extends GetxController{
 
       if (response.statusCode == 200) {
         data = jsonDecode(response.body.toString());
-        Get.to(homeScreen());
-      }else {
+        if(isremember.value == true){
+          SharedPreferences homesignin =await SharedPreferences.getInstance();
+          homesignin.setString("email", _username);
+          print(homesignin.getString("email"));
+          Get.to(homeScreen());
+        }
+        else{
+          Get.to(homeScreen());
+        }
+      }else if(response.statusCode == 403){
         Map<String, dynamic> error = jsonDecode(response.body);
         String errorCode = error["code"];
-        if (errorCode == "invalid_username") {
-          Get.snackbar("Error", "The username is incorrect.",
+        if (errorCode == "invalid_email") {
+          Get.snackbar("Error", "The email is incorrect.",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);
-        } else {
+        } else if(errorCode == "incorrect_password") {
           Get.snackbar("Error", "Wrong password entered",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);
+        }else if(errorCode == "incorrect_password" && errorCode == "invalid_email"){
+          Get.snackbar("Error", "Wrong email and Password",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.grey,
+              colorText: Colors.black);
+        }else{
+          print(response.statusCode);
+         /* Get.snackbar("Error", "Something Went Wrong",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.grey,
+              colorText: Colors.black);*/
         }
       }
 

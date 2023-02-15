@@ -4,11 +4,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:like_button/like_button.dart';
-
+import 'package:html/parser.dart';
 
 import '../bookingScreen/bookingScreen.dart';
 
@@ -18,6 +17,8 @@ class RentCarDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var data = Get.arguments;
+    var description = parse(data["cardescription"]);
+    String parsedstring = description.documentElement!.text;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -71,6 +72,7 @@ class RentCarDetails extends StatelessWidget {
           ),
         ),
       ),
+
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
         child: ListView(
@@ -146,16 +148,25 @@ class RentCarDetails extends StatelessWidget {
                   ),),
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Align(
                 alignment: Alignment.topLeft,
-                child: Text(data!["cardescription"].toString(),
+                //data!["cardescription"].toString()
+
+                child : Text(  parsedstring.toString(),
                   style: TextStyle(
                       color: Colors.grey.shade700,
                       fontSize: Get.height * 0.02
                   ),
                 ),
+                /*Text(  description.toString(),
+                  style: TextStyle(
+                      color: Colors.grey.shade700,
+                      fontSize: Get.height * 0.02
+                  ),
+                ),*/
               ),
             ),
             Align(

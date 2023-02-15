@@ -14,6 +14,7 @@ import '../../Profile/Profile.dart';
 import '../../RENT/HouseDetails/detailScreen.dart';
 import '../../RENT/rentHome/rentHomeController.dart';
 import '../HouseDetails/houseDetails.dart';
+import '../home/homeScreen.dart';
 
 class houseHome extends StatelessWidget {
   const houseHome({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class houseHome extends StatelessWidget {
         backgroundColor: Colors.white70,
         leading: IconButton(
           onPressed: (){
-            Get.to(ChooseOption());
+            Get.to(homeScreen());
           },
           icon: Icon(CupertinoIcons.line_horizontal_3_decrease,
             color: Colors.black,

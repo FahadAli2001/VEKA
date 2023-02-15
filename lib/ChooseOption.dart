@@ -45,8 +45,8 @@ class ChooseOption extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 2),
             child: InkWell(
               onTap: ()async {
-               SharedPreferences homesp =await SharedPreferences.getInstance();
-               (homesp.getString("username")!=null)?Get.to(homeScreen()):Get.to(loginSxreen());
+               SharedPreferences homesp = await SharedPreferences.getInstance();
+               (homesp.getString("email")!=null)?Get.to(homeScreen()):Get.to(loginSxreen());
               },
               child: Center(
                 child: Container(

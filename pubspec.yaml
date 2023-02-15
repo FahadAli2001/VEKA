@@ -37,6 +37,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   get:
+  flutter_html:
+  html: ^0.15.1
   font_awesome_flutter:
   flutter_awesome_buttons:
   animated_splash_screen:

@@ -37,14 +37,18 @@ class SignInScreen extends StatelessWidget {
                           errorStyle: TextStyle(
                               color: Colors.red
                           ),
-                          hintText: "User Id",
-                          labelText: "User Id",
-                          suffixIcon: Icon(CupertinoIcons.person),
+                          hintText: "Email",
+                          labelText: "Email",
+                          suffixIcon: Icon(Icons.email),
                         border: OutlineInputBorder()
                       ),
                         validator: (val) {
                           if (val!.isEmpty) {
-                            return "Please enter User-name";
+                            return "Please enter Email";
+                          }else if(!val.contains("@")){
+                            return "Invalid Email";
+                          }else if(val != val.toLowerCase()){
+                            return 'Email cannot contain uppercase letters';
                           }
                         }),
                 ),
@@ -60,7 +64,7 @@ class SignInScreen extends StatelessWidget {
                           if(val!.isEmpty){
                             return "Enter password";
                           }else if (val!.length < 8){
-                            return "Enter mini 8 digit password";
+                            return "Enter minimum 8 digit password";
                           }
                         },
                         controller: sic.password,

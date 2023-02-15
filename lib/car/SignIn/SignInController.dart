@@ -20,14 +20,15 @@ class SignInController extends GetxController{
     // print(isrem.value);
   }
   void SignIn()async{
-    String _username = username.text.trim().toString();
+
+    String _email = username.text.trim().toString();
     String _password = password.text.trim().toString();
 
     try{
       var response =await http.post(
           Uri.parse("https://vekaautomobile.technopreneurssoftware.com/wp-json/jwt-auth/v1/token"),
           body: {
-            "username":_username,
+            "username":_email,
             "password":_password
           }
       );
@@ -35,38 +36,47 @@ class SignInController extends GetxController{
       if(response.statusCode==200) {
        //
 
-        //print("method called");
-        //print("login");
+
         var data = jsonDecode(response.body);
         if (isrem.value == true) {
-          //print("login");
+          //
           SharedPreferences sp = await SharedPreferences.getInstance();
-          sp.setString("username", _username);
+          sp.setString("username", _email);
           sp.setString("password", _password);
           //print(sp.getString("username" ));
+         // print("login");
 
         }
         else{
-          Get.off(DashboardScreen());
+          Get.to(DashboardScreen());
         }
       }else if (response.statusCode == 403){
         Map<String, dynamic> error = jsonDecode(response.body);
         String errorCode = error["code"];
-        if (errorCode == "invalid_username") {
-          Get.snackbar("Error", "The username is incorrect.",
+        if (errorCode == "invalid_email" && response.statusCode == 403) {
+          Get.snackbar("Error", "The email is incorrect.",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);
-        } else {
+        } else if(errorCode == "incorrect_password") {
           Get.snackbar("Error", "Wrong password entered",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);
+        }else if(errorCode == "incorrect_password" && errorCode == "invalid_email"){
+          Get.snackbar("Error", "Wrong Email and Password",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.grey,
+              colorText: Colors.black);
+        }else{
+          print(response.statusCode);
+          /*Get.snackbar("Error", "Something Went Wrong",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.grey,
+              colorText: Colors.black);*/
         }
       }
-      else{
-        Get.to(DashboardScreen());
-      }
+
     }catch(e){
       print(e.toString()+"error");
       Get.snackbar(e.toString(),"SomeThing went wrong",

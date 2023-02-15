@@ -38,7 +38,7 @@ class CarHomePage extends StatelessWidget {
           backgroundColor: Colors.white70,
           leading: IconButton(
             onPressed: (){
-              Get.to(ChooseOption());
+             // Get.to(ChooseOption());
             },
             icon: Icon(CupertinoIcons.line_horizontal_3_decrease,
               color: Colors.black,

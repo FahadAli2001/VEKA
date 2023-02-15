@@ -28,10 +28,10 @@ class HomeProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           child: InkWell(
             onTap: ()async{
-              SharedPreferences homesp =await SharedPreferences.getInstance();
-              homesp.remove("username" );
-              homesp.remove("password" );
-              Get.to(loginSxreen());
+              SharedPreferences homesignin =await SharedPreferences.getInstance();
+              homesignin.remove("email" );
+              homesignin.remove("password" );
+              Get.offAll(loginSxreen());
             },
             child: Container(
               width: Get.width * 0.4,
