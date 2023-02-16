@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:html/parser.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
 
 class CarHomePageController extends GetxController{
@@ -84,6 +85,13 @@ class CarHomePageController extends GetxController{
           backgroundColor: Colors.grey);
     }
     return selldata;
+  }
+  var parsedstring;
+  HtmlToText (val){
+    var description = parse(val);
+     parsedstring = description.documentElement!.text;
+
+     return parsedstring;
   }
 
 }

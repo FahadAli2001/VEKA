@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:html/parser.dart';
 import 'package:like_button/like_button.dart';
 import 'package:veka/car/BuyingCarsDetails/BuyingCarsDetails.dart';
 import 'package:flutter/material.dart';
@@ -115,9 +116,10 @@ class CarHomePage extends StatelessWidget {
                     color: Colors.grey,
                   ),
                 );
-
                       // isLoad.value = true;
                     }
+                   /* var description = parse(snapshot.data[index]["short_description"].toString());
+                    String parsedstring = description.documentElement!.text;*/
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 7),
                       child: Container(
@@ -125,13 +127,14 @@ class CarHomePage extends StatelessWidget {
                         height: Get.height * 0.35,
                         //color:Colors.orange ,
                         child: ListView.builder(
+
                           itemCount: snapshot.data!.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return carCards(snapshot.data![index]["name"].toString(),
                                 snapshot.data[index]["images"][0]["src"].toString(),
                                 snapshot.data[index]["price"].toString(),
-                                snapshot.data[index]["short_description"].toString(),
+                                car.HtmlToText(snapshot.data[index]["short_description"].toString()),
                               snapshot.data[index]["meta_data"][11]["value"],
                               snapshot.data![index]["meta_data"][10]["value"],
                               snapshot.data![index]["meta_data"][20]["value"]
@@ -938,6 +941,10 @@ class CarHomePage extends StatelessWidget {
                   ),),
               ),
             ),
+            /*
+            var description = parse(data["cardescription"]);
+            String parsedstring = description.documentElement!.text;
+            */
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Align(

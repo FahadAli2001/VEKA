@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:html/parser.dart';
 
 import '../ReviewSubmission/reviewsubmission.dart';
 import '../buyReviewSubmission/buyRevuewSubmission.dart';
@@ -14,6 +15,7 @@ class BuyingCarsDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     Color selectionbox = Colors.grey;
     var data=Get.arguments;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white70,

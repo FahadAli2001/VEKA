@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:veka/car/Dashboard/dashboardScreen.dart';
@@ -14,6 +16,7 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = Get.width;
     var SocialAppIconSize = Get.height * 0.03;
+
 
     SignInController sic = Get.put(SignInController());
     final _formKey = GlobalKey<FormState>();
@@ -160,7 +163,8 @@ class SignInScreen extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: (){
-                            sic.signInWithFacebook();
+                            //sic.signInWithFacebook();
+                            sic.LogInWithFacebook();
                           },
                           child: FaIcon(FontAwesomeIcons.facebook,
                           color: Colors.grey,

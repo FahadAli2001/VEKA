@@ -85,24 +85,78 @@ class SignInController extends GetxController{
           colorText: Colors.black);
     }
   }
+  Map<String, dynamic>? _userData;
 
-  void signInWithFacebook ()async{
-    try{
+  var result;
+   final FirebaseAuth _auth = FirebaseAuth.instance;
+   signInWithFacebook() async {
+     try {
+       final LoginResult? loginResult = await FacebookAuth.instance.login();
+       if (loginResult != null) {
+         final AccessToken? accessToken = loginResult.accessToken;
+         if (accessToken != null) {
+           final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(accessToken.token);
+           result =await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+           return result;
+         } else {
+           print('Facebook login failed: access token is null');
+         }
+
+       } else {
+         print('Facebook login failed: login result is null');
+       }
+     } on FirebaseAuthException catch (e) {
+       print(e);
+     }
+
+     /*if (loginResult != null) {
+       try {
+         final OAuthCredential facebookAuthCredential =
+         FacebookAuthProvider.credential(loginResult.accessToken!.token);
+         final UserCredential userCredential =
+         await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+         // Authentication successful, do something with userCredential.user
+         return userCredential;
+       } on FirebaseAuthException catch (e) {
+         print(e.toString()+ "firebase error");
+         // Handle authentication error, e.g. invalid credential, network error, etc.
+       } catch (e) {
+         // Handle other errors
+         print(e.toString() + "error");
+       }
+     } else {
+       print("other error");
+       // Handle case where loginResult is null, e.g. user cancelled the login dialog
+     }*/
+
+    /*try {
 
       final LoginResult loginResult = await FacebookAuth.instance.login();
 
-      if (loginResult.status == LoginStatus.success) {
-        var cd_accessToken = loginResult.accessToken;
-        final userInfo = await FacebookAuth.instance.getUserData();
-        //_userData = userInfo;
-      }
+      final OAuthCredential facebookAuthCredential =
+      FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
-   /*   final LoginResult result = await FacebookAuth.instance.login();
-      final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(result.accessToken!.token);
-      return await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);*/
-    }catch (e){
-      print("error"+e.toString());
-    }
+      await _auth.signInWithCredential(facebookAuthCredential);
+    } on FirebaseAuthException catch (e) {
+      print( "error"+e.message!.toString()); // Displaying the error message
+    }*/
 
+  }
+  String userEmail = "";
+  Future<UserCredential> LogInWithFacebook() async {
+    // Trigger the sign-in flow
+    final LoginResult loginResult = await FacebookAuth.instance.login(
+        permissions: ['email', 'public_profile', 'user_birthday']
+    );
+
+    // Create a credential from the access token
+    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+    final userData = await FacebookAuth.instance.getUserData();
+
+  //  userEmail = userData['email'];
+
+    // Once signed in, return the UserCredential
+    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 }

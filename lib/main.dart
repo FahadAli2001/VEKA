@@ -10,7 +10,6 @@ import 'dart:ui';
 void main() async{
   ErrorWidget.builder = (FlutterErrorDetails details) => Container();
   WidgetsFlutterBinding.ensureInitialized();
-  //await FacebookAuth.instance.initialize();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }

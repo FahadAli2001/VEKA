@@ -56,9 +56,10 @@ dependencies:
   readmore: ^2.2.0
   time_picker_spinner_pop_up: ^1.0.3
   firebase_core:
-  flutter_facebook_auth:
+  flutter_facebook_auth: ^3.0.0-nullsafety.1
   auto_size_text: ^3.0.0
   shared_preferences: ^2.0.17
+
 
 
 
