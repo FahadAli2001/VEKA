@@ -13,6 +13,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:veka/ChooseOption.dart';
 import 'package:veka/car/CarHome/CarHomePageController.dart';
 
+import '../Mybookmark/rents/rentBookmarkController.dart';
 import '../Profile/Profile.dart';
 import '../RentCarDetails/RentCarDetails.dart';
 import '../bookingScreen/bookingScreen.dart';
@@ -25,6 +26,7 @@ class CarHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CarHomePageController car = Get.put(CarHomePageController());
+
 
 
     return Scaffold(

@@ -5,10 +5,12 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:html/parser.dart';
 
+import '../Mybookmark/rents/rentBookmarkController.dart';
 import '../bookingScreen/bookingScreen.dart';
 
 class RentCarDetails extends StatelessWidget {
@@ -17,6 +19,7 @@ class RentCarDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var data = Get.arguments;
+    rentBookmarkController rbmc = Get.put(rentBookmarkController());
     var description = parse(data["cardescription"]);
     String parsedstring = description.documentElement!.text;
     return Scaffold(
@@ -29,15 +32,46 @@ class RentCarDetails extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: FavoriteButton(
-              iconSize: 40,
-              isFavorite: false,
-              // iconDisabledColor: Colors.white,
-              valueChanged: (_isFavorite) {
-                print('Is Favorite : $_isFavorite');
+            child: Obx(()=>
+               IconButton(onPressed: (){
+                 //print(rbmc.RentBookmarkList[0].id);
+                 final id = data['id'].toString(); // This is the ID you're checking for
+
+
+                 if(rbmc.RentBookmarkList.contains(id)){
+                   print("contain");
+                 }else{
+                   print("not contain");
+                 }
+                 /*if(rbmc.RentBookmarkList.contains(data["id"])){
+                   rbmc.deleteFrombookMark(data["id"].toString(),data["carname"].toString(),
+                       data["carprice"].toString(),data["carimage"].toString());
+                 }else{
+                   rbmc.marktoFav(data["id"].toString(),data["carname"].toString(),
+                       data["carprice"].toString(),data["carimage"].toString());
+
+                 }*/
+                 /*
+                   print(rbmc.RentBookmarkList[0].id);
+                   print(rbmc.RentBookmarkList[0].name);
+                   print(rbmc.RentBookmarkList[0].price);
+                   print(rbmc.RentBookmarkList.length);
+                 */
               },
+                  icon :(rbmc.RentBookmarkList.contains(data["id"]))?Icon(Icons.favorite,color: Colors.red,)
+                      :Icon(Icons.favorite,color: Colors.grey,)
+                /*:FaIcon(FontAwesomeIcons.heart,
+                color: Colors.red,
+                size: 25,),*/
+              ),
             ),
           ),
+          //
+          IconButton(onPressed: (){
+            rbmc.RentBookmarkList.clear();
+            print(rbmc.RentBookmarkList.length);
+          },
+              icon: Icon(Icons.maximize,color: Colors.black,))
         ],
       ),
       bottomNavigationBar: Padding(
