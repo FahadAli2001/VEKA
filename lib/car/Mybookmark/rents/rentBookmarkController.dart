@@ -3,16 +3,22 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 
 class rentBookmarkController extends GetxController{
 
-  var RentBookmarkList = [].obs;
+  RxList RentBookmarkList = [].obs;
 
-  marktoFav (id,name,price,image) {
-    RentBookmarkList.add(rentbookmarkModel(id: id, name: name, price: price, image: image));
+  marktoFav (rentbookmarkModel model) {
+    RentBookmarkList.value.add(model);
   }
-  deleteFrombookMark (id,name,price,image){
-    RentBookmarkList.remove(rentbookmarkModel(id: id, name: name, price: price, image: image));
+  deleteFrombookMark (rentbookmarkModel model){
+    RentBookmarkList.value.remove(model);
   }
+
+
 
 }
+
+
+
+
 
 class rentbookmarkModel {
   String? id;

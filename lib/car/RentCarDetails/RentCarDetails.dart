@@ -22,6 +22,8 @@ class RentCarDetails extends StatelessWidget {
     rentBookmarkController rbmc = Get.put(rentBookmarkController());
     var description = parse(data["cardescription"]);
     String parsedstring = description.documentElement!.text;
+    var id;
+   // var exits = false.obs;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -30,48 +32,43 @@ class RentCarDetails extends StatelessWidget {
             icon: Icon(CupertinoIcons.back),
         color: Colors.black,),
         actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Obx(()=>
-               IconButton(onPressed: (){
-                 //print(rbmc.RentBookmarkList[0].id);
-                 final id = data['id'].toString(); // This is the ID you're checking for
 
+             Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child:
+                 IconButton(onPressed: (){
+                   print(rbmc.RentBookmarkList.length.toString());
+                   //.any((item) => item.id == id.id)
+                   id  = rentbookmarkModel(id: data["id"].toString(),name:data["carname"].toString(),
+                       price:data["carprice"].toString(), image: data["carimage"].toString() );
+                   if (rbmc.RentBookmarkList.contains(id.id)) {
+                     print("${id.id} exists in the list");
+                     rbmc.deleteFrombookMark(data["id"].toString(),data["carname"].toString(), data["carprice"].toString(),  data["carimage"].toString());
+                    // print(rbmc.RentBookmarkList.length.toString());
+                     print("deleted");
 
-                 if(rbmc.RentBookmarkList.contains(id)){
-                   print("contain");
-                 }else{
-                   print("not contain");
-                 }
-                 /*if(rbmc.RentBookmarkList.contains(data["id"])){
-                   rbmc.deleteFrombookMark(data["id"].toString(),data["carname"].toString(),
-                       data["carprice"].toString(),data["carimage"].toString());
-                 }else{
-                   rbmc.marktoFav(data["id"].toString(),data["carname"].toString(),
-                       data["carprice"].toString(),data["carimage"].toString());
+                   } else {
+                     print("${id.id} does not exist in the list");
+                    rbmc.marktoFav( data["id"].toString(),data["carname"].toString(), data["carprice"].toString(),  data["carimage"].toString());
+                    // print(rbmc.RentBookmarkList.length.toString());
+                     print("added");
 
-                 }*/
-                 /*
-                   print(rbmc.RentBookmarkList[0].id);
-                   print(rbmc.RentBookmarkList[0].name);
-                   print(rbmc.RentBookmarkList[0].price);
-                   print(rbmc.RentBookmarkList.length);
-                 */
-              },
-                  icon :(rbmc.RentBookmarkList.contains(data["id"]))?Icon(Icons.favorite,color: Colors.red,)
-                      :Icon(Icons.favorite,color: Colors.grey,)
-                /*:FaIcon(FontAwesomeIcons.heart,
-                color: Colors.red,
-                size: 25,),*/
-              ),
+                   }
+                   },
+                    icon : Icon(
+                       Icons.favorite ,
+                      color: rbmc.RentBookmarkList.contains(id) ? Colors.red : Colors.grey,
+                    )
+            //
             ),
           ),
-          //
           IconButton(onPressed: (){
             rbmc.RentBookmarkList.clear();
-            print(rbmc.RentBookmarkList.length);
-          },
-              icon: Icon(Icons.maximize,color: Colors.black,))
+           // rbmc.marktoFav(data["id"].toString(),data["carname"].toString(), data["carprice"].toString(), data["carimage"].toString()
+              /*id: data["id"].toString(),name:data["carname"].toString(),
+                price:data["carprice"].toString(), image: data["carimage"].toString()*///);
+            print("clear");
+          }, icon: Icon(Icons.add,color: Colors.black,))
         ],
       ),
       bottomNavigationBar: Padding(
