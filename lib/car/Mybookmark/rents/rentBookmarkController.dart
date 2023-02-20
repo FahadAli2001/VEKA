@@ -12,6 +12,17 @@ class rentBookmarkController extends GetxController{
     RentBookmarkList.value.remove(model);
   }
 
+  void checkModel(rentbookmarkModel model) {
+    if (RentBookmarkList.contains(model)) {
+      print("${model.name} exists in the list");
+      RentBookmarkList.remove(model);
+      print(" removed");
+    } else {
+      print("${model.name} does not exist in the list");
+        RentBookmarkList.add(model);
+      print(" added");
+    }
+  }
 
 
 }

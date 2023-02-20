@@ -37,23 +37,31 @@ class RentCarDetails extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child:
                  IconButton(onPressed: (){
-                   print(rbmc.RentBookmarkList.length.toString());
+                   var model = rentbookmarkModel(id: data["id"].toString(),
+                       name: data["carname"].toString(), price: data["carprice"].toString(),
+                       image: data["carimage"].toString());
+
+                  rbmc.checkModel( model);
+
+                   // print(rbmc.RentBookmarkList.length.toString());
                    //.any((item) => item.id == id.id)
-                   id  = rentbookmarkModel(id: data["id"].toString(),name:data["carname"].toString(),
+                  /* id  = rentbookmarkModel(id: data["id"].toString(),name:data["carname"].toString(),
                        price:data["carprice"].toString(), image: data["carimage"].toString() );
-                   if (rbmc.RentBookmarkList.contains(id.id)) {
+
+                   var model  = rentbookmarkModel(id: data["id"].toString(), name: data["carname"].toString(), price: data["carprice"].toString(), image: data["carimage"].toString());
+                   if (rbmc.RentBookmarkList.contains(model)) {
                      print("${id.id} exists in the list");
-                     rbmc.deleteFrombookMark(data["id"].toString(),data["carname"].toString(), data["carprice"].toString(),  data["carimage"].toString());
+                     rbmc.deleteFrombookMark(model);
                     // print(rbmc.RentBookmarkList.length.toString());
                      print("deleted");
 
                    } else {
                      print("${id.id} does not exist in the list");
-                    rbmc.marktoFav( data["id"].toString(),data["carname"].toString(), data["carprice"].toString(),  data["carimage"].toString());
+                    rbmc.marktoFav(model);
                     // print(rbmc.RentBookmarkList.length.toString());
                      print("added");
 
-                   }
+                   }*/
                    },
                     icon : Icon(
                        Icons.favorite ,
