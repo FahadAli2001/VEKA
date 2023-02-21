@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:html/parser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Mybookmark/rents/rentBookmarkController.dart';
 import '../bookingScreen/bookingScreen.dart';
@@ -22,8 +23,9 @@ class RentCarDetails extends StatelessWidget {
     rentBookmarkController rbmc = Get.put(rentBookmarkController());
     var description = parse(data["cardescription"]);
     String parsedstring = description.documentElement!.text;
-    var id;
+    var model;
    // var exits = false.obs;
+    var isPresent = false.obs;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -37,48 +39,71 @@ class RentCarDetails extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child:
                  IconButton(onPressed: (){
-                   var model = rentbookmarkModel(id: data["id"].toString(),
-                       name: data["carname"].toString(), price: data["carprice"].toString(),
-                       image: data["carimage"].toString());
+                   /* model = rentbookmarkModel(
+                     id: data["id"].toString(),
+                     name: data["carname"].toString(),
+                     price: data["carprice"].toString(),
+                     image: data["carimage"].toString(),
+                   );*/
+                   rbmc.bookmark(rentbookmarkModel(
+                     id: data["id"].toString(),
+                     name: data["carname"].toString(),
+                     price: data["carprice"].toString(),
+                     image: data["carimage"].toString(),
+                   ));
+                  // rbmc.addToBookmark(model);
+                   //print(rbmc.rentBookmarkList.length);
 
-                  rbmc.checkModel( model);
+                   /*isPresent.value = rbmc.RentBookmarkList.any((element) => element.id == model.id);
 
-                   // print(rbmc.RentBookmarkList.length.toString());
-                   //.any((item) => item.id == id.id)
-                  /* id  = rentbookmarkModel(id: data["id"].toString(),name:data["carname"].toString(),
-                       price:data["carprice"].toString(), image: data["carimage"].toString() );
-
-                   var model  = rentbookmarkModel(id: data["id"].toString(), name: data["carname"].toString(), price: data["carprice"].toString(), image: data["carimage"].toString());
-                   if (rbmc.RentBookmarkList.contains(model)) {
-                     print("${id.id} exists in the list");
-                     rbmc.deleteFrombookMark(model);
-                    // print(rbmc.RentBookmarkList.length.toString());
+                   if (isPresent.value) {
+                     print('$model is present in the RentBookmarkList array.');
+                     //rbmc.deleteFrombookMark(model);
                      print("deleted");
-
+                     isPresent.value = false;
                    } else {
-                     print("${id.id} does not exist in the list");
-                    rbmc.marktoFav(model);
-                    // print(rbmc.RentBookmarkList.length.toString());
+                     print('$model does not present in the RentBookmarkList array.');
+                     //rbmc.marktoFav(model);
                      print("added");
+                     isPresent.value = true;
 
                    }*/
-                   },
-                    icon : Icon(
-                       Icons.favorite ,
-                      color: rbmc.RentBookmarkList.contains(id) ? Colors.red : Colors.grey,
+                  },
+                    icon : Obx(()=>
+                       Icon(
+                         Icons.favorite ,
+                        color:   rbmc.bookmarkColor.value ,
+                      ),
                     )
             //
             ),
           ),
-          IconButton(onPressed: (){
-            rbmc.RentBookmarkList.clear();
-           // rbmc.marktoFav(data["id"].toString(),data["carname"].toString(), data["carprice"].toString(), data["carimage"].toString()
-              /*id: data["id"].toString(),name:data["carname"].toString(),
-                price:data["carprice"].toString(), image: data["carimage"].toString()*///);
+          IconButton(onPressed: ()async{
+            SharedPreferences rentbookmark =await  SharedPreferences.getInstance();
+            rentbookmark.clear();
+            rbmc.rentBookmarkList.clear();
             print("clear");
+          }, icon: Icon(Icons.minimize,color: Colors.black,)),
+          IconButton(onPressed: (){
+            rbmc.rentBookmarkList.add(rentbookmarkModel(
+              id: data["id"].toString(),
+              name: data["carname"].toString(),
+              price: data["carprice"].toString(),
+              image: data["carimage"].toString(),
+            ));
+            print("added ");
+           // print(rbmc.RentBookmarkList.length.toString());
+           // print(rbmc.RentBookmarkList[0].id);
           }, icon: Icon(Icons.add,color: Colors.black,))
         ],
       ),
+      floatingActionButton: FloatingActionButton(onPressed: ()async{
+        rbmc.printList();
+      // print(rbmc.printList());
+        //print(rbmc.rentBookmarkList.length.toString());
+        //final prefs = await SharedPreferences.getInstance();
+        //print(prefs.getStringList("rent_bookmark_list"));
+      }),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: GestureDetector(
