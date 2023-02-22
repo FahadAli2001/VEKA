@@ -14,6 +14,8 @@ class SignInController extends GetxController{
   TextEditingController password = TextEditingController();
   RxBool isHidepass = true.obs;
 
+  var userId;
+
   var isrem = false.obs;
   void handleRadioValueChanged(val) {
     isrem.value = val;
@@ -34,18 +36,12 @@ class SignInController extends GetxController{
       );
 
       if(response.statusCode==200) {
-       //
-
-
+        SignInWithFirebase();
         var data = jsonDecode(response.body);
         if (isrem.value == true) {
-          //
           SharedPreferences sp = await SharedPreferences.getInstance();
           sp.setString("username", _email);
           sp.setString("password", _password);
-          //print(sp.getString("username" ));
-         // print("login");
-
         }
         else{
           Get.to(DashboardScreen());
@@ -80,6 +76,26 @@ class SignInController extends GetxController{
     }catch(e){
       print(e.toString()+"error");
       Get.snackbar(e.toString(),"SomeThing went wrong",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.grey,
+          colorText: Colors.black);
+    }
+  }
+
+  void SignInWithFirebase()async{
+    String _email = username.text.trim().toString();
+    String _password = password.text.trim().toString();
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _email,
+          password: _password
+      );
+
+      userId = FirebaseAuth.instance.currentUser!.uid;
+      print(userId);
+
+    } on FirebaseAuthException catch (e) {
+      Get.snackbar("Error", "Something Went Wrong",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.grey,
           colorText: Colors.black);

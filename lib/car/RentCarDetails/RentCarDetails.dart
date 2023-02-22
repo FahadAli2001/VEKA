@@ -45,12 +45,12 @@ class RentCarDetails extends StatelessWidget {
                      price: data["carprice"].toString(),
                      image: data["carimage"].toString(),
                    );*/
-                   rbmc.bookmark(rentbookmarkModel(
+                  /* rbmc.bookmark(rentbookmarkModel(
                      id: data["id"].toString(),
                      name: data["carname"].toString(),
                      price: data["carprice"].toString(),
                      image: data["carimage"].toString(),
-                   ));
+                   ));*/
                   // rbmc.addToBookmark(model);
                    //print(rbmc.rentBookmarkList.length);
 
@@ -72,7 +72,7 @@ class RentCarDetails extends StatelessWidget {
                     icon : Obx(()=>
                        Icon(
                          Icons.favorite ,
-                        color:   rbmc.bookmarkColor.value ,
+                        color:Colors.red   //rbmc.bookmarkColor.value ,
                       ),
                     )
             //
@@ -81,16 +81,16 @@ class RentCarDetails extends StatelessWidget {
           IconButton(onPressed: ()async{
             SharedPreferences rentbookmark =await  SharedPreferences.getInstance();
             rentbookmark.clear();
-            rbmc.rentBookmarkList.clear();
+          //  rbmc.rentBookmarkList.clear();
             print("clear");
           }, icon: Icon(Icons.minimize,color: Colors.black,)),
           IconButton(onPressed: (){
-            rbmc.rentBookmarkList.add(rentbookmarkModel(
-              id: data["id"].toString(),
-              name: data["carname"].toString(),
-              price: data["carprice"].toString(),
-              image: data["carimage"].toString(),
-            ));
+           // rbmc.rentBookmarkList.add(rentbookmarkModel(
+            //  id: data["id"].toString(),
+            //  name: data["carname"].toString(),
+            //  price: data["carprice"].toString(),
+             // image: data["carimage"].toString(),
+            //));
             print("added ");
            // print(rbmc.RentBookmarkList.length.toString());
            // print(rbmc.RentBookmarkList[0].id);
@@ -98,7 +98,7 @@ class RentCarDetails extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(onPressed: ()async{
-        rbmc.printList();
+        //rbmc.getBookmarks();
       // print(rbmc.printList());
         //print(rbmc.rentBookmarkList.length.toString());
         //final prefs = await SharedPreferences.getInstance();

@@ -7,27 +7,40 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class rentBookmarkController extends GetxController{
 
-    List rentBookmarkList = [];
+  void addBookMark()async{
+
+  }
+
+    /*List rentBookmarkList = [];
 
     var bookmarkColor = Colors.grey.obs;
     List<String>? bookmarkList;
 
-    printList() async {
+    Future<List<dynamic>> getBookmarks() async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var bookmarkData =  prefs.getString('rent_bookmark');
-      if (bookmarkData != null) {
-        List<dynamic> bookmarkList = json.decode(bookmarkData);
-        for (var bookmark in bookmarkList) {
-          print(bookmark['id']);
-        //  print(bookmark['title']);
-         // print(bookmark['url']);
-          // Add any additional fields you want to print here
+
+      try {
+        String? bookmarkData = prefs.getString('rent_bookmark');
+        if (bookmarkData != null) {
+          List<dynamic> bookmarkList = json.decode(bookmarkData) as List<dynamic>;
+          for (var bookmark in bookmarkList) {
+            if (bookmark is Map<String, dynamic>) {
+              print(bookmark['id']);
+              print(bookmark['title']);
+              print(bookmark['url']);
+              // Add any additional fields you want to print here
+            }
+          }
+          return bookmarkList;
         }
-        return bookmarkList;
-      } else {
-        return [];
+      } catch (e) {
+        print('Error retrieving bookmarks: $e');
       }
+
+      return [];
     }
+
+
 
     bookmark(rentbookmarkModel model) async {
       SharedPreferences rentbookmark =await  SharedPreferences.getInstance();
@@ -96,6 +109,6 @@ class rentbookmarkModel {
     'name': name,
     'price': price,
     'image':image
-  };
+  };*/
 
 }
