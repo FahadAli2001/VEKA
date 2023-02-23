@@ -39,6 +39,7 @@ class RentCarDetails extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child:
                  IconButton(onPressed: (){
+                   rbmc.toggleBookmark(data["id"].toString(), data["carname"].toString(), data["carprice"].toString(), data["carimage"].toString());
                    /* model = rentbookmarkModel(
                      id: data["id"].toString(),
                      name: data["carname"].toString(),
@@ -69,29 +70,27 @@ class RentCarDetails extends StatelessWidget {
 
                    }*/
                   },
-                    icon : Obx(()=>
-                       Icon(
-                         Icons.favorite ,
+                    icon :  Icon(
+                        Icons.favorite ,
                         color:Colors.red   //rbmc.bookmarkColor.value ,
-                      ),
-                    )
+                    ),
             //
             ),
           ),
           IconButton(onPressed: ()async{
-            SharedPreferences rentbookmark =await  SharedPreferences.getInstance();
-            rentbookmark.clear();
+
           //  rbmc.rentBookmarkList.clear();
             print("clear");
           }, icon: Icon(Icons.minimize,color: Colors.black,)),
           IconButton(onPressed: (){
+
            // rbmc.rentBookmarkList.add(rentbookmarkModel(
             //  id: data["id"].toString(),
             //  name: data["carname"].toString(),
             //  price: data["carprice"].toString(),
              // image: data["carimage"].toString(),
             //));
-            print("added ");
+            print("added");
            // print(rbmc.RentBookmarkList.length.toString());
            // print(rbmc.RentBookmarkList[0].id);
           }, icon: Icon(Icons.add,color: Colors.black,))

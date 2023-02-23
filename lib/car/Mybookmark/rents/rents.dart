@@ -20,15 +20,25 @@ class rent extends StatelessWidget {
 
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: (){
 
-      }),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
-          child: ListView.builder(
-            itemCount:list.length,
-            itemBuilder: (context,index){
+      body: FutureBuilder(
+        future: rbmc.fetchBookmarks(),
+        builder: (context,snapshot){
+          if(snapshot.hasError){
+            return Center(child: Text("some thing went wrong"));
+          }
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if(snapshot.data == null){
+            return Center(child: Text("no data"));
+          }
+         
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+              itemBuilder: (context,index){
               return Padding(
                 padding: const EdgeInsets.all(4),
                 child: Container(
@@ -42,25 +52,21 @@ class rent extends StatelessWidget {
                         width: Get.width * 0.5,
                         child: ListTile(
                           leading: CircleAvatar(
-                            backgroundImage: AssetImage("assets/car.png"),
+                            backgroundImage: NetworkImage(snapshot.data![index]["image"].toString()),
                             radius: 30,
                             backgroundColor: Colors.black54,
                           ),
-                          title: Text("AUDI A3"),
-                          subtitle: Text("\$450",
-                          style: TextStyle(
-                            color: Colors.green
-                          ),),
+                          title: Text(snapshot.data![index]["name"].toString()),
+                          subtitle: Text(snapshot.data![index]["price"].toString(),
+                            style: TextStyle(
+                                color: Colors.green
+                            ),),
                         ),
                       ),
                       Obx(
                             ()=> IconButton(
                           onPressed: (){
-                            if(bookmark.value == true){
-                              bookmark.value = false;
-                            }else{
-                              bookmark.value = true;
-                            }
+
                           },
                           icon:Icon(Icons.bookmark),
                           color: (bookmark.value == true)?Colors.green:Colors.grey,),
@@ -69,9 +75,8 @@ class rent extends StatelessWidget {
                   ),
                 ),
               );
-            },
-          ),
-        ),
+              });
+        },
       ),
     );
   }

@@ -7,11 +7,15 @@ import 'package:woocommerce_api/woocommerce_api.dart';
 import '../SignUp/SignupController.dart';
 class BuyReviewController extends GetxController{
 
+  //carid
+  //signupshared.getString("username")
+  //signupshared.getString("email")
+
 
   Future postProduct(carid,price) async {
     SharedPreferences signupshared =await SharedPreferences.getInstance();
 
-    Map<String, dynamic> data = {
+    Map<String, dynamic> data ={
       "status": "processing",
       "currency": "USD",
       "billing": {

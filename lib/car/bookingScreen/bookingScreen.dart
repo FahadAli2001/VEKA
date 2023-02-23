@@ -64,7 +64,8 @@ class _bookingScreenState extends State<bookingScreen> {
                     "totalprice": bsc.totalcarPrice(rxisSelected.toList(), data["extraservicescharges"], data["carprice"]),
                     "extraservices":data!["extraservices"],
                     "charges": bsc.pricewidget(rxisSelected, data!["extraservicescharges"], data!["extraservices"]),
-                    "id":data!["id"]
+                    "id":data!["id"],
+                    "rxisSelected":rxisSelected
                   });
 
             },

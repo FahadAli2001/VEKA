@@ -79,7 +79,7 @@ class rentPaymentController extends GetxController{
   }
 
   Future requestForBuyHouse(houseid ,List isSelected) async {
-    SharedPreferences homesignup =await SharedPreferences.getInstance();
+    SharedPreferences homesignin =await SharedPreferences.getInstance();
 
     Map<String, dynamic> data = {
       "status": "processing",
@@ -93,7 +93,7 @@ class rentPaymentController extends GetxController{
         "state": "SD",
         "postcode": "76550",
         "country": "PK",
-        "email": "13@gmail.com",
+        "email": homesignin.getString("email"),
         "phone": "74643"
       },
       "payment_method": "bacs",

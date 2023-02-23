@@ -56,7 +56,7 @@ class reviewsubmission extends StatelessWidget {
           child: CupertinoButton(
             color: Colors.green,
             onPressed: (){
-            rrsc.postRentOrder(data["id"]);
+            rrsc.postRentOrder(data["id"],data["rxisSelected"]);
             },
             child: Text("Done",
             style: TextStyle(
