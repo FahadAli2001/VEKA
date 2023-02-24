@@ -140,7 +140,7 @@ class SignUp extends StatelessWidget {
                           if(val!.isEmpty){
                             return "Enter password";
                           }
-                          else if(suc.password.value != suc.confirmpassword.value) {
+                          else if(suc.password.value.text.trim() != suc.confirmpassword.value.text.trim()) {
                             return "Password doesn't match";
                           }
                         },
@@ -221,7 +221,7 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
                 //
-                Align(
+               /* Align(
                   alignment: Alignment.center,
                   child: Text("or login with ",
                     style: TextStyle(
@@ -255,7 +255,7 @@ class SignUp extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
+                ),*/
                /* Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: RichText(

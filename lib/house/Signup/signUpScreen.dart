@@ -100,27 +100,39 @@ class signUpscreen extends StatelessWidget {
                     ),
                   ),
                   //
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-                    child: TextFormField(
-                        obscureText: hsp.isHidepass.value,
-                        validator: (String? val){
-                          if(val!.isEmpty){
-                            return "Enter password";
-                          }else if (val!.length < 8){
-                            return "Enter mini 8 digit password";
-                          }
-                        },
-                        style: TextStyle(
-                            height: 0.5
-                        ),
-                        controller: hsp.password,
-                        decoration: InputDecoration(
-                            hintText: "Password",
-                            labelText: "Password",
-                            suffixIcon: Icon(CupertinoIcons.eye_slash_fill),
-                            border: OutlineInputBorder()
-                        )
+                  Obx(
+                      ()=> Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                      child: TextFormField(
+                          obscureText: hsp.isHidepass.value,
+                          validator: (String? val){
+                            if(val!.isEmpty){
+                              return "Enter password";
+                            }else if (val!.length < 8){
+                              return "Enter mini 8 digit password";
+                            }
+                          },
+                          style: TextStyle(
+                              height: 0.5
+                          ),
+                          controller: hsp.password,
+                          decoration: InputDecoration(
+                              hintText: "Password",
+                              labelText: "Password",
+                              suffixIcon: InkWell(
+                                onTap: (){
+                                  if(hsp.isHidepass.value == true){
+                                    hsp.isHidepass.value = false;
+                                  }else{
+                                    hsp.isHidepass.value = true;
+                                  }
+                                },
+                                  child:(hsp.isHidepass.value == true)?Icon(CupertinoIcons.eye_slash_fill
+                                  ):Icon(CupertinoIcons.eye)
+                              ),
+                              border: OutlineInputBorder()
+                          )
+                      ),
                     ),
                   ),
                   //
@@ -132,7 +144,7 @@ class signUpscreen extends StatelessWidget {
                             if(val!.isEmpty){
                               return "Enter password";
                             }
-                            else if(hsp.password.value != hsp.confirmpassword.value) {
+                            else if(hsp.password.value.text.trim() != hsp.confirmpassword.value.text.trim()) {
                               return "Password doesn't match";
                             }
                           },
@@ -212,7 +224,7 @@ class signUpscreen extends StatelessWidget {
                     ),
                   ),
                   //-----------
-                  Padding(
+                 /* Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Row(
 
@@ -248,7 +260,7 @@ class signUpscreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
+                  ),*/
                   //--------------
                   Padding(
                     padding: const EdgeInsets.only(top: 50),

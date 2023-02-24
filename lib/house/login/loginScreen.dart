@@ -164,7 +164,7 @@ class loginSxreen extends StatelessWidget {
                     ),
                   ),
                   //-----------
-                  Padding(
+                 /* Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Row(
 
@@ -205,7 +205,7 @@ class loginSxreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
+                  ),*/
                   //--------------
                   Padding(
                     padding: const EdgeInsets.only(top: 50),

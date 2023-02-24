@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -12,8 +14,11 @@ class HouseSignUpController extends GetxController{
   TextEditingController confirmpassword = TextEditingController();
   var accessToken;
 
-  RxBool isHidepass = true.obs;
+  var isHidepass = true.obs;
   var isHideconpass = true.obs;
+
+  var id;
+  var name;
 
   var Value = false.obs;
   void handleRadioValueChanged(val) {
@@ -64,11 +69,13 @@ class HouseSignUpController extends GetxController{
       );
 
       if(response.statusCode==201){
+        SignUpWithFirebase();
         print("method called");
         var data = jsonDecode(response.body.toString());
         homesignup.setString("username", _username);
         homesignup.setString("email", _email);
         //print(data);
+
         clearFileds();
         print("user created");
         Get.snackbar("","User Created Successfully",
@@ -88,6 +95,8 @@ class HouseSignUpController extends GetxController{
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);
+        }else if (errorCode == "jwt_auth_invalid_token"){
+          print("invalid token");
         }
       }
     }catch(e){
@@ -125,6 +134,35 @@ class HouseSignUpController extends GetxController{
     email.clear();
     password.clear();
     confirmpassword.clear();
+  }
+
+  SignUpWithFirebase()async{
+    String _email = email.text.toString();
+    String _password = password.text.toString();
+
+    try {
+      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _email,
+        password: _password,
+      );
+      if(credential != null){
+        CollectionReference users = FirebaseFirestore.instance.collection('users');
+        id = credential.user!.uid;
+        users.doc(id).set({
+          "name":name
+        });
+
+        clearFileds();
+      }
+    } on FirebaseAuthException catch (e) {
+      Get.snackbar("","SomeThing went wrong",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.grey,
+          colorText: Colors.black);
+    } catch (e) {
+      print(e);
+    }
+
   }
 
 

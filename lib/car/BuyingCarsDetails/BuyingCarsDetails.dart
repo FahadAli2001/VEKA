@@ -1,10 +1,13 @@
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:html/parser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Mybookmark/buying/BuyingBookmarkController.dart';
 import '../ReviewSubmission/reviewsubmission.dart';
 import '../buyReviewSubmission/buyRevuewSubmission.dart';
 
@@ -15,7 +18,7 @@ class BuyingCarsDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     Color selectionbox = Colors.grey;
     var data=Get.arguments;
-
+    BuyingBookmarkController bbmc = Get.put(BuyingBookmarkController());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white70,
@@ -35,16 +38,23 @@ class BuyingCarsDetails extends StatelessWidget {
         ),),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child:  FavoriteButton(
-              iconSize: 40,
-              isFavorite: true,
-              // iconDisabledColor: Colors.white,
-              valueChanged: (_isFavorite) {
-                print('Is Favorite : $_isFavorite');
-              },
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child:
+            IconButton(onPressed: ()async{
+              SharedPreferences bmvalue = await SharedPreferences.getInstance();
+              bbmc.toggleBookmark(data["id"].toString(), data["carname"].toString(), data["carprice"].toString(), data["carimage"].toString());
+              print('${bmvalue.getBool("isBookmark")}');
+            },
+              icon :   Obx(
+                    ()=> Icon(
+                    Icons.favorite ,
+                    color:(bbmc.isbookedmark.value)?Colors.red :Colors.grey   //rbmc.bookmarkColor.value ,
+                ),
+              ),
+
+              //
             ),
-          )
+          ),
         ],
       ),
       bottomNavigationBar: Container(
@@ -123,7 +133,6 @@ class BuyingCarsDetails extends StatelessWidget {
           Positioned(
             top:170,
             child: Container(
-
               width: Get.width,
               height: Get.height *0.9,
               decoration: BoxDecoration(

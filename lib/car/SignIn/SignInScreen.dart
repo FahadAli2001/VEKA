@@ -139,12 +139,13 @@ class SignInScreen extends StatelessWidget {
                         if(_formKey.currentState!.validate()){
                           print("tapp");
                           sic.SignIn();
+
                         }
                         }),
                   ),
                 ),
                 //
-                Align(
+               /* Align(
                   alignment: Alignment.center,
                   child: Text("or login with ",
                   style: TextStyle(
@@ -179,7 +180,7 @@ class SignInScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                ),
+                ),*/
              /*   Padding(
                   padding: const EdgeInsets.only(top: 50),
                   child: InkWell(

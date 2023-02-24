@@ -14,6 +14,8 @@ class more extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    Color boxColor = Colors.grey.shade300;
     return Scaffold(
 
         appBar: AppBar(
@@ -43,7 +45,7 @@ class more extends StatelessWidget {
                   Get.to(orderdetails());
                 },
                 child: Container(
-                  color: Colors.grey.shade400,
+                  color: boxColor,
                   width: Get.width,
                   height:  Get.height * 0.1,
                   child: Padding(
@@ -90,7 +92,7 @@ class more extends StatelessWidget {
                   Get.to(myBookmark());
                 },
                 child: Container(
-                  color: Colors.grey.shade400,
+                  color: boxColor,
                   width: Get.width,
                   height:  Get.height * 0.1,
                   child: Padding(
@@ -138,7 +140,7 @@ class more extends StatelessWidget {
                   Get.to(serviceMode());
                 },
                 child: Container(
-                  color: Colors.grey.shade400,
+                  color: boxColor,
                   width: Get.width,
                   height:  Get.height * 0.1,
                   child: Padding(
@@ -186,7 +188,7 @@ class more extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  color: Colors.grey.shade400,
+                  color: boxColor,
                   width: Get.width,
                   height:  Get.height * 0.1,
                   child: Padding(
@@ -225,9 +227,6 @@ class more extends StatelessWidget {
                 ),
               ),
             )
-
-
-
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:http/http.dart'as http;
@@ -15,11 +16,27 @@ class SignInController extends GetxController{
   RxBool isHidepass = true.obs;
 
   var userId;
+  var name;
 
   var isrem = false.obs;
   void handleRadioValueChanged(val) {
     isrem.value = val;
     // print(isrem.value);
+  }
+  GetUsername()async{
+    final userRef = FirebaseFirestore.instance.collection('users').doc(userId);
+
+    userRef.get().then((snapshot) {
+      if (snapshot.exists) {
+        final data = snapshot.data();
+        name = data!['name'];
+        print('User name: $name');
+      } else {
+        print('User not found in database.');
+      }
+    }).catchError((error) {
+      print('Error getting user data: $error');
+    });
   }
   void SignIn()async{
 
@@ -92,7 +109,8 @@ class SignInController extends GetxController{
       );
 
       userId = FirebaseAuth.instance.currentUser!.uid;
-      print(userId);
+      GetUsername();
+
 
     } on FirebaseAuthException catch (e) {
       Get.snackbar("Error", "Something Went Wrong",
@@ -101,7 +119,9 @@ class SignInController extends GetxController{
           colorText: Colors.black);
     }
   }
-  Map<String, dynamic>? _userData;
+
+
+ /* Map<String, dynamic>? _userData;
 
   var result;
    final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -123,7 +143,7 @@ class SignInController extends GetxController{
        }
      } on FirebaseAuthException catch (e) {
        print(e);
-     }
+     }*/
 
      /*if (loginResult != null) {
        try {
@@ -158,7 +178,7 @@ class SignInController extends GetxController{
     }*/
 
   }
-  String userEmail = "";
+ /* String userEmail = "";
   Future<UserCredential> LogInWithFacebook() async {
     // Trigger the sign-in flow
     final LoginResult loginResult = await FacebookAuth.instance.login(
@@ -174,5 +194,4 @@ class SignInController extends GetxController{
 
     // Once signed in, return the UserCredential
     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-  }
-}
+  }*/

@@ -4,9 +4,12 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
 
+import '../../login/LoginController.dart';
 import '../dashboard/dashboard.dart';
 
 class rentPaymentController extends GetxController{
+
+  loginController lc = Get.put(loginController());
 
   var checkIndate = DateTime.now().obs;
   var checkOutdate = DateTime.now().obs;
@@ -84,8 +87,8 @@ class rentPaymentController extends GetxController{
     Map<String, dynamic> data = {
       "status": "processing",
       "billing": {
-        "first_name": "test",
-        "last_name": "test1234",
+        "first_name": lc.name.toString(),
+        "last_name": "",
         "company": "23",
         "address_1": "123",
         "address_2": "123",

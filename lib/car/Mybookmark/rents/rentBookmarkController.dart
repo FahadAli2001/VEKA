@@ -13,13 +13,13 @@ class rentBookmarkController extends GetxController{
 
   SignInController sic = Get.put(SignInController());
 
-  Future<void> toggleBookmark(
-      String productId,
-      String productName,
-      String productPrice,
-      String productImage,
-      ) async {
+  var isbookedmark = false.obs;
+
+  Future<void> toggleBookmark(String productId, String productName, String productPrice, String productImage,) async {
+    //SharedPreferences rentBookmarksp =await SharedPreferences.getInstance();
     // get current user
+    SharedPreferences bmvalue = await SharedPreferences.getInstance();
+
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       // user not signed in
@@ -28,7 +28,7 @@ class rentBookmarkController extends GetxController{
 
     // reference to bookmarks collection for this user
     final bookmarksRef = FirebaseFirestore.instance
-        .collection('rent-bookmarks')
+        .collection('rentalCar-bookmarks')
         .doc(user.uid)
         .collection('productIds')
         .doc(productId);
@@ -38,39 +38,35 @@ class rentBookmarkController extends GetxController{
     if (snapshot.exists) {
       // already bookmarked, so remove it
       await bookmarksRef.delete();
+      isbookedmark.value = false;
+
+      //print(bmvalue.getBool("isBookmark"));
+      bmvalue.setBool("isBookmark", isbookedmark.value);
       print('Bookmark removed for product ');
+      print(isbookedmark.value);
+      print(bmvalue.getBool("isBookmark"));
     } else {
       // product not bookmarked yet, so add it
       await bookmarksRef.set({
         'name': productName,
         'price': productPrice,
         'image': productImage,
+        'isBookmark': true
       }, SetOptions(merge: true));
       print('Bookmark added for product');
-    }
-  }
-
-  Future<List<Map<String, dynamic>>> fetchBookmarks() async {
-    // get current user
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) {
-      // user not signed in
-      return [];
+     // isbookedmark.value = true;
+      //rentBookmarksp.setBool("isBookmark", isbookedmark.value);
     }
 
-    // reference to bookmarks collection for this user
-    final bookmarksRef = FirebaseFirestore.instance
-        .collection('bookmarks')
-        .doc(user.uid)
-        .collection('productIds');
+    final isBookmarkSnapshot = await bookmarksRef.get();
+    if (isBookmarkSnapshot.exists) {
+       isbookedmark.value = isBookmarkSnapshot.data()!['isBookmark'] ?? false;
+       print(isbookedmark.value);
 
-    // get all documents from the bookmarks collection
-    final querySnapshot = await bookmarksRef.get();
+       bmvalue.setBool('isBookmark', isbookedmark.value);
+       print(bmvalue.getBool('isBookmark'));
 
-    // convert each document to a map of fields
-    final bookmarks = querySnapshot.docs.map((doc) => doc.data()).toList();
-
-    return bookmarks;
+    }
   }
 
 

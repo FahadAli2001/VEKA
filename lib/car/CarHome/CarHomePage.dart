@@ -994,7 +994,7 @@ class CarHomePage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Container(
-                        color: Colors.grey,
+                        color: Colors.grey.shade300,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: Center(
@@ -1015,7 +1015,7 @@ class CarHomePage extends StatelessWidget {
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
                 child: Text("Car Info",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -1029,19 +1029,7 @@ class CarHomePage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  /* Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      for(var i = 0 ; i < data["cardetailicon"].length ; i++) ... [
-                            Icon(
-                            data["cardetailicon"][i],
-                              size: 32.0,
-                              color: Colors.green,
-                            )
-                      ]
 
-                    ],
-                  ),*/
                   //
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -1050,9 +1038,9 @@ class CarHomePage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(cardetail[i],
-                            style: TextStyle(
-                                color: Colors.green.shade900,
-                                fontSize: Get.width * 0.045
+                            softWrap:true,style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold
                             ),),
                         ),
 
@@ -1069,8 +1057,8 @@ class CarHomePage extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(cardetailinfo[i],
                             style: TextStyle(
-                                color: Colors.green.shade800,
-                                fontSize: Get.width * 0.045
+                                color: Colors.black,
+                                fontSize: Get.width * 0.04
                             ),),
                         )
                       ]

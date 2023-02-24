@@ -4,8 +4,10 @@ import 'package:http/http.dart'as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
 
+import '../SignIn/SignInController.dart';
 import '../SignUp/SignupController.dart';
 class BuyReviewController extends GetxController{
+  SignInController sic = Get.put(SignInController());
 
   //carid
   //signupshared.getString("username")
@@ -19,14 +21,14 @@ class BuyReviewController extends GetxController{
       "status": "processing",
       "currency": "USD",
       "billing": {
-        "first_name": signupshared.getString("username"),
+        "first_name": sic.name,
         "last_name":"",
         "address_1": "karachi",
         "address_2": "karachi",
         "city": "karachi",
         "state": "CA",
         "country": "AE",
-        "email":  signupshared.getString("email"),
+        "email":  signupshared.getString("username"),
         "phone": "123456789"
       },
       "payment_method": "cod",

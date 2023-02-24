@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart'as http;
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Dashboard/dashboardScreen.dart';
+import '../SignIn/SignInController.dart';
 import '../Token/AccessToken.dart';
 
 class SignUpController extends GetxController{
@@ -16,7 +18,10 @@ class SignUpController extends GetxController{
   TextEditingController confirmpassword = TextEditingController();
 
   AcessToken acessTokenclass = Get.put(AcessToken());
+  SignInController sic = Get.put(SignInController());
 
+  var name;
+  var id;
   RxBool isHidepass = true.obs;
   var isHideconpass = true.obs;
 
@@ -73,6 +78,7 @@ class SignUpController extends GetxController{
       if(response.statusCode==201){
         SignUpWithFirebase();
         var data = jsonDecode(response.body.toString());
+        name = data["username"].toString();
         signupshared.setString("username", _username);
         signupshared.setString("email", _email);
         print("user created");
@@ -93,6 +99,9 @@ class SignUpController extends GetxController{
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);
+        }else if (errorCode == "jwt_auth_invalid_token"){
+          print("invalid token");
+
         }
       }
     }catch (e){
@@ -142,6 +151,12 @@ class SignUpController extends GetxController{
         password: _password,
       );
       if(credential != null){
+        CollectionReference users = FirebaseFirestore.instance.collection('users');
+        id = credential.user!.uid;
+        users.doc(id).set({
+          "name":name
+        });
+
         clearFileds();
       }
     } on FirebaseAuthException catch (e) {
@@ -154,6 +169,9 @@ class SignUpController extends GetxController{
     }
 
   }
+
+
+
 
 
 }

@@ -20,13 +20,12 @@ class bookingScreen extends StatefulWidget {
 class _bookingScreenState extends State<bookingScreen> {
   @override
   Widget build(BuildContext context) {
-    Color color = Colors.grey;
+    Color color = Colors.grey.shade300;
     var data = Get.arguments;
     bookingScreenController bsc = Get.put(bookingScreenController());
 
     RxList<dynamic> rxisSelected=[].obs;
     rxisSelected.value = RxList.generate(data!["extraservices"].length, (_) => false);
-
 
 
     return Scaffold(

@@ -9,15 +9,14 @@ class More extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color boxColor = Colors.grey.shade300;
     return Scaffold(
 
       appBar: AppBar(
-
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white70,
         leading: null,
-
         title: Text("More",
           style: TextStyle(
               color: Colors.black,
@@ -35,10 +34,9 @@ class More extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 onTap: (){
-
                 },
                 child: Container(
-                  color: Colors.grey.shade400,
+                  color: boxColor,
                   width: Get.width,
                   height:  Get.height * 0.1,
                   child: Padding(
@@ -85,7 +83,7 @@ class More extends StatelessWidget {
 
                 },
                 child: Container(
-                  color: Colors.grey.shade400,
+                  color: boxColor,
                   width: Get.width,
                   height:  Get.height * 0.1,
                   child: Padding(
@@ -133,7 +131,7 @@ class More extends StatelessWidget {
 
                 },
                 child: Container(
-                  color: Colors.grey.shade400,
+                  color: boxColor,
                   width: Get.width,
                   height:  Get.height * 0.1,
                   child: Padding(
@@ -181,7 +179,7 @@ class More extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  color: Colors.grey.shade400,
+                  color: boxColor,
                   width: Get.width,
                   height:  Get.height * 0.1,
                   child: Padding(

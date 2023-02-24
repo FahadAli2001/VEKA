@@ -4,9 +4,12 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
 
+import '../../login/LoginController.dart';
 import '../MeetingSuccess/meetingSuccessScreen.dart';
 
 class buyingMeetingController extends GetxController{
+
+  loginController lc = Get.put(loginController());
   var meetingdate = DateTime.now().obs;
   var meetingtime = DateTime.now().obs;
 
@@ -19,7 +22,7 @@ class buyingMeetingController extends GetxController{
       "date_created": meetingtime.value.toString(),
       "date_modified": meetingdate.value.toString(),
       "billing": {
-        "first_name": "",//homesignup.getString("username")
+        "first_name": lc.name.toString(),//homesignup.getString("username")
         "last_name":"",
         "address_1": "karachi",
         "address_2": "karachi",

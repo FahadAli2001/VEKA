@@ -23,7 +23,7 @@ class RentCarDetails extends StatelessWidget {
     rentBookmarkController rbmc = Get.put(rentBookmarkController());
     var description = parse(data["cardescription"]);
     String parsedstring = description.documentElement!.text;
-    var model;
+    final isBookmark = RxBool(false);
    // var exits = false.obs;
     var isPresent = false.obs;
     return Scaffold(
@@ -38,71 +38,22 @@ class RentCarDetails extends StatelessWidget {
              Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child:
-                 IconButton(onPressed: (){
+                 IconButton(onPressed: ()async{
+                   SharedPreferences bmvalue = await SharedPreferences.getInstance();
                    rbmc.toggleBookmark(data["id"].toString(), data["carname"].toString(), data["carprice"].toString(), data["carimage"].toString());
-                   /* model = rentbookmarkModel(
-                     id: data["id"].toString(),
-                     name: data["carname"].toString(),
-                     price: data["carprice"].toString(),
-                     image: data["carimage"].toString(),
-                   );*/
-                  /* rbmc.bookmark(rentbookmarkModel(
-                     id: data["id"].toString(),
-                     name: data["carname"].toString(),
-                     price: data["carprice"].toString(),
-                     image: data["carimage"].toString(),
-                   ));*/
-                  // rbmc.addToBookmark(model);
-                   //print(rbmc.rentBookmarkList.length);
-
-                   /*isPresent.value = rbmc.RentBookmarkList.any((element) => element.id == model.id);
-
-                   if (isPresent.value) {
-                     print('$model is present in the RentBookmarkList array.');
-                     //rbmc.deleteFrombookMark(model);
-                     print("deleted");
-                     isPresent.value = false;
-                   } else {
-                     print('$model does not present in the RentBookmarkList array.');
-                     //rbmc.marktoFav(model);
-                     print("added");
-                     isPresent.value = true;
-
-                   }*/
+                   print('${bmvalue.getBool("isBookmark")}');
                   },
-                    icon :  Icon(
-                        Icons.favorite ,
-                        color:Colors.red   //rbmc.bookmarkColor.value ,
+                    icon :   Obx(
+                        ()=> Icon(
+                            Icons.favorite ,
+                            color:(rbmc.isbookedmark.value)?Colors.red :Colors.grey   //rbmc.bookmarkColor.value ,
+                        ),
                     ),
+
             //
             ),
           ),
-          IconButton(onPressed: ()async{
-
-          //  rbmc.rentBookmarkList.clear();
-            print("clear");
-          }, icon: Icon(Icons.minimize,color: Colors.black,)),
-          IconButton(onPressed: (){
-
-           // rbmc.rentBookmarkList.add(rentbookmarkModel(
-            //  id: data["id"].toString(),
-            //  name: data["carname"].toString(),
-            //  price: data["carprice"].toString(),
-             // image: data["carimage"].toString(),
-            //));
-            print("added");
-           // print(rbmc.RentBookmarkList.length.toString());
-           // print(rbmc.RentBookmarkList[0].id);
-          }, icon: Icon(Icons.add,color: Colors.black,))
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(onPressed: ()async{
-        //rbmc.getBookmarks();
-      // print(rbmc.printList());
-        //print(rbmc.rentBookmarkList.length.toString());
-        //final prefs = await SharedPreferences.getInstance();
-        //print(prefs.getStringList("rent_bookmark_list"));
-      }),
+  ]),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: GestureDetector(
@@ -256,7 +207,7 @@ class RentCarDetails extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Container(
-                        color: Colors.grey,
+                        color: Colors.grey.shade300,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: Center(

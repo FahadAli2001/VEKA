@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../BUYING/home/homeScreen.dart';
 class loginController extends GetxController{
+
+  var userId;
+  var name;
 
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -18,6 +23,21 @@ class loginController extends GetxController{
     isremember.value = val;
   }
   var data;
+  GetUsername()async{
+    final userRef = FirebaseFirestore.instance.collection('users').doc(userId);
+
+    userRef.get().then((snapshot) {
+      if (snapshot.exists) {
+        final data = snapshot.data();
+        name = data!['name'];
+        print('User name: $name');
+      } else {
+        print('User not found in database.');
+      }
+    }).catchError((error) {
+      print('Error getting user data: $error');
+    });
+  }
   void SignIn()async{
     String _username = username.text.trim().toString();
     String _password = password.text.trim().toString();
@@ -69,59 +89,31 @@ class loginController extends GetxController{
         }
       }
 
-      /* else if (response.statusCode == 403) {
-        Get.snackbar("Error", "Incorrect password, please try again",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.grey,
-            colorText: Colors.black);
-      }*/
     } catch (e) {
       Get.snackbar("Error", "Some error occurred, please try again",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.grey,
           colorText: Colors.black);
     }
-
-    /*try{
-
-      var response =await http.post(
-          Uri.parse("https://vekarealestate.technopreneurssoftware.com/wp-json/jwt-auth/v1/token"),
-          body: {
-            "username":_username,
-            "password":_password
-          }
+  }
+  void SignInWithFirebase()async{
+    String _email = username.text.trim().toString();
+    String _password = password.text.trim().toString();
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _email,
+          password: _password
       );
 
-      if(response.statusCode==200){
-       // print("method called");
-        data = jsonDecode(response.body.toString());
-
-        Get.to(homeScreen());
-      }else if (response.statusCode == 403){
-        var error = jsonDecode(response.body.toString());
-        if(error['data']['code'] == "invalid_username"){
-          Get.snackbar("Error","Incorrect Email",
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.grey,
-              colorText: Colors.black);
-        }
-        print("invalid email");
-      }
-     /* else if(response.statusCode ==403){
-        Get.snackbar("Error","Authentication failed, please login again",
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.grey,
-            colorText: Colors.black);
-      }*/
+      userId = FirebaseAuth.instance.currentUser!.uid;
+      GetUsername();
 
 
-      //print(data["code"]);
-    }catch(e){
-      //print(e.toString()+"errorrrrrrrrrrrrrrrrrrrrrrrr");
-      Get.snackbar(e.toString(),"SomeThing went wrong",
+    } on FirebaseAuthException catch (e) {
+      Get.snackbar("Error", "Something Went Wrong",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.grey,
           colorText: Colors.black);
-    }*/
+    }
   }
 }
