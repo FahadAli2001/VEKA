@@ -12,64 +12,99 @@ import '../../SignIn/SignInController.dart';
 class rentBookmarkController extends GetxController{
 
   SignInController sic = Get.put(SignInController());
+  @override
+  /*void onInit() {
+    super.onInit();
+
+    // code to initialize state goes here
+    // for example, fetch data from Firebase and update markColor accordingly
+    void CheckColor(String productId, String productName, String productPrice, String productImage)async{
+      try{
+        final user = FirebaseAuth.instance.currentUser;
+        final bookmarksRef = FirebaseFirestore.instance
+            .collection('rentalCar-bookmarks')
+            .doc(user!.uid)
+            .collection('productIds')
+            .doc(productId);
+
+        // check if product is already bookmarked
+        final snapshot = await bookmarksRef.get();
+        if(snapshot.exists){
+          print(snapshot.id);
+          iconColor.value = Colors.red;
+        }else{
+          iconColor.value = Colors.grey;
+        }
+      }catch (e){
+
+      }
+    }
+
+
+  }*/
 
   var isbookedmark = false.obs;
-  final iconColor = Rxn<Color>();
+  var iconColor = Rx<MaterialColor?>(null);
 
   Future<void> toggleBookmark(String productId, String productName, String productPrice, String productImage,) async {
-    //SharedPreferences rentBookmarksp =await SharedPreferences.getInstance();
-    // get current user
-    SharedPreferences bmvalue = await SharedPreferences.getInstance();
 
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) {
-      // user not signed in
-      return;
+    try{
+     // SharedPreferences rentBookmarksp =await SharedPreferences.getInstance();
+      SharedPreferences rentBookmarksp = await SharedPreferences.getInstance();
+      // get current users
+
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        // user not signed in
+        return;
+      }
+
+      // reference to bookmarks collection for this user
+      final bookmarksRef = FirebaseFirestore.instance
+          .collection('rentalCar-bookmarks')
+          .doc(user.uid)
+          .collection('productIds')
+          .doc(productId);
+
+      // check if product is already bookmarked
+      final snapshot = await bookmarksRef.get();
+      if (snapshot.exists) {
+
+        // already bookmarked, so remove it
+        await bookmarksRef.delete();
+
+        iconColor.value =Colors.grey;
+       // rentBookmarksp.setInt("IconColor", iconColor.value!.value);
+        rentBookmarksp.setInt("IconColor", iconColor.value!.value);
+
+        //print(bmvalue.getBool("isBookmark"));
+        //bmvalue.setBool("isBookmark", isbookedmark.value);
+        print('Bookmark removed for product ');
+        // print(isbookedmark.value);
+        // print(bmvalue.getBool("isBookmark"));
+      } else {
+        // product not bookmarked yet, so add it
+
+        await bookmarksRef.set({
+          'name': productName,
+          'price': productPrice,
+          'image': productImage,
+        }, SetOptions(merge: true));
+        print('Bookmark added for product');
+        iconColor.value = Colors.red;
+        rentBookmarksp.setInt("IconColor", iconColor.value!.value);
+
+
+        //rentBookmarksp.setInt("IconColor", iconColor.value!.value);
+
+        // isbookedmark.value = true;
+        //rentBookmarksp.setBool("isBookmark", isbookedmark.value);
+      }
+
+    }catch (e){
+      print(e);
     }
 
-    // reference to bookmarks collection for this user
-    final bookmarksRef = FirebaseFirestore.instance
-        .collection('rentalCar-bookmarks')
-        .doc(user.uid)
-        .collection('productIds')
-        .doc(productId);
-
-    // check if product is already bookmarked
-    final snapshot = await bookmarksRef.get();
-    if (snapshot.exists) {
-      // already bookmarked, so remove it
-      await bookmarksRef.delete();
-      iconColor.value = Colors.grey;
-      isbookedmark.value = false;
-
-      //print(bmvalue.getBool("isBookmark"));
-      //bmvalue.setBool("isBookmark", isbookedmark.value);
-      print('Bookmark removed for product ');
-     // print(isbookedmark.value);
-     // print(bmvalue.getBool("isBookmark"));
-    } else {
-      // product not bookmarked yet, so add it
-      await bookmarksRef.set({
-        'name': productName,
-        'price': productPrice,
-        'image': productImage,
-        'isBookmark': true
-      }, SetOptions(merge: true));
-      print('Bookmark added for product');
-      iconColor.value = Colors.red;
-     // isbookedmark.value = true;
-      //rentBookmarksp.setBool("isBookmark", isbookedmark.value);
-    }
-
-   /* final isBookmarkSnapshot = await bookmarksRef.get();
-    if (isBookmarkSnapshot.exists) {
-       isbookedmark.value = isBookmarkSnapshot.data()!['isBookmark'] ?? false;
-       //print(isbookedmark.value);
-
-      // bmvalue.setBool('isBookmark', isbookedmark.value);
-     //  print(bmvalue.getBool('isBookmark'));
-
-    }*/
 
   }
 

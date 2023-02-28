@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -18,14 +20,20 @@ class RentCarDetails extends StatelessWidget {
   const RentCarDetails({Key? key}) : super(key: key);
 
   @override
+  void onInit(){
+
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     var data = Get.arguments;
     rentBookmarkController rbmc = Get.put(rentBookmarkController());
     var description = parse(data["cardescription"]);
     String parsedstring = description.documentElement!.text;
     final isBookmark = RxBool(false);
    // var exits = false.obs;
-    var isPresent = false.obs;
+    var color;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -38,15 +46,18 @@ class RentCarDetails extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child:
                  IconButton(onPressed: ()async{
-                   SharedPreferences bmvalue = await SharedPreferences.getInstance();
+                   SharedPreferences rentBookmarksp = await SharedPreferences.getInstance();
+                   //SharedPreferences rentBookmarksp =await SharedPreferences.getInstance();
+                  // color = rentBookmarksp.getInt("IconColor");
+                  // rbmc.CheckColor(data["id"].toString(), data["carname"].toString(), data["carprice"].toString(), data["carimage"].toString());
                    rbmc.toggleBookmark(data["id"].toString(), data["carname"].toString(), data["carprice"].toString(), data["carimage"].toString());
-                   print('${bmvalue.getBool("isBookmark")}');
+                    color = rentBookmarksp.getInt("IconColor");
                   },
-                    icon :   Obx(
-                        ()=> Icon(
-                            Icons.favorite ,
-                            color:rbmc.iconColor.value   //rbmc.bookmarkColor.value ,
-                        ),
+                    icon : Obx(()=>
+                       Icon(
+                              Icons.favorite ,
+                              color:Color(color)  //rbmc.bookmarkColor.value ,
+                      ),
                     ),
                   //
             ),
