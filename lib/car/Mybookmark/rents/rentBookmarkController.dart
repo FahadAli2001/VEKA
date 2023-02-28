@@ -14,6 +14,7 @@ class rentBookmarkController extends GetxController{
   SignInController sic = Get.put(SignInController());
 
   var isbookedmark = false.obs;
+  final iconColor = Rxn<Color>();
 
   Future<void> toggleBookmark(String productId, String productName, String productPrice, String productImage,) async {
     //SharedPreferences rentBookmarksp =await SharedPreferences.getInstance();
@@ -38,13 +39,14 @@ class rentBookmarkController extends GetxController{
     if (snapshot.exists) {
       // already bookmarked, so remove it
       await bookmarksRef.delete();
+      iconColor.value = Colors.grey;
       isbookedmark.value = false;
 
       //print(bmvalue.getBool("isBookmark"));
-      bmvalue.setBool("isBookmark", isbookedmark.value);
+      //bmvalue.setBool("isBookmark", isbookedmark.value);
       print('Bookmark removed for product ');
-      print(isbookedmark.value);
-      print(bmvalue.getBool("isBookmark"));
+     // print(isbookedmark.value);
+     // print(bmvalue.getBool("isBookmark"));
     } else {
       // product not bookmarked yet, so add it
       await bookmarksRef.set({
@@ -54,19 +56,21 @@ class rentBookmarkController extends GetxController{
         'isBookmark': true
       }, SetOptions(merge: true));
       print('Bookmark added for product');
+      iconColor.value = Colors.red;
      // isbookedmark.value = true;
       //rentBookmarksp.setBool("isBookmark", isbookedmark.value);
     }
 
-    final isBookmarkSnapshot = await bookmarksRef.get();
+   /* final isBookmarkSnapshot = await bookmarksRef.get();
     if (isBookmarkSnapshot.exists) {
        isbookedmark.value = isBookmarkSnapshot.data()!['isBookmark'] ?? false;
-       print(isbookedmark.value);
+       //print(isbookedmark.value);
 
-       bmvalue.setBool('isBookmark', isbookedmark.value);
-       print(bmvalue.getBool('isBookmark'));
+      // bmvalue.setBool('isBookmark', isbookedmark.value);
+     //  print(bmvalue.getBool('isBookmark'));
 
-    }
+    }*/
+
   }
 
 

@@ -34,7 +34,6 @@ class RentCarDetails extends StatelessWidget {
             icon: Icon(CupertinoIcons.back),
         color: Colors.black,),
         actions: [
-
              Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child:
@@ -46,11 +45,10 @@ class RentCarDetails extends StatelessWidget {
                     icon :   Obx(
                         ()=> Icon(
                             Icons.favorite ,
-                            color:(rbmc.isbookedmark.value)?Colors.red :Colors.grey   //rbmc.bookmarkColor.value ,
+                            color:rbmc.iconColor.value   //rbmc.bookmarkColor.value ,
                         ),
                     ),
-
-            //
+                  //
             ),
           ),
   ]),
@@ -59,7 +57,6 @@ class RentCarDetails extends StatelessWidget {
         child: GestureDetector(
           onTap: (){
            //print(data["extraservices"][1].toString());
-
             Get.to(bookingScreen(),arguments:
             {"carimage": data!["carimage"].toString(),
               "carname":data!["carname"].toString(),
@@ -69,7 +66,6 @@ class RentCarDetails extends StatelessWidget {
               "id":data["id"]
             }
             );
-          /* */
           },
           child: Container(
             width: Get.width * 0.5,

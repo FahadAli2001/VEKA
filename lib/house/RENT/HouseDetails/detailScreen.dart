@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:html/parser.dart';
 import 'package:readmore/readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../AvailableRooms/availableRooms.dart';
+import '../rentStepper/rentStepper.dart';
 
 class detailScreen extends StatelessWidget {
   const detailScreen({Key? key}) : super(key: key);
@@ -17,6 +19,9 @@ class detailScreen extends StatelessWidget {
     PageController();
 
     var data = Get.arguments;
+
+    var description = parse(data["description"]);
+    String parsedstring = description.documentElement!.text;
 
 
     return Scaffold(
@@ -46,7 +51,7 @@ class detailScreen extends StatelessWidget {
             child: InkWell(
               onTap: (){
                 //print(data["houseprice"]);
-                Get.to(availableRooms(),
+                Get.to(rentStepper(),
                 arguments: {
                   "houseprice":data["houseprice"],
                   "extraservices":data["extraservices"],
@@ -63,7 +68,7 @@ class detailScreen extends StatelessWidget {
                 width: Get.width,
                 height: Get.height,
                 child: Center(
-                  child: Text("Available Rooms",
+                  child: Text("Available Dates",
                     style: TextStyle(
                         fontSize: Get.width * 0.04
                     ),),
@@ -219,7 +224,7 @@ class detailScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 6),
                   child:ReadMoreText(
-                      data["description"],
+                      parsedstring,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,

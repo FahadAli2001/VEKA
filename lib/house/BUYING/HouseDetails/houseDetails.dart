@@ -3,6 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:html/parser.dart';
 import 'package:readmore/readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,8 @@ class buyhouseDetails extends StatelessWidget {
     PageController();
 
    var data = Get.arguments;
+    var description = parse(data["description"]);
+    String parsedstring = description.documentElement!.text;
 
     return Scaffold(
       appBar: AppBar(
@@ -223,7 +226,7 @@ class buyhouseDetails extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child:ReadMoreText(
-                      data["description"],
+                      parsedstring.toString(),
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
