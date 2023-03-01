@@ -19,16 +19,15 @@ import '../bookingScreen/bookingScreen.dart';
 class RentCarDetails extends StatelessWidget {
   const RentCarDetails({Key? key}) : super(key: key);
 
-  @override
-  void onInit(){
 
-  }
 
   @override
   Widget build(BuildContext context) {
 
     var data = Get.arguments;
-    rentBookmarkController rbmc = Get.put(rentBookmarkController());
+    rentBookmarkController rbmc = Get.put(rentBookmarkController(productId: data["id"],productName:data["carname"],
+    productPrice: data["carprice"].toString(),productImage:data["carimage"] ));
+
     var description = parse(data["cardescription"]);
     String parsedstring = description.documentElement!.text;
     final isBookmark = RxBool(false);
@@ -46,19 +45,30 @@ class RentCarDetails extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child:
                  IconButton(onPressed: ()async{
-                   SharedPreferences rentBookmarksp = await SharedPreferences.getInstance();
+                   final rentBookmarksp = await SharedPreferences.getInstance();
+                   //SharedPreferences rentBookmarksp = await SharedPreferences.getInstance();
                    //SharedPreferences rentBookmarksp =await SharedPreferences.getInstance();
                   // color = rentBookmarksp.getInt("IconColor");
                   // rbmc.CheckColor(data["id"].toString(), data["carname"].toString(), data["carprice"].toString(), data["carimage"].toString());
-                   rbmc.toggleBookmark(data["id"].toString(), data["carname"].toString(), data["carprice"].toString(), data["carimage"].toString());
-                    color = rentBookmarksp.getInt("IconColor");
+                   rbmc.toggleBookmark(data["id"].toString(), data["carname"].toString(),
+                                          data["carprice"].toString(), data["carimage"].toString());
+                   //data["id"].toString(), data["carname"].toString(),
+                   //                        data["carprice"].toString(), data["carimage"].toString()
+                    color =await rentBookmarksp.getBool("bookmark");
+                    //print(rentBookmarksp.getBool("bookmark"));
+                   // print(color);
+
                   },
-                    icon : Obx(()=>
-                       Icon(
-                              Icons.favorite ,
-                              color:Color(color)  //rbmc.bookmarkColor.value ,
+                    icon :
+
+                         Obx(()=>
+                           Icon(
+                                  Icons.favorite ,
+                                  color:rbmc.iconColor.value/*rbmc.isBookmarked.value ?Colors.red:Colors.grey*/
                       ),
-                    ),
+                         ),
+
+
                   //
             ),
           ),

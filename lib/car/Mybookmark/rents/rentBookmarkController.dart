@@ -9,48 +9,149 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../SignIn/SignInController.dart';
 
-class rentBookmarkController extends GetxController{
+class rentBookmarkController extends GetxController {
+  var productId;
+
+  var productName;
+
+  var productPrice;
+  var productImage;
+
+  rentBookmarkController({this.productId,this.productName,this.productPrice,this.productImage});
 
   SignInController sic = Get.put(SignInController());
+  var isBookmarked = false.obs;
+  //var iconColor = Rx<MaterialColor?>(null);
+
+  var iconColor = Colors.grey.obs;
   @override
-  /*void onInit() {
+  void onInit()async{
+
+  }
+
+
+  /*@override
+  void onInit() async {
+    super.onInit();
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return;
+    }
+    final bookmarksRef = FirebaseFirestore.instance
+        .collection('rentalCar-bookmarks')
+        .doc(user.uid)
+        .collection('productIds')
+        .doc(productId);
+
+    // listen for changes to bookmarks collection
+    final snapshot =await bookmarksRef.get();
+    SharedPreferences rentBookmarksp = await SharedPreferences.getInstance();
+    if (snapshot.exists) {
+      iconColor.value = Colors.red;
+      rentBookmarksp.setInt("IconColor", iconColor.value!.value);
+    } else {
+      iconColor.value = Colors.grey;
+      rentBookmarksp.setInt("IconColor", iconColor.value!.value);
+    }
+
+  }*/
+
+  /*@override
+  void onInit() async {
+    super.onInit();
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return;
+    }
+    final bookmarksRef = FirebaseFirestore.instance
+        .collection('rentalCar-bookmarks')
+        .doc(user.uid)
+        .collection('productIds')
+        .doc(productId);
+
+    // listen for changes to bookmarks collection
+    final snapshot = await bookmarksRef.get();
+    if(snapshot.exists){
+      iconColor.value ??= Colors.red; // add null check here
+    }else{
+      iconColor.value ??= Colors.grey; // add null check here
+    }
+  }*/
+
+ /* @override
+  void onInit() async {
     super.onInit();
 
-    // code to initialize state goes here
-    // for example, fetch data from Firebase and update markColor accordingly
-    void CheckColor(String productId, String productName, String productPrice, String productImage)async{
-      try{
+    SharedPreferences rentBookmarksp = await SharedPreferences.getInstance();
+    int? savedColor = rentBookmarksp.getInt("IconColor");
+
+    // if savedColor is not null, set the value of iconColor to the saved color
+    if (savedColor != null) {
+      iconColor.value = MaterialColor(savedColor, {});
+    }
+  }*/
+
+
+
+    /*Future<void> toggleBookmark(String productId, String productName,
+        String productPrice, String productImage,) async {
+      try {
+         SharedPreferences rentBookmarksp =await SharedPreferences.getInstance();
+        //SharedPreferences rentBookmarksp = await SharedPreferences.getInstance();
+        // get current users
+
         final user = FirebaseAuth.instance.currentUser;
+        if (user == null) {
+          // user not signed in
+          return;
+        }
+
+        // reference to bookmarks collection for this user
         final bookmarksRef = FirebaseFirestore.instance
             .collection('rentalCar-bookmarks')
-            .doc(user!.uid)
+            .doc(user.uid)
             .collection('productIds')
             .doc(productId);
 
         // check if product is already bookmarked
         final snapshot = await bookmarksRef.get();
-        if(snapshot.exists){
-          print(snapshot.id);
-          iconColor.value = Colors.red;
-        }else{
+        if (snapshot.exists) {
+
+          await bookmarksRef.delete();
           iconColor.value = Colors.grey;
+
+          rentBookmarksp.setBool("bookmark", false);
+          print('Bookmark removed for product ');
+        } else {
+          await bookmarksRef.set({
+            'name': productName,
+            'price': productPrice,
+            'image': productImage,
+          }, SetOptions(merge: true));
+          print('Bookmark added for product');
+          iconColor.value = Colors.red;
+          isBookmarked.value = true;
+          bool? getbool = rentBookmarksp.getBool("bookmark");
+          rentBookmarksp.setBool("bookmark", !getbool!);
+          /*SharedPreferences prefs = await SharedPreferences.getInstance();
+          List<String> bookmarkedProductIds = prefs.getStringList('bookmarkedProductIds') ?? [];
+          if (isBookmarked.value) {
+            bookmarkedProductIds.add(productId);
+          } else {
+            bookmarkedProductIds.remove(productId);
+          }
+          await prefs.setStringList('bookmarkedProductIds', bookmarkedProductIds);*/
         }
-      }catch (e){
-
+      } catch (e) {
+        print(e);
       }
-    }
+    }*/
 
-
-  }*/
-
-  var isbookedmark = false.obs;
-  var iconColor = Rx<MaterialColor?>(null);
-
-  Future<void> toggleBookmark(String productId, String productName, String productPrice, String productImage,) async {
-
-    try{
-     // SharedPreferences rentBookmarksp =await SharedPreferences.getInstance();
-      SharedPreferences rentBookmarksp = await SharedPreferences.getInstance();
+  Future<void> toggleBookmark(String productId, String productName,
+      String productPrice, String productImage,) async {
+    try {
+      SharedPreferences rentBookmarksp =await SharedPreferences.getInstance();
+      //SharedPreferences rentBookmarksp = await SharedPreferences.getInstance();
       // get current users
 
       final user = FirebaseAuth.instance.currentUser;
@@ -70,21 +171,11 @@ class rentBookmarkController extends GetxController{
       final snapshot = await bookmarksRef.get();
       if (snapshot.exists) {
 
-        // already bookmarked, so remove it
         await bookmarksRef.delete();
+        iconColor.value = Colors.grey;
 
-        iconColor.value =Colors.grey;
-       // rentBookmarksp.setInt("IconColor", iconColor.value!.value);
-        rentBookmarksp.setInt("IconColor", iconColor.value!.value);
-
-        //print(bmvalue.getBool("isBookmark"));
-        //bmvalue.setBool("isBookmark", isbookedmark.value);
         print('Bookmark removed for product ');
-        // print(isbookedmark.value);
-        // print(bmvalue.getBool("isBookmark"));
       } else {
-        // product not bookmarked yet, so add it
-
         await bookmarksRef.set({
           'name': productName,
           'price': productPrice,
@@ -92,101 +183,15 @@ class rentBookmarkController extends GetxController{
         }, SetOptions(merge: true));
         print('Bookmark added for product');
         iconColor.value = Colors.red;
-        rentBookmarksp.setInt("IconColor", iconColor.value!.value);
 
-
-        //rentBookmarksp.setInt("IconColor", iconColor.value!.value);
-
-        // isbookedmark.value = true;
-        //rentBookmarksp.setBool("isBookmark", isbookedmark.value);
       }
-
-    }catch (e){
+    } catch (e) {
       print(e);
     }
-
-
   }
 
-
-
-/*List rentBookmarkList = [];
-
-    var bookmarkColor = Colors.grey.obs;
-    List<String>? bookmarkList;
-
-    Future<List<dynamic>> getBookmarks() async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      try {
-        String? bookmarkData = prefs.getString('rent_bookmark');
-        if (bookmarkData != null) {
-          List<dynamic> bookmarkList = json.decode(bookmarkData) as List<dynamic>;
-          for (var bookmark in bookmarkList) {
-            if (bookmark is Map<String, dynamic>) {
-              print(bookmark['id']);
-              print(bookmark['title']);
-              print(bookmark['url']);
-              // Add any additional fields you want to print here
-            }
-          }
-          return bookmarkList;
-        }
-      } catch (e) {
-        print('Error retrieving bookmarks: $e');
-      }
-
-      return [];
-    }
-
-
-
-    bookmark(rentbookmarkModel model) async {
-      SharedPreferences rentbookmark =await  SharedPreferences.getInstance();
-      var id = model.id;
-      if (rentBookmarkList.any((item) => item.id == id)) {
-        print("contain");
-        rentBookmarkList.remove(model);
-        List bookmarkList = rentBookmarkList.map((item) => item.toJson()).toList();
-        String jsonString = jsonEncode(bookmarkList);
-        List<String> stringList = [jsonString];
-        rentbookmark.setStringList("rent_bookmark", stringList);
-        print("deleted");
-        bookmarkColor.value = Colors.grey;
-      } else {
-        print("not contain");
-        rentBookmarkList.add(model);
-        List bookmarkList = rentBookmarkList.map((item) => item.toJson()).toList();
-        String jsonString = jsonEncode(bookmarkList);
-        List<String> stringList = [jsonString];
-        rentbookmark.setStringList("rent_bookmark", stringList);
-        bookmarkColor.value = Colors.red;
-        print("added");
-      }
-    }
-
-
-   List RentBookmarkList = [];
-
-
-
-  void checkModel(rentbookmarkModel model) async{
-    if (RentBookmarkList.contains(model)) {
-      print("${model.name} exists in the list");
-      RentBookmarkList.remove(model);
-      print(" removed");
-    } else {
-      print("${model.name} does not exist in the list");
-        RentBookmarkList.add(model);
-      final prefs = await SharedPreferences.getInstance();
-
-      var listJson = RentBookmarkList.map((model) => json.encode(model.toJson())).toList();
-
-      await prefs.setStringList('rent_bookmark_list', listJson);
-    }
-      print(" added");
-    }*/
 }
+
 
 
 
