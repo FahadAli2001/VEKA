@@ -1,6 +1,7 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
@@ -11,7 +12,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:veka/car/orderDetails/buying/buyingdetails.dart';
 
+import '../../login/LoginController.dart';
 import '../BuyingMeeting/buyingMeeting.dart';
+import '../houseHome/sellHomeController.dart';
 
 
 class buyhouseDetails extends StatelessWidget {
@@ -19,13 +22,15 @@ class buyhouseDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    sellHomeController shc = Get.put(sellHomeController());
+    loginController lgc = Get.put(loginController());
     final PageController _pageController =
     PageController();
 
    var data = Get.arguments;
     var description = parse(data["description"]);
     String parsedstring = description.documentElement!.text;
-
+    var pid = data["id"];
     return Scaffold(
       appBar: AppBar(
         title: Text("buy",
@@ -42,7 +47,6 @@ class buyhouseDetails extends StatelessWidget {
           color: Colors.black,
         ),
       ),
-
       bottomNavigationBar: Container(
         width: Get.width,
         height: Get.height * 0.09,

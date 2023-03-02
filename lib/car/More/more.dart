@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:veka/car/AboutUs/aboutUs.dart';
@@ -8,6 +9,7 @@ import 'package:veka/car/serviceMode/serviceMode.dart';
 
 import '../../ChooseOption.dart';
 import '../Mybookmark/myBookmark.dart';
+import '../Profile/ProfileController.dart';
 
 class more extends StatelessWidget {
   const more({Key? key}) : super(key: key);
@@ -16,7 +18,35 @@ class more extends StatelessWidget {
   Widget build(BuildContext context) {
 
     Color boxColor = Colors.grey.shade300;
+    var boxheight = Get.height * 0.08;
+    profileController pc = Get.put(profileController());
     return Scaffold(
+      bottomNavigationBar: Container(
+        width: Get.width,
+        height: Get.height * 0.08,
+        //  color: Colors.blue,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: InkWell(
+            onTap: (){
+              pc.SignOut();
+            },
+            child: Container(
+              width: Get.width * 0.4,
+              height: Get.height * 0.8,
+              color: Colors.green,
+              child: Center(
+                child: Text("LogOut",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: Get.width * 0.04
+                  ),),
+              ),
+            ),
+          ),
+        ),
+      ),
 
         appBar: AppBar(
 
@@ -47,7 +77,7 @@ class more extends StatelessWidget {
                 child: Container(
                   color: boxColor,
                   width: Get.width,
-                  height:  Get.height * 0.1,
+                  height: boxheight,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
@@ -94,7 +124,7 @@ class more extends StatelessWidget {
                 child: Container(
                   color: boxColor,
                   width: Get.width,
-                  height:  Get.height * 0.1,
+                  height:  boxheight,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
@@ -142,7 +172,7 @@ class more extends StatelessWidget {
                 child: Container(
                   color: boxColor,
                   width: Get.width,
-                  height:  Get.height * 0.1,
+                  height:  boxheight,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
@@ -190,7 +220,7 @@ class more extends StatelessWidget {
                 child: Container(
                   color: boxColor,
                   width: Get.width,
-                  height:  Get.height * 0.1,
+                  height:  boxheight,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
@@ -230,7 +260,6 @@ class more extends StatelessWidget {
           ],
         ),
       ),
-
     );
   }
 }

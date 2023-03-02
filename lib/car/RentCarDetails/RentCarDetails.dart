@@ -14,6 +14,7 @@ import 'package:html/parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Mybookmark/rents/rentBookmarkController.dart';
+import '../SignIn/SignInController.dart';
 import '../bookingScreen/bookingScreen.dart';
 
 class RentCarDetails extends StatelessWidget {
@@ -24,16 +25,19 @@ class RentCarDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    SignInController sic = Get.put(SignInController());
+
     var data = Get.arguments;
-    rentBookmarkController rbmc = Get.put(rentBookmarkController(productId: data["id"],productName:data["carname"],
-    productPrice: data["carprice"].toString(),productImage:data["carimage"] ));
+    rentBookmarkController rbmc = Get.put(rentBookmarkController( ));
 
     var description = parse(data["cardescription"]);
     String parsedstring = description.documentElement!.text;
-    final isBookmark = RxBool(false);
-   // var exits = false.obs;
-    var color;
+
+    var pid = data["id"].toString();
+
+
     return Scaffold(
+
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -41,38 +45,36 @@ class RentCarDetails extends StatelessWidget {
             icon: Icon(CupertinoIcons.back),
         color: Colors.black,),
         actions: [
-             Padding(
+          StreamBuilder(
+            stream:  FirebaseFirestore.instance
+          .collection('rentalCar-bookmarks')
+          .doc(sic.userId)
+          .collection('productIds')
+          .doc(pid)
+          .snapshots(),
+          builder: (context,snapshot){
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return Container();
+            }
+            return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child:
-                 IconButton(onPressed: ()async{
-                   final rentBookmarksp = await SharedPreferences.getInstance();
-                   //SharedPreferences rentBookmarksp = await SharedPreferences.getInstance();
-                   //SharedPreferences rentBookmarksp =await SharedPreferences.getInstance();
-                  // color = rentBookmarksp.getInt("IconColor");
-                  // rbmc.CheckColor(data["id"].toString(), data["carname"].toString(), data["carprice"].toString(), data["carimage"].toString());
-                   rbmc.toggleBookmark(data["id"].toString(), data["carname"].toString(),
-                                          data["carprice"].toString(), data["carimage"].toString());
-                   //data["id"].toString(), data["carname"].toString(),
-                   //                        data["carprice"].toString(), data["carimage"].toString()
-                    color =await rentBookmarksp.getBool("bookmark");
-                    //print(rentBookmarksp.getBool("bookmark"));
-                   // print(color);
-
-                  },
-                    icon :
-
-                         Obx(()=>
-                           Icon(
-                                  Icons.favorite ,
-                                  color:rbmc.iconColor.value/*rbmc.isBookmarked.value ?Colors.red:Colors.grey*/
-                      ),
-                         ),
-
-
-                  //
-            ),
-          ),
-  ]),
+              IconButton(onPressed: ()async{
+                rbmc.toggleBookmark(data["id"].toString(), data["carname"].toString(),
+                    data["carprice"].toString(), data["carimage"].toString());
+                print(snapshot.hasData);
+              },
+                icon :(snapshot.hasData && snapshot.data!.exists)? Icon(
+                    Icons.favorite ,
+                    color:Colors.red
+                )
+                : Icon(
+                Icons.favorite ,
+                color:Colors.grey
+            ),) //
+            );
+          },)
+        ]),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: GestureDetector(
@@ -228,7 +230,7 @@ class RentCarDetails extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: Center(
-                            child: Text(data!["carspecs"][i],
+                            child: Text(data!["carspecs"][i].toString(),
                               softWrap:true,style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold

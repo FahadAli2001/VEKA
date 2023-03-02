@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +18,6 @@ class rent extends StatelessWidget {
   Widget build(BuildContext context) {
     SignInController sic = Get.put(SignInController());
     var bookmark = true.obs;
-
     rentBookmarkController rbmc = Get.put(rentBookmarkController());
 
     final Stream<QuerySnapshot> _usersStream  = FirebaseFirestore.instance
@@ -40,10 +37,11 @@ class rent extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          if(snapshot.data == null){
-            return Center(child: Text("no data"));
-          }
+
           var data = snapshot.data!.docs;
+          if(data == null){
+            return Center(child: Text("no bookmark"));
+          }
           return ListView.builder(
             itemCount: data.length,
               itemBuilder: (context,index){
@@ -74,13 +72,14 @@ class rent extends StatelessWidget {
                             ),),
                         ),
                       ),
-                      Obx(
-                            ()=> IconButton(
-                          onPressed: (){
 
+                             IconButton(
+                          onPressed: (){
+                            rbmc.toggleBookmark(data[index]["id"].toString(), data[index]["name"].toString(),data[index]["price"].toString(),data[index]["image"].toString());
                           },
                           icon:Icon(Icons.favorite),
-                          color: (bookmark.value == true)?Colors.green:Colors.grey,),
+                          color: Colors.red,
+
                       )
                     ],
                   ),

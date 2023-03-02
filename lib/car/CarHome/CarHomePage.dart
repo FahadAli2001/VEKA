@@ -53,7 +53,7 @@ class CarHomePage extends StatelessWidget {
               padding: EdgeInsets.only(right: 20),
               child: GestureDetector(
                 onTap: (){
-                  Get.to(ProfileScreen());
+                 // Get.to(ProfileScreen());
                 },
                 child: CircleAvatar(
                   backgroundColor: Colors.white70,
@@ -69,7 +69,7 @@ class CarHomePage extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Text("Have a good day",
@@ -80,7 +80,7 @@ class CarHomePage extends StatelessWidget {
                 ),
               ),
               //-------
-              Padding(
+              /*Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 25),
                 child: TextField(
                   style: TextStyle(
@@ -101,7 +101,7 @@ class CarHomePage extends StatelessWidget {
                       filled: true
                   ),
                 ),
-              ),
+              ),*/
               //-------------
               FutureBuilder(
                   future: car.allproducts(),
@@ -129,7 +129,6 @@ class CarHomePage extends StatelessWidget {
                         height: Get.height * 0.35,
                         //color:Colors.orange ,
                         child: ListView.builder(
-
                           itemCount: snapshot.data!.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
@@ -876,16 +875,15 @@ class CarHomePage extends StatelessWidget {
                                 color: Colors.black,
                                 fontSize: Get.height * 0.02
                             ),),
-                          LikeButton(
+                          /*LikeButton(
                             size: 30,
                             likeBuilder: (bool isLiked) {
                               return Icon(
                                 CupertinoIcons.heart,
                                 color: isLiked ? Colors.deepPurpleAccent : Colors.grey,
-
                               );
                             },
-                          ),
+                          ),*/
                         ],
                       ),
                       Align(

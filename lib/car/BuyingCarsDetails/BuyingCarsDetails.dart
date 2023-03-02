@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Mybookmark/buying/BuyingBookmarkController.dart';
 import '../ReviewSubmission/reviewsubmission.dart';
+import '../SignIn/SignInController.dart';
 import '../buyReviewSubmission/buyRevuewSubmission.dart';
 
 class BuyingCarsDetails extends StatelessWidget {
@@ -16,9 +18,10 @@ class BuyingCarsDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color selectionbox = Colors.grey;
+    SignInController sic = Get.put(SignInController());
     var data=Get.arguments;
     BuyingBookmarkController bbmc = Get.put(BuyingBookmarkController());
+    var pid = data["id"].toString();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white70,
@@ -37,24 +40,33 @@ class BuyingCarsDetails extends StatelessWidget {
           color: Colors.black
         ),),
         actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child:
-            IconButton(onPressed: ()async{
-              SharedPreferences bmvalue = await SharedPreferences.getInstance();
-              bbmc.toggleBookmark(data["id"].toString(), data["carname"].toString(), data["carprice"].toString(), data["carimage"].toString());
-              print('${bmvalue.getBool("isBookmark")}');
-            },
-              icon :   Obx(
-                    ()=> Icon(
-                    Icons.favorite ,
-                    color:(bbmc.isbookedmark.value)?Colors.red :Colors.grey   //rbmc.bookmarkColor.value ,
-                ),
-              ),
-
-              //
-            ),
-          ),
+          StreamBuilder(
+            stream:  FirebaseFirestore.instance
+                .collection('BuyCar-bookmarks')
+                .doc(sic.userId)
+                .collection('productIds')
+                .doc(pid)
+                .snapshots(),
+            builder: (context,snapshot){
+              if(snapshot.connectionState == ConnectionState.waiting){
+                return Container();
+              }
+              return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child:
+                  IconButton(onPressed: ()async{
+                    bbmc.toggleBookmark(data["id"].toString(), data["carname"].toString(),
+                        data["carprice"].toString(), data["carImage"].toString());
+                  },
+                    icon :(snapshot.hasData && snapshot.data!.exists)? Icon(
+                        Icons.favorite ,
+                        color:Colors.red
+                    ) : Icon(
+                        Icons.favorite ,
+                        color:Colors.grey
+                    ),) //
+              );
+            },)
         ],
       ),
       bottomNavigationBar: Container(
@@ -178,11 +190,11 @@ class BuyingCarsDetails extends StatelessWidget {
                                   style: TextStyle(
                                       fontSize: Get.width * 0.04
                                   ),),
-                                Text("\$900|MONTH",
+                                /*Text("\$900|MONTH",
                                   style: TextStyle(
                                       color: Colors.green,
                                       fontSize: Get.width * 0.04
-                                  ),),
+                                  ),),*/
                               ],
                             ),
                           ),
@@ -222,7 +234,7 @@ class BuyingCarsDetails extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 5),
                               child: Container(
-                                color: Colors.grey,
+                                color: Colors.grey.shade300,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 15),
                                   child: Center(
@@ -262,7 +274,6 @@ class BuyingCarsDetails extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-
                             for(var i = 0 ; i < data["cardetails"].length ; i++)...[
                               Text(data["cardetails"][i],
                                 style: TextStyle(

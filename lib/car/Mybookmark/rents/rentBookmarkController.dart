@@ -10,14 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../SignIn/SignInController.dart';
 
 class rentBookmarkController extends GetxController {
-  var productId;
 
-  var productName;
-
-  var productPrice;
-  var productImage;
-
-  rentBookmarkController({this.productId,this.productName,this.productPrice,this.productImage});
 
   SignInController sic = Get.put(SignInController());
   var isBookmarked = false.obs;
@@ -150,10 +143,6 @@ class rentBookmarkController extends GetxController {
   Future<void> toggleBookmark(String productId, String productName,
       String productPrice, String productImage,) async {
     try {
-      SharedPreferences rentBookmarksp =await SharedPreferences.getInstance();
-      //SharedPreferences rentBookmarksp = await SharedPreferences.getInstance();
-      // get current users
-
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) {
         // user not signed in
@@ -180,6 +169,7 @@ class rentBookmarkController extends GetxController {
           'name': productName,
           'price': productPrice,
           'image': productImage,
+          "id":productId
         }, SetOptions(merge: true));
         print('Bookmark added for product');
         iconColor.value = Colors.red;

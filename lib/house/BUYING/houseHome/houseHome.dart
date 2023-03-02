@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -13,6 +14,7 @@ import 'package:veka/house/RENT/rentHome/rentHome.dart';
 import '../../Profile/Profile.dart';
 import '../../RENT/HouseDetails/detailScreen.dart';
 import '../../RENT/rentHome/rentHomeController.dart';
+import '../../login/LoginController.dart';
 import '../HouseDetails/houseDetails.dart';
 import '../home/homeScreen.dart';
 
@@ -23,6 +25,7 @@ class houseHome extends StatelessWidget {
   Widget build(BuildContext context) {
 
     sellHomeController shc = Get.put(sellHomeController());
+    loginController lgc = Get.put(loginController());
     return Scaffold(
       appBar: AppBar(
         title: Text("VEKA",
@@ -78,24 +81,24 @@ class houseHome extends StatelessWidget {
                );
              }
            }
-           if(snapshot.data ==null){
+           if(snapshot.data == null){
              return Center(
                child: CircularProgressIndicator(
                  color: Colors.grey,
                ) ,
              );
            }
-           //shc.buyproducts?.length
            return ListView.builder(
              itemCount:snapshot.data!.length ,
              itemBuilder: (context,index){
+               var pid = snapshot.data![index]["id"].toString();
+               var name = snapshot.data[index]["name"].toString();
+               var price = snapshot.data[index]["price"].toString();
+               var image = snapshot.data[index]["images"][0]["src"].toString();
                return Padding(
                  padding: const EdgeInsets.all(8.0),
                  child: GestureDetector(
                    onTap: (){
-                    // print(snapshot.data![index]["id"].toString());
-                     //print("rooms " + snapshot.data[index]["attributes"][0]["options"][0].toString());
-                     //print("tapppp");
                      Get.to(Get.to(buyhouseDetails(),
                      arguments: {
                        "totalrooms":snapshot.data[index]["attributes"][0]["options"][0].toString(),
@@ -154,9 +157,51 @@ class houseHome extends StatelessWidget {
                                                //fontSize: Get.width * 0.05
                                            ),),
                                        ),
-                                       FavoriteButton(
-                                           iconSize: 35,
-                                           valueChanged: (){})
+
+                                       StreamBuilder(
+                                         stream: FirebaseFirestore.instance
+                                             .collection('buyHouse-bookmarks')
+                                             .doc(lgc.userId)
+                                             .collection('productIds')
+                                             .doc(pid)
+                                             .snapshots(),
+                                         builder: (context, snapshot) {
+                                           if (snapshot.connectionState == ConnectionState.waiting) {
+                                             return Container();
+                                           }
+                                           return Padding(
+                                             padding: const EdgeInsets.symmetric(horizontal: 10),
+                                             child: StatefulBuilder(
+                                               builder: (BuildContext context, StateSetter setState) {
+                                                 return IconButton(
+                                                   onPressed: () async {
+                                                   try{
+                                                     await shc.toggleBookmark(
+                                                       pid.toString(),
+                                                       name.toString(),
+                                                       price.toString(),
+                                                       image.toString(),
+                                                     );
+                                                   }catch (e){
+                                                     print("runtime error ${e.toString()}");
+                                                   }
+                                                   },
+                                                   icon: (snapshot.hasData && snapshot.data!.exists)
+                                                       ? Icon(
+                                                     Icons.favorite,
+                                                     color: Colors.red,
+                                                   )
+                                                       : Icon(
+                                                     Icons.favorite,
+                                                     color: Colors.grey,
+                                                   ),
+                                                 );
+                                               },
+                                             ),
+                                           );
+                                         },
+                                       )
+
                                      ],
                                    ),
                                  ),

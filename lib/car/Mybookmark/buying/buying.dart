@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
 import '../../SignIn/SignInController.dart';
+import 'BuyingBookmarkController.dart';
 
 class buying extends StatelessWidget {
   const buying({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class buying extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SignInController sic = Get.put(SignInController());
+    BuyingBookmarkController bbmc = Get.put(BuyingBookmarkController());
     final Stream<QuerySnapshot> _usersStream  = FirebaseFirestore.instance
         .collection('BuyCar-bookmarks')
         .doc(sic.userId)
@@ -63,14 +65,13 @@ class buying extends StatelessWidget {
                               ),),
                           ),
                         ),
-                        Obx(
-                              ()=> IconButton(
-                            onPressed: (){
-
-                            },
-                            icon:Icon(Icons.favorite),
-                            color: (bookmark.value == true)?Colors.green:Colors.grey,),
-                        )
+                    IconButton(
+                      onPressed: (){
+                        bbmc.toggleBookmark(data[index]["id"].toString(), data[index]["name"].toString(),data[index]["price"].toString(),data[index]["image"].toString());
+                      },
+                      icon:Icon(Icons.favorite),
+                      color: Colors.red,
+                    )
                       ],
                     ),
                   ),
