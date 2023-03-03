@@ -18,7 +18,6 @@ class houseDashboard extends StatelessWidget {
     TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
     const List<Widget> _widgetOptions = <Widget>[
       houseHome(),
-      Text("notification"),
       More()
 
     ];
@@ -54,10 +53,6 @@ class houseDashboard extends StatelessWidget {
                   GButton(
                     icon: CupertinoIcons.home,
                     text: 'Home',
-                  ),
-                  GButton(
-                    icon: CupertinoIcons.bell_fill,
-                    text: 'Notification',
                   ),
                   GButton(
                     icon: CupertinoIcons.settings,

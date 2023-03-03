@@ -1,8 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:veka/car/AboutUs/aboutUs.dart';
+
+import '../../login/LoginController.dart';
+import '../../login/loginScreen.dart';
 
 class More extends StatelessWidget {
   const More({Key? key}) : super(key: key);
@@ -10,8 +15,38 @@ class More extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color boxColor = Colors.grey.shade300;
+    var boxheight  = Get.height * 0.08;
+    loginController lc = Get.put(loginController());
     return Scaffold(
-
+      bottomNavigationBar: Container(
+        width: Get.width,
+        height: Get.height * 0.08,
+        //  color: Colors.blue,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: InkWell(
+            onTap: ()async{
+              SharedPreferences homesignin =await SharedPreferences.getInstance();
+              homesignin.remove("email" );
+              homesignin.remove("password" );
+              Get.offAll(loginSxreen());
+            },
+            child: Container(
+              width: Get.width * 0.4,
+              height: Get.height * 0.8,
+              color: Colors.green,
+              child: Center(
+                child: Text("LogOut",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: Get.width * 0.04
+                  ),),
+              ),
+            ),
+          ),
+        ),
+      ),
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
@@ -38,7 +73,7 @@ class More extends StatelessWidget {
                 child: Container(
                   color: boxColor,
                   width: Get.width,
-                  height:  Get.height * 0.1,
+                  height:  boxheight,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
@@ -85,7 +120,7 @@ class More extends StatelessWidget {
                 child: Container(
                   color: boxColor,
                   width: Get.width,
-                  height:  Get.height * 0.1,
+                  height:  boxheight,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
@@ -102,7 +137,7 @@ class More extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text("My Book Marks",
+                          child: Text("My BookMarks",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: Get.width * 0.05
@@ -133,7 +168,7 @@ class More extends StatelessWidget {
                 child: Container(
                   color: boxColor,
                   width: Get.width,
-                  height:  Get.height * 0.1,
+                  height:  boxheight,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
@@ -181,7 +216,7 @@ class More extends StatelessWidget {
                 child: Container(
                   color: boxColor,
                   width: Get.width,
-                  height:  Get.height * 0.1,
+                  height:  boxheight,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
@@ -218,13 +253,9 @@ class More extends StatelessWidget {
                 ),
               ),
             )
-
-
-
           ],
         ),
       ),
-
     );
   }
 }

@@ -262,7 +262,7 @@ class buyReviewSubmission extends StatelessWidget {
                             fontSize: Get.width * 0.04
                         ),
                       ),
-                      Text("\$45",
+                      Text(data["carprice"].toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
@@ -285,7 +285,7 @@ class buyReviewSubmission extends StatelessWidget {
                             fontSize: Get.width * 0.04
                         ),
                       ),
-                      Text("\$45",
+                      Text("000",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
@@ -309,7 +309,7 @@ class buyReviewSubmission extends StatelessWidget {
                             fontSize: Get.width * 0.04
                         ),
                       ),
-                      Text("\$50",
+                      Text(data["carprice"].toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,

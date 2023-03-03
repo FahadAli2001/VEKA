@@ -7,9 +7,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:veka/house/Signup/signUpScreen.dart';
 
-
-import '../BUYING/dashboard/houseDashboard.dart';
-import '../BUYING/home/homeScreen.dart';
+import '../../ChooseOption.dart';
 import 'LoginController.dart';
 
 class loginSxreen extends StatelessWidget {
@@ -21,6 +19,14 @@ class loginSxreen extends StatelessWidget {
     var SocialAppIconSize = Get.height * 0.03;
     loginController lc = Get.put(loginController());
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white10,
+        leading: IconButton(onPressed: (){
+          Get.to(()=>ChooseOption());
+        },
+            icon: Icon(CupertinoIcons.back,color: Colors.black,)),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -129,6 +135,7 @@ class loginSxreen extends StatelessWidget {
                       //color: Colors.red,
                       child: Obx(
                             ()=> Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Checkbox(
                                 value: lc.isremember.value,
@@ -139,6 +146,15 @@ class loginSxreen extends StatelessWidget {
                                   fontSize: Get.width * 0.04
                               ),
                             ),
+                            //
+                            TextButton(onPressed: (){
+                              lc.forgetpassword();
+                            },
+                                child: Text("Forget Password",
+                                style: TextStyle(
+                                    fontSize: Get.width * 0.04,
+                                  color: Colors.blue
+                                ),))
                           ],
                         ),
                       ),

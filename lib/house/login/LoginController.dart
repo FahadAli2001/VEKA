@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart'as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../BUYING/home/homeScreen.dart';
 class loginController extends GetxController{
@@ -115,5 +116,19 @@ class loginController extends GetxController{
           backgroundColor: Colors.grey,
           colorText: Colors.black);
     }
+  }
+
+  void forgetpassword()async{
+    try{
+      final Uri _url = Uri.parse('https://vekarealestate.technopreneurssoftware.com/my-account/lost-password');
+
+      if (!await launchUrl(_url,mode: LaunchMode.externalApplication)) {
+        await launchUrl(_url);
+        //print('Could not launch $_url');
+      }
+    }catch (e){
+      print("eroorr"+e.toString());
+    }
+
   }
 }

@@ -2,18 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:veka/ChooseOption.dart';
-import 'package:favorite_button/favorite_button.dart';
 import 'package:veka/house/BUYING/houseHome/sellHomeController.dart';
-import 'package:veka/house/RENT/rentHome/rentHome.dart';
-
 import '../../Profile/Profile.dart';
-import '../../RENT/HouseDetails/detailScreen.dart';
-import '../../RENT/rentHome/rentHomeController.dart';
 import '../../login/LoginController.dart';
 import '../HouseDetails/houseDetails.dart';
 import '../home/homeScreen.dart';
@@ -50,7 +43,7 @@ class houseHome extends StatelessWidget {
             padding: EdgeInsets.only(right: 20),
             child: InkWell(
               onTap: (){
-                Get.to(HomeProfileScreen());
+               // Get.to(HomeProfileScreen());
               },
               child: CircleAvatar(
                 backgroundColor: Colors.white70,
@@ -157,15 +150,15 @@ class houseHome extends StatelessWidget {
                                                //fontSize: Get.width * 0.05
                                            ),),
                                        ),
-
+                                       //
                                        StreamBuilder(
                                          stream: FirebaseFirestore.instance
                                              .collection('buyHouse-bookmarks')
                                              .doc(lgc.userId)
-                                             .collection('productIds')
-                                             .doc(pid)
+                                             .collection('productIds').doc(pid)
                                              .snapshots(),
-                                         builder: (context, snapshot) {
+                                         builder: (context, snapshot)
+                                         {
                                            if (snapshot.connectionState == ConnectionState.waiting) {
                                              return Container();
                                            }
@@ -182,19 +175,22 @@ class houseHome extends StatelessWidget {
                                                        price.toString(),
                                                        image.toString(),
                                                      );
+                                                     if(snapshot.hasData ){
+                                                       print("${snapshot.data.toString()}data is present");
+                                                     }else{
+                                                       print("not present");
+                                                     }
                                                    }catch (e){
                                                      print("runtime error ${e.toString()}");
                                                    }
                                                    },
-                                                   icon: (snapshot.hasData && snapshot.data!.exists)
-                                                       ? Icon(
-                                                     Icons.favorite,
-                                                     color: Colors.red,
+                                                   icon: (snapshot.hasData && snapshot.data!.exists)? Icon(
+                                                       Icons.favorite ,
+                                                       color:Colors.red
+                                                   ) : Icon(
+                                                       Icons.favorite ,
+                                                       color:Colors.grey
                                                    )
-                                                       : Icon(
-                                                     Icons.favorite,
-                                                     color: Colors.grey,
-                                                   ),
                                                  );
                                                },
                                              ),
@@ -207,13 +203,25 @@ class houseHome extends StatelessWidget {
                                  ),
                                  //---------
                                  Padding(
+                                   padding: const EdgeInsets.symmetric(vertical: 20),
+                                   child: Row(
+                                     children: [
+                                       Icon(CupertinoIcons.star_fill,color: Colors.red,),
+                                       Text(snapshot.data[index]["average_rating"].toString(),
+                                       style: TextStyle(
+                                         color: Colors.red
+                                       ),)
+                                     ],
+                                   ),
+                                 )
+                                /* Padding(
                                    padding: const EdgeInsets.only(right: 1),
                                    child: Align(
                                      alignment: Alignment.topLeft,
                                      child: Container(
                                        child: RatingBar.builder(
-                                         initialRating: 1,
-                                         minRating: 1,
+                                         initialRating: 0,
+                                         minRating: 0,
                                          direction: Axis.horizontal,
                                          //allowHalfRating: true,
                                          itemCount: 5,
@@ -222,31 +230,34 @@ class houseHome extends StatelessWidget {
                                            Icons.star,
                                            size: 20,
                                            color: Colors.amber,
-                                         ),
-                                         onRatingUpdate: (rating) {
-                                           print(rating);
-                                         },
+                                         ), onRatingUpdate: (double value) {  },
                                        ),
                                      ),
                                    ),
-                                 ),
+                                 ),*/
                                  //
-                                 Align(
-                                   alignment: Alignment.topLeft,
-                                   child: Text("\$${snapshot.data[index]["price"].toString()}",
-                                     style: TextStyle(
-                                       color: Colors.red,
-                                       fontSize: Get.width * 0.045,
-                                     ),),
+                                 ,Padding(
+                                   padding: const EdgeInsets.only(top: 10),
+                                   child: Align(
+                                     alignment: Alignment.bottomLeft,
+                                     child: Text("\$${snapshot.data[index]["price"].toString()}",
+                                       style: TextStyle(
+                                         color: Colors.red,
+                                         fontSize: Get.width * 0.045,
+                                       ),),
+                                   ),
                                  ),
                                  //------------
-                                 Padding(
-                                   padding: const EdgeInsets.symmetric(vertical: 15),
-                                   child: Row(
-                                     children: [
-                                       Icon(CupertinoIcons.location_solid,color: Colors.black,),
-                                       Text(snapshot.data![index]["attributes"][1]["options"][0].toString())
-                                     ],
+                                 Align(
+                                   alignment: Alignment.bottomLeft,
+                                   child: Padding(
+                                     padding: const EdgeInsets.symmetric(vertical: 15),
+                                     child: Row(
+                                       children: [
+                                         Icon(CupertinoIcons.location_solid,color: Colors.black,),
+                                         Text(snapshot.data![index]["attributes"][1]["options"][0].toString())
+                                       ],
+                                     ),
                                    ),
                                  ),
                                  //------------

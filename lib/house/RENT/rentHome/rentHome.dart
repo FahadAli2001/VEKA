@@ -151,8 +151,20 @@ class rentHome extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    //---------
                                     Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 10),
+                                      child: Row(
+                                        children: [
+                                          Icon(CupertinoIcons.star_fill,color: Colors.red,),
+                                          Text(snapshot.data[index]["average_rating"].toString(),
+                                            style: TextStyle(
+                                                color: Colors.red
+                                            ),)
+                                        ],
+                                      ),
+                                    ),
+                                    //---------
+                                   /* Padding(
                                       padding: const EdgeInsets.only(right: 1),
                                       child: Align(
                                         alignment: Alignment.topLeft,
@@ -175,7 +187,7 @@ class rentHome extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                    ),
+                                    ),*/
                                     //------------
 
                                     Padding(

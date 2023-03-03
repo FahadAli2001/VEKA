@@ -19,6 +19,8 @@ class HomeProfileScreen extends StatelessWidget {
 
     loginController lc = Get.put(loginController());
 
+
+
     return Scaffold(
       bottomNavigationBar: Container(
         width: Get.width,
