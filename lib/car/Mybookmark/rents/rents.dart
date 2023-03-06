@@ -75,7 +75,7 @@ class rent extends StatelessWidget {
 
                              IconButton(
                           onPressed: (){
-                            rbmc.toggleBookmark(data[index]["id"].toString(), data[index]["name"].toString(),data[index]["price"].toString(),data[index]["image"].toString());
+                          //  rbmc.toggleBookmark(data[index]["id"].toString(), data[index]["name"].toString(),data[index]["price"].toString(),data[index]["image"].toString());
                           },
                           icon:Icon(Icons.favorite),
                           color: Colors.red,

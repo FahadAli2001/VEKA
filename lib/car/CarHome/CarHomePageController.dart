@@ -86,6 +86,8 @@ class CarHomePageController extends GetxController{
     }
     return selldata;
   }
+
+
   var parsedstring;
   HtmlToText (val){
     var description = parse(val);

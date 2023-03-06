@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart'as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:woocommerce_api/woocommerce_api.dart';
 
 import '../Dashboard/dashboardScreen.dart';
 import '../bookingScreen/bookingScreenController.dart';
@@ -113,27 +114,24 @@ class RentReviewSubmissionController extends GetxController{
       ]
     };
     try{
-      final response = await http.get(
-        Uri.parse("https://vekaautomobile.technopreneurssoftware.com"),
-        headers: {
-          'Consumer-Key': 'ck_35efc60387133919ea7a6e22c34a2201af711f47',
-          'Consumer-Secret': 'cs_650113cb966d76d8f9f926b41f9a894186e2dcd6'
-        },
+      WooCommerceAPI wooCommerceAPI = WooCommerceAPI(
+          url: "https://vekaautomobile.technopreneurssoftware.com",
+          consumerKey: "ck_35efc60387133919ea7a6e22c34a2201af711f47",
+          consumerSecret: "cs_650113cb966d76d8f9f926b41f9a894186e2dcd6");
+
+      // Post data using the "products" endpoint
+      var response = await wooCommerceAPI.postAsync("orders",data);
+      Get.defaultDialog(
+          buttonColor: Colors.green,
+          title: "",
+          //DashboardScreen()
+          middleText: "Your booking has been successfully completed}",
+          onConfirm: (){
+            Get.back();
+            // Get.to(DashboardScreen());
+            //Get.to(DashboardScreen());
+          }
       );
-      if(response.statusCode == 200){
-        Get.defaultDialog(
-            buttonColor: Colors.green,
-            title: "",
-            //DashboardScreen()
-            middleText: "Your booking has been successfully completed}",
-            onConfirm: (){
-              Get.back();
-             // Get.to(DashboardScreen());
-              //Get.to(DashboardScreen());
-            }
-        );
-        print("order submited");
-      }
     }catch(e){
       print(e.toString());
     }

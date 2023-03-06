@@ -76,9 +76,10 @@ class SignUpController extends GetxController{
       );
       print("method called");
       if(response.statusCode==201){
-        SignUpWithFirebase();
+       // SignUpWithFirebase();
+        clearFileds();
         var data = jsonDecode(response.body.toString());
-        name = data["username"].toString();
+      //  name = data["username"].toString();
         signupshared.setString("username", _username);
         signupshared.setString("email", _email);
         print("user created");
@@ -125,6 +126,7 @@ class SignUpController extends GetxController{
       if(response.statusCode == 200){
         var data = jsonDecode(response.body.toString());
         accessToken = data["data"]['token'];
+       // print(accessToken);
 
       }
     }catch (e){
@@ -141,7 +143,7 @@ class SignUpController extends GetxController{
     confirmpassword.clear();
   }
 
-  SignUpWithFirebase()async{
+  /*SignUpWithFirebase()async{
     String _email = email.text.toString();
     String _password = password.text.toString();
 
@@ -166,12 +168,11 @@ class SignUpController extends GetxController{
           colorText: Colors.black);
     } catch (e) {
       print(e);
-    }
-
-  }
-
-
-
-
+    }*/
 
 }
+
+
+
+
+

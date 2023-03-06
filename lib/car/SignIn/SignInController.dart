@@ -23,7 +23,7 @@ class SignInController extends GetxController{
     isrem.value = val;
     // print(isrem.value);
   }
-  GetUsername()async{
+ /* GetUsername()async{
     final userRef = FirebaseFirestore.instance.collection('users').doc(userId);
 
     userRef.get().then((snapshot) {
@@ -37,7 +37,7 @@ class SignInController extends GetxController{
     }).catchError((error) {
       print('Error getting user data: $error');
     });
-  }
+  }*/
   void SignIn()async{
 
     String _email = username.text.trim().toString();
@@ -53,8 +53,12 @@ class SignInController extends GetxController{
       );
 
       if(response.statusCode==200) {
-        SignInWithFirebase();
+       // SignInWithFirebase();
         var data = jsonDecode(response.body);
+        name = data["data"]["nicename"];
+        userId =  data["data"]["id"];
+        //print('Welcome, $');
+        print(data["data"]["id"]);
         if (isrem.value == true) {
           SharedPreferences sp = await SharedPreferences.getInstance();
           sp.setString("username", _email);
@@ -99,7 +103,7 @@ class SignInController extends GetxController{
     }
   }
 
-  void SignInWithFirebase()async{
+ /* void SignInWithFirebase()async{
     String _email = username.text.trim().toString();
     String _password = password.text.trim().toString();
     try {
@@ -118,7 +122,7 @@ class SignInController extends GetxController{
           backgroundColor: Colors.grey,
           colorText: Colors.black);
     }
-  }
+  }*/
 
 
  /* Map<String, dynamic>? _userData;

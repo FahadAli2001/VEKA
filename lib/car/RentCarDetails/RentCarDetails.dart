@@ -37,7 +37,6 @@ class RentCarDetails extends StatelessWidget {
 
 
     return Scaffold(
-
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -45,7 +44,20 @@ class RentCarDetails extends StatelessWidget {
             icon: Icon(CupertinoIcons.back),
         color: Colors.black,),
         actions: [
-          StreamBuilder(
+      Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child:
+      IconButton(onPressed: (){
+          print("tapppppp");
+          //rbmc.getShareKey();
+          //rbmc.sellProduct();
+      },
+          icon : Icon(
+              Icons.favorite ,
+              color:Colors.red)
+             )
+
+         /* StreamBuilder(
             stream:  FirebaseFirestore.instance
           .collection('rentalCar-bookmarks')
           .doc(sic.userId)
@@ -60,8 +72,8 @@ class RentCarDetails extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child:
               IconButton(onPressed: ()async{
-                rbmc.toggleBookmark(data["id"].toString(), data["carname"].toString(),
-                    data["carprice"].toString(), data["carimage"].toString());
+               /* rbmc.toggleBookmark(data["id"].toString(), data["carname"].toString(),
+                    data["carprice"].toString(), data["carimage"].toString());*/
                 print(snapshot.hasData);
               },
                 icon :(snapshot.hasData && snapshot.data!.exists)? Icon(
@@ -73,7 +85,8 @@ class RentCarDetails extends StatelessWidget {
                 color:Colors.grey
             ),) //
             );
-          },)
+          },)*/
+      )
         ]),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
