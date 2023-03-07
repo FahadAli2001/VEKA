@@ -20,14 +20,11 @@ class rent extends StatelessWidget {
     var bookmark = true.obs;
     rentBookmarkController rbmc = Get.put(rentBookmarkController());
 
-    final Stream<QuerySnapshot> _usersStream  = FirebaseFirestore.instance
-        .collection('rentalCar-bookmarks')
-        .doc(sic.userId)
-        .collection('productIds').snapshots();
+
 
     return Scaffold(
-      body: StreamBuilder(
-        stream:  _usersStream,
+      body: FutureBuilder(
+        future:  rbmc.getAllData(),
         builder: (context,snapshot){
           if(snapshot.hasError){
             return Center(child: Text("some thing went wrong"));
@@ -37,13 +34,8 @@ class rent extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-
-          var data = snapshot.data!.docs;
-          if(data == null){
-            return Center(child: Text("no bookmark"));
-          }
           return ListView.builder(
-            itemCount: data.length,
+            itemCount: rbmc.data!.length,
               itemBuilder: (context,index){
               return Padding(
                 padding: const EdgeInsets.all(10),
@@ -61,12 +53,12 @@ class rent extends StatelessWidget {
                         width: Get.width * 0.5,
                         child: ListTile(
                           leading: CircleAvatar(
-                            backgroundImage: NetworkImage(data[index]["image"].toString()),
+                            backgroundImage: NetworkImage(rbmc.data![index]["image"].toString()),
                             radius: 30,
                             backgroundColor: Colors.black54,
                           ),
-                          title: Text(data[index]["name"].toString()),
-                          subtitle: Text(data[index]["price"].toString(),
+                          title: Text(rbmc.data![index]["name"].toString()),
+                          subtitle: Text(rbmc.data![index]["price"].toString(),
                             style: TextStyle(
                                 color: Colors.green
                             ),),

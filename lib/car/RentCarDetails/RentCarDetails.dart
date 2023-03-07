@@ -33,10 +33,16 @@ class RentCarDetails extends StatelessWidget {
     var description = parse(data["cardescription"]);
     String parsedstring = description.documentElement!.text;
 
-    var pid = data["id"].toString();
+    String pid = data["id"].toString();
 
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        //rbmc.getBookmarksData();
+        //rbmc.getSharekey();
+        rbmc.getAllData();
+        //print(rbmc.sharekey);
+      }),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -49,43 +55,14 @@ class RentCarDetails extends StatelessWidget {
       child:
       IconButton(onPressed: (){
           print("tapppppp");
-          //rbmc.getShareKey();
-          //rbmc.sellProduct();
+          print(pid);
+        rbmc.getsharekeybyId(pid);
       },
           icon : Icon(
               Icons.favorite ,
               color:Colors.red)
              )
 
-         /* StreamBuilder(
-            stream:  FirebaseFirestore.instance
-          .collection('rentalCar-bookmarks')
-          .doc(sic.userId)
-          .collection('productIds')
-          .doc(pid)
-          .snapshots(),
-          builder: (context,snapshot){
-            if(snapshot.connectionState == ConnectionState.waiting){
-              return Container();
-            }
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child:
-              IconButton(onPressed: ()async{
-               /* rbmc.toggleBookmark(data["id"].toString(), data["carname"].toString(),
-                    data["carprice"].toString(), data["carimage"].toString());*/
-                print(snapshot.hasData);
-              },
-                icon :(snapshot.hasData && snapshot.data!.exists)? Icon(
-                    Icons.favorite ,
-                    color:Colors.red
-                )
-                : Icon(
-                Icons.favorite ,
-                color:Colors.grey
-            ),) //
-            );
-          },)*/
       )
         ]),
       bottomNavigationBar: Padding(
