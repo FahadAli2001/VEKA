@@ -287,13 +287,13 @@ class CarHomePage extends StatelessWidget {
                           itemCount:  snapshot.data!.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context,index){
-                            return  products(car.selldata[index]["images"][0]["src"].toString(),
+                            return   products(car.selldata[index]["images"][0]["src"].toString(),
                                 car.selldata[index]["name"].toString(),
                                 car.selldata[index]["price"].toString(),
                                 snapshot.data![index]["meta_data"][20]["value"],
-                              snapshot.data[index]["meta_data"][11]["value"],
-                              snapshot.data![index]["meta_data"][10]["value"],
-                              snapshot.data[index]["id"]
+                                snapshot.data[index]["meta_data"][11]["value"],
+                                snapshot.data![index]["meta_data"][10]["value"],
+                                snapshot.data[index]["id"]
                             );
                           },
                         ),
@@ -458,7 +458,7 @@ class CarHomePage extends StatelessWidget {
     );
   }
 
-  Widget products(carImage,carName,carprice,carspecs, cardetails, cardetailsinfo,id){
+  Widget products(carImage,carName,carprice,carspecs,List cardetails,List cardetailsinfo,id){
     return  Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(

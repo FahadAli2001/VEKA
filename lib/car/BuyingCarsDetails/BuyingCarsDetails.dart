@@ -39,7 +39,7 @@ class BuyingCarsDetails extends StatelessWidget {
         style: TextStyle(
           color: Colors.black
         ),),
-        actions: [
+        /*actions: [
           StreamBuilder(
             stream:  FirebaseFirestore.instance
                 .collection('BuyCar-bookmarks')
@@ -67,7 +67,7 @@ class BuyingCarsDetails extends StatelessWidget {
                     ),) //
               );
             },)
-        ],
+        ],*/
       ),
       bottomNavigationBar: Container(
         width: Get.width,

@@ -16,7 +16,7 @@ class rentHomeController extends GetxController{
           consumerKey: "ck_af3ea7f372c93ef5ccf3ef4e46c3ab02d2bd0be8",
           consumerSecret: "cs_8f66eac90fe06004ec4e4e5d240b5b5e2679ab37");
       rentproducts= await wooCommerceAPI.getAsync("products?type=ovacrs_car_rental");//?type=ovacrs_car_rental
-     // print(rentproducts);
+      //print(rentproducts);
 
     }
     catch (e) {

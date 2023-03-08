@@ -40,7 +40,15 @@ class RentCarDetails extends StatelessWidget {
       floatingActionButton: FloatingActionButton(onPressed: (){
         //rbmc.getBookmarksData();
         //rbmc.getSharekey();
-        rbmc.getAllData();
+       // rbmc.getSharekey();
+        //rbmc.getBookmarksData();
+        //rbmc.BookmarkId.clear();
+        print("tapp");
+       //rbmc.getBookmarksData();
+        //rbmc.fetchProducts();
+        rbmc.allproducts();
+        // rbmc.fetchProducts();
+       // print(rbmc.getBookmarksData());
         //print(rbmc.sharekey);
       }),
       appBar: AppBar(

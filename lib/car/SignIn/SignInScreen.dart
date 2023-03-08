@@ -113,7 +113,7 @@ class SignInScreen extends StatelessWidget {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 60),
+                              padding: const EdgeInsets.only(left: 40),
                               child: TextButton(onPressed: (){},
                                   child: Text("Forget Password?")),
                             )

@@ -23,8 +23,12 @@ class rent extends StatelessWidget {
 
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        //rbmc.getAllData();
+      //  print(rbmc.data.toString());
+      }),
       body: FutureBuilder(
-        future:  rbmc.getAllData(),
+        future:  rbmc.getBookmarksData(),
         builder: (context,snapshot){
           if(snapshot.hasError){
             return Center(child: Text("some thing went wrong"));
@@ -34,8 +38,12 @@ class rent extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
+          if(snapshot.data == null){
+            return Center(child:Text("No Bookmark"));
+          }
+          var data = snapshot.data!;
           return ListView.builder(
-            itemCount: rbmc.data!.length,
+            itemCount:rbmc.BookmarkId.length,
               itemBuilder: (context,index){
               return Padding(
                 padding: const EdgeInsets.all(10),
@@ -53,7 +61,7 @@ class rent extends StatelessWidget {
                         width: Get.width * 0.5,
                         child: ListTile(
                           leading: CircleAvatar(
-                            backgroundImage: NetworkImage(rbmc.data![index]["image"].toString()),
+                            backgroundImage: NetworkImage(rbmc.data[index]["images"][0]["src"].toString()),
                             radius: 30,
                             backgroundColor: Colors.black54,
                           ),

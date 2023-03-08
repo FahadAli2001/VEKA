@@ -20,6 +20,10 @@ class rentHome extends StatelessWidget {
   Widget build(BuildContext context) {
     rentHomeController rhc = Get.put(rentHomeController());
 
+    var para = """There is great thanks in the development of the world from various aspects at the present time, both at the industrial and commercial level to the various vehicles and transportation that are used these days, and its continuous development. Cars and means of transportation have not been invented in the past between day and night;  as we can not return the invention of cars to one person only, as in all inventions and discoveries as well; science and geometry are generally considered cumulative, in which each scientist is completed beyond his predecessors so as to eventually obtain a particular invention or discovery. The history of the first steam car dates back to 1769 when Nicholas Joseph Kignot invented the first steam-powered car on full scale,  In 1801 Joseph Trevethick also designed a four-wheeled steam engine.
+
+After that, the steam engines were continuously developed and the various systems used were improved,  Until 1885, Karl Baines developed the first gasoline-fueled internal combustion engine, which is still in use today in cars, and has patented it.""";
+
     return Scaffold(
       appBar: AppBar(
         title: Text("VEKA",
@@ -42,10 +46,17 @@ class rentHome extends StatelessWidget {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 20),
-            child: CircleAvatar(
-              backgroundColor: Colors.white70,
-              child: Icon(CupertinoIcons.person_alt,
-                color: Colors.black,),
+            child: GestureDetector(
+              onTap: (){
+               // rhc.rentProduct();
+                print(para.toString());
+               // print("tap");
+              },
+              child: CircleAvatar(
+                backgroundColor: Colors.white70,
+                child: Icon(CupertinoIcons.person_alt,
+                  color: Colors.black,),
+              ),
             ),
           )
         ],

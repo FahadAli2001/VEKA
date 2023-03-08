@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../car/Token/AccessToken.dart';
 class HouseSignUpController extends GetxController{
 
   TextEditingController username = TextEditingController();
@@ -13,6 +15,8 @@ class HouseSignUpController extends GetxController{
   TextEditingController password = TextEditingController();
   TextEditingController confirmpassword = TextEditingController();
   var accessToken;
+
+  AcessToken at = Get.put(AcessToken());
 
   var isHidepass = true.obs;
   var isHideconpass = true.obs;
@@ -69,7 +73,7 @@ class HouseSignUpController extends GetxController{
       );
 
       if(response.statusCode==201){
-        SignUpWithFirebase();
+       // SignUpWithFirebase();
         print("method called");
         var data = jsonDecode(response.body.toString());
         homesignup.setString("username", _username);
@@ -113,8 +117,8 @@ class HouseSignUpController extends GetxController{
       var response =await http.post(
           Uri.parse("https://vekarealestate.technopreneurssoftware.com/wp-json/jwt-auth/v1/token"),
           body: {
-            "username":"cveru",
-            "password":"I&Ljfv2MfW:wc"
+            "username":at.username,
+            "password":at.password
           }
       );
       if(response.statusCode == 200){
