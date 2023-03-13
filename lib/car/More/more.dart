@@ -16,10 +16,12 @@ class more extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     Color boxColor = Colors.grey.shade300;
+    var icon = Get.width * 0.05;
+    var circle = Get.width * 0.05;
     var boxheight = Get.height * 0.08;
     profileController pc = Get.put(profileController());
+
     return Scaffold(
       bottomNavigationBar: Container(
         width: Get.width,
@@ -28,7 +30,7 @@ class more extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: InkWell(
-            onTap: (){
+            onTap: () {
               pc.SignOut();
             },
             child: Container(
@@ -36,42 +38,40 @@ class more extends StatelessWidget {
               height: Get.height * 0.8,
               color: Colors.green,
               child: Center(
-                child: Text("LogOut",
+                child: Text(
+                  "LogOut",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: Get.width * 0.04
-                  ),),
+                      fontSize: Get.width * 0.04),
+                ),
               ),
             ),
           ),
         ),
       ),
-
-        appBar: AppBar(
-
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.white70,
-          leading: null,
-
-          title: Text("More",
-            style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: Get.width * 0.05
-            ),),
-
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.white70,
+        leading: null,
+        title: Text(
+          "More",
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: Get.width * 0.05),
         ),
+      ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
         child: Column(
-         // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.to(orderdetails());
                 },
                 child: Container(
@@ -84,28 +84,27 @@ class more extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CircleAvatar(
-                          radius: Get.width * 0.07,
+                          radius: circle,
                           backgroundColor: Colors.grey,
                           child: Icon(
                             CupertinoIcons.lock_fill,
                             color: Colors.black,
-                            size: Get.width * 0.07,
+                            size: icon,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text("Order Details",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: Get.width * 0.05
-                          ),),
+                          child: Text(
+                            "Order Details",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: Get.width * 0.05),
+                          ),
                         ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: Container(
-                            child: Icon(
-                              CupertinoIcons.arrow_right_circle_fill
-                            ),
+                            child: Icon(CupertinoIcons.arrow_right_circle_fill),
                           ),
                         )
                       ],
@@ -118,41 +117,40 @@ class more extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.to(myBookmark());
                 },
                 child: Container(
                   color: boxColor,
                   width: Get.width,
-                  height:  boxheight,
+                  height: boxheight,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CircleAvatar(
-                          radius: Get.width * 0.07,
+                          radius: circle,
                           backgroundColor: Colors.grey,
                           child: Icon(
                             CupertinoIcons.bookmark_fill,
                             color: Colors.black,
-                            size: Get.width * 0.07,
+                            size: icon,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text("My Book Marks",
+                          child: Text(
+                            "My Book Marks",
                             style: TextStyle(
                                 color: Colors.black,
-                                fontSize: Get.width * 0.05
-                            ),),
+                                fontSize: Get.width * 0.05),
+                          ),
                         ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: Container(
-                            child: Icon(
-                                CupertinoIcons.arrow_right_circle_fill
-                            ),
+                            child: Icon(CupertinoIcons.arrow_right_circle_fill),
                           ),
                         )
                       ],
@@ -166,41 +164,40 @@ class more extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.to(serviceMode());
                 },
                 child: Container(
                   color: boxColor,
                   width: Get.width,
-                  height:  boxheight,
+                  height: boxheight,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CircleAvatar(
-                          radius: Get.width * 0.07,
+                          radius: circle,
                           backgroundColor: Colors.grey,
                           child: Icon(
                             Icons.car_rental_sharp,
                             color: Colors.black,
-                            size: Get.width * 0.07,
+                            size: icon,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text("Service Mode",
+                          child: Text(
+                            "Service Mode",
                             style: TextStyle(
                                 color: Colors.black,
-                                fontSize: Get.width * 0.05
-                            ),),
+                                fontSize: Get.width * 0.05),
+                          ),
                         ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: Container(
-                            child: Icon(
-                                CupertinoIcons.arrow_right_circle_fill
-                            ),
+                            child: Icon(CupertinoIcons.arrow_right_circle_fill),
                           ),
                         )
                       ],
@@ -212,43 +209,42 @@ class more extends StatelessWidget {
             //--------------
             //--------
             GestureDetector(
-              onTap: (){
-                Get.to(()=>aboutUs());
+              onTap: () {
+                Get.to(() => aboutUs());
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   color: boxColor,
                   width: Get.width,
-                  height:  boxheight,
+                  height: boxheight,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CircleAvatar(
-                          radius: Get.width * 0.07,
+                          radius: circle,
                           backgroundColor: Colors.grey,
                           child: Icon(
                             Icons.note_alt_rounded,
                             color: Colors.black,
-                            size: Get.width * 0.07,
+                            size: icon,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text("About us",
+                          child: Text(
+                            "About us",
                             style: TextStyle(
                                 color: Colors.black,
-                                fontSize: Get.width * 0.05
-                            ),),
+                                fontSize: Get.width * 0.05),
+                          ),
                         ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: Container(
-                            child: Icon(
-                                CupertinoIcons.arrow_right_circle_fill
-                            ),
+                            child: Icon(CupertinoIcons.arrow_right_circle_fill),
                           ),
                         )
                       ],

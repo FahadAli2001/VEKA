@@ -20,25 +20,21 @@ class rentHome extends StatelessWidget {
   Widget build(BuildContext context) {
     rentHomeController rhc = Get.put(rentHomeController());
 
-    var para = """There is great thanks in the development of the world from various aspects at the present time, both at the industrial and commercial level to the various vehicles and transportation that are used these days, and its continuous development. Cars and means of transportation have not been invented in the past between day and night;  as we can not return the invention of cars to one person only, as in all inventions and discoveries as well; science and geometry are generally considered cumulative, in which each scientist is completed beyond his predecessors so as to eventually obtain a particular invention or discovery. The history of the first steam car dates back to 1769 when Nicholas Joseph Kignot invented the first steam-powered car on full scale,  In 1801 Joseph Trevethick also designed a four-wheeled steam engine.
-
-After that, the steam engines were continuously developed and the various systems used were improved,  Until 1885, Karl Baines developed the first gasoline-fueled internal combustion engine, which is still in use today in cars, and has patented it.""";
-
     return Scaffold(
       appBar: AppBar(
-        title: Text("VEKA",
-          style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold
-          ),),
+        title: Text(
+          "VEKA",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white70,
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             Get.to(homeScreen());
           },
-          icon: Icon(CupertinoIcons.line_horizontal_3_decrease,
+          icon: Icon(
+            CupertinoIcons.line_horizontal_3_decrease,
             color: Colors.black,
             size: Get.height * 0.04,
           ),
@@ -47,135 +43,146 @@ After that, the steam engines were continuously developed and the various system
           Padding(
             padding: EdgeInsets.only(right: 20),
             child: GestureDetector(
-              onTap: (){
-               // rhc.rentProduct();
-                print(para.toString());
-               // print("tap");
+              onTap: () {
+                // rhc.rentProduct();
+                //  print(para.toString());
+                // print("tap");
               },
               child: CircleAvatar(
                 backgroundColor: Colors.white70,
-                child: Icon(CupertinoIcons.person_alt,
-                  color: Colors.black,),
+                child: Icon(
+                  CupertinoIcons.person_alt,
+                  color: Colors.black,
+                ),
               ),
             ),
           )
         ],
       ),
       //--------
-      body: SafeArea(child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 7),
-          child:FutureBuilder(
-            future: rhc.rentProduct(),
-            builder: (context,snapshot){
-              if(snapshot.hasError){
-                Get.snackbar("Error", snapshot.error.toString(),
-                    snackPosition: SnackPosition.BOTTOM,
-                    backgroundColor: Colors.grey
-                );
-                if(snapshot.connectionState == ConnectionState.waiting){
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.grey,
-                    ),
-                  );
-                }
-              }
-              if(snapshot.data == null){
+      body: SafeArea(
+          child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+        child: FutureBuilder(
+          future: rhc.rentProduct(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              Get.snackbar("Error", snapshot.error.toString(),
+                  snackPosition: SnackPosition.BOTTOM,
+                  backgroundColor: Colors.grey);
+              if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: CircularProgressIndicator(
                     color: Colors.grey,
                   ),
                 );
               }
-              return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (context,index){
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: (){
-                       //print(snapshot.data![index]["meta_data"][12]["value"]);
-                       // print(snapshot.data[index]["meta_data"][18]["value"][0].toString());
-                       Get.to(Get.to(detailScreen(),
-                        arguments: {
-                          "totalrooms":snapshot.data![index]["meta_data"][18]["value"][0].toString(),
-                          "houseimage":snapshot.data![index]["images"][0]["src"],
-                          "housename":snapshot.data[index]["name"].toString(),
-                          "houseprice":snapshot.data![index]["price"],
-                          "description":snapshot.data[index]["description"],
-                          "location":snapshot.data![index]["meta_data"][18]["value"][1],
-                          "facilities":snapshot.data![index]["meta_data"][22]["value"],
-                          "extraservices":snapshot.data![index]["meta_data"][9]["value"],
-                          "extraservicescharges":snapshot.data![index]["meta_data"][12]["value"],
-                          "id":snapshot.data![index]["id"]
-                        }));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Colors.grey
-                            )
-                        ),
-                        width: Get.width,
-                        height: Get.height * 0.35,
-                        //color: Colors.orange,
-                        child: Row(
-                          children: [
-                            Container(
-                              height:Get.height ,
-                              width: Get.width / 2.8,
-                              decoration: BoxDecoration(
-                                  color: Colors.grey.shade200,
-                                  image: DecorationImage(
-                                      image:NetworkImage(snapshot.data[index]["images"][0]["src"]),
-                                      fit: BoxFit.fill
-                                  )
-                              ),
-                            ),
-                            //----
-                            Container(
-                              height: Get.height,
-                              width: Get.width * 0.53,
-                              //color: Colors.pink,
-                              child: Padding(
-                                padding: const EdgeInsets.all(4),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 5),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: AutoSizeText(snapshot.data[index]["name"],
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                  //fontSize: Get.width * 0.05
-                                              ),
-                                              softWrap: true,
-                                            ),
-                                          ),
-                                          FavoriteButton(
-                                              iconSize: 30,
-                                              valueChanged: (){})
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 10),
-                                      child: Row(
-                                        children: [
-                                          Icon(CupertinoIcons.star_fill,color: Colors.red,),
-                                          Text(snapshot.data[index]["average_rating"].toString(),
+            }
+            if (snapshot.data == null) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: Colors.grey,
+                ),
+              );
+            }
+            return ListView.builder(
+              physics: ScrollPhysics(),
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      //print(snapshot.data![index]["meta_data"][12]["value"]);
+                      // print(snapshot.data[index]["meta_data"][18]["value"][0].toString());
+                      Get.to(Get.to(detailScreen(), arguments: {
+                        "totalrooms": snapshot.data![index]["meta_data"][18]
+                                ["value"][0]
+                            .toString(),
+                        "houseimage": snapshot.data![index]["images"][0]["src"],
+                        "housename": snapshot.data[index]["name"].toString(),
+                        "houseprice": snapshot.data![index]["price"],
+                        "description": snapshot.data[index]["description"],
+                        "location": snapshot.data![index]["meta_data"][18]
+                            ["value"][1],
+                        "facilities": snapshot.data![index]["meta_data"][22]
+                            ["value"],
+                        "extraservices": snapshot.data![index]["meta_data"][9]
+                            ["value"],
+                        "extraservicescharges": snapshot.data![index]
+                            ["meta_data"][12]["value"],
+                        "id": snapshot.data![index]["id"]
+                      }));
+                    },
+                    child: Container(
+                      decoration:
+                          BoxDecoration(border: Border.all(color: Colors.grey)),
+                      width: Get.width,
+                      height: Get.height * 0.35,
+                      //color: Colors.orange,
+                      child: Row(
+                        children: [
+                          Container(
+                            height: Get.height,
+                            width: Get.width / 2.8,
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                image: DecorationImage(
+                                    image: NetworkImage(snapshot.data[index]
+                                        ["images"][0]["src"]),
+                                    fit: BoxFit.fill)),
+                          ),
+                          //----
+                          Container(
+                            height: Get.height,
+                            width: Get.width * 0.53,
+                            //color: Colors.pink,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 5),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: AutoSizeText(
+                                            snapshot.data[index]["name"],
                                             style: TextStyle(
-                                                color: Colors.red
-                                            ),)
-                                        ],
-                                      ),
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                              //fontSize: Get.width * 0.05
+                                            ),
+                                            softWrap: true,
+                                          ),
+                                        ),
+                                        FavoriteButton(
+                                            iconSize: 30, valueChanged: () {})
+                                      ],
                                     ),
-                                    //---------
-                                   /* Padding(
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          CupertinoIcons.star_fill,
+                                          color: Colors.red,
+                                        ),
+                                        Text(
+                                          snapshot.data[index]["average_rating"]
+                                              .toString(),
+                                          style: TextStyle(color: Colors.red),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  //---------
+                                  /* Padding(
                                       padding: const EdgeInsets.only(right: 1),
                                       child: Align(
                                         alignment: Alignment.topLeft,
@@ -199,47 +206,56 @@ After that, the steam engines were continuously developed and the various system
                                         ),
                                       ),
                                     ),*/
-                                    //------------
+                                  //------------
 
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 10),
-                                      child: Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text("\$${snapshot.data[index]["price"]}",
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                            fontSize: Get.width * 0.045,
-                                          ),),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        "\$${snapshot.data[index]["price"]}",
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: Get.width * 0.045,
+                                        ),
                                       ),
                                     ),
-                                    //--
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 15),
-                                      child: Row(
-                                        children: [
-                                          Icon(CupertinoIcons.location_solid,color: Colors.black,),
-                                          Expanded(
-                                            child: Text(
-                                              snapshot.data![index]["meta_data"][18]["value"][1],
-                                            softWrap: true,),
-                                          )
-                                        ],
-                                      ),
+                                  ),
+                                  //--
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          CupertinoIcons.location_solid,
+                                          color: Colors.black,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            snapshot.data![index]["meta_data"]
+                                                [18]["value"][1],
+                                            softWrap: true,
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                    //------------
-                                  ],
-                                ),
+                                  ),
+                                  //------------
+                                ],
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                  );
-                },
-              );
-            },
-          ),
+                  ),
+                );
+              },
+            );
+          },
+        ),
       )),
     );
   }

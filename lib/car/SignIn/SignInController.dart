@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../Dashboard/dashboardScreen.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
-class SignInController extends GetxController{
+class SignInController extends GetxController {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   RxBool isHidepass = true.obs;
@@ -23,7 +23,8 @@ class SignInController extends GetxController{
     isrem.value = val;
     // print(isrem.value);
   }
- /* GetUsername()async{
+
+  /* GetUsername()async{
     final userRef = FirebaseFirestore.instance.collection('users').doc(userId);
 
     userRef.get().then((snapshot) {
@@ -38,36 +39,32 @@ class SignInController extends GetxController{
       print('Error getting user data: $error');
     });
   }*/
-  void SignIn()async{
-
+  void SignIn() async {
     String _email = username.text.trim().toString();
     String _password = password.text.trim().toString();
 
-    try{
-      var response =await http.post(
-          Uri.parse("https://vekaautomobile.technopreneurssoftware.com/wp-json/jwt-auth/v1/token"),
-          body: {
-            "username":_email,
-            "password":_password
-          }
-      );
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://vekaautomobile.technopreneurssoftware.com/wp-json/jwt-auth/v1/token"),
+          body: {"username": _email, "password": _password});
 
-      if(response.statusCode==200) {
-       // SignInWithFirebase();
+      if (response.statusCode == 200) {
+        // SignInWithFirebase();
         var data = jsonDecode(response.body);
         name = data["data"]["nicename"];
-        userId =  data["data"]["id"];
+        userId = data["data"]["id"];
         //print('Welcome, $');
         print(data["data"]["id"]);
         if (isrem.value == true) {
           SharedPreferences sp = await SharedPreferences.getInstance();
           sp.setString("username", _email);
           sp.setString("password", _password);
+          Get.off(DashboardScreen());
+        } else {
+          Get.off(DashboardScreen());
         }
-        else{
-          Get.to(DashboardScreen());
-        }
-      }else if (response.statusCode == 403){
+      } else if (response.statusCode == 403) {
         Map<String, dynamic> error = jsonDecode(response.body);
         String errorCode = error["code"];
         if (errorCode == "invalid_email" && response.statusCode == 403) {
@@ -75,17 +72,18 @@ class SignInController extends GetxController{
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);
-        } else if(errorCode == "incorrect_password") {
+        } else if (errorCode == "incorrect_password") {
           Get.snackbar("Error", "Wrong password entered",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);
-        }else if(errorCode == "incorrect_password" && errorCode == "invalid_email"){
+        } else if (errorCode == "incorrect_password" &&
+            errorCode == "invalid_email") {
           Get.snackbar("Error", "Wrong Email and Password",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);
-        }else{
+        } else {
           print(response.statusCode);
           /*Get.snackbar("Error", "Something Went Wrong",
               snackPosition: SnackPosition.BOTTOM,
@@ -93,17 +91,16 @@ class SignInController extends GetxController{
               colorText: Colors.black);*/
         }
       }
-
-    }catch(e){
-      print(e.toString()+"error");
-      Get.snackbar(e.toString(),"SomeThing went wrong",
+    } catch (e) {
+      print(e.toString() + "error");
+      Get.snackbar(e.toString(), "SomeThing went wrong",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.grey,
           colorText: Colors.black);
     }
   }
 
- /* void SignInWithFirebase()async{
+  /* void SignInWithFirebase()async{
     String _email = username.text.trim().toString();
     String _password = password.text.trim().toString();
     try {
@@ -124,8 +121,7 @@ class SignInController extends GetxController{
     }
   }*/
 
-
- /* Map<String, dynamic>? _userData;
+  /* Map<String, dynamic>? _userData;
 
   var result;
    final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -149,7 +145,7 @@ class SignInController extends GetxController{
        print(e);
      }*/
 
-     /*if (loginResult != null) {
+  /*if (loginResult != null) {
        try {
          final OAuthCredential facebookAuthCredential =
          FacebookAuthProvider.credential(loginResult.accessToken!.token);
@@ -169,7 +165,7 @@ class SignInController extends GetxController{
        // Handle case where loginResult is null, e.g. user cancelled the login dialog
      }*/
 
-    /*try {
+  /*try {
 
       final LoginResult loginResult = await FacebookAuth.instance.login();
 
@@ -181,7 +177,7 @@ class SignInController extends GetxController{
       print( "error"+e.message!.toString()); // Displaying the error message
     }*/
 
-  }
+}
  /* String userEmail = "";
   Future<UserCredential> LogInWithFacebook() async {
     // Trigger the sign-in flow

@@ -5,13 +5,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../BUYING/home/homeScreen.dart';
-class loginController extends GetxController{
 
+class loginController extends GetxController {
   var userId;
   var name;
 
@@ -23,8 +23,9 @@ class loginController extends GetxController{
   void handleRadioValueChanged(val) {
     isremember.value = val;
   }
+
   var data;
-  GetUsername()async{
+  GetUsername() async {
     final userRef = FirebaseFirestore.instance.collection('users').doc(userId);
 
     userRef.get().then((snapshot) {
@@ -39,31 +40,28 @@ class loginController extends GetxController{
       print('Error getting user data: $error');
     });
   }
-  void SignIn()async{
+
+  void SignIn() async {
     String _username = username.text.trim().toString();
     String _password = password.text.trim().toString();
 
     try {
       var response = await http.post(
-          Uri.parse("https://vekarealestate.technopreneurssoftware.com/wp-json/jwt-auth/v1/token"),
-          body: {
-            "username": _username,
-            "password": _password
-          }
-      );
+          Uri.parse(
+              "https://vekarealestate.technopreneurssoftware.com/wp-json/jwt-auth/v1/token"),
+          body: {"username": _username, "password": _password});
 
       if (response.statusCode == 200) {
         data = jsonDecode(response.body.toString());
-        if(isremember.value == true){
-          SharedPreferences homesignin =await SharedPreferences.getInstance();
+        if (isremember.value == true) {
+          SharedPreferences homesignin = await SharedPreferences.getInstance();
           homesignin.setString("email", _username);
           print(homesignin.getString("email"));
-          Get.to(homeScreen());
+          Get.off(homeScreen());
+        } else {
+          Get.off(homeScreen());
         }
-        else{
-          Get.to(homeScreen());
-        }
-      }else if(response.statusCode == 403){
+      } else if (response.statusCode == 403) {
         Map<String, dynamic> error = jsonDecode(response.body);
         String errorCode = error["code"];
         if (errorCode == "invalid_email") {
@@ -71,25 +69,25 @@ class loginController extends GetxController{
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);
-        } else if(errorCode == "incorrect_password") {
+        } else if (errorCode == "incorrect_password") {
           Get.snackbar("Error", "Wrong password entered",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);
-        }else if(errorCode == "incorrect_password" && errorCode == "invalid_email"){
+        } else if (errorCode == "incorrect_password" &&
+            errorCode == "invalid_email") {
           Get.snackbar("Error", "Wrong email and Password",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);
-        }else{
+        } else {
           print(response.statusCode);
-         /* Get.snackbar("Error", "Something Went Wrong",
+          /* Get.snackbar("Error", "Something Went Wrong",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);*/
         }
       }
-
     } catch (e) {
       Get.snackbar("Error", "Some error occurred, please try again",
           snackPosition: SnackPosition.BOTTOM,
@@ -97,19 +95,16 @@ class loginController extends GetxController{
           colorText: Colors.black);
     }
   }
-  void SignInWithFirebase()async{
+
+  void SignInWithFirebase() async {
     String _email = username.text.trim().toString();
     String _password = password.text.trim().toString();
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _email,
-          password: _password
-      );
+      final credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: _email, password: _password);
 
       userId = FirebaseAuth.instance.currentUser!.uid;
       GetUsername();
-
-
     } on FirebaseAuthException catch (e) {
       Get.snackbar("Error", "Something Went Wrong",
           snackPosition: SnackPosition.BOTTOM,
@@ -118,17 +113,17 @@ class loginController extends GetxController{
     }
   }
 
-  void forgetpassword()async{
-    try{
-      final Uri _url = Uri.parse('https://vekarealestate.technopreneurssoftware.com/my-account/lost-password');
+  void forgetpassword() async {
+    try {
+      final Uri _url = Uri.parse(
+          'https://vekarealestate.technopreneurssoftware.com/my-account/lost-password');
 
-      if (!await launchUrl(_url,mode: LaunchMode.externalApplication)) {
+      if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) {
         await launchUrl(_url);
         //print('Could not launch $_url');
       }
-    }catch (e){
-      print("eroorr"+e.toString());
+    } catch (e) {
+      print("eroorr" + e.toString());
     }
-
   }
 }

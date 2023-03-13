@@ -20,118 +20,96 @@ import '../bookingScreen/bookingScreen.dart';
 class RentCarDetails extends StatelessWidget {
   const RentCarDetails({Key? key}) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
-
     SignInController sic = Get.put(SignInController());
 
     var data = Get.arguments;
-    rentBookmarkController rbmc = Get.put(rentBookmarkController( ));
+    rentBookmarkController rbmc = Get.put(rentBookmarkController());
 
     var description = parse(data["cardescription"]);
     String parsedstring = description.documentElement!.text;
-
     String pid = data["id"].toString();
 
-
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        //rbmc.getBookmarksData();
-        //rbmc.getSharekey();
-       // rbmc.getSharekey();
-        //rbmc.getBookmarksData();
-        //rbmc.BookmarkId.clear();
-        print("tapp");
-       //rbmc.getBookmarksData();
-        //rbmc.fetchProducts();
-        rbmc.allproducts();
-        // rbmc.fetchProducts();
-       // print(rbmc.getBookmarksData());
-        //print(rbmc.sharekey);
-      }),
+      floatingActionButton: FloatingActionButton(onPressed: (() {
+        rbmc.allBookmark();
+      })),
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(onPressed: (){Get.back();},
+          backgroundColor: Colors.white12,
+          elevation: 0,
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
             icon: Icon(CupertinoIcons.back),
-        color: Colors.black,),
-        actions: [
-      Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child:
-      IconButton(onPressed: (){
-          print("tapppppp");
-          print(pid);
-        rbmc.getsharekeybyId(pid);
-      },
-          icon : Icon(
-              Icons.favorite ,
-              color:Colors.red)
-             )
-
-      )
-        ]),
+            color: Colors.black,
+          ),
+          actions: [
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: IconButton(
+                    onPressed: () {
+                      print("tapppppp");
+                      print(pid);
+                      rbmc.getsharekeybyId(pid);
+                    },
+                    icon: Icon(Icons.favorite, color: Colors.red)))
+          ]),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: GestureDetector(
-          onTap: (){
-           //print(data["extraservices"][1].toString());
-            Get.to(bookingScreen(),arguments:
-            {"carimage": data!["carimage"].toString(),
-              "carname":data!["carname"].toString(),
-              "carprice":data!["carprice"].toString(),
-              "extraservices":data!["extraservices"],
-              "extraservicescharges":data!["extraservicescharges"],
-              "id":data["id"]
-            }
-            );
+          onTap: () {
+            //print(data["extraservices"][1].toString());
+            Get.to(bookingScreen(), arguments: {
+              "carimage": data!["carimage"].toString(),
+              "carname": data!["carname"].toString(),
+              "carprice": data!["carprice"].toString(),
+              "extraservices": data!["extraservices"],
+              "extraservicescharges": data!["extraservicescharges"],
+              "id": data["id"]
+            });
           },
           child: Container(
             width: Get.width * 0.5,
             height: Get.height * 0.06,
             color: Colors.green,
             child: Center(
-              child: Text("Next",
+              child: Text(
+                "Next",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
-                    fontSize: Get.width * 0.05
-                ),),
+                    fontSize: Get.width * 0.05),
+              ),
             ),
           ),
         ),
       ),
-
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: ListView(
+          physics: BouncingScrollPhysics(),
           children: [
-
-
             CarouselSlider.builder(
               itemCount: 2,
-              itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
-                  Container(
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                      //color: Colors.orange,
-                        image: DecorationImage(
-                            image: NetworkImage(data!["carimage"].toString()),
-                            filterQuality: FilterQuality.high,
-                            fit: BoxFit.cover
-                        )
-                    ),
-
-                  ), options:  CarouselOptions(
-                autoPlay: false,
-                enlargeCenterPage: true,
-                //height: Get.height * 0.1,
-                aspectRatio: 18/8,
-                onPageChanged: (index, reason) {
-
-                }),
+              itemBuilder:
+                  (BuildContext context, int itemIndex, int pageViewIndex) =>
+                      Container(
+                width: Get.width,
+                decoration: BoxDecoration(
+                    //color: Colors.orange,
+                    image: DecorationImage(
+                        image: NetworkImage(data!["carimage"].toString()),
+                        filterQuality: FilterQuality.high,
+                        fit: BoxFit.cover)),
+              ),
+              options: CarouselOptions(
+                  autoPlay: false,
+                  enlargeCenterPage: true,
+                  //height: Get.height * 0.1,
+                  aspectRatio: 18 / 8,
+                  onPageChanged: (index, reason) {}),
             ),
             //-------
             Container(
@@ -139,27 +117,29 @@ class RentCarDetails extends StatelessWidget {
               width: Get.width,
               height: Get.height * 0.1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 8),
-                child: Padding(padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                child: Padding(
+                  padding: EdgeInsets.all(8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: Text(data!["carname"].toString(),
+                        child: Text(
+                          data!["carname"].toString(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
-                              fontSize: Get.height * 0.02
-                          ),
+                              fontSize: Get.height * 0.02),
                           softWrap: true,
                         ),
                       ),
-                      Text("\$${data!["carprice"].toString()}",
+                      Text(
+                        "\$${data!["carprice"].toString()}",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
-                            fontSize: Get.height * 0.02
-                        ),),
+                            fontSize: Get.height * 0.02),
+                      ),
                     ],
                   ),
                 ),
@@ -170,13 +150,15 @@ class RentCarDetails extends StatelessWidget {
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
-                child: Text("About",
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                child: Text(
+                  "About",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: Get.height * 0.02
-                  ),),
+                      fontSize: Get.height * 0.02),
+                ),
               ),
             ),
 
@@ -186,11 +168,10 @@ class RentCarDetails extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 //data!["cardescription"].toString()
 
-                child : Text(  parsedstring.toString(),
+                child: Text(
+                  parsedstring.toString(),
                   style: TextStyle(
-                      color: Colors.grey.shade700,
-                      fontSize: Get.height * 0.02
-                  ),
+                      color: Colors.grey.shade700, fontSize: Get.height * 0.02),
                 ),
                 /*Text(  description.toString(),
                   style: TextStyle(
@@ -203,13 +184,15 @@ class RentCarDetails extends StatelessWidget {
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 10),
-                child: Text("Car Specs",
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                child: Text(
+                  "Car Specs",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: Get.height * 0.02
-                  ),),
+                      fontSize: Get.height * 0.02),
+                ),
               ),
             ),
             //
@@ -220,7 +203,7 @@ class RentCarDetails extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  for(var i = 0 ; i < data!["carspecs"].length ; i++)...[
+                  for (var i = 0; i < data!["carspecs"].length; i++) ...[
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Container(
@@ -228,11 +211,13 @@ class RentCarDetails extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: Center(
-                            child: Text(data!["carspecs"][i].toString(),
-                              softWrap:true,style: TextStyle(
+                            child: Text(
+                              data!["carspecs"][i].toString(),
+                              softWrap: true,
+                              style: TextStyle(
                                   color: Colors.black,
-                                  fontWeight: FontWeight.bold
-                              ),),
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                       ),
@@ -245,13 +230,15 @@ class RentCarDetails extends StatelessWidget {
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
-                child: Text("Car Info",
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                child: Text(
+                  "Car Info",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: Get.height * 0.025
-                  ),),
+                      fontSize: Get.height * 0.025),
+                ),
               ),
             ),
             //
@@ -260,7 +247,7 @@ class RentCarDetails extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                 /* Column(
+                  /* Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       for(var i = 0 ; i < data["cardetailicon"].length ; i++) ... [
@@ -277,14 +264,13 @@ class RentCarDetails extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                     for(var i = 0 ; i < data!["cardetail"].length ; i++)...[
-                       Text(data["cardetail"][i].toString(),
-                         style: TextStyle(
-                             color: Colors.grey,
-                           fontSize: Get.width * 0.045
-                         ),),
-
-                     ]
+                      for (var i = 0; i < data!["cardetail"].length; i++) ...[
+                        Text(
+                          data["cardetail"][i].toString(),
+                          style: TextStyle(
+                              color: Colors.grey, fontSize: Get.width * 0.045),
+                        ),
+                      ]
                     ],
                   ),
                   //
@@ -292,21 +278,20 @@ class RentCarDetails extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      for(var i = 0 ; i < data!["cardetailinfo"].length ; i++)...[
-                        Text(data["cardetailinfo"][i].toString(),
+                      for (var i = 0;
+                          i < data!["cardetailinfo"].length;
+                          i++) ...[
+                        Text(
+                          data["cardetailinfo"][i].toString(),
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: Get.width * 0.045
-                          ),)
+                              color: Colors.black, fontSize: Get.width * 0.045),
+                        )
                       ]
                     ],
                   ),
-
                 ],
               ),
             )
-
-
           ],
         ),
       ),

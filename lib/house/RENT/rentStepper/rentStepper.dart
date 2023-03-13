@@ -12,36 +12,42 @@ class rentStepper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var data = Get.arguments;
-    List<Step>step=[
+    List<Step> step = [
       Step(
         isActive: true,
-        title: Text(""), content: rentBookingDatesScreen( extraservices:  data["extraservices"],
-          extraservicescharges:data["extraservicescharges"],houseprice: data["houseprice"],id:data["id"]),),
-      Step(title: Text(""), content: Text(""),
+        title: Text(""),
+        content: rentBookingDatesScreen(
+            extraservices: data["extraservices"],
+            extraservicescharges: data["extraservicescharges"],
+            houseprice: data["houseprice"],
+            id: data["id"]),
       ),
-      Step(title: Text(""), content: Text(""),),
-
-
-
+      Step(
+        title: Text(""),
+        content: Text(""),
+      ),
+      Step(
+        title: Text(""),
+        content: Text(""),
+      ),
     ];
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
-        leading: IconButton(onPressed: (){
-          Get.back();
-        },
+        backgroundColor: Colors.white12,
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
           icon: Icon(CupertinoIcons.back),
-          color: Colors.black,),
+          color: Colors.black,
+        ),
       ),
       body: Theme(
         data: ThemeData(
-          accentColor: Colors.red,
-          primaryColor: Colors.red,
-            colorScheme: ColorScheme.light(
-                primary: Colors.red
-            )
-        ),
+            accentColor: Colors.red,
+            primaryColor: Colors.red,
+            colorScheme: ColorScheme.light(primary: Colors.red)),
         child: Stepper(
           type: StepperType.horizontal,
           steps: step,
