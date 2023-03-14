@@ -42,6 +42,7 @@ class loginController extends GetxController {
   }
 
   void SignIn() async {
+    SharedPreferences homesignin = await SharedPreferences.getInstance();
     String _username = username.text.trim().toString();
     String _password = password.text.trim().toString();
 
@@ -53,10 +54,14 @@ class loginController extends GetxController {
 
       if (response.statusCode == 200) {
         data = jsonDecode(response.body.toString());
+        name = data["data"]["nicename"];
+
+        homesignin.setString("name", name);
+        homesignin.setString("Email", data["data"]["email"]);
         if (isremember.value == true) {
-          SharedPreferences homesignin = await SharedPreferences.getInstance();
           homesignin.setString("email", _username);
-          print(homesignin.getString("email"));
+
+          //print(homesignin.getString("email"));
           Get.off(homeScreen());
         } else {
           Get.off(homeScreen());
@@ -96,7 +101,7 @@ class loginController extends GetxController {
     }
   }
 
-  void SignInWithFirebase() async {
+  /*void SignInWithFirebase() async {
     String _email = username.text.trim().toString();
     String _password = password.text.trim().toString();
     try {
@@ -111,7 +116,7 @@ class loginController extends GetxController {
           backgroundColor: Colors.grey,
           colorText: Colors.black);
     }
-  }
+  }*/
 
   void forgetpassword() async {
     try {

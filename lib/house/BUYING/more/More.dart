@@ -31,6 +31,8 @@ class More extends StatelessWidget {
               SharedPreferences homesignin =
                   await SharedPreferences.getInstance();
               homesignin.remove("email");
+              homesignin.remove("name");
+              homesignin.remove("Email");
               homesignin.remove("password");
               Get.offAll(loginSxreen());
             },

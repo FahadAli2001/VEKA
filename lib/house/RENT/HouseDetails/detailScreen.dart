@@ -21,7 +21,6 @@ class detailScreen extends StatelessWidget {
 
     var description = parse(data["description"]);
     String parsedstring = description.documentElement!.text;
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

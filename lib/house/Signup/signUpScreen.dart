@@ -6,7 +6,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:veka/car/SignUp/SignupController.dart';
 import 'package:veka/house/login/loginScreen.dart';
-
 import 'SignUpController.dart';
 
 class signUpscreen extends StatelessWidget {
@@ -21,55 +20,55 @@ class signUpscreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             child: Form(
               key: _formKey,
               child: Column(
                 children: [
-                  Padding(padding: EdgeInsets.only(top: 60),
-                    child:  Align(
+                  Padding(
+                    padding: EdgeInsets.only(top: 60),
+                    child: Align(
                       alignment: Alignment.topLeft,
-                      child: Text("Create Your Acount",
+                      child: Text(
+                        "Create Your Acount",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-                            fontSize: Get.width * 0.07
-                        ),),
-                    ),),
+                            fontSize: Get.width * 0.07),
+                      ),
+                    ),
+                  ),
                   //---
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     child: Align(
                       alignment: Alignment.topLeft,
-                      child: Text("Signup with your email and password",
+                      child: Text(
+                        "Signup with your email and password",
                         style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: Get.width * 0.04
-                        ),),
-
+                            color: Colors.grey, fontSize: Get.width * 0.04),
+                      ),
                     ),
                   ),
                   //----
-                  SizedBox(height: 80,),
+                  SizedBox(
+                    height: 80,
+                  ),
                   //--
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
                     child: TextFormField(
-                        controller: hsp.username,
-                        style: TextStyle(
-                            height: 0.5
-                        ),
-                        decoration: InputDecoration(
-                            errorStyle: TextStyle(
-                                color: Colors.red
-                            ),
-                            hintText: "User Name",
-                            labelText: "User Name",
-                            suffixIcon: Icon(CupertinoIcons.person),
-                            border: OutlineInputBorder()
-                        ),
-                      validator: (val){
-                        if(val!.isEmpty){
+                      controller: hsp.username,
+                      style: TextStyle(height: 0.5),
+                      decoration: InputDecoration(
+                          errorStyle: TextStyle(color: Colors.red),
+                          hintText: "User Name",
+                          labelText: "User Name",
+                          suffixIcon: Icon(CupertinoIcons.person),
+                          border: OutlineInputBorder()),
+                      validator: (val) {
+                        if (val!.isEmpty) {
                           return "Please enter User-name";
                         }
                       },
@@ -79,102 +78,87 @@ class signUpscreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: TextFormField(
-                        validator: (val){
-                          if(val == ""){
+                        validator: (val) {
+                          if (val == "") {
                             return "Enter email";
                           }
                         },
                         controller: hsp.email,
-                        style: TextStyle(
-                            height: 0.5
-                        ),
+                        style: TextStyle(height: 0.5),
                         decoration: InputDecoration(
-                            errorStyle: TextStyle(
-                                color: Colors.red
-                            ),
+                            errorStyle: TextStyle(color: Colors.red),
                             hintText: "Email",
                             labelText: "Email",
                             suffixIcon: Icon(CupertinoIcons.mail),
-                            border: OutlineInputBorder()
-                        )
-                    ),
+                            border: OutlineInputBorder())),
                   ),
                   //
                   Obx(
-                      ()=> Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                    () => Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
                       child: TextFormField(
                           obscureText: hsp.isHidepass.value,
-                          validator: (String? val){
-                            if(val!.isEmpty){
+                          validator: (String? val) {
+                            if (val!.isEmpty) {
                               return "Enter password";
-                            }else if (val!.length < 8){
+                            } else if (val!.length < 8) {
                               return "Enter mini 8 digit password";
                             }
                           },
-                          style: TextStyle(
-                              height: 0.5
-                          ),
+                          style: TextStyle(height: 0.5),
                           controller: hsp.password,
                           decoration: InputDecoration(
                               hintText: "Password",
                               labelText: "Password",
                               suffixIcon: InkWell(
-                                onTap: (){
-                                  if(hsp.isHidepass.value == true){
-                                    hsp.isHidepass.value = false;
-                                  }else{
-                                    hsp.isHidepass.value = true;
-                                  }
-                                },
-                                  child:(hsp.isHidepass.value == true)?Icon(CupertinoIcons.eye_slash_fill
-                                  ):Icon(CupertinoIcons.eye)
-                              ),
-                              border: OutlineInputBorder()
-                          )
-                      ),
+                                  onTap: () {
+                                    if (hsp.isHidepass.value == true) {
+                                      hsp.isHidepass.value = false;
+                                    } else {
+                                      hsp.isHidepass.value = true;
+                                    }
+                                  },
+                                  child: (hsp.isHidepass.value == true)
+                                      ? Icon(CupertinoIcons.eye_slash_fill)
+                                      : Icon(CupertinoIcons.eye)),
+                              border: OutlineInputBorder())),
                     ),
                   ),
                   //
                   Obx(
-                        ()=> Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                    () => Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
                       child: TextFormField(
-                          validator: (val){
-                            if(val!.isEmpty){
+                          validator: (val) {
+                            if (val!.isEmpty) {
                               return "Enter password";
-                            }
-                            else if(hsp.password.value.text.trim() != hsp.confirmpassword.value.text.trim()) {
+                            } else if (hsp.password.value.text.trim() !=
+                                hsp.confirmpassword.value.text.trim()) {
                               return "Password doesn't match";
                             }
                           },
                           obscureText: hsp.isHideconpass.value,
                           controller: hsp.confirmpassword,
-                          style: TextStyle(
-                              height: 0.5
-                          ),
+                          style: TextStyle(height: 0.5),
                           decoration: InputDecoration(
-                              errorStyle: TextStyle(
-                                  color: Colors.red
-                              ),
-
-
-                              hintText: "Confirm Password",
-                              labelText: "Confirm Password",
-                              suffixIcon: GestureDetector(
-                                  onTap: (){
-                                    if(hsp.isHideconpass.value == true){
-                                      hsp.isHideconpass.value = false;
-                                    }else{
-                                      hsp.isHideconpass.value = true;
-                                    }
-                                  },
-                                  child:(hsp.isHideconpass.value == true)?Icon(CupertinoIcons.eye_slash_fill
-                                  ):Icon(CupertinoIcons.eye)
-                              ),
-                              border: OutlineInputBorder(),
-                          )
-                      ),
+                            errorStyle: TextStyle(color: Colors.red),
+                            hintText: "Confirm Password",
+                            labelText: "Confirm Password",
+                            suffixIcon: GestureDetector(
+                                onTap: () {
+                                  if (hsp.isHideconpass.value == true) {
+                                    hsp.isHideconpass.value = false;
+                                  } else {
+                                    hsp.isHideconpass.value = true;
+                                  }
+                                },
+                                child: (hsp.isHideconpass.value == true)
+                                    ? Icon(CupertinoIcons.eye_slash_fill)
+                                    : Icon(CupertinoIcons.eye)),
+                            border: OutlineInputBorder(),
+                          )),
                     ),
                   ),
                   //
@@ -185,16 +169,14 @@ class signUpscreen extends StatelessWidget {
                       width: Get.width,
                       //color: Colors.red,
                       child: Obx(
-                            ()=> Row(
+                        () => Row(
                           children: [
                             Checkbox(
                                 value: hsp.Value.value,
-                                onChanged: hsp.handleRadioValueChanged
-                            ), //Ch
-                            Text("I agree with Terms & Conditions",
-                              style: TextStyle(
-                                  fontSize: Get.width * 0.04
-                              ),
+                                onChanged: hsp.handleRadioValueChanged), //Ch
+                            Text(
+                              "I agree with Terms & Conditions",
+                              style: TextStyle(fontSize: Get.width * 0.04),
                             ),
                           ],
                         ),
@@ -204,18 +186,20 @@ class signUpscreen extends StatelessWidget {
                   //
 
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 15),
                     child: SizedBox(
                       width: Get.width,
                       child: CupertinoButton(
                           color: Colors.black,
-                          child: Text("Sign Up",
+                          child: Text(
+                            "Sign Up",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: Get.width * 0.05
-                            ),),
-                          onPressed: (){
-                            if(_formKey.currentState!.validate()){
+                                fontSize: Get.width * 0.05),
+                          ),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
                               print("tapppppp");
                               hsp.checkIsAgree();
                               //hsp.SignUp();
@@ -224,7 +208,7 @@ class signUpscreen extends StatelessWidget {
                     ),
                   ),
                   //-----------
-                 /* Padding(
+                  /* Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Row(
 
@@ -265,22 +249,21 @@ class signUpscreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 50),
                     child: InkWell(
-                      onTap: (){
+                      onTap: () {
                         Get.to(loginSxreen());
                       },
                       child: RichText(
                         text: TextSpan(
                           text: "Already Have An Account? ",
                           style: TextStyle(
-                              fontSize: Get.width * 0.04,
-                              color: Colors.grey
-                          ),
+                              fontSize: Get.width * 0.04, color: Colors.grey),
                           children: const <TextSpan>[
-                            TextSpan(text: 'Sign In', style:
-                            TextStyle(fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            )),
-
+                            TextSpan(
+                                text: 'Sign In',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                )),
                           ],
                         ),
                       ),

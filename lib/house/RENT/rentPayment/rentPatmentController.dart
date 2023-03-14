@@ -4,73 +4,67 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
 
+import '../../../car/Token/AccessToken.dart';
 import '../../login/LoginController.dart';
 import '../dashboard/dashboard.dart';
 
-class rentPaymentController extends GetxController{
-
+class rentPaymentController extends GetxController {
+  AcessToken acessToken = Get.put(AcessToken());
   loginController lc = Get.put(loginController());
 
   var checkIndate = DateTime.now().obs;
   var checkOutdate = DateTime.now().obs;
   var total = 0.obs;
 
-
   var adultCount = 1.obs;
   var childrenCount = 1.obs;
   var infantCount = 1.obs;
 
-  void addAdults(){
+  void addAdults() {
     adultCount.value++;
   }
 
-  void subAdults(){
-    if(adultCount.value <= 0){
+  void subAdults() {
+    if (adultCount.value <= 0) {
       Get.snackbar("Error", "In-valid input",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.grey
-      );
-    }else{
+          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.grey);
+    } else {
       adultCount.value--;
     }
   }
 
-  void addChildren(){
+  void addChildren() {
     childrenCount.value++;
   }
 
-  void subChildren(){
-    if(childrenCount.value <= 0){
+  void subChildren() {
+    if (childrenCount.value <= 0) {
       Get.snackbar("Error", "In-valid input",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.grey
-      );
-    }else{
+          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.grey);
+    } else {
       childrenCount.value--;
     }
   }
 
-  void addInfant(){
+  void addInfant() {
     infantCount.value++;
   }
 
-  void subInfant(){
-    if(infantCount.value <= 0){
+  void subInfant() {
+    if (infantCount.value <= 0) {
       Get.snackbar("Error", "In-valid input",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.grey
-      );
-    }else{
+          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.grey);
+    } else {
       infantCount.value--;
     }
   }
 
-  int totalhomePrice(List isSelected , List charges, homeprice){
+  int totalhomePrice(List isSelected, List charges, homeprice) {
     var difference = checkOutdate.value.difference(checkIndate.value).obs;
-    var nofdays =  difference.value.inDays;
+    var nofdays = difference.value.inDays;
 
-     total.value = int.parse(homeprice)  * nofdays ;
-   // total.value = total.value * nofdays;
+    total.value = int.parse(homeprice) * nofdays;
+    // total.value = total.value * nofdays;
     //print(total.value);
     for (var entry in isSelected.asMap().entries) {
       if (entry.value == true) {
@@ -81,13 +75,13 @@ class rentPaymentController extends GetxController{
     return total.value;
   }
 
-  Future requestForBuyHouse(houseid ,List isSelected) async {
-    SharedPreferences homesignin =await SharedPreferences.getInstance();
+  Future requestForBuyHouse(houseid, List isSelected) async {
+    SharedPreferences homesignin = await SharedPreferences.getInstance();
 
     Map<String, dynamic> data = {
       "status": "processing",
       "billing": {
-        "first_name": lc.name.toString(),
+        "first_name": homesignin.getString("name"),
         "last_name": "",
         "company": "23",
         "address_1": "123",
@@ -96,7 +90,7 @@ class rentPaymentController extends GetxController{
         "state": "SD",
         "postcode": "76550",
         "country": "PK",
-        "email": homesignin.getString("email"),
+        "email": homesignin.getString("Email"),
         "phone": "74643"
       },
       "payment_method": "bacs",
@@ -118,87 +112,48 @@ class rentPaymentController extends GetxController{
               "value": checkOutdate.value.toString(),
               "display_key": "Drop-off date"
             },
-            {
-              "key": "ovacrs_total_days",
-              "value": ""
-
-            },
-            {
-              "key": "ovacrs_price_detail",
-              "value": ""
-            },
-            {
-              "key": "Snacks",
-              "value": isSelected[0].toString()
-            },
-            {
-              "key": "Beverages",
-              "value": isSelected[1].toString()
-            },
-            {
-              "key": "rental_type",
-              "value": "day"
-            },
-            {
-              "key": "ovacrs_deposit_amount_product",
-              "value": ""
-
-            },
-            {
-              "key": "ovacrs_remaining_amount_product",
-              "value": "0"
-
-            },
-            {
-              "key": "id_vehicle",
-              "value": ""
-
-            },
-            {
-              "key": "ovacrs_quantity",
-              "value": "1"
-
-            }
-          ]       }   ],
-      "shipping_lines": [
-        {
-          "method_id": "flat_rate",
-          "method_title": "Flat Rate",
-          "total": ""
+            {"key": "ovacrs_total_days", "value": ""},
+            {"key": "ovacrs_price_detail", "value": ""},
+            {"key": "Snacks", "value": isSelected[0].toString()},
+            {"key": "Beverages", "value": isSelected[1].toString()},
+            {"key": "rental_type", "value": "day"},
+            {"key": "ovacrs_deposit_amount_product", "value": ""},
+            {"key": "ovacrs_remaining_amount_product", "value": "0"},
+            {"key": "id_vehicle", "value": ""},
+            {"key": "ovacrs_quantity", "value": "1"}
+          ]
         }
-
+      ],
+      "shipping_lines": [
+        {"method_id": "flat_rate", "method_title": "Flat Rate", "total": ""}
       ]
     };
     //print("called");
-    try{
+    try {
       WooCommerceAPI wooCommerceAPI = WooCommerceAPI(
           url: "https://vekarealestate.technopreneurssoftware.com",
-          consumerKey: "ck_af3ea7f372c93ef5ccf3ef4e46c3ab02d2bd0be8",
-          consumerSecret: "cs_8f66eac90fe06004ec4e4e5d240b5b5e2679ab37");
+          consumerKey: acessToken.HouseCK,
+          consumerSecret: acessToken.HouseCS);
 
       // Post data using the "products" endpoint
-      var response = await wooCommerceAPI.postAsync("orders",data);
+      var response = await wooCommerceAPI.postAsync("orders", data);
       Get.defaultDialog(
           buttonColor: Colors.green,
           title: "",
           //DashboardScreen()
           middleText: "Your booking has been successfully completed",
-          onConfirm: (){
-           Get.to(dashboard());
+          onConfirm: () {
+            Get.to(dashboard());
             //Get.to(DashboardScreen());
-          }
-      );
+          });
 
-     // print(meetingdate.value.toString());
+      // print(meetingdate.value.toString());
       // print(response);
       //Get.to(meetingSuccessScreen());
       //print("done");
 
-
-    }catch(e){
-      print("erorrrrrrrrrrrrrrrrrrrrr${e.toString()}");
+    } catch (e) {
+      print("erorr${e.toString()}");
     }
-
   }
-
 }

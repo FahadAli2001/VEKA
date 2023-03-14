@@ -1,30 +1,34 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Dashboard/dashboardScreen.dart';
+import '../SignIn/SignInController.dart';
 import 'BuyReviewController.dart';
 
 class buyReviewSubmission extends StatelessWidget {
   const buyReviewSubmission({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
-    BuyReviewController brc  = Get.put(BuyReviewController());
+    BuyReviewController brc = Get.put(BuyReviewController());
+    SignInController sic = Get.put(SignInController());
     var data = Get.arguments;
     return Scaffold(
       appBar: AppBar(
-
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white70,
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             Get.back();
           },
-          icon: Icon(CupertinoIcons.back,
+          icon: Icon(
+            CupertinoIcons.back,
             color: Colors.black,
             size: Get.height * 0.04,
           ),
@@ -34,8 +38,10 @@ class buyReviewSubmission extends StatelessWidget {
             padding: EdgeInsets.only(right: 20),
             child: CircleAvatar(
               backgroundColor: Colors.white70,
-              child: Icon(CupertinoIcons.person_alt,
-                color: Colors.black,),
+              child: Icon(
+                CupertinoIcons.person_alt,
+                color: Colors.black,
+              ),
             ),
           )
         ],
@@ -45,76 +51,76 @@ class buyReviewSubmission extends StatelessWidget {
         height: Get.height * 0.09,
         // color: Colors.grey,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40,vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
           child: CupertinoButton(
             color: Colors.green,
-            onPressed: (){
+            onPressed: () {
               print("tap");
-              brc.postProduct(data["id"],data["carprice"]);
+              brc.postProduct(data["id"], data["carprice"]);
             },
-            child: Text("Done",
+            child: Text(
+              "Done",
               style: TextStyle(
                   fontSize: Get.width * 0.04,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black
-              ),),
+                  color: Colors.black),
+            ),
           ),
         ),
-
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Align(
                     alignment: Alignment.topCenter,
-                    child: Text("Review Submission",
+                    child: Text(
+                      "Review Submission",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
-                          fontSize: Get.width * 0.06
-                      ),),
+                          fontSize: Get.width * 0.06),
+                    ),
                   ),
                 ),
                 //
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: Container(
                     child: Row(
                       children: [
                         CircleAvatar(
                           radius: 35,
-                          backgroundImage: NetworkImage(data["carimage"].toString()),
+                          backgroundImage:
+                              NetworkImage(data["carimage"].toString()),
                         ),
                         Container(
                             width: Get.width * 0.6,
                             child: Align(
                               alignment: Alignment.topLeft,
                               child: ListTile(
-                                title: Text(data["carname"],
+                                title: Text(
+                                  data["carname"],
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
-                                      fontSize: Get.width * 0.04
-                                  ),
+                                      fontSize: Get.width * 0.04),
                                 ),
-                                subtitle: Text("\$ ${data["carprice"]}",
+                                subtitle: Text(
+                                  "\$ ${data["carprice"]}",
                                   style: TextStyle(
-
                                       color: Colors.green,
-                                      fontSize: Get.width * 0.04
-                                  ),
+                                      fontSize: Get.width * 0.04),
                                 ),
                               ),
-                            )
-                        )
+                            ))
                       ],
                     ),
-
                   ),
                 ),
                 //
@@ -131,19 +137,18 @@ class buyReviewSubmission extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text("Car Name",
+                            Text(
+                              "Car Name",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
-                                  fontSize: Get.width * 0.04
-                              ),
+                                  fontSize: Get.width * 0.04),
                             ),
-                            Text(data["carname"],
+                            Text(
+                              data["carname"],
                               style: TextStyle(
-
                                   color: Colors.black,
-                                  fontSize: Get.width * 0.04
-                              ),
+                                  fontSize: Get.width * 0.04),
                             ),
                           ],
                         ),
@@ -152,19 +157,18 @@ class buyReviewSubmission extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Qty",
+                            Text(
+                              "Qty",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
-                                  fontSize: Get.width * 0.04
-                              ),
+                                  fontSize: Get.width * 0.04),
                             ),
-                            Text("1",
+                            Text(
+                              "1",
                               style: TextStyle(
-
                                   color: Colors.black,
-                                  fontSize: Get.width * 0.04
-                              ),
+                                  fontSize: Get.width * 0.04),
                             ),
                           ],
                         ),
@@ -173,19 +177,19 @@ class buyReviewSubmission extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Price",
+                            Text(
+                              "Price",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
-                                  fontSize: Get.width * 0.04
-                              ),
+                                  fontSize: Get.width * 0.04),
                             ),
-                            Text("\$ ${data["carprice"].toString()}",
+                            Text(
+                              "\$ ${data["carprice"].toString()}",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
-                                  fontSize: Get.width * 0.04
-                              ),
+                                  fontSize: Get.width * 0.04),
                             ),
                           ],
                         ),
@@ -209,19 +213,18 @@ class buyReviewSubmission extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text("Instructions",
+                              Text(
+                                "Instructions",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
-                                    fontSize: Get.width * 0.04
-                                ),
+                                    fontSize: Get.width * 0.04),
                               ),
-                              Text("Cash on delivery",
+                              Text(
+                                "Cash on delivery",
                                 style: TextStyle(
-
                                     color: Colors.black,
-                                    fontSize: Get.width * 0.04
-                                ),
+                                    fontSize: Get.width * 0.04),
                               ),
                             ],
                           ),
@@ -231,17 +234,14 @@ class buyReviewSubmission extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("+ Add notes",
+                              Text(
+                                "+ Add notes",
                                 style: TextStyle(
-
                                     color: Colors.green,
-                                    fontSize: Get.width * 0.04
-                                ),
+                                    fontSize: Get.width * 0.04),
                               ),
-
-                              Radio(value: 0,
-
-                                  groupValue: null, onChanged: null),
+                              Radio(
+                                  value: 0, groupValue: null, onChanged: null),
                             ],
                           ),
                         ],
@@ -255,19 +255,19 @@ class buyReviewSubmission extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Sub total",
+                      Text(
+                        "Sub total",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-                            fontSize: Get.width * 0.04
-                        ),
+                            fontSize: Get.width * 0.04),
                       ),
-                      Text(data["carprice"].toString(),
+                      Text(
+                        data["carprice"].toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
-                            fontSize: Get.width * 0.04
-                        ),
+                            fontSize: Get.width * 0.04),
                       ),
                     ],
                   ),
@@ -278,19 +278,19 @@ class buyReviewSubmission extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Deposit (50%)",
+                      Text(
+                        "Deposit (50%)",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-                            fontSize: Get.width * 0.04
-                        ),
+                            fontSize: Get.width * 0.04),
                       ),
-                      Text("000",
+                      Text(
+                        "000",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
-                            fontSize: Get.width * 0.04
-                        ),
+                            fontSize: Get.width * 0.04),
                       ),
                     ],
                   ),
@@ -302,29 +302,27 @@ class buyReviewSubmission extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Total",
+                      Text(
+                        "Total",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
-                            fontSize: Get.width * 0.04
-                        ),
+                            fontSize: Get.width * 0.04),
                       ),
-                      Text(data["carprice"].toString(),
+                      Text(
+                        data["carprice"].toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
-                            fontSize: Get.width * 0.06
-                        ),
+                            fontSize: Get.width * 0.06),
                       ),
                     ],
                   ),
                 ),
                 //---
-
               ],
             ),
           ),
-
         ),
       ),
     );

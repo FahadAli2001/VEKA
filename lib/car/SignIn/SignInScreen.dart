@@ -17,135 +17,122 @@ class SignInScreen extends StatelessWidget {
     var width = Get.width;
     var SocialAppIconSize = Get.height * 0.03;
 
-
     SignInController sic = Get.put(SignInController());
     final _formKey = GlobalKey<FormState>();
     return Container(
-      child : SingleChildScrollView(
+      child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           child: Form(
             key: _formKey,
-            child: Column
-              (
+            child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: TextFormField(
-                    controller: sic.username,
-                      style: TextStyle(
-                          height: 0.5
-                      ),
+                      controller: sic.username,
+                      style: TextStyle(height: 0.5),
                       decoration: InputDecoration(
-                          errorStyle: TextStyle(
-                              color: Colors.red
-                          ),
+                          errorStyle: TextStyle(color: Colors.red),
                           hintText: "Email",
                           labelText: "Email",
                           suffixIcon: Icon(Icons.email),
-                        border: OutlineInputBorder()
-                      ),
-                        validator: (val) {
-                          if (val!.isEmpty) {
-                            return "Please enter Email";
-                          }else if(!val.contains("@")){
-                            return "Invalid Email";
-                          }else if(val != val.toLowerCase()){
-                            return 'Email cannot contain uppercase letters';
-                          }
-                        }),
+                          border: OutlineInputBorder()),
+                      validator: (val) {
+                        if (val!.isEmpty) {
+                          return "Please enter Email";
+                        } else if (!val.contains("@")) {
+                          return "Invalid Email";
+                        } else if (val != val.toLowerCase()) {
+                          return 'Email cannot contain uppercase letters';
+                        }
+                      }),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-                  child: Obx(()=>
-                     TextFormField(
-                      style: TextStyle(
-                        height: 0.5
-                      ),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Obx(
+                    () => TextFormField(
+                        style: TextStyle(height: 0.5),
                         obscureText: sic.isHidepass.value,
-                        validator: (String? val){
-                          if(val!.isEmpty){
+                        validator: (String? val) {
+                          if (val!.isEmpty) {
                             return "Enter password";
-                          }else if (val!.length < 8){
+                          } else if (val!.length < 8) {
                             return "Enter minimum 8 digit password";
                           }
                         },
                         controller: sic.password,
                         decoration: InputDecoration(
-                            errorStyle: TextStyle(
-                                color: Colors.red
-                            ),
+                            errorStyle: TextStyle(color: Colors.red),
                             hintText: "Password",
                             labelText: "Password",
                             suffixIcon: InkWell(
-                              onTap: (){
-                                if(sic.isHidepass.value == true){
-                                  sic.isHidepass.value = false;
-                                }else{
-                                  sic.isHidepass.value = true;
-                                }
-                              },
-                                child: (sic.isHidepass.value == true)?Icon(CupertinoIcons.eye_slash_fill):
-                                    Icon(CupertinoIcons.eye)
-                            ),
-                            border: OutlineInputBorder()
-                        )
-                    ),
+                                onTap: () {
+                                  if (sic.isHidepass.value == true) {
+                                    sic.isHidepass.value = false;
+                                  } else {
+                                    sic.isHidepass.value = true;
+                                  }
+                                },
+                                child: (sic.isHidepass.value == true)
+                                    ? Icon(CupertinoIcons.eye_slash_fill)
+                                    : Icon(CupertinoIcons.eye)),
+                            border: OutlineInputBorder())),
                   ),
                 ),
                 Obx(
-                    ()=> Padding(
+                  () => Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Container(
                       height: Get.height * 0.06,
                       width: Get.width,
                       //color: Colors.red,
-                      child:  Row(
-                          children: [
-
-                            Checkbox(
+                      child: Row(
+                        children: [
+                          Checkbox(
                               value: sic.isrem.value,
-                              onChanged: sic.handleRadioValueChanged
-                            ), //Ch
-                            Text("Remember me",
-                              style: TextStyle(
-                                fontSize: width * 0.04
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 40),
-                              child: TextButton(onPressed: (){},
-                                  child: Text("Forget Password?")),
-                            )
-
-                          ],
-                        ),
+                              onChanged: sic.handleRadioValueChanged), //Ch
+                          Text(
+                            "Remember me",
+                            style: TextStyle(fontSize: width * 0.04),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 40),
+                            child: TextButton(
+                                onPressed: () {
+                                  sic.forgetpassword();
+                                },
+                                child: Text("Forget Password?")),
+                          )
+                        ],
                       ),
                     ),
+                  ),
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                   child: SizedBox(
                     width: Get.width,
                     child: CupertinoButton(
-                      color: Colors.black,
-                        child: Text("Sign In",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: width * 0.05
-                        ),),
-                        onPressed: (){
-                        if(_formKey.currentState!.validate()){
-                          print("tapp");
-                          sic.SignIn();
-
-                        }
+                        color: Colors.black,
+                        child: Text(
+                          "Sign In",
+                          style: TextStyle(
+                              color: Colors.white, fontSize: width * 0.05),
+                        ),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            print("tapp");
+                            sic.SignIn();
+                          }
                         }),
                   ),
                 ),
                 //
-               /* Align(
+                /* Align(
                   alignment: Alignment.center,
                   child: Text("or login with ",
                   style: TextStyle(
@@ -181,7 +168,7 @@ class SignInScreen extends StatelessWidget {
                     ),
                   ),
                 ),*/
-             /*   Padding(
+                /*   Padding(
                   padding: const EdgeInsets.only(top: 50),
                   child: InkWell(
                     onTap: (){

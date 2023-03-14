@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -7,6 +8,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:veka/house/Signup/signUpScreen.dart';
 import '../Dashboard/dashboardScreen.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
@@ -24,22 +28,8 @@ class SignInController extends GetxController {
     // print(isrem.value);
   }
 
-  /* GetUsername()async{
-    final userRef = FirebaseFirestore.instance.collection('users').doc(userId);
-
-    userRef.get().then((snapshot) {
-      if (snapshot.exists) {
-        final data = snapshot.data();
-        name = data!['name'];
-        print('User name: $name');
-      } else {
-        print('User not found in database.');
-      }
-    }).catchError((error) {
-      print('Error getting user data: $error');
-    });
-  }*/
   void SignIn() async {
+    SharedPreferences sigin = await SharedPreferences.getInstance();
     String _email = username.text.trim().toString();
     String _password = password.text.trim().toString();
 
@@ -54,8 +44,10 @@ class SignInController extends GetxController {
         var data = jsonDecode(response.body);
         name = data["data"]["nicename"];
         userId = data["data"]["id"];
-        //print('Welcome, $');
-        print(data["data"]["id"]);
+        sigin.setString("name", name);
+        sigin.setString("email", data["data"]["email"]);
+        //log('Welcome, $name');
+        //print(data["data"]["id"]);
         if (isrem.value == true) {
           SharedPreferences sp = await SharedPreferences.getInstance();
           sp.setString("username", _email);
@@ -97,6 +89,20 @@ class SignInController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.grey,
           colorText: Colors.black);
+    }
+  }
+
+  void forgetpassword() async {
+    try {
+      final Uri _url = Uri.parse(
+          'https://vekaautomobile.technopreneurssoftware.com/my-account/lost-password');
+
+      if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) {
+        await launchUrl(_url);
+        //print('Could not launch $_url');
+      }
+    } catch (e) {
+      print("eroorr" + e.toString());
     }
   }
 
