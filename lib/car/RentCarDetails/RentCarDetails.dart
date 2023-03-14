@@ -33,7 +33,8 @@ class RentCarDetails extends StatelessWidget {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: (() {
-        rbmc.allBookmark();
+        rbmc.BookmarkId.clear();
+        rbmc.products.clear();
       })),
       appBar: AppBar(
           backgroundColor: Colors.white12,

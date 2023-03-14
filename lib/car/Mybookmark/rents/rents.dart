@@ -25,13 +25,13 @@ class rent extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: (){
         //rbmc.getAllData();
-      //  print(rbmc.data.toString());
+        print(rbmc.allBookmark());
       }),
       body: FutureBuilder(
-        future:  rbmc.getBookmarksData(),
+        future:  rbmc.allBookmark(),
         builder: (context,snapshot){
           if(snapshot.hasError){
-            return Center(child: Text("some thing went wrong"));
+            return Center(child: Text(snapshot.error.toString()));
           }
           if(snapshot.connectionState == ConnectionState.waiting){
             return Center(
@@ -43,7 +43,7 @@ class rent extends StatelessWidget {
           }
           var data = snapshot.data!;
           return ListView.builder(
-            itemCount:rbmc.BookmarkId.length,
+            itemCount:rbmc.products.length,
               itemBuilder: (context,index){
               return Padding(
                 padding: const EdgeInsets.all(10),
@@ -61,12 +61,12 @@ class rent extends StatelessWidget {
                         width: Get.width * 0.5,
                         child: ListTile(
                           leading: CircleAvatar(
-                            backgroundImage: NetworkImage(rbmc.data[index]["images"][0]["src"].toString()),
+                            backgroundImage: NetworkImage(rbmc.products[index]["images"][0]["src"].toString()),
                             radius: 30,
                             backgroundColor: Colors.black54,
                           ),
-                          title: Text(rbmc.data![index]["name"].toString()),
-                          subtitle: Text(rbmc.data![index]["price"].toString(),
+                          title: Text(rbmc.products[index]["name"].toString()),
+                          subtitle: Text(rbmc.products[index]["price"].toString(),
                             style: TextStyle(
                                 color: Colors.green
                             ),),

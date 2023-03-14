@@ -46,7 +46,8 @@ class SignInController extends GetxController {
         userId = data["data"]["id"];
         sigin.setString("name", name);
         sigin.setString("email", data["data"]["email"]);
-        //log('Welcome, $name');
+        sigin.setString("userId", userId.toString());
+        log('Welcome, $userId');
         //print(data["data"]["id"]);
         if (isrem.value == true) {
           SharedPreferences sp = await SharedPreferences.getInstance();

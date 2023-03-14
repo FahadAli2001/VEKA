@@ -58,12 +58,11 @@ class SignInScreen extends StatelessWidget {
                         validator: (String? val) {
                           if (val!.isEmpty) {
                             return "Enter password";
-                          } else if (val!.length < 8) {
-                            return "Enter minimum 8 digit password";
                           }
                         },
                         controller: sic.password,
                         decoration: InputDecoration(
+
                             errorStyle: TextStyle(color: Colors.red),
                             hintText: "Password",
                             labelText: "Password",
