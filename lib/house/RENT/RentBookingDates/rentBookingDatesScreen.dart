@@ -9,6 +9,7 @@ import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 import 'package:veka/house/RENT/rentPayment/rentPaymnet.dart';
 
 import '../rentPayment/rentPatmentController.dart';
+import 'rentBookingDatesController.dart';
 
 class rentBookingDatesScreen extends StatelessWidget {
   var extraservices;
@@ -28,6 +29,8 @@ class rentBookingDatesScreen extends StatelessWidget {
     rentPaymentController rpc = Get.put(rentPaymentController());
     RxList<dynamic> rxisSelected = [].obs;
     rxisSelected.value = RxList.generate(extraservices.length, (_) => false);
+
+
 
     return Container(
       child: Column(children: [

@@ -29,7 +29,7 @@ class rentBookmarkController extends GetxController {
      //getBookmarksData();
 
   }
-
+  
   getsharekeybyId(pid) async {
     SharedPreferences sigin = await SharedPreferences.getInstance();
     var id = sigin.getString("userId");//isko logout krte waqt clear bhi karana hai
