@@ -11,8 +11,9 @@ import 'package:veka/car/Mybookmark/rents/rentBookmarkController.dart';
 
 import '../../SignIn/SignInController.dart';
 
-class rent extends StatelessWidget {
-  const rent({Key? key}) : super(key: key);
+class Rent extends StatelessWidget {
+  final bool isBuy;
+  const Rent({Key? key, required this.isBuy}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,71 +21,65 @@ class rent extends StatelessWidget {
     var bookmark = true.obs;
     rentBookmarkController rbmc = Get.put(rentBookmarkController());
 
-
-
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        //rbmc.getAllData();
-        print(rbmc.allBookmark());
-      }),
       body: FutureBuilder(
-        future:  rbmc.allBookmark(),
-        builder: (context,snapshot){
-          if(snapshot.hasError){
+        future: rbmc.getsharekeybyId(isBuy),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));
           }
-          if(snapshot.connectionState == ConnectionState.waiting){
-            return Center(
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          if(snapshot.data == null){
-            return Center(child:Text("No Bookmark"));
+          if (rbmc.products.isEmpty) {
+            return const Center(child: Text("No Bookmark"));
           }
-          var data = snapshot.data!;
+
           return ListView.builder(
-            itemCount:rbmc.products.length,
-              itemBuilder: (context,index){
-              return Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey.shade500)
-                  ),
-                  width: Get.width,
-                  //height: Get.height * 0.11,
-                  //color: Colors.grey,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: Get.width * 0.5,
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(rbmc.products[index]["images"][0]["src"].toString()),
-                            radius: 30,
-                            backgroundColor: Colors.black54,
+              itemCount: rbmc.products.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey.shade500)),
+                    width: Get.width,
+                    //height: Get.height * 0.11,
+                    //color: Colors.grey,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: Get.width * 0.5,
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(rbmc.products[index]
+                                      ["images"][0]["src"]
+                                  .toString()),
+                              radius: 30,
+                              backgroundColor: Colors.black54,
+                            ),
+                            title:
+                                Text(rbmc.products[index]["name"].toString()),
+                            subtitle: Text(
+                              rbmc.products[index]["price"].toString(),
+                              style: const TextStyle(color: Colors.green),
+                            ),
                           ),
-                          title: Text(rbmc.products[index]["name"].toString()),
-                          subtitle: Text(rbmc.products[index]["price"].toString(),
-                            style: TextStyle(
-                                color: Colors.green
-                            ),),
                         ),
-                      ),
-
-                             IconButton(
-                          onPressed: (){
-                          //  rbmc.toggleBookmark(data[index]["id"].toString(), data[index]["name"].toString(),data[index]["price"].toString(),data[index]["image"].toString());
+                        IconButton(
+                          onPressed: () {
+                            //  rbmc.toggleBookmark(data[index]["id"].toString(), data[index]["name"].toString(),data[index]["price"].toString(),data[index]["image"].toString());
                           },
-                          icon:Icon(Icons.favorite),
+                          icon: const Icon(Icons.favorite),
                           color: Colors.red,
-
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              );
+                );
               });
         },
       ),

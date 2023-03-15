@@ -118,7 +118,7 @@ class more extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
                 onTap: () {
-                  Get.to(myBookmark());
+                  Get.to(const MyBookmark());
                 },
                 child: Container(
                   color: boxColor,

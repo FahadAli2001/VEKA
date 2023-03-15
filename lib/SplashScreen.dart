@@ -11,9 +11,9 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       splash: Column(
-        children: [
+        children: const [
           CircleAvatar(
-            radius: 100,
+            radius: 100,  
             backgroundColor: Colors.white,
             backgroundImage:AssetImage("assets/Veka-Green.png") ,
           ),
@@ -26,13 +26,13 @@ class SplashScreen extends StatelessWidget {
          // Image.asset("assets/Veka-Red.png")
         ],
       ),
-      nextScreen: ChooseOption(),
+      nextScreen: const ChooseOption(),
 
       duration: 3500,
       splashIconSize: 500,
       //splashTransition: SplashTransition.,
       pageTransitionType: PageTransitionType.bottomToTop,
-      animationDuration: Duration(seconds: 2),
+      animationDuration: const Duration(seconds: 2),
     );
   }
 }
