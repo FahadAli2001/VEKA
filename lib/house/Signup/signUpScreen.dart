@@ -102,11 +102,12 @@ class signUpscreen extends StatelessWidget {
                           validator: (String? val) {
                             if (val!.isEmpty) {
                               return "Enter password";
-                            } else if (val!.length < 8) {
+                            } else if (val.length < 8) {
                               return "Enter mini 8 digit password";
                             }
+                            return null;
                           },
-                          style: TextStyle(height: 0.5),
+                          style: const TextStyle(height: 0.5),
                           controller: hsp.password,
                           decoration: InputDecoration(
                               hintText: "Password",

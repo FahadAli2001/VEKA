@@ -7,8 +7,30 @@ import 'package:veka/house/BUYING/home/homeScreen.dart';
 
 import 'car/Dashboard/dashboardScreen.dart';
 
-class ChooseOption extends StatelessWidget {
+class ChooseOption extends StatefulWidget {
   const ChooseOption({Key? key}) : super(key: key);
+
+  @override
+  State<ChooseOption> createState() => _ChooseOptionState();
+}
+
+class _ChooseOptionState extends State<ChooseOption> {
+
+  @override
+  void initState() {
+    super.initState();
+    
+    SharedPreferences.getInstance().then((value) {
+      if(value.getInt("realStateUserId")!=null){
+        Get.to(() => const homeScreen());
+      }
+      else if(value.getString("userId")!=null){
+        Get.to(() => const DashboardScreen());
+      }
+    });
+
+  }
+
 
   @override
   Widget build(BuildContext context) {

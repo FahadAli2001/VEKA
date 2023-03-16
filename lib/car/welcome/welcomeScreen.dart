@@ -6,8 +6,16 @@ import 'package:get/get_core/src/get_main.dart';
 import '../SignIn/SignInScreen.dart';
 import '../SignUp/SignUp.dart';
 
-class welcomeScreen extends StatelessWidget {
+class welcomeScreen extends StatefulWidget {
   const welcomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<welcomeScreen> createState() => _welcomeScreenState();
+}
+
+class _welcomeScreenState extends State<welcomeScreen> {
+
+  bool isSignIn = false;
 
   @override
   Widget build(BuildContext context) {

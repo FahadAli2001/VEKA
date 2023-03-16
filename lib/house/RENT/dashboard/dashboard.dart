@@ -5,7 +5,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../BUYING/more/More.dart';
-import '../rentHome/rentHome.dart';
+import '../rentHome/rent_home.dart';
 
 class dashboard extends StatelessWidget {
   const dashboard({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class dashboard extends StatelessWidget {
     const TextStyle optionStyle =
     TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
     const List<Widget> _widgetOptions = <Widget>[
-      rentHome(),
+      RentHome(),
       More()
 
 

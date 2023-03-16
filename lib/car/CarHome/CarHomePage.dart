@@ -607,11 +607,11 @@ class CarHomePage extends StatelessWidget {
                           ),
                           FavoriteButton(
                             iconSize: 40,
-                            isFavorite: true,
+                            isFavorite: true, valueChanged: () {  },
                             // iconDisabledColor: Colors.white,
-                            valueChanged: (_isFavorite) {
-                              print('Is Favorite : $_isFavorite');
-                            },
+                            // valueChanged: (_isFavorite) {
+                            //   print('Is Favorite : $_isFavorite');
+                            // },
                           ),
                         ],
                       ),

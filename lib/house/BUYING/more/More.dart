@@ -5,7 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:veka/car/AboutUs/aboutUs.dart';
-
+import '../../Bookmarks/realstate_bookmark.dart';
 import '../../login/LoginController.dart';
 import '../../login/loginScreen.dart';
 
@@ -34,7 +34,8 @@ class More extends StatelessWidget {
               homesignin.remove("name");
               homesignin.remove("Email");
               homesignin.remove("password");
-              Get.offAll(loginSxreen());
+              homesignin.remove("realStateUserId");
+              Get.offAll(const loginSxreen());
             },
             child: Container(
               width: Get.width * 0.4,
@@ -118,7 +119,9 @@ class More extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Get.to(const RealStateBookmark());
+                },
                 child: Container(
                   color: boxColor,
                   width: Get.width,

@@ -55,7 +55,7 @@ class loginController extends GetxController {
       if (response.statusCode == 200) {
         data = jsonDecode(response.body.toString());
         name = data["data"]["nicename"];
-
+        homesignin.setInt("realStateUserId", data["data"]["id"]);
         homesignin.setString("name", name);
         homesignin.setString("Email", data["data"]["email"]);
         if (isremember.value == true) {

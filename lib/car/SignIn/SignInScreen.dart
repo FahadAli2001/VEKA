@@ -9,8 +9,17 @@ import 'package:veka/car/SignUp/SignUp.dart';
 
 import 'SignInController.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
+  
   const SignInScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+
+  bool isSignIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +111,7 @@ class SignInScreen extends StatelessWidget {
                                 onPressed: () {
                                   sic.forgetpassword();
                                 },
-                                child: Text("Forget Password?")),
+                                child:  const Text("Forget Password?")),
                           )
                         ],
                       ),
@@ -117,15 +126,24 @@ class SignInScreen extends StatelessWidget {
                     width: Get.width,
                     child: CupertinoButton(
                         color: Colors.black,
-                        child: Text(
+                        child: isSignIn ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                ) : Text(
                           "Sign In",
                           style: TextStyle(
                               color: Colors.white, fontSize: width * 0.05),
                         ),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            print("tapp");
+                            if(isSignIn != true){
                             sic.SignIn();
+                            }
+                            setState(() {
+                              isSignIn = true;
+                            });
+                            if(!mounted){
+                              isSignIn = false;
+                            }
                           }
                         }),
                   ),

@@ -7,10 +7,9 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
-import '../../SignIn/SignInController.dart';
 
-class rentBookmarkController extends GetxController {
-  SignInController sic = Get.put(SignInController());
+class RealStateRentBookmarkController extends GetxController {
+  // SignInController sic = Get.put(SignInController());
 
   var isBookmarked = false.obs;
   var iconColor = Colors.grey.obs;
@@ -24,6 +23,7 @@ class rentBookmarkController extends GetxController {
     // Initialization logic goes here
     super.onInit();
     //getSharekey();
+    //getSharekey();
     // getBookmarksData();
     //getSharekey();
     // getsharekeybyId(pid);
@@ -32,43 +32,46 @@ class rentBookmarkController extends GetxController {
 
   getsharekeybyId(bool isBuy, {String? pid, bool? isWishlist}) async {
     SharedPreferences sigin = await SharedPreferences.getInstance();
-    var id =
-        sigin.getString("userId"); //isko logout krte waqt clear bhi karana hai
-    print("user id : ${id}");
+    var id = sigin.getInt("realStateUserId");
+    print("user id : $id");
     final url =
-        "https://vekaautomobile.technopreneurssoftware.com/wp-json/wc/v3/wishlist/get_by_user/$id";
+        "https://vekarealestate.technopreneurssoftware.com/wp-json/wc/v3/wishlist/get_by_user/$id";
     final response = await http.get(
       Uri.parse(url),
       headers: {
+        // ignore: prefer_interpolation_to_compose_strings
         'Authorization': 'Basic ' +
             base64Encode(utf8.encode(
-                'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6')),
+                'ck_af3ea7f372c93ef5ccf3ef4e46c3ab02d2bd0be8:cs_8f66eac90fe06004ec4e4e5d240b5b5e2679ab37')),
         'wc-authentication':
-            'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6',
+            'ck_af3ea7f372c93ef5ccf3ef4e46c3ab02d2bd0be8:cs_8f66eac90fe06004ec4e4e5d240b5b5e2679ab37',
       },
     );
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body.toString());
       String sharekey = data[0]["share_key"];
-      
+
       if (pid != null) {
         if (isWishlist != null) {
+          print("working");
           return await getBookmark(sharekey);
         } else {
+          print("addBookmarks $sharekey $pid");
           addBookmark(int.parse(pid), sharekey);
         }
       } else {
+        
         final products = await getBookmarksData(sharekey, isBuy);
-       
-     
+
         return products;
       }
     } else {}
   }
 
   addBookmark(int pid, String shareKey) async {
+    print("addBookmark $shareKey $pid");
     final url =
-        "https://vekaautomobile.technopreneurssoftware.com/wp-json/wc/v3/wishlist/$shareKey/add_product";
+        "https://vekarealestate.technopreneurssoftware.com/wp-json/wc/v3/wishlist/$shareKey/add_product";
 
     var body = jsonEncode({"product_id": pid, "variation_id": 0, "meta": {}});
 
@@ -80,15 +83,16 @@ class rentBookmarkController extends GetxController {
           // ignore: prefer_interpolation_to_compose_strings
           'Authorization': 'Basic ' +
               base64Encode(utf8.encode(
-                  'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6')),
+                  'ck_af3ea7f372c93ef5ccf3ef4e46c3ab02d2bd0be8:cs_8f66eac90fe06004ec4e4e5d240b5b5e2679ab37')),
           'wc-authentication':
-              'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6',
+              'ck_af3ea7f372c93ef5ccf3ef4e46c3ab02d2bd0be8:cs_8f66eac90fe06004ec4e4e5d240b5b5e2679ab37',
         },
         body: body,
       );
 
       if (response.statusCode == 200) {
-      
+        print(response.statusCode);
+        print("Add Bookmarks");
         final List<dynamic> wishlistItems = jsonDecode(response.body);
 
         for (final item in wishlistItems) {
@@ -103,27 +107,31 @@ class rentBookmarkController extends GetxController {
         throw Exception('Failed to fetch product IDs');
       }
     } catch (e) {
-      print("something went wrong");
+      log("something went wrong");
     }
   }
 
   getBookmarksData(String shareKey, bool isBuy) async {
     try {
       final url =
-          "https://vekaautomobile.technopreneurssoftware.com/wp-json/wc/v3/wishlist/$shareKey/get_products";
+          "https://vekarealestate.technopreneurssoftware.com/wp-json/wc/v3/wishlist/$shareKey/get_products";
       final response = await http.get(
         Uri.parse(url),
         headers: {
+          
+          // ignore: prefer_interpolation_to_compose_strings
           'Authorization': 'Basic ' +
               base64Encode(utf8.encode(
-                  'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6')),
+                  'ck_af3ea7f372c93ef5ccf3ef4e46c3ab02d2bd0be8:cs_8f66eac90fe06004ec4e4e5d240b5b5e2679ab37')),
           'wc-authentication':
-              'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6',
+              'ck_af3ea7f372c93ef5ccf3ef4e46c3ab02d2bd0be8:cs_8f66eac90fe06004ec4e4e5d240b5b5e2679ab37',
         },
       );
+      print(response.statusCode);
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
-     
+        print(data);
+        print("data");
         BookmarkId.clear();
 
         for (final product in data) {
@@ -134,36 +142,38 @@ class rentBookmarkController extends GetxController {
           BookmarkId.add(productId);
         }
 
-        
         products = await allBookmark(isBuy: isBuy);
 
         return products;
       } else {
-        var data = jsonDecode(response.body.toString());
-     
-        print("bookmarks get api ${response.statusCode}");
+        log("bookmarks get api ${response.statusCode}");
       }
     } catch (e) {
-      print("getbookmark data error : ${e}");
+      log("getbookmark data error : $e");
     }
   }
 
   getBookmark(String sharekey) async {
+    print(sharekey);
     try {
       final url =
-          "https://vekaautomobile.technopreneurssoftware.com/wp-json/wc/v3/wishlist/$sharekey/get_products";
+          "https://vekarealestate.technopreneurssoftware.com/wp-json/wc/v3/wishlist/$sharekey/get_products";
       final response = await http.get(
         Uri.parse(url),
         headers: {
+          
+          // ignore: prefer_interpolation_to_compose_strings
           'Authorization': 'Basic ' +
               base64Encode(utf8.encode(
-                  'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6')),
+                  'ck_af3ea7f372c93ef5ccf3ef4e46c3ab02d2bd0be8:cs_8f66eac90fe06004ec4e4e5d240b5b5e2679ab37')),
           'wc-authentication':
-              'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6',
+              'ck_af3ea7f372c93ef5ccf3ef4e46c3ab02d2bd0be8:cs_8f66eac90fe06004ec4e4e5d240b5b5e2679ab37',
         },
       );
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
+        print(data);
+        print("data");
         BookmarkId.clear();
 
         for (final product in data) {
@@ -183,16 +193,20 @@ class rentBookmarkController extends GetxController {
   allBookmark({bool? isBuy}) async {
     final String include = BookmarkId.isNotEmpty ? BookmarkId.join(',') : "0";
     final String apiUrl =
-        'https://vekaautomobile.technopreneurssoftware.com/wp-json/wc/v3/products?include=$include';
+        'https://vekarealestate.technopreneurssoftware.com/wp-json/wc/v3/products?include=$include';
 
-    final response = await http.get(Uri.parse(apiUrl), headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Basic ' +
-          base64Encode(utf8.encode(
-              'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6')),
-      'wc-authentication':
-          'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6',
-    });
+    final response = await http.get(
+      Uri.parse(apiUrl),
+      headers: {
+        
+        // ignore: prefer_interpolation_to_compose_strings
+        'Authorization': 'Basic ' +
+            base64Encode(utf8.encode(
+                'ck_af3ea7f372c93ef5ccf3ef4e46c3ab02d2bd0be8:cs_8f66eac90fe06004ec4e4e5d240b5b5e2679ab37')),
+        'wc-authentication':
+            'ck_af3ea7f372c93ef5ccf3ef4e46c3ab02d2bd0be8:cs_8f66eac90fe06004ec4e4e5d240b5b5e2679ab37',
+      },
+    );
 
     if (response.statusCode == 200) {
       final List<dynamic> productsJson = jsonDecode(response.body);
@@ -214,22 +228,22 @@ class rentBookmarkController extends GetxController {
     } else {
       throw Exception('Failed to fetch products');
     }
-   
   }
 
   removeBookmark(int bookMarkId) async {
     final url =
-        "https://vekaautomobile.technopreneurssoftware.com/wp-json/wc/v3/wishlist/remove_product/$bookMarkId";
+        "https://vekarealestate.technopreneurssoftware.com/wp-json/wc/v3/wishlist/remove_product/$bookMarkId";
 
     final response = await http.get(
       Uri.parse(url),
       headers: {
+      
         // ignore: prefer_interpolation_to_compose_strings
         'Authorization': 'Basic ' +
             base64Encode(utf8.encode(
-                'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6')),
+                'ck_af3ea7f372c93ef5ccf3ef4e46c3ab02d2bd0be8:cs_8f66eac90fe06004ec4e4e5d240b5b5e2679ab37')),
         'wc-authentication':
-            'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6',
+            'ck_af3ea7f372c93ef5ccf3ef4e46c3ab02d2bd0be8:cs_8f66eac90fe06004ec4e4e5d240b5b5e2679ab37',
       },
     );
 
@@ -237,23 +251,9 @@ class rentBookmarkController extends GetxController {
       wishListId.removeWhere((key, value) => value == bookMarkId);
       products.removeWhere((element) => element["id"] == bookMarkId);
       BookmarkId.remove(wishListId["productId"]);
-      
       return "Succesfully removed";
     } else {
       return "Something went wrong";
     }
   }
-}
-
-class rentbookmarkModel {
-  String? id;
-  String? name;
-  String? price;
-  String? image;
-
-  rentbookmarkModel(
-      {required this.id,
-      required this.name,
-      required this.price,
-      required this.image});
 }
