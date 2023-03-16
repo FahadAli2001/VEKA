@@ -8,11 +8,18 @@ import 'package:veka/car/SignUp/SignupController.dart';
 
 
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
 
   @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  @override
   Widget build(BuildContext context) {
+    var groupvalue = true.obs;
+    bool isSignUp = false;
     var width = Get.width;
     var SocialAppIconSize = Get.height * 0.03;
     SignUpController suc = Get.put(SignUpController());
@@ -41,11 +48,15 @@ class SignUp extends StatelessWidget {
                         hintText: "User Name",
                         labelText: "User Name",
 
-                        suffixIcon: Icon(CupertinoIcons.person_alt,),
+                        suffixIcon: Icon(CupertinoIcons.person_alt,
+                        color: Colors.black,),
                         border: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey)
+                            borderSide: BorderSide(color: Colors.black)
                         ),
+                      labelStyle: TextStyle(
+                          color: Colors.black
+                      ),
                     ),
 
                     validator: (val){
@@ -60,6 +71,7 @@ class SignUp extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
                   child: TextFormField(
+
                     validator: (val){
                       /* if(val!= EmailValidator.validate(val.toString())){
                         return "Enter valid email";
@@ -73,13 +85,19 @@ class SignUp extends StatelessWidget {
                         height: 0.5
                     ),
                     decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black)
+                      ),
+                      labelStyle: TextStyle(
+                          color: Colors.black
+                      ),
                         errorStyle: TextStyle(
                             color: Colors.red
                         ),
 
                         hintText: "Email",
                         labelText: "Email",
-                        suffixIcon: Icon(CupertinoIcons.mail,
+                        suffixIcon: Icon(CupertinoIcons.mail,color: Colors.black,
                         ),
                         border: OutlineInputBorder(),
 
@@ -105,6 +123,12 @@ class SignUp extends StatelessWidget {
                             height: 0.5
                         ),
                         decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)
+                          ),
+                          labelStyle: TextStyle(
+                              color: Colors.black
+                          ),
                             errorStyle: TextStyle(
                                 color: Colors.red
                             ),
@@ -120,53 +144,10 @@ class SignUp extends StatelessWidget {
                                   }
                                 },
                                 child: (suc.isHidepass.value == true)?Icon(CupertinoIcons.eye_slash_fill,
-
+                                  color: Colors.black,
                                 ):Icon(CupertinoIcons.eye,
+                                  color: Colors.black,
                                   )
-                            ),
-                            border: OutlineInputBorder(),
-
-                        )
-                    ),
-                  ),
-                ),
-                //
-                //
-                Obx(
-                      ()=> Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-                    child: TextFormField(
-                        validator: (val){
-                          if(val!.isEmpty){
-                            return "Enter password";
-                          }
-                          else if(suc.password.value.text.trim() != suc.confirmpassword.value.text.trim()) {
-                            return "Password doesn't match";
-                          }
-                        },
-                        obscureText: suc.isHideconpass.value,
-                        controller: suc.confirmpassword,
-                        style: TextStyle(
-                            height: 0.5
-                        ),
-                        decoration: InputDecoration(
-                            errorStyle: TextStyle(
-                                color: Colors.red
-                            ),
-
-
-                            hintText: "Confirm Password",
-                            labelText: "Confirm Password",
-                            suffixIcon: GestureDetector(
-                                onTap: (){
-                                  if(suc.isHideconpass.value == true){
-                                    suc.isHideconpass.value = false;
-                                  }else{
-                                    suc.isHideconpass.value = true;
-                                  }
-                                },
-                                child:(suc.isHideconpass.value == true)?Icon(CupertinoIcons.eye_slash_fill
-                                ):Icon(CupertinoIcons.eye)
                             ),
                             border: OutlineInputBorder(),
 
@@ -181,13 +162,21 @@ class SignUp extends StatelessWidget {
                     height: Get.height * 0.06,
                     width: Get.width,
                     //color: Colors.red,
-                    child: Obx(
-                      ()=> Row(
+                    child:  Row(
                         children: [
-                          Checkbox(
-                              value: suc.Value.value,
-                              onChanged: suc.handleRadioValueChanged
-                          ), //Ch
+                          Obx(
+                        ()=> Theme(
+                          data: ThemeData(
+                            toggleableActiveColor: Colors.black, // set the toggleableActiveColor to blue
+                          ),
+                          child: Radio(
+                            value: suc.Value.value,
+                            onChanged: suc.handleRadioValueChanged,
+                            groupValue: "SignUp",
+                          ),
+                        )
+                          ), //
+                          //
                           Text("I agree with Terms & Conditions",
                             style: TextStyle(
                                 fontSize: width * 0.04
@@ -197,7 +186,7 @@ class SignUp extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+
                 //
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
@@ -205,7 +194,7 @@ class SignUp extends StatelessWidget {
                     width: Get.width,
                     child: CupertinoButton(
                         color: Colors.black,
-                        child: Text("Sign - Up",
+                        child:(isSignUp == true)?CircularProgressIndicator(color: Colors.white,): Text("Sign - Up",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: width * 0.05
@@ -213,8 +202,16 @@ class SignUp extends StatelessWidget {
                         onPressed: (){
 
                           if(_formKey.currentState!.validate()){
-                            print("tap");
-                            suc.checkIsAgree();
+                            if(isSignUp!=true){
+                              suc.checkIsAgree();
+                            }
+                            setState(() {
+                              isSignUp = true;
+                            });
+                            if(!mounted){
+                              isSignUp = false;
+                            }
+
                             //suc.UserSignUp();
                           }
                         }),

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -10,11 +9,17 @@ import 'package:veka/house/Signup/signUpScreen.dart';
 import '../../ChooseOption.dart';
 import 'LoginController.dart';
 
-class loginSxreen extends StatelessWidget {
+class loginSxreen extends StatefulWidget {
   const loginSxreen({Key? key}) : super(key: key);
 
   @override
+  State<loginSxreen> createState() => _loginSxreenState();
+}
+
+class _loginSxreenState extends State<loginSxreen> {
+  @override
   Widget build(BuildContext context) {
+    bool isSignIn = false;
     final _formKey = GlobalKey<FormState>();
     var SocialAppIconSize = Get.height * 0.03;
     loginController lc = Get.put(loginController());
@@ -35,7 +40,7 @@ class loginSxreen extends StatelessWidget {
               key: _formKey,
               child: Column(
                 children: [
-                 Padding(padding: EdgeInsets.only(top: 40),
+                 Padding(padding: EdgeInsets.only(top: 40,left: 15),
                  child:  Align(
                    alignment: Alignment.topLeft,
                    child: Text("Welcome Back",
@@ -47,7 +52,7 @@ class loginSxreen extends StatelessWidget {
                  ),),
                   //---
           Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
+              padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 15),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text("Login with your email and password",
@@ -70,12 +75,20 @@ class loginSxreen extends StatelessWidget {
                           height: 0.5
                       ),
                       decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.black
+                          )
+                        ),
+                          labelStyle: TextStyle(
+                            color: Colors.black
+                          ),
                           errorStyle: TextStyle(
                               color: Colors.red
                           ),
                           hintText: "Email",
                           labelText: "Email",
-                          suffixIcon: Icon(Icons.email),
+                          suffixIcon: Icon(Icons.email,color: Colors.black,),
                           border: OutlineInputBorder()
                       ),
                       validator: (val){
@@ -105,6 +118,14 @@ class loginSxreen extends StatelessWidget {
                           ),
                           controller: lc.password,
                           decoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.black
+                                  )
+                              ),
+                              labelStyle: TextStyle(
+                                  color: Colors.black
+                              ),
                             errorStyle: TextStyle(
                               color: Colors.red
                             ),
@@ -118,8 +139,10 @@ class loginSxreen extends StatelessWidget {
                                     lc.isHidepass.value = true;
                                   }
                                 },
-                                  child: (lc.isHidepass.value == true)?Icon(CupertinoIcons.eye_slash_fill):
-                                      Icon(CupertinoIcons.eye)
+                                  child: (lc.isHidepass.value == true)?Icon(CupertinoIcons.eye_slash_fill,
+                                  color: Colors.black,):
+                                      Icon(CupertinoIcons.eye,
+                                      color: Colors.black,)
                               ),
                               border: OutlineInputBorder()
                           )
@@ -152,8 +175,8 @@ class loginSxreen extends StatelessWidget {
                             },
                                 child: Text("Forget Password",
                                 style: TextStyle(
-                                    fontSize: Get.width * 0.04,
-                                  color: Colors.blue
+                                    //fontSize: Get.width * 0.04,
+                                  color: Colors.black
                                 ),))
                           ],
                         ),
@@ -167,14 +190,23 @@ class loginSxreen extends StatelessWidget {
                       width: Get.width,
                       child: CupertinoButton(
                           color: Colors.black,
-                          child: Text("Sign In",
+                          child: isSignIn ?CircularProgressIndicator(color: Colors.white,) : Text(
+                            "Sign In"
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: Get.width * 0.05
-                            ),),
+                                color: Colors.white, fontSize: Get.width * 0.05),
+                          ),
                           onPressed: (){
                             if(_formKey.currentState!.validate()){
-                              lc.SignIn();
+                              if(isSignIn != true){
+                                lc.SignIn();
+                              }
+                              setState(() {
+                                isSignIn = true;
+                              });
+                              if(!mounted){
+                                isSignIn = false;
+                              }
+
                             }
                           }),
                     ),

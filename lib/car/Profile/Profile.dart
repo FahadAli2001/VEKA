@@ -19,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           child: InkWell(
             onTap: (){
-              pc.SignOut();
+              pc.signOut();
             },
             child: Container(
               width: Get.width * 0.4,

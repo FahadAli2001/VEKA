@@ -4,7 +4,10 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
 
+
 import '../../../car/Token/AccessToken.dart';
+
+
 
 class rentHomeController extends GetxController {
 
@@ -19,7 +22,6 @@ class rentHomeController extends GetxController {
           consumerSecret: acessToken.HouseCS);
       rentproducts = await wooCommerceAPI.getAsync(
           "products?type=ovacrs_car_rental"); //?type=ovacrs_car_rental
-      //print(rentproducts);
 
     } catch (e) {
       Get.snackbar("Error", e.toString(),

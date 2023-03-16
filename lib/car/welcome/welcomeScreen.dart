@@ -6,42 +6,55 @@ import 'package:get/get_core/src/get_main.dart';
 import '../SignIn/SignInScreen.dart';
 import '../SignUp/SignUp.dart';
 
-class welcomeScreen extends StatelessWidget {
+class welcomeScreen extends StatefulWidget {
   const welcomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<welcomeScreen> createState() => _welcomeScreenState();
+}
+
+class _welcomeScreenState extends State<welcomeScreen> {
+
+  var isSignIn = false.obs;
 
   @override
   Widget build(BuildContext context) {
     var width = Get.width;
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
+    var loginButton = Get.width * 0.05;
+    return Scaffold(
 
         body: Column(
           children: <Widget>[
 
-            // construct the profile details widget here
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/car.png"),
-                  filterQuality: FilterQuality.high,
-                  fit: BoxFit.cover
-                )
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 40),
-                    child: Center(child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 40,
-                      backgroundImage: AssetImage("assets/Veka-Green.png",
-                      ),
-                    )),
+            Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50)),
+                      image: DecorationImage(
+                          image: AssetImage("assets/car.png"),
+                          filterQuality: FilterQuality.high,
+                          fit: BoxFit.cover
+                      )
                   ),
-                  //
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
+                  width: Get.width ,
+                  height: Get.height * 0.45,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: Center(child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 40,
+                    backgroundImage: AssetImage("assets/Veka-Green.png",
+                    ),
+                  )),
+                ),
+                //
+                Positioned(
+                 top: 120,
+                  left: 130,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 30),
                     child: Text("Welcome",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -49,52 +62,86 @@ class welcomeScreen extends StatelessWidget {
                           fontSize: width * 0.08
                       ),),
                   ),
-                  //
-                  Container(
-
-                    height: Get.height * 0.12,
-                   // color: Colors.red,
-                  ),
-                ],
-              ),
-            ),
-
-            // the tab bar with two items
-            SizedBox(
-              height:50,
-              child:  TabBar(
-                indicatorColor: Colors.black,
-                  tabs: [
-                    Tab(
-                      child: Text("Sign In",
-                        style: TextStyle(
-                            color: Colors.black
-                        ),),
-                    ),
-                    Tab(
-                      child: Text("Sign Up",
-                        style: TextStyle(
-                            color: Colors.black
-                        ),),
-                    ),
-                  ],
                 ),
-              ),
+
+                Positioned(
+                  top: 320,
+                  right: 90,
+                  left: 90,
+                  child: Center(
+                    child: Obx(()=>
+                       Row(
+                        children: [
+                            GestureDetector(
+                              onTap: (){
+                                isSignIn.value = false;
+                                print(isSignIn.value);
+                              },
+                              child: Container(
+                                child: Column(
+                                  children: [
+                                  Text("SignIn",
+                                     style: TextStyle(
+                                         fontWeight: FontWeight.bold,
+                                         color: Colors.white,
+                                         fontSize: loginButton
+                                     ),),
 
 
-            // create widgets for each tab bar here
-            Expanded(
-              child: TabBarView(
-                children: [
-                  // first tab bar view widget
-                  SignInScreen(),
-                  SignUp()
-                ],
-              ),
+                                    (isSignIn.value == false)? SizedBox(
+                                      width: 60,
+                                      child: Divider(color: Colors.white,thickness: 2,
+                                      ),
+                                    ):Container()
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                          //
+                          SizedBox(
+                            width: 80,
+                          ),
+                          //
+                          GestureDetector(
+                            onTap: (){
+                              isSignIn.value = true;
+                              print(isSignIn.value);
+                            },
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  Text("SignUp",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          fontSize: loginButton
+                                      ),),
+
+                                  (isSignIn.value == true)? SizedBox(
+                                    width: 60,
+                                    child: Divider(color: Colors.white,thickness: 2,
+                                    ),
+                                  ):Container()
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
             ),
+
+            Obx(
+    ()=> Expanded(child: (isSignIn.value == false)?SignInScreen():SignUp()
+              ),
+            )
           ],
         ),
-      ),
+
     );
   }
 }

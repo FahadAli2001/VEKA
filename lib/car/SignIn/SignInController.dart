@@ -1,8 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +7,8 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:veka/house/Signup/signUpScreen.dart';
 import '../Dashboard/dashboardScreen.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
 
 class SignInController extends GetxController {
   TextEditingController username = TextEditingController();
@@ -22,11 +18,13 @@ class SignInController extends GetxController {
   var userId;
   var name;
 
-  var isrem = false.obs;
-  void handleRadioValueChanged(val) {
-    isrem.value = val;
-    // print(isrem.value);
+  var isRem = false.obs;
+
+   handleRadioValueChanged(val) {
+    isRem.value = val;
+    print(isRem.value);
   }
+
 
   void SignIn() async {
     SharedPreferences sigin = await SharedPreferences.getInstance();
@@ -40,7 +38,6 @@ class SignInController extends GetxController {
           body: {"username": _email, "password": _password});
 
       if (response.statusCode == 200) {
-        // SignInWithFirebase();
         var data = jsonDecode(response.body);
         name = data["data"]["nicename"];
         userId = data["data"]["id"];
@@ -48,8 +45,7 @@ class SignInController extends GetxController {
         sigin.setString("email", data["data"]["email"]);
         sigin.setString("userId", userId.toString());
         log('Welcome, $userId');
-        //print(data["data"]["id"]);
-        if (isrem.value == true) {
+        if (isRem.value == true) {
           SharedPreferences sp = await SharedPreferences.getInstance();
           sp.setString("username", _email);
           sp.setString("password", _password);

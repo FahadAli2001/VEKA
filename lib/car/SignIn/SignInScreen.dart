@@ -1,16 +1,19 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:veka/car/Dashboard/dashboardScreen.dart';
-import 'package:veka/car/SignUp/SignUp.dart';
-
 import 'SignInController.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
+  
   const SignInScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+
+  bool isSignIn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +31,22 @@ class SignInScreen extends StatelessWidget {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
                   child: TextFormField(
                       controller: sic.username,
                       style: TextStyle(height: 0.5),
                       decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)
+                          ),
                           errorStyle: TextStyle(color: Colors.red),
                           hintText: "Email",
                           labelText: "Email",
-                          suffixIcon: Icon(Icons.email),
+                          labelStyle: TextStyle(
+                            color: Colors.black
+                          ),
+                          suffixIcon: Icon(Icons.email,
+                          color: Colors.black,),
                           border: OutlineInputBorder()),
                       validator: (val) {
                         if (val!.isEmpty) {
@@ -50,38 +60,48 @@ class SignInScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 15),
                   child: Obx(
                     () => TextFormField(
-                        style: TextStyle(height: 0.5),
-                        obscureText: sic.isHidepass.value,
-                        validator: (String? val) {
-                          if (val!.isEmpty) {
-                            return "Enter password";
-                          }
-                        },
-                        controller: sic.password,
-                        decoration: InputDecoration(
+                          style: TextStyle(height: 0.5),
+                          obscureText: sic.isHidepass.value,
+                          validator: (String? val) {
+                            if (val!.isEmpty) {
+                              return "Enter password";
+                            }
+                          },
+                          controller: sic.password,
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)
+                            ),
+                            focusColor: Colors.black,
+                              errorStyle: TextStyle(color: Colors.red),
+                              hintText: "Password",
+                              labelText: "Password",
+                              labelStyle: TextStyle(
+                                color: Colors.black
+                              ),
+                              suffixIcon: InkWell(
+                                  onTap: () {
+                                    if (sic.isHidepass.value == true) {
+                                      sic.isHidepass.value = false;
+                                    } else {
+                                      sic.isHidepass.value = true;
+                                    }
+                                  },
+                                  child: (sic.isHidepass.value == true)
+                                      ? Icon(CupertinoIcons.eye_slash_fill,
+                                  color: Colors.black,)
+                                      : Icon(CupertinoIcons.eye,
+                                  color: Colors.black,)),
+                              border: OutlineInputBorder(
 
-                            errorStyle: TextStyle(color: Colors.red),
-                            hintText: "Password",
-                            labelText: "Password",
-                            suffixIcon: InkWell(
-                                onTap: () {
-                                  if (sic.isHidepass.value == true) {
-                                    sic.isHidepass.value = false;
-                                  } else {
-                                    sic.isHidepass.value = true;
-                                  }
-                                },
-                                child: (sic.isHidepass.value == true)
-                                    ? Icon(CupertinoIcons.eye_slash_fill)
-                                    : Icon(CupertinoIcons.eye)),
-                            border: OutlineInputBorder())),
+                              ))),
+                    ),
                   ),
-                ),
-                Obx(
-                  () => Padding(
+
+               Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Container(
                       height: Get.height * 0.06,
@@ -89,108 +109,64 @@ class SignInScreen extends StatelessWidget {
                       //color: Colors.red,
                       child: Row(
                         children: [
-                          Checkbox(
-                              value: sic.isrem.value,
-                              onChanged: sic.handleRadioValueChanged), //Ch
+                          Obx(() =>  Radio(
+                              value: false,
+                              groupValue: sic.isRem.value,
+                              onChanged: (bool? val) =>
+                                  sic.handleRadioValueChanged(val),
+                              activeColor: Colors.black,
+                            ),
+                          ),
                           Text(
                             "Remember me",
                             style: TextStyle(fontSize: width * 0.04),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 40),
+                            padding: const EdgeInsets.only(left: 50),
                             child: TextButton(
                                 onPressed: () {
                                   sic.forgetpassword();
                                 },
-                                child: Text("Forget Password?")),
+                                child:  const Text("Forget Password?",style: TextStyle(
+                                  color: Colors.black
+                                ),)),
                           )
                         ],
                       ),
                     ),
                   ),
-                ),
+
 
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                   child: SizedBox(
                     width: Get.width,
                     child: CupertinoButton(
                         color: Colors.black,
-                        child: Text(
+                        child: isSignIn ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                ) : Text(
                           "Sign In",
                           style: TextStyle(
                               color: Colors.white, fontSize: width * 0.05),
                         ),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            print("tapp");
+                            if(isSignIn != true){
                             sic.SignIn();
+                            }
+                            setState(() {
+                              isSignIn = true;
+                            });
+                            if(!mounted){
+                              isSignIn = false;
+                            }
                           }
                         }),
                   ),
                 ),
-                //
-                /* Align(
-                  alignment: Alignment.center,
-                  child: Text("or login with ",
-                  style: TextStyle(
-                    fontSize: width * 0.05,
-                    color: Colors.grey
-                  ),),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 118,vertical: 20),
-                  child: Container(
-                    width: Get.width,
-                    //height: 100,
-                    //color: Colors.pink,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: (){
-                            //sic.signInWithFacebook();
-                            sic.LogInWithFacebook();
-                          },
-                          child: FaIcon(FontAwesomeIcons.facebook,
-                          color: Colors.grey,
-                          size: SocialAppIconSize,),
-                        ),
-                        FaIcon(FontAwesomeIcons.instagram,
-                          color: Colors.grey,
-                          size: SocialAppIconSize,),
-                        FaIcon(FontAwesomeIcons.twitter,
-                          color: Colors.grey,
-                          size: SocialAppIconSize,),
-                      ],
-                    ),
-                  ),
-                ),*/
-                /*   Padding(
-                  padding: const EdgeInsets.only(top: 50),
-                  child: InkWell(
-                    onTap: (){
-                      Get.to(SignUp());
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        text: "Don't Have An Account? ",
-                        style: TextStyle(
-                          fontSize: width * 0.04,
-                          color: Colors.grey
-                        ),
-                        children: const <TextSpan>[
-                          TextSpan(text: 'Sign Up', style:
-                          TextStyle(fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          )),
 
-                        ],
-                      ),
-                    ),
-                  ),
-                )*/
               ],
             ),
           ),

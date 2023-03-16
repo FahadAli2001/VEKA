@@ -26,7 +26,7 @@ class signUpscreen extends StatelessWidget {
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 60),
+                    padding: EdgeInsets.only(top: 60,left: 15),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -40,7 +40,7 @@ class signUpscreen extends StatelessWidget {
                   ),
                   //---
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 15),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -102,11 +102,12 @@ class signUpscreen extends StatelessWidget {
                           validator: (String? val) {
                             if (val!.isEmpty) {
                               return "Enter password";
-                            } else if (val!.length < 8) {
+                            } else if (val.length < 8) {
                               return "Enter mini 8 digit password";
                             }
+                            return null;
                           },
-                          style: TextStyle(height: 0.5),
+                          style: const TextStyle(height: 0.5),
                           controller: hsp.password,
                           decoration: InputDecoration(
                               hintText: "Password",
@@ -126,41 +127,7 @@ class signUpscreen extends StatelessWidget {
                     ),
                   ),
                   //
-                  Obx(
-                    () => Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
-                      child: TextFormField(
-                          validator: (val) {
-                            if (val!.isEmpty) {
-                              return "Enter password";
-                            } else if (hsp.password.value.text.trim() !=
-                                hsp.confirmpassword.value.text.trim()) {
-                              return "Password doesn't match";
-                            }
-                          },
-                          obscureText: hsp.isHideconpass.value,
-                          controller: hsp.confirmpassword,
-                          style: TextStyle(height: 0.5),
-                          decoration: InputDecoration(
-                            errorStyle: TextStyle(color: Colors.red),
-                            hintText: "Confirm Password",
-                            labelText: "Confirm Password",
-                            suffixIcon: GestureDetector(
-                                onTap: () {
-                                  if (hsp.isHideconpass.value == true) {
-                                    hsp.isHideconpass.value = false;
-                                  } else {
-                                    hsp.isHideconpass.value = true;
-                                  }
-                                },
-                                child: (hsp.isHideconpass.value == true)
-                                    ? Icon(CupertinoIcons.eye_slash_fill)
-                                    : Icon(CupertinoIcons.eye)),
-                            border: OutlineInputBorder(),
-                          )),
-                    ),
-                  ),
+
                   //
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),

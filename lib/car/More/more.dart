@@ -17,243 +17,319 @@ class more extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color boxColor = Colors.grey.shade300;
+    Color circleColor = Colors.grey.shade400;
     var icon = Get.width * 0.05;
     var circle = Get.width * 0.05;
     var boxheight = Get.height * 0.08;
+    var textSize = Get.width * 0.045;
     profileController pc = Get.put(profileController());
 
-    return Scaffold(
-      bottomNavigationBar: Container(
-        width: Get.width,
-        height: Get.height * 0.08,
-        //  color: Colors.blue,
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: InkWell(
-            onTap: () {
-              pc.SignOut();
-            },
-            child: Container(
-              width: Get.width * 0.4,
-              height: Get.height * 0.8,
-              color: Colors.green,
-              child: Center(
-                child: Text(
-                  "LogOut",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: Get.width * 0.04),
+    return SafeArea(
+      child: Scaffold(
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            width: Get.width,
+            height: Get.height * 0.08,
+            //  color: Colors.blue,
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: InkWell(
+                onTap: () {
+                  pc.signOut();
+                },
+                child: Container(
+                  width: Get.width * 0.4,
+                  height: Get.height * 0.8,
+                  color: Colors.green,
+                  child: Center(
+                    child: Text(
+                      "LogOut",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: Get.width * 0.04),
+                    ),
+                  ),
                 ),
               ),
             ),
           ),
         ),
-      ),
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.white70,
-        leading: null,
-        title: Text(
-          "More",
-          style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: Get.width * 0.05),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
+        appBar: AppBar(
+          title: Image.asset(
+            "assets/Veka-Green.png",
+            height: 180,
+            width: 150,
+          ),
+          centerTitle: true,
+          actions: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  Get.to(orderdetails());
-                },
-                child: Container(
-                  color: boxColor,
-                  width: Get.width,
-                  height: boxheight,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CircleAvatar(
-                          radius: circle,
-                          backgroundColor: Colors.grey,
-                          child: Icon(
-                            CupertinoIcons.lock_fill,
-                            color: Colors.black,
-                            size: icon,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            "Order Details",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: Get.width * 0.05),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                            child: Icon(CupertinoIcons.arrow_right_circle_fill),
-                          ),
-                        )
-                      ],
+                padding: const EdgeInsets.only(top: 5, right: 20),
+                child: Column(
+                  children: const [
+                    CircleAvatar(
+                      radius: 18,
                     ),
-                  ),
-                ),
-              ),
-            ),
-            //--------
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  Get.to(myBookmark());
-                },
-                child: Container(
-                  color: boxColor,
-                  width: Get.width,
-                  height: boxheight,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CircleAvatar(
-                          radius: circle,
-                          backgroundColor: Colors.grey,
-                          child: Icon(
-                            CupertinoIcons.bookmark_fill,
-                            color: Colors.black,
-                            size: icon,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            "My Book Marks",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: Get.width * 0.05),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                            child: Icon(CupertinoIcons.arrow_right_circle_fill),
-                          ),
-                        )
-                      ],
+                    // SizedBox(height: 5,),
+                    Text(
+                      "Hi, Belly",
+                      style: TextStyle(color: Colors.black, fontSize: 10),
                     ),
-                  ),
-                ),
-              ),
-            ),
-            //--------
-            //--------
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  Get.to(serviceMode());
-                },
-                child: Container(
-                  color: boxColor,
-                  width: Get.width,
-                  height: boxheight,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CircleAvatar(
-                          radius: circle,
-                          backgroundColor: Colors.grey,
-                          child: Icon(
-                            Icons.car_rental_sharp,
-                            color: Colors.black,
-                            size: icon,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            "Service Mode",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: Get.width * 0.05),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                            child: Icon(CupertinoIcons.arrow_right_circle_fill),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            //--------------
-            //--------
-            GestureDetector(
-              onTap: () {
-                Get.to(() => aboutUs());
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  color: boxColor,
-                  width: Get.width,
-                  height: boxheight,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CircleAvatar(
-                          radius: circle,
-                          backgroundColor: Colors.grey,
-                          child: Icon(
-                            Icons.note_alt_rounded,
-                            color: Colors.black,
-                            size: icon,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            "About us",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: Get.width * 0.05),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                            child: Icon(CupertinoIcons.arrow_right_circle_fill),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            )
+                  ],
+                ))
           ],
+
+          elevation: 0,
+          backgroundColor: Colors.white12,
+          leading: null,
+
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Center(
+                  child: Text(
+                    "More",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: Get.width * 0.05),
+                  ),
+                ),
+              ),
+              //
+              Row(
+                children: [
+                  Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          color: boxColor,
+                          width: Get.width * 0.85,
+                          height: boxheight,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CircleAvatar(
+                                  radius: circle,
+                                  backgroundColor: circleColor,
+                                  child: Icon(
+                                    Icons.shopping_bag,
+                                    color: Colors.black,
+                                    size: icon,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  child: Text(
+                                    "Order Details",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: textSize),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 25,left: 325),
+                        child: CircleAvatar(
+                            radius: Get.width *0.04,
+                            backgroundColor: boxColor,
+                            child: Icon(Icons.arrow_forward_ios_outlined,
+                              color: Colors.grey.shade500,)
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+              //
+              GestureDetector(
+                onTap: (){
+                  Get.to(const MyBookmark());
+                },
+                child: Row(
+                  children: [
+                    Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            color: boxColor,
+                            width: Get.width * 0.85,
+                            height: boxheight,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CircleAvatar(
+                                    radius: circle,
+                                    backgroundColor: circleColor,
+                                    child: Icon(
+                                      CupertinoIcons.bookmark_fill,
+                                      color: Colors.black,
+                                      size: icon,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text(
+                                      "My Book Marks",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: textSize),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 25,left: 325),
+                          child: CircleAvatar(
+                              radius: Get.width *0.04,
+                              backgroundColor: boxColor,
+                              child: Icon(Icons.arrow_forward_ios_outlined,
+                                color: Colors.grey.shade500,)
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              //--------
+              GestureDetector(
+                onTap: (){
+                  Get.to(const serviceMode());
+                },
+                child: Row(
+                  children: [
+                    Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            color: boxColor,
+                            width: Get.width * 0.85,
+                            height: boxheight,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CircleAvatar(
+                                    radius: circle,
+                                    backgroundColor: circleColor,
+                                    child: Icon(
+                                      Icons.car_rental_sharp,
+                                      color: Colors.black,
+                                      size: icon,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text(
+                                      "Service Mode",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: textSize),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 25,left: 325),
+                          child: CircleAvatar(
+                              radius: Get.width *0.04,
+                              backgroundColor: boxColor,
+                              child: Icon(Icons.arrow_forward_ios_outlined,
+                                color: Colors.grey.shade500,)
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              //--------about us
+              GestureDetector(
+                onTap: (){
+                  Get.to(() =>const aboutUs());
+                },
+                child: Row(
+                  children: [
+                    Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            color: boxColor,
+                            width: Get.width * 0.85,
+                            height: boxheight,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CircleAvatar(
+                                    radius: circle,
+                                    backgroundColor: circleColor,
+                                    child: Icon(
+                                      Icons.note_alt_rounded,
+                                      color: Colors.black,
+                                      size: icon,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text(
+                                      "About Us",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: textSize),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 25,left: 325),
+                          child: CircleAvatar(
+                              radius: Get.width *0.04,
+                              backgroundColor: boxColor,
+                              child: Icon(Icons.arrow_forward_ios_outlined,
+                                color: Colors.grey.shade500,)
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              //--------
+
+            ],
+          ),
         ),
       ),
     );

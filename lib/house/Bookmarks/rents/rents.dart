@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:veka/car/Mybookmark/rents/rentBookmarkController.dart';
+import 'package:veka/house/Bookmarks/rents/rent_bookmark_controller.dart';
 
-
-class Rent extends StatelessWidget {
+class RealStateRentTab extends StatelessWidget {
   final bool isBuy;
-  const Rent({Key? key, required this.isBuy}) : super(key: key);
+  const RealStateRentTab({Key? key, required this.isBuy}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-  
-    rentBookmarkController rbmc = Get.put(rentBookmarkController());
+    RealStateRentBookmarkController rbmc = Get.put(RealStateRentBookmarkController());
 
     return Scaffold(
       body: FutureBuilder(

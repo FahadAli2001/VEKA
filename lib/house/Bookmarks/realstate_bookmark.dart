@@ -1,12 +1,13 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:veka/car/Mybookmark/buying/buying.dart';
 import 'package:veka/car/Mybookmark/rents/rents.dart';
+import 'package:veka/house/Bookmarks/rents/rents.dart';
 
-class MyBookmark extends StatelessWidget {
-  const MyBookmark({Key? key}) : super(key: key);
+class RealStateBookmark extends StatelessWidget {
+  const RealStateBookmark({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +58,10 @@ class MyBookmark extends StatelessWidget {
         ),
         body: const TabBarView(
           children: [
-            Rent(
+            RealStateRentTab(
               isBuy: true,
             ),
-            Rent(
+            RealStateRentTab(
               isBuy: false,
             ),
           ],
