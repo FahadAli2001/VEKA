@@ -1,12 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:veka/car/Dashboard/dashboardScreen.dart';
-import 'package:veka/car/SignUp/SignUp.dart';
-
 import 'SignInController.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -37,7 +31,7 @@ class _SignInScreenState extends State<SignInScreen> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
                   child: TextFormField(
                       controller: sic.username,
                       style: TextStyle(height: 0.5),
@@ -59,7 +53,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 15),
                   child: Obx(
                     () => TextFormField(
                         style: TextStyle(height: 0.5),
@@ -71,7 +65,6 @@ class _SignInScreenState extends State<SignInScreen> {
                         },
                         controller: sic.password,
                         decoration: InputDecoration(
-
                             errorStyle: TextStyle(color: Colors.red),
                             hintText: "Password",
                             labelText: "Password",
@@ -98,7 +91,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       //color: Colors.red,
                       child: Row(
                         children: [
-                          Checkbox(
+                          Radio(
+                            groupValue: "SignIn",
                               value: sic.isrem.value,
                               onChanged: sic.handleRadioValueChanged), //Ch
                           Text(
@@ -106,12 +100,14 @@ class _SignInScreenState extends State<SignInScreen> {
                             style: TextStyle(fontSize: width * 0.04),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 40),
+                            padding: const EdgeInsets.only(left: 50),
                             child: TextButton(
                                 onPressed: () {
                                   sic.forgetpassword();
                                 },
-                                child:  const Text("Forget Password?")),
+                                child:  const Text("Forget Password?",style: TextStyle(
+                                  color: Colors.black
+                                ),)),
                           )
                         ],
                       ),
@@ -121,7 +117,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                   child: SizedBox(
                     width: Get.width,
                     child: CupertinoButton(
@@ -148,67 +144,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         }),
                   ),
                 ),
-                //
-                /* Align(
-                  alignment: Alignment.center,
-                  child: Text("or login with ",
-                  style: TextStyle(
-                    fontSize: width * 0.05,
-                    color: Colors.grey
-                  ),),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 118,vertical: 20),
-                  child: Container(
-                    width: Get.width,
-                    //height: 100,
-                    //color: Colors.pink,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: (){
-                            //sic.signInWithFacebook();
-                            sic.LogInWithFacebook();
-                          },
-                          child: FaIcon(FontAwesomeIcons.facebook,
-                          color: Colors.grey,
-                          size: SocialAppIconSize,),
-                        ),
-                        FaIcon(FontAwesomeIcons.instagram,
-                          color: Colors.grey,
-                          size: SocialAppIconSize,),
-                        FaIcon(FontAwesomeIcons.twitter,
-                          color: Colors.grey,
-                          size: SocialAppIconSize,),
-                      ],
-                    ),
-                  ),
-                ),*/
-                /*   Padding(
-                  padding: const EdgeInsets.only(top: 50),
-                  child: InkWell(
-                    onTap: (){
-                      Get.to(SignUp());
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        text: "Don't Have An Account? ",
-                        style: TextStyle(
-                          fontSize: width * 0.04,
-                          color: Colors.grey
-                        ),
-                        children: const <TextSpan>[
-                          TextSpan(text: 'Sign Up', style:
-                          TextStyle(fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          )),
 
-                        ],
-                      ),
-                    ),
-                  ),
-                )*/
               ],
             ),
           ),

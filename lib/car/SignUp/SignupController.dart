@@ -1,12 +1,9 @@
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart'as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../Dashboard/dashboardScreen.dart';
 import '../SignIn/SignInController.dart';
 import '../Token/AccessToken.dart';
 
@@ -29,7 +26,8 @@ class SignUpController extends GetxController{
 
   var Value = false.obs;
   void handleRadioValueChanged(val) {
-    Value.value = val;
+    Value.value = !val;
+    print(Value.value);
   }
 
   void checkIsAgree (){

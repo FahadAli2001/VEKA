@@ -23,7 +23,6 @@ class RentCarDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SignInController sic = Get.put(SignInController());
 
     var data = Get.arguments;
     rentBookmarkController rbmc = Get.put(rentBookmarkController());

@@ -1,12 +1,9 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:woocommerce_api/woocommerce_api.dart';
 import '../../SignIn/SignInController.dart';
 
 class rentBookmarkController extends GetxController {
@@ -20,15 +17,7 @@ class rentBookmarkController extends GetxController {
   var pid;
   var data;
   List<Map<String, dynamic>> products = [];
-  void onInit() {
-    // Initialization logic goes here
-    super.onInit();
-    //getSharekey();
-    // getBookmarksData();
-    //getSharekey();
-    // getsharekeybyId(pid);
-    //getBookmarksData();
-  }
+
 
   getsharekeybyId(bool isBuy, {String? pid, bool? isWishlist}) async {
     SharedPreferences sigin = await SharedPreferences.getInstance();

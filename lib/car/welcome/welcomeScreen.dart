@@ -27,28 +27,33 @@ class _welcomeScreenState extends State<welcomeScreen> {
         body: Column(
           children: <Widget>[
 
-            // construct the profile details widget here
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/car.png"),
-                  filterQuality: FilterQuality.high,
-                  fit: BoxFit.cover
-                )
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 40),
-                    child: Center(child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      radius: 40,
-                      backgroundImage: AssetImage("assets/Veka-Green.png",
-                      ),
-                    )),
+            Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("assets/car.png"),
+                          filterQuality: FilterQuality.high,
+                          fit: BoxFit.cover
+                      )
                   ),
-                  //
-                  Padding(
+                  width: Get.width ,
+                  height: Get.height * 0.5,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: Center(child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 40,
+                    backgroundImage: AssetImage("assets/Veka-Green.png",
+                    ),
+                  )),
+                ),
+                //
+                Positioned(
+                 top: 120,
+                  left: 130,
+                  child: Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text("Welcome",
                       style: TextStyle(
@@ -57,15 +62,34 @@ class _welcomeScreenState extends State<welcomeScreen> {
                           fontSize: width * 0.08
                       ),),
                   ),
-                  //
-                  Container(
+                ),
 
-                    height: Get.height * 0.12,
-                   // color: Colors.red,
+                Positioned(
+                  top: 250,
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          Text("SignIn",
+                          style: TextStyle(
+                            color: Colors.white
+                          ),),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text("SignUp",
+                            style: TextStyle(
+                                color: Colors.white
+                            ),),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                )
+              ],
             ),
+
 
             // the tab bar with two items
             SizedBox(
