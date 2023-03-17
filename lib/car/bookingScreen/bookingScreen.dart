@@ -468,7 +468,7 @@ class _bookingScreenState extends State<bookingScreen> {
                     for (var i = 0; i < data["extraservices"]!.length; i++) ...[
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Container(
+                        child: SizedBox(
                           width: Get.width,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -478,23 +478,23 @@ class _bookingScreenState extends State<bookingScreen> {
                                 child: Obx(
                                   () => ListTile(
                                     title: Text(
-                                      data["extraservices"][i]!.toString(),
+                                     "saad",// data["extraservices"][i]!.toString()
                                       style:
                                           TextStyle(fontSize: Get.width * 0.04),
                                     ),
-                                    leading: Checkbox(
-                                        value: rxisSelected[i]!,
-                                        onChanged: (val) {
-                                          // print(val);
-                                          rxisSelected[i] = val!;
-                                          /*print(val);
-                                      bsc.handleRadioValueChanged(val);*/
-                                        }),
+                                    // leading: Checkbox(
+                                    //     value: rxisSelected[i]!,
+                                    //     onChanged: (val) {
+                                    //       // print(val);
+                                    //       rxisSelected[i] = val!;
+                                    //       /*print(val);
+                                    //   bsc.handleRadioValueChanged(val);*/
+                                    //     }),
                                   ),
                                 ),
                               ),
                               Text(
-                                "\$${data["extraservicescharges"][i]!.toString()}",
+                                "Yo",//\$${data["extraservicescharges"][i]!.toString()}
                                 style: TextStyle(fontSize: Get.width * 0.04),
                               )
                             ],

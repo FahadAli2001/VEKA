@@ -33,6 +33,11 @@ class _reviewsubmissionState extends State<reviewsubmission> {
         int.parse(data["carprice"]) * int.parse(bsc.carqntyvalue.value);
     return Scaffold(
       appBar: AppBar(
+        title:Image.asset(
+            "assets/Veka-Green.png",
+            height: 180,
+            width: 150,
+          ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white12,
@@ -46,18 +51,7 @@ class _reviewsubmissionState extends State<reviewsubmission> {
             size: Get.height * 0.04,
           ),
         ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: CircleAvatar(
-              backgroundColor: Colors.white70,
-              child: Icon(
-                CupertinoIcons.person_alt,
-                color: Colors.black,
-              ),
-            ),
-          )
-        ],
+       
       ),
       bottomNavigationBar: Container(
         width: Get.width,
@@ -288,7 +282,7 @@ class _reviewsubmissionState extends State<reviewsubmission> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 7),
                   child: Container(
-                    height: Get.height * 0.1,
+                    height: Get.height * 0.12,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
