@@ -20,12 +20,12 @@ class reviewsubmission extends StatefulWidget {
 class _reviewsubmissionState extends State<reviewsubmission> {
 
   bool isDone = false;
+  RentReviewSubmissionController rrsc =
+  Get.put(RentReviewSubmissionController());
+  bookingScreenController bsc = Get.put(bookingScreenController());
 
   @override
   Widget build(BuildContext context) {
-    RentReviewSubmissionController rrsc =
-        Get.put(RentReviewSubmissionController());
-    bookingScreenController bsc = Get.put(bookingScreenController());
 
     var data = Get.arguments;
 
@@ -365,7 +365,7 @@ class _reviewsubmissionState extends State<reviewsubmission> {
                             fontSize: Get.width * 0.04),
                       ),
                       Text(
-                        "\$45",
+                        "\$50",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.green,

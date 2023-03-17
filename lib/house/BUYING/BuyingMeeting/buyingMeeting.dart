@@ -5,7 +5,6 @@ import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 
-import '../MeetingSuccess/meetingSuccessScreen.dart';
 import 'buyingMeetingController.dart';
 
 class buyingMeeting extends StatefulWidget {
@@ -17,11 +16,12 @@ class buyingMeeting extends StatefulWidget {
 
 class _buyingMeetingState extends State<buyingMeeting> {
 
+  buyingMeetingController bmc = Get.put(buyingMeetingController());
   bool isDone = false;
 
   @override
   Widget build(BuildContext context) {
-    buyingMeetingController bmc = Get.put(buyingMeetingController());
+
     var data = Get.arguments;
 
     return Scaffold(
@@ -114,8 +114,12 @@ class _buyingMeetingState extends State<buyingMeeting> {
                           color: Colors.white,
                           height: Get.height * 0.05,
                           child:TimePickerSpinnerPopUp(
+
                             mode: CupertinoDatePickerMode.date,
-                            initTime: bmc.meetingdate.value,
+                          //  minTime: DateTime.now(),
+                            minTime: bmc.meetingdate.value,
+                            initTime: DateTime.now(),
+
                             barrierColor: Colors.black12, //Barrier Color when pop up show
                             onChange: (dateTime) {
                               // Implement your logic with select dateTime
@@ -155,7 +159,8 @@ class _buyingMeetingState extends State<buyingMeeting> {
                           height: Get.height * 0.05,
                           child: TimePickerSpinnerPopUp(
                             mode: CupertinoDatePickerMode.time,
-                            initTime: bmc.meetingtime.value,
+                            initTime: DateTime.now(),
+                            minTime:  bmc.meetingtime.value,
                             barrierColor: Colors.black12, //Barrier Color when pop up show
                             onChange: (dateTime) {
                               // Implement your logic with select dateTime

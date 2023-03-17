@@ -35,9 +35,6 @@ class rentStepper extends StatelessWidget {
       ),
     ];
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        rbdc.getBookedDates();
-      }),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white12,

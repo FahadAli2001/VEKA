@@ -6,6 +6,8 @@ import 'package:get/get_navigation/get_navigation.dart';
 
 
 import '../dashboard/houseDashboard.dart';
+import '../home/homeScreen.dart';
+import '../houseHome/houseHome.dart';
 
 class meetingSuccessScreen extends StatefulWidget {
    meetingSuccessScreen({Key? key}) : super(key: key);
@@ -21,7 +23,7 @@ class _meetingSuccessScreenState extends State<meetingSuccessScreen> {
     super.initState();
     Timer(Duration(seconds: 4),
             ()=>Get.offAll(
-                houseDashboard()
+                homeScreen()
         )
     );
   }

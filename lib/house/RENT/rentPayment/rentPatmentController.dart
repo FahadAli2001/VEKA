@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
 
 import '../../../car/Token/AccessToken.dart';
+import '../../BUYING/home/homeScreen.dart';
 import '../../login/LoginController.dart';
 import '../dashboard/dashboard.dart';
 
@@ -143,7 +144,7 @@ class rentPaymentController extends GetxController {
           //DashboardScreen()
           middleText: "Your booking has been successfully completed",
           onConfirm: () {
-            Get.offAll(const dashboard());
+            Get.offAll(const homeScreen());
             //Get.to(DashboardScreen());
           });
 

@@ -1210,6 +1210,7 @@ class CarHomePage extends StatelessWidget {
                                                                                 height: Get.height * 0.07,
                                                                                 child: TimePickerSpinnerPopUp(
                                                                                   mode: CupertinoDatePickerMode.date,
+                                                                                  
                                                                                   initTime: bsc.pickupdate.value,
                                                                                   barrierColor: Colors.black12,
                                                                                   onChange: (dateTime) {
@@ -1346,7 +1347,8 @@ class CarHomePage extends StatelessWidget {
                                                                                 height: Get.height * 0.07,
                                                                                 child: TimePickerSpinnerPopUp(
                                                                                   mode: CupertinoDatePickerMode.date,
-                                                                                  initTime: bsc.dropOfdate.value,
+                                                                                  minTime: bsc.dropOfdate.value.add(Duration(days: 2)),
+                                                                                  initTime:bsc.dropOfdate.value.add(Duration(days: 2))fa,
                                                                                   barrierColor: Colors.black12,
                                                                                   onChange: (dateTime) {
                                                                                     bsc.dropOfdate.value = dateTime;

@@ -20,6 +20,7 @@ class houseHome extends StatelessWidget {
         Get.put(RealStateRentBookmarkController());
     return Scaffold(
       appBar: AppBar(
+
         title: Image.asset(
           "assets/Veka-Red.png",
           height: 180,
