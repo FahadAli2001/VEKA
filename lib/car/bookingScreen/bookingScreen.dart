@@ -4,9 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
-
 import '../ReviewSubmission/reviewsubmission.dart';
-
 import 'bookingScreenController.dart';
 
 class bookingScreen extends StatefulWidget {
@@ -24,8 +22,7 @@ class _bookingScreenState extends State<bookingScreen> {
     bookingScreenController bsc = Get.put(bookingScreenController());
 
     RxList<dynamic> rxisSelected = [].obs;
-    rxisSelected.value =
-        RxList.generate(data!["extraservices"].length, (_) => false);
+    rxisSelected.value = RxList.generate(data!["extraservices"].length, (_) => false);
 
     return Scaffold(
         appBar: AppBar(

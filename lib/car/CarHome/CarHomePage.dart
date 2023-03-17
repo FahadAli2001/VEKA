@@ -3,16 +3,17 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
+import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 import 'package:veka/car/BuyingCarsDetails/BuyingCarsDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:veka/car/CarHome/CarHomePageController.dart';
-
 import '../Mybookmark/rents/rentBookmarkController.dart';
 import 'package:html/parser.dart';
 import '../bookingScreen/bookingScreen.dart';
+import '../bookingScreen/bookingScreenController.dart';
 
 class CarHomePage extends StatelessWidget {
   const CarHomePage({Key? key}) : super(key: key);
@@ -21,6 +22,13 @@ class CarHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     CarHomePageController car = Get.put(CarHomePageController());
     rentBookmarkController rbmc = Get.put(rentBookmarkController());
+
+    Color color = Colors.grey.shade300;
+    var data = Get.arguments;
+    bookingScreenController bsc = Get.put(bookingScreenController());
+
+    RxList<dynamic> rxisSelected = [].obs;
+   // rxisSelected.value = RxList.generate(data?["extraservices"].length, (_) => false);
 
     return Scaffold(
         appBar: AppBar(
@@ -297,7 +305,10 @@ class CarHomePage extends StatelessWidget {
                                       snapshot.data![index]["meta_data"][20]
                                           ["value"],
                                       snapshot.data![index]["id"],
-                                    rbmc
+                                    rbmc,
+                                    bsc,
+                                      rxisSelected,
+                                    color
                                   );
                                 },
                               ),
@@ -558,14 +569,16 @@ class CarHomePage extends StatelessWidget {
       List cardeatailicon,
       carspecs,
       id,
-      rbmc
+      rbmc,
+      bsc,
+      rxisSelected,
+      color
       ) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
           Get.bottomSheet(
-
             Container(
               height: Get.height * 0.9,
               width: Get.width,
@@ -600,9 +613,8 @@ class CarHomePage extends StatelessWidget {
                                 () => Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 10),
                               child: IconButton(
-                                onPressed: () {// yhn iint thi id
+                                onPressed: () {
                                   if (rbmc.wishListId.containsValue(id)) {
-
                                     rbmc.removeBookmark(
                                         rbmc.wishListId["itemId"]);
                                   } else {
@@ -675,7 +687,6 @@ class CarHomePage extends StatelessWidget {
                       ),
                     ),
                     //----------------
-                    //--
                     Align(
                       alignment: Alignment.topLeft,
                       child: Padding(
@@ -690,7 +701,7 @@ class CarHomePage extends StatelessWidget {
                         ),
                       ),
                     ),
-
+                    //--------
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Align(
@@ -698,7 +709,7 @@ class CarHomePage extends StatelessWidget {
                         //data!["cardescription"].toString()
 
                         child: Text(
-                          cardescription.toString(),
+                          parse(cardescription).documentElement!.text,
                           style: TextStyle(
                               color: Colors.grey.shade700,
                               fontSize: Get.height * 0.02),
@@ -728,26 +739,29 @@ class CarHomePage extends StatelessWidget {
                     //
                     Container(
                       width: Get.width,
-                      height: Get.height * 0.05,
+                      height: Get.height * 0.09,
                       //color: Colors.red,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: [
                           for (var i = 0; i < carspecs.length; i++) ...[
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5),
-                              child: Container(
-                                color: Colors.grey.shade300,
-                                child: Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                                  child: Center(
-                                    child: Text(
-                                      carspecs[i].toString(),
-                                      softWrap: true,
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold),
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              child: Card(
+                                elevation: 10,
+                                child: Container(
+                                  color: Colors.white12,
+                                  child: Padding(
+                                    padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                    child: Center(
+                                      child: Text(
+                                        carspecs[i].toString(),
+                                        softWrap: true,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -814,31 +828,527 @@ class CarHomePage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          //print(data["extraservices"][1].toString());
-                          Get.to(bookingScreen(), arguments: {
-                            "carimage": carImage.toString(),
-                            "carname": carName.toString(),
-                            "carprice": carprice.toString(),
-                            "extraservices":extraservices,
-                            "extraservicescharges": extraservicesCharges,
-                            "id": id
-                          });
-                        },
-                        child: Container(
-                          width: Get.width * 0.5,
-                          height: Get.height * 0.06,
+                    //---
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.bottomSheet(
+                                Container(
+                                  height: Get.height * 0.9,
+                              width:  Get.width,
+                                //  height:  Get.height * 0.9,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(50),
+                                      topLeft: Radius.circular(50)
+                                    )
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ListView(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 15),
+                                          child: Center(
+                                            child: Text(
+                                              "Booking Form",
+                                              style: TextStyle(color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: Get.width * 0.05),
+                                            ),
+                                          ),
+                                        ),
+                                        //
+                                          FutureBuilder(
+                                          future: bsc.getdroplocation(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      print(snapshot.error.toString());
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(
                           color: Colors.green,
-                          child: Center(
-                            child: Text(
-                              "Next",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontSize: Get.width * 0.05),
+                        ),
+                      );
+                    }
+                    return Container(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Row(
+                              children: [
+                                Container(
+                                  //height: Get.height * 0.35,
+                                  width: Get.width / 2.2,
+                                //  color: Colors.orange,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .start,
+                                      children: [
+                                        Text(
+                                          "Pick Up Location",
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: Get.width * 0.04),
+                                        ),
+                                        //
+                                        FutureBuilder(
+                                          future: bsc.getpicklocation(),
+                                          builder: (context, snapshot) {
+                                            List<String> element = [];
+                                            for (var i = 0;
+                                            i < bsc.picklocation.length;
+                                            i++) {
+                                              element.add(
+                                                  bsc.picklocation[i]["title"]
+                                                  ['rendered']!
+                                                      .toString());
+                                            }
+                                            bsc.pick.value =
+                                                element[0].toString();
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return Container();
+                                            }
+                                            if (snapshot.hasData == null) {
+                                              return Container();
+                                            }
+                                            if (snapshot.hasError) {
+                                              return Container();
+                                            }
+                                            return Obx(
+                                                  () =>
+                                                  Card(
+                                                    elevation: 2,
+                                                    child: Container(
+                                                      color: color,
+                                                      width: Get.width / 0.2,
+                                                      height: Get.height * 0.07,
+                                                      child: Padding(
+                                                        padding:
+                                                        const EdgeInsets.all(8.0),
+                                                        child: DropdownButton(
+                                                            value: bsc.pick
+                                                                .toString(),
+                                                            icon: const Icon(
+                                                              Icons
+                                                                  .keyboard_arrow_down,
+                                                              color: Colors.black,
+                                                            ),
+                                                            items: element
+                                                                .map((
+                                                                String items) {
+                                                              return DropdownMenuItem(
+                                                                value: items,
+                                                                child: Text(
+                                                                    items),
+                                                              );
+                                                            }).toList(),
+                                                            onChanged: (val) {
+                                                              bsc.pick.value =
+                                                                  val.toString();
+                                                            }),
+                                                      ),
+                                                    ),
+                                                  ),
+                                            );
+                                          },
+                                        ),
+                                        //
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        //
+                                        Text(
+                                          "Pick Up Date",
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: Get.width * 0.04),
+                                        ),
+                                        Card(
+                                          elevation: 2,
+                                          child: Container(
+                                            color: color,
+                                            width: Get.width / 0.2,
+                                            height: Get.height * 0.07,
+                                            child: TimePickerSpinnerPopUp(
+                                              mode: CupertinoDatePickerMode.date,
+                                              initTime: bsc.pickupdate.value,
+                                              barrierColor: Colors.black12,
+                                              onChange: (dateTime) {
+                                                bsc.pickupdate.value = dateTime;
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        //
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        //
+                                        Text(
+                                          "Total Person",
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: Get.width * 0.04),
+                                        ),
+                                        Obx(
+                                              () =>
+                                              Card(
+                                                elevation: 2,
+                                                child: Container(
+                                                  color: color,
+                                                  width: Get.width / 0.2,
+                                                  height: Get.height * 0.07,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(
+                                                        8.0),
+                                                    child: DropdownButton(
+                                                      // Initial Value
+                                                        value:
+                                                        bsc.persondropdownvalue
+                                                            .value,
+                                                        // Down Arrow Icon
+                                                        icon: const Icon(
+                                                          Icons
+                                                              .keyboard_arrow_down,
+                                                          color: Colors.black,
+                                                        ),
+                                                        // Array list of items
+                                                        items: bsc.persons
+                                                            .map((String items) {
+                                                          return DropdownMenuItem(
+                                                            value: items,
+                                                            child: Text(items),
+                                                          );
+                                                        }).toList(),
+                                                        onChanged: (val) {
+                                                          bsc.personSelected(
+                                                              val.toString());
+                                                        }),
+                                                  ),
+                                                ),
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                //-----
+                                Container(
+                                  //height: Get.height * 0.36,
+                                  // color: Colors.green,
+                                  width: Get.width / 2.2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .start,
+                                      children: [
+                                        Text(
+                                          "Drop Of Location",
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: Get.width * 0.04),
+                                        ),
+                                        FutureBuilder(
+                                          future: bsc.getdroplocation(),
+                                          builder: (context, snapshot) {
+                                            List<String> element = [];
+                                            for (var i = 0;
+                                            i < bsc.droplocation!.length;
+                                            i++) {
+                                              element.add(
+                                                  bsc.droplocation![i]["title"]
+                                                  ['rendered']!
+                                                      .toString());
+                                            }
+                                            bsc.drop.value =
+                                                element[0].toString();
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
+                                              return Container();
+                                            }
+                                            if (snapshot.hasData == null) {
+                                              return Container();
+                                            }
+                                            if (snapshot.hasError) {
+                                              return Container();
+                                            }
+                                            return Obx(
+                                                  () =>
+                                                  Card(
+                                                    elevation: 2,
+                                                    child: Container(
+                                                      color: color,
+                                                      width: Get.width / 0.2,
+                                                      height: Get.height * 0.07,
+                                                      child: Padding(
+                                                        padding:
+                                                        const EdgeInsets.all(8.0),
+                                                        child: DropdownButton(
+                                                            value:
+                                                            bsc.drop.value
+                                                                .toString(),
+                                                            icon: const Icon(
+                                                              Icons
+                                                                  .keyboard_arrow_down,
+                                                              color: Colors.black,
+                                                            ),
+                                                            items: element
+                                                                .map((
+                                                                String items) {
+                                                              return DropdownMenuItem(
+                                                                value: items,
+                                                                child: Text(
+                                                                    items),
+                                                              );
+                                                            }).toList(),
+                                                            onChanged: (val) {
+                                                              bsc.drop.value =
+                                                                  val.toString();
+                                                            }),
+                                                      ),
+                                                    ),
+                                                  ),
+                                            );
+                                          },
+                                        ),
+                                        //
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        //
+                                        Text(
+                                          "Drop Of Date",
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: Get.width * 0.04),
+                                        ),
+                                        Card(
+                                          elevation: 2,
+                                          child: Container(
+                                            color: color,
+                                            width: Get.width / 0.2,
+                                            height: Get.height * 0.07,
+                                            child: TimePickerSpinnerPopUp(
+                                              mode: CupertinoDatePickerMode.date,
+                                              initTime: bsc.dropOfdate.value,
+                                              barrierColor: Colors.black12,
+                                              onChange: (dateTime) {
+                                                bsc.dropOfdate.value = dateTime;
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        //
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        //
+                                        Text(
+                                          "Quantity",
+                                          style: TextStyle(
+                                              color: Colors.green,
+                                              fontSize: Get.width * 0.04),
+                                        ),
+                                        Card(
+                                          elevation: 2,
+                                          child: Obx(
+                                                () =>
+                                                Container(
+                                                  color: color,
+                                                  width: Get.width / 0.2,
+                                                  height: Get.height * 0.07,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(
+                                                        8.0),
+                                                    child: DropdownButton(
+                                                        value: bsc.carqntyvalue
+                                                            .value,
+                                                        icon: const Icon(
+                                                          Icons
+                                                              .keyboard_arrow_down,
+                                                          color: Colors.black,
+                                                        ),
+                                                        items: bsc.carqnty
+                                                            .map((String items) {
+                                                          return DropdownMenuItem(
+                                                            value: items,
+                                                            child: Text(items),
+                                                          );
+                                                        }).toList(),
+                                                        onChanged: (val) {
+                                                          bsc.carqntySelected(
+                                                              val.toString());
+                                                        }),
+                                                  ),
+                                                ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          //
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "Payment",
+                                style: TextStyle(
+                                    color: Colors.green,
+                                    fontSize: Get.width * 0.04),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Obx(
+                                    () =>
+                                    Card(
+                                      elevation: 2,
+                                      child: Container(
+                                        color: color,
+                                        width: Get.width / 2.2,
+                                        height: Get.height * 0.07,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: DropdownButton(
+                                              value:
+                                              bsc.paymenttypevalue.value
+                                                  .toString(),
+                                              icon: const Icon(
+                                                Icons.keyboard_arrow_down,
+                                                color: Colors.black,
+                                              ),
+                                              items: bsc.paymenttype.map((
+                                                  String items) {
+                                                return DropdownMenuItem(
+                                                  value: items,
+                                                  child: Text(items),
+                                                );
+                                              }).toList(),
+                                              onChanged: (val) {
+                                                bsc.paymentTypeSelected(
+                                                    val.toString());
+                                              }),
+                                        ),
+                                      ),
+                                    ),
+                              ),
+                            ),
+                          ),
+                          //
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Extra Service",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: Get.width * 0.05),
+                                ),
+                                Text(
+                                  "Charges",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: Get.width * 0.05),
+                                )
+                              ],
+                            ),
+                          ),
+                          //
+                          for (var i = 0; i < extraservices.length; i++) ...[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 15),
+                              child: Container(
+                                width: Get.width,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                      width: Get.width * 0.5,
+                                      child: Obx(
+                                            () =>
+                                            ListTile(
+                                              title: Text(
+                                                extraservices[i].toString(),
+                                                style:
+                                                TextStyle(
+                                                    fontSize: Get.width * 0.04),
+                                              ),
+                                              leading: Checkbox(
+                                                  value: rxisSelected[i]!,
+                                                  onChanged: (val) {
+                                                    // print(val);
+                                                    rxisSelected[i] = val!;
+                                                    /*print(val);
+                                        bsc.handleRadioValueChanged(val);*/
+                                                  }),
+                                            ),
+                                      ),
+                                    ),
+                                    Text(
+                                      "\$${extraservicesCharges[i].toString()}",
+                                      style: TextStyle(
+                                          fontSize: Get.width * 0.04),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ]
+                        ],
+                      ),
+                    );
+                  })],
+                                    ),
+                                  )
+                            ),
+                            isScrollControlled: true);
+
+                            //print(data["extraservices"][1].toString());
+                            // Get.to(bookingScreen(), arguments: {
+                            //   "carimage": carImage.toString(),
+                            //   "carname": carName.toString(),
+                            //   "carprice": carprice.toString(),
+                            //   "extraservices":extraservices,
+                            //   "extraservicescharges": extraservicesCharges,
+                            //   "id": id
+                            // });
+                          },
+                          child: Container(
+                            width: Get.width * 0.4,
+                            height: Get.height * 0.06,
+                            color: Colors.black,
+                            child: Center(
+                              child: Text(
+                                "Go To Book",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: Get.width * 0.04),
+                              ),
                             ),
                           ),
                         ),

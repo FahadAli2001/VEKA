@@ -174,10 +174,10 @@ class BuyingCarsDetails extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "Karachi",
-                                  style: TextStyle(fontSize: Get.width * 0.04),
-                                ),
+                                // Text(
+                                //   "Karachi",
+                                //   style: TextStyle(fontSize: Get.width * 0.04),
+                                // ),
                                 /*Text("\$900|MONTH",
                                   style: TextStyle(
                                       color: Colors.green,
@@ -213,10 +213,10 @@ class BuyingCarsDetails extends StatelessWidget {
                   ),
                   //
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Container(
                       width: Get.width,
-                      height: Get.height * 0.05,
+                      height: Get.height * 0.08,
                       //color: Colors.red,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
@@ -224,19 +224,22 @@ class BuyingCarsDetails extends StatelessWidget {
                           for (var i = 0; i < data["carspecs"].length; i++) ...[
                             Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: Container(
-                                color: Colors.grey.shade300,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15),
-                                  child: Center(
-                                    child: Text(
-                                      data["carspecs"][i],
-                                      softWrap: true,
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold),
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                              child: Card(
+                                elevation: 10,
+                                child: Container(
+                                  color: Colors.white12,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: Center(
+                                      child: Text(
+                                        data["carspecs"][i],
+                                        softWrap: true,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                 ),
