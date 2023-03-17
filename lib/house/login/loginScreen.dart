@@ -191,7 +191,7 @@ class _loginSxreenState extends State<loginSxreen> {
                       child: CupertinoButton(
                           color: Colors.black,
                           child: isSignIn ?CircularProgressIndicator(color: Colors.white,) : Text(
-                            "Sign In"
+                            "Sign In",
                             style: TextStyle(
                                 color: Colors.white, fontSize: Get.width * 0.05),
                           ),
