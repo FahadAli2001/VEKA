@@ -8,8 +8,16 @@ import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 import '../MeetingSuccess/meetingSuccessScreen.dart';
 import 'buyingMeetingController.dart';
 
-class buyingMeeting extends StatelessWidget {
+class buyingMeeting extends StatefulWidget {
   const buyingMeeting({Key? key}) : super(key: key);
+
+  @override
+  State<buyingMeeting> createState() => _buyingMeetingState();
+}
+
+class _buyingMeetingState extends State<buyingMeeting> {
+
+  bool isDone = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +34,18 @@ class buyingMeeting extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 8),
             child: InkWell(
               onTap: (){
-                bmc.requestForBuyHouse(data["id"]);
+                setState(() {
+                  isDone = true;
+                });
+                bmc.requestForBuyHouse(data["id"]).then((value) {
+                  setState(() {
+                    isDone = false;
+                  });
+                }).catchError((onError){
+                  setState(() {
+                    isDone = false;
+                  });
+                });
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -37,7 +56,9 @@ class buyingMeeting extends StatelessWidget {
                 width: Get.width,
                 height: Get.height,
                 child: Center(
-                  child: Text("DONE",
+                  child: isDone ? const CircularProgressIndicator(
+                    color: Colors.black,
+                  ) : Text("DONE",
                     style: TextStyle(
                         fontSize: Get.width * 0.05
                     ),),

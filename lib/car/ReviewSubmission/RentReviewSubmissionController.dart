@@ -82,7 +82,7 @@ class RentReviewSubmissionController extends GetxController {
           //DashboardScreen()
           middleText: "Your booking has been successfully completed",
           onConfirm: () {
-            Get.back();
+            Get.offAll(const DashboardScreen());
           });
     } catch (e) {
       print(e.toString());

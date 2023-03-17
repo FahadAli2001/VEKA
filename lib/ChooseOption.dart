@@ -22,10 +22,10 @@ class _ChooseOptionState extends State<ChooseOption> {
     
     SharedPreferences.getInstance().then((value) {
       if(value.getInt("realStateUserId")!=null){
-        Get.to(() => const homeScreen());
+        Get.off(() => const homeScreen());
       }
       else if(value.getString("userId")!=null){
-        Get.to(() => const DashboardScreen());
+        Get.off(() => const DashboardScreen());
       }
     });
 

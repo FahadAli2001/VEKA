@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:veka/house/BUYING/home/homeScreen.dart';
+import 'package:veka/house/RENT/dashboard/dashboard.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
 
 import '../SignIn/SignInController.dart';
@@ -59,9 +61,9 @@ class BuyReviewController extends GetxController {
           title: "",
           //DashboardScreen()
           middleText:
-              "Your booking has been successfully completed ${sic.name}",
+              "Your booking has been successfully completed ",
           onConfirm: () {
-            Get.back();
+            Get.offAll(const dashboard());
             //Get.to(DashboardScreen());
           });
     } catch (e) {

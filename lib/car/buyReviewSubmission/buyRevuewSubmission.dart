@@ -10,8 +10,16 @@ import '../Dashboard/dashboardScreen.dart';
 import '../SignIn/SignInController.dart';
 import 'BuyReviewController.dart';
 
-class buyReviewSubmission extends StatelessWidget {
+class buyReviewSubmission extends StatefulWidget {
   const buyReviewSubmission({Key? key}) : super(key: key);
+
+  @override
+  State<buyReviewSubmission> createState() => _buyReviewSubmissionState();
+}
+
+class _buyReviewSubmissionState extends State<buyReviewSubmission> {
+
+  bool isDone  = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,18 +41,6 @@ class buyReviewSubmission extends StatelessWidget {
             size: Get.height * 0.04,
           ),
         ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: CircleAvatar(
-              backgroundColor: Colors.white70,
-              child: Icon(
-                CupertinoIcons.person_alt,
-                color: Colors.black,
-              ),
-            ),
-          )
-        ],
       ),
       bottomNavigationBar: Container(
         width: Get.width,
@@ -55,10 +51,19 @@ class buyReviewSubmission extends StatelessWidget {
           child: CupertinoButton(
             color: Colors.green,
             onPressed: () {
-              print("tap");
-              brc.postProduct(data["id"], data["carprice"]);
+             
+              setState(() {
+                isDone = true;
+              });
+              brc.postProduct(data["id"], data["carprice"]).then((value) {
+                setState(() {
+                isDone = false;
+              });
+              });
             },
-            child: Text(
+            child: isDone ? const CircularProgressIndicator(
+              color: Colors.black,
+            ) : Text(
               "Done",
               style: TextStyle(
                   fontSize: Get.width * 0.04,
@@ -79,7 +84,7 @@ class buyReviewSubmission extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.topCenter,
                     child: Text(
-                      "Review Submission",
+                      "Review Your Submission",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,

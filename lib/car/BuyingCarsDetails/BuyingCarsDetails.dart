@@ -1,15 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:html/parser.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Mybookmark/buying/BuyingBookmarkController.dart';
-import '../ReviewSubmission/reviewsubmission.dart';
 import '../SignIn/SignInController.dart';
 import '../buyReviewSubmission/buyRevuewSubmission.dart';
 
@@ -30,14 +23,14 @@ class BuyingCarsDetails extends StatelessWidget {
           onPressed: () {
             Get.back();
           },
-          icon: Icon(
+          icon: const Icon(
             CupertinoIcons.back,
             color: Colors.black,
           ),
         ),
         title: Text(
           data["carname"],
-          style: TextStyle(color: Colors.black),
+          style: const TextStyle(color: Colors.black),
         ),
         actions: [
           Padding(
@@ -56,7 +49,7 @@ class BuyingCarsDetails extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         width: Get.width,
         height: Get.height * 0.08,
         //  color: Colors.blue,
@@ -68,7 +61,7 @@ class BuyingCarsDetails extends StatelessWidget {
               InkWell(
                 onTap: () {
                   //data["carname"],data["carImage"],data["carprice"]
-                  Get.to(buyReviewSubmission(), arguments: {
+                  Get.to(const buyReviewSubmission(), arguments: {
                     "carname": data["carname"].toString(),
                     "carimage": data["carImage"].toString(),
                     "carprice": data["carprice"].toString(),
@@ -132,7 +125,7 @@ class BuyingCarsDetails extends StatelessWidget {
             child: Container(
               width: Get.width,
               height: Get.height * 0.9,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(50),
@@ -146,7 +139,7 @@ class BuyingCarsDetails extends StatelessWidget {
                       width: Get.width,
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           Padding(
@@ -193,7 +186,7 @@ class BuyingCarsDetails extends StatelessWidget {
                     ),
                   ),
                   //
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   //
@@ -224,22 +217,19 @@ class BuyingCarsDetails extends StatelessWidget {
                           for (var i = 0; i < data["carspecs"].length; i++) ...[
                             Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 12),
-                              child: Card(
-                                elevation: 10,
-                                child: Container(
-                                  color: Colors.white12,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    child: Center(
-                                      child: Text(
-                                        data["carspecs"][i],
-                                        softWrap: true,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Container(
+                                color: Colors.grey.shade300,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15),
+                                  child: Center(
+                                    child: Text(
+                                      data["carspecs"][i],
+                                      softWrap: true,
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ),
@@ -257,7 +247,7 @@ class BuyingCarsDetails extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Details",
+                        "Car Info",
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,

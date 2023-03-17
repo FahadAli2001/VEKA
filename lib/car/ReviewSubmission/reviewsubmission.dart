@@ -10,8 +10,16 @@ import 'package:veka/car/bookingScreen/bookingScreenController.dart';
 import '../../ChooseOption.dart';
 import 'RentReviewSubmissionController.dart';
 
-class reviewsubmission extends StatelessWidget {
+class reviewsubmission extends StatefulWidget {
   const reviewsubmission({Key? key}) : super(key: key);
+
+  @override
+  State<reviewsubmission> createState() => _reviewsubmissionState();
+}
+
+class _reviewsubmissionState extends State<reviewsubmission> {
+
+  bool isDone = false;
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +68,12 @@ class reviewsubmission extends StatelessWidget {
           child: CupertinoButton(
             color: Colors.green,
             onPressed: () {
+              setState(() {
+                isDone = true;
+              });
               rrsc.postRentOrder(data["id"], data["rxisSelected"]);
             },
-            child: Text(
+            child: isDone ? const CircularProgressIndicator(color: Colors.black,) : Text(
               "Done",
               style: TextStyle(
                   fontSize: Get.width * 0.04,
@@ -83,7 +94,7 @@ class reviewsubmission extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.topCenter,
                     child: Text(
-                      "Review Submission",
+                      "Review Your Submission",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,

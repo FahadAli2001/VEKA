@@ -143,7 +143,7 @@ class rentPaymentController extends GetxController {
           //DashboardScreen()
           middleText: "Your booking has been successfully completed",
           onConfirm: () {
-            Get.to(dashboard());
+            Get.offAll(const dashboard());
             //Get.to(DashboardScreen());
           });
 

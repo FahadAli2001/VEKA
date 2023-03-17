@@ -26,7 +26,7 @@ class SignInController extends GetxController {
   }
 
 
-  void SignIn() async {
+  Future SignIn() async {
     SharedPreferences sigin = await SharedPreferences.getInstance();
     String _email = username.text.trim().toString();
     String _password = password.text.trim().toString();
@@ -36,7 +36,6 @@ class SignInController extends GetxController {
           Uri.parse(
               "https://vekaautomobile.technopreneurssoftware.com/wp-json/jwt-auth/v1/token"),
           body: {"username": _email, "password": _password});
-
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
         name = data["data"]["nicename"];
@@ -86,6 +85,7 @@ class SignInController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.grey,
           colorText: Colors.black);
+    rethrow;
     }
   }
 

@@ -104,56 +104,61 @@ class more extends StatelessWidget {
                 ),
               ),
               //
-              Row(
-                children: [
-                  Stack(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          color: boxColor,
-                          width: Get.width * 0.85,
-                          height: boxheight,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CircleAvatar(
-                                  radius: circle,
-                                  backgroundColor: circleColor,
-                                  child: Icon(
-                                    Icons.shopping_bag,
-                                    color: Colors.black,
-                                    size: icon,
+              InkWell(
+                onTap: (){
+                  Get.to(const Orderdetails());
+                },
+                child: Row(
+                  children: [
+                    Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            color: boxColor,
+                            width: Get.width * 0.85,
+                            height: boxheight,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CircleAvatar(
+                                    radius: circle,
+                                    backgroundColor: circleColor,
+                                    child: Icon(
+                                      Icons.shopping_bag,
+                                      color: Colors.black,
+                                      size: icon,
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                                  child: Text(
-                                    "Order Details",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: textSize),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: Text(
+                                      "Order Details",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: textSize),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 25,left: 325),
-                        child: CircleAvatar(
-                            radius: Get.width *0.04,
-                            backgroundColor: boxColor,
-                            child: Icon(Icons.arrow_forward_ios_outlined,
-                              color: Colors.grey.shade500,)
-                        ),
-                      )
-                    ],
-                  )
-                ],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 25,left: 325),
+                          child: CircleAvatar(
+                              radius: Get.width *0.04,
+                              backgroundColor: boxColor,
+                              child: Icon(Icons.arrow_forward_ios_outlined,
+                                color: Colors.grey.shade500,)
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
               //
               GestureDetector(

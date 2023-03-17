@@ -20,40 +20,32 @@ class houseHome extends StatelessWidget {
         Get.put(RealStateRentBookmarkController());
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "VEKA",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        title: Image.asset(
+          "assets/Veka-Red.png",
+          height: 180,
+          width: 150,
         ),
+        actions: [
+            Padding(
+                padding: const EdgeInsets.only(top: 5, right: 20),
+                child: Column(
+                  children: const [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
+                      radius: 18,
+                    ),
+                    // SizedBox(height: 5,),
+                    Text(
+                      "Hi, Belly",
+                      style: TextStyle(color: Colors.black, fontSize: 10),
+                    ),
+                  ],
+                ))
+          ],
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white70,
-        leading: IconButton(
-          onPressed: () {
-            Get.to(const homeScreen());
-          },
-          icon: Icon(
-            CupertinoIcons.line_horizontal_3_decrease,
-            color: Colors.black,
-            size: Get.height * 0.04,
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: InkWell(
-              onTap: () {
-                // Get.to(HomeProfileScreen());
-              },
-              child: const CircleAvatar(
-                backgroundColor: Colors.white70,
-                child: Icon(
-                  CupertinoIcons.person_alt,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          )
-        ],
       ),
       //--------
       body: SafeArea(

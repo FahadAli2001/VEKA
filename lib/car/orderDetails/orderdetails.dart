@@ -5,8 +5,8 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:veka/car/orderDetails/buying/buyingdetails.dart';
 import 'package:veka/car/orderDetails/rent/rent.dart';
 
-class orderdetails extends StatelessWidget {
-  const orderdetails({Key? key}) : super(key: key);
+class Orderdetails extends StatelessWidget {
+  const Orderdetails({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

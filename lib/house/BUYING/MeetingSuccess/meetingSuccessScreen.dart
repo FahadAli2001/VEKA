@@ -20,7 +20,7 @@ class _meetingSuccessScreenState extends State<meetingSuccessScreen> {
     // TODO: implement initState
     super.initState();
     Timer(Duration(seconds: 4),
-            ()=>Get.to(
+            ()=>Get.offAll(
                 houseDashboard()
         )
     );

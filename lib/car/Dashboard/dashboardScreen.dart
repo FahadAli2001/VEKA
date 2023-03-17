@@ -14,9 +14,9 @@ class DashboardScreen extends StatelessWidget {
     var _selectedIndex = 0.obs;
      const TextStyle optionStyle =
     TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
-     const List<Widget> _widgetOptions = <Widget>[
+      List<Widget> _widgetOptions = <Widget>[
        CarHomePage(),
-      more(),
+      const more(),
 
 
 

@@ -16,8 +16,9 @@ import '../bookingScreen/bookingScreen.dart';
 import '../bookingScreen/bookingScreenController.dart';
 
 class CarHomePage extends StatelessWidget {
-  const CarHomePage({Key? key}) : super(key: key);
+  CarHomePage({Key? key}) : super(key: key);
 
+  CarHomePageController car = Get.put(CarHomePageController());
   @override
   Widget build(BuildContext context) {
     CarHomePageController car = Get.put(CarHomePageController());
@@ -29,7 +30,11 @@ class CarHomePage extends StatelessWidget {
 
     RxList<dynamic> rxisSelected = [].obs;
    // rxisSelected.value = RxList.generate(data?["extraservices"].length, (_) => false);
+    var size = MediaQuery.of(context).size;
 
+    /*24 is for notification bar on Android*/
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 3;
+    final double itemWidth = size.width / 2;
     return Scaffold(
         appBar: AppBar(
           title: Image.asset(
@@ -57,6 +62,8 @@ class CarHomePage extends StatelessWidget {
                 child: Column(
                   children: const [
                     CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
                       radius: 18,
                     ),
                     // SizedBox(height: 5,),
@@ -161,11 +168,10 @@ class CarHomePage extends StatelessWidget {
                     /* var description = parse(snapshot.data[index]["short_description"].toString());
                     String parsedstring = description.documentElement!.text;*/
                     return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 7),
+                      padding: const EdgeInsets.symmetric(vertical: 6),
                       child: SizedBox(
                         width: Get.width,
-                        height: Get.height * 0.35,
-                        //color:Colors.orange ,
+                        height: Get.height * 0.265,
                         child: ListView.builder(
                           itemCount: snapshot.data!.length,
                           scrollDirection: Axis.horizontal,
@@ -180,13 +186,14 @@ class CarHomePage extends StatelessWidget {
                                     .toString()),
                                 snapshot.data[index]["meta_data"][11]["value"],
                                 snapshot.data![index]["meta_data"][10]["value"],
-                                snapshot.data![index]["meta_data"][20]
-                                    ["value"]);
+                                snapshot.data![index]["meta_data"][20]["value"],
+                                index);
                           },
                         ),
                       ),
                     );
                   }),
+
               //--------------------------
               Obx(
                 () => SizedBox(
@@ -195,18 +202,16 @@ class CarHomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: SizedBox(
-                            width: Get.width * 0.4,
-                            height: Get.height * 0.07,
+                            width: Get.width * 0.45,
+                            height: Get.height * 0.055,
                             child: InkWell(
                               onTap: () {
                                 car.rent.value = true;
-                                // rent.value = false;
-                                //
                                 car.buy.value = false;
-                                // rent.value = true;
-                                car.rentProduct();
+
+                                // car.rentProduct();
                               },
                               child: Card(
                                 elevation: 5,
@@ -229,14 +234,14 @@ class CarHomePage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SizedBox(
-                            width: Get.width * 0.4,
-                            height: Get.height * 0.07,
+                            width: Get.width * 0.45,
+                            height: Get.height * 0.055,
                             child: InkWell(
                               onTap: () {
                                 //rent = false;
                                 car.rent.value = false;
                                 car.buy.value = true;
-                                car.sellProduct();
+                                // car.sellProduct();
                               },
                               child: Card(
                                 color: (car.buy.value == false)
@@ -259,6 +264,75 @@ class CarHomePage extends StatelessWidget {
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 26),
+                child: SizedBox(
+                  height: Get.height * 0.055,
+                  width: Get.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      SizedBox(
+                        width: 80,
+                        child: Card(
+                          color: Colors.white,
+                          child: Center(
+                            child: Text(
+                              "AUDI",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 80,
+                        child: Card(
+                          color: Colors.black,
+                          child: Center(
+                            child: Text(
+                              "LEXUS",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 80,
+                        child: Card(
+                          color: Colors.white,
+                          child: Center(
+                            child: Text(
+                              "PORSCHE",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 80,
+                        child: Card(
+                          color: Colors.white,
+                          child: Center(
+                            child: Text(
+                              "BMW",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
               //--------------------------------
               Obx(
                 () => (car.rent.value == true)
@@ -277,13 +351,18 @@ class CarHomePage extends StatelessWidget {
                           }
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              width: Get.width,
-                              height: Get.height * 0.4,
-                              child: ListView.builder(
+                            child: Expanded(
+                              child: GridView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: (itemWidth / itemHeight),
+                                ),
                                 itemCount: snapshot.data!.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
+
+                                itemBuilder: (BuildContext context, int index) {
                                   return product(
 
                                       car.rentData![index]["images"][0]["src"]
@@ -311,6 +390,11 @@ class CarHomePage extends StatelessWidget {
                                     color
                                   );
                                 },
+
+                                // child: ListView.builder(
+                                //   itemCount: snapshot.data!.length,
+                                //   scrollDirection: Axis.horizontal,
+                                //   itemBuilder: (context, index) {
                               ),
                             ),
                           );
@@ -334,13 +418,18 @@ class CarHomePage extends StatelessWidget {
                           //
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              width: Get.width,
-                              height: Get.height * 0.4,
-                              child: ListView.builder(
-                                itemCount: snapshot.data!.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
+                            child: Expanded(
+                              child: GridView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: (itemWidth / itemHeight),
+                                ),
+                                itemCount: car.selldata!.length, //
+
+                                itemBuilder: (BuildContext context, int index) {
                                   return products(
                                       car.selldata[index]["images"][0]["src"]
                                           .toString(),
@@ -422,19 +511,25 @@ class CarHomePage extends StatelessWidget {
   }
 
   Widget carCards(String carname, String carimage, carprice, cardescription,
-      cardetails, cardetailsinfo, carmoreinfo) {
+      cardetails, cardetailsinfo, carmoreinfo, int index) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(
+        left: 12.0,
+      ),
       child: SizedBox(
-        width: Get.width * 0.49,
+        width: Get.width * 0.48,
+        height: Get.height * 0.25,
         child: Stack(
           children: [
             SizedBox(
-              width: Get.width * 0.43,
-              height: Get.height * 0.28,
+              width: Get.width * 0.46,
+              height: Get.height * 0.25,
               child: Card(
                 //color: Colors.green,
                 shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                        width: 2,
+                        color: index == 0 ? Colors.green : Colors.grey),
                     borderRadius: BorderRadius.circular(10)),
                 elevation: 5,
                 child: Padding(
@@ -445,7 +540,9 @@ class CarHomePage extends StatelessWidget {
                     child: Text(
                       carname,
                       style: TextStyle(
-                          color: Colors.black,fontWeight: FontWeight.bold, fontSize: Get.width * 0.04),
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: Get.width * 0.04),
                     ),
                   ),
                 ),
@@ -456,7 +553,7 @@ class CarHomePage extends StatelessWidget {
               left: 80,
               child: SizedBox(
                 width: Get.width * 0.3,
-                height: Get.height * 0.20,
+                height: Get.height * 0.15,
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
@@ -467,8 +564,8 @@ class CarHomePage extends StatelessWidget {
               ),
             ),
             Positioned(
-                top: 200,
-                left: 40,
+                top: 180,
+                left: 50,
                 child: SizedBox(
                     child: InkWell(
                   onTap: () {
@@ -482,23 +579,30 @@ class CarHomePage extends StatelessWidget {
                   child: Container(
                     width: 80,
                     height: 30,
-                    color: Colors.black,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color:
+                              index != 0 ? Colors.black : Colors.transparent),
+                      color: index == 0 ? Colors.black : Colors.white,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
                           "Details",
-                          style: TextStyle(color: Colors.white,fontSize: 10),
+                          style: TextStyle(
+                              color: index == 0 ? Colors.white : Colors.black,
+                              fontSize: 10),
                         ),
                         Icon(
                           Icons.arrow_forward,
-                          color: Colors.white,
+                          color: index == 0 ? Colors.white : Colors.black,
                           size: 10,
                         )
                       ],
                     ),
                   ),
-                )))
+                ))),
           ],
         ),
       ),
@@ -524,33 +628,137 @@ class CarHomePage extends StatelessWidget {
         },
         child: Card(
           elevation: 10,
-          child: Container(
-            width: Get.width * 0.7,
-            height: 600,
-            decoration: BoxDecoration(
-              //  color: Colors.orange,
-              image: DecorationImage(
-                image: NetworkImage(carImage.toString()),
-                fit: BoxFit.cover,
-              ),
-
-              borderRadius: const BorderRadius.all(
-                Radius.circular(5),
-              ),
-            ),
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  carName,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: Get.width * 0.05),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20, 
+                child: Center(
+                  child: Text(
+                    carName,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12),
+                  ),
                 ),
               ),
-            ),
+              Container(
+                width: Get.width * 0.7,
+                height: 120,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(carImage.toString()),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(5),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 65,
+                width: Get.width,
+                child: Column(
+                  children: [
+                   const SizedBox(
+                    height: 10,
+                   ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Row(
+                        children: const [
+                         Text(
+                            "Mileage:",
+                            style: TextStyle(
+                              fontSize: 8,
+                            ),
+                          ),
+                         
+                          Text(
+                            "4900 Km",
+                            style: TextStyle(
+                              fontSize: 7,
+                            ),
+                          ),
+                          Spacer(),
+                           Text(
+                            "Location: ",
+                            style: TextStyle(
+                              fontSize: 8,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "Daipro",
+                            style: TextStyle(
+                              fontSize: 7,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Row(
+                        children: const [
+                          Text(
+                            "Engine",
+                            style: TextStyle(
+                              fontSize: 8,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "3.5 Diesel",
+                            style: TextStyle(
+                              fontSize: 7,
+                            ),
+                          ),
+                          
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Row(
+                        children: [
+                           const Text(
+                            "17900",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          const Spacer(),
+                          Container(
+                            height: 20,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: const Center(
+                              child: Text("More Details", style: TextStyle(
+                              fontSize: 10,
+                            ),),
+                            )
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),
@@ -562,11 +770,11 @@ class CarHomePage extends StatelessWidget {
       carName,
       carprice,
       cardescription,
-      List extraservices,
-      List extraservicesCharges,
-      List cardetail,
-      List cardetailinfo,
-      List cardeatailicon,
+      List? extraservices,
+      List? extraservicesCharges,
+      List? cardetail,
+      List? cardetailinfo,
+      List? cardeatailicon,
       carspecs,
       id,
       rbmc,
@@ -797,7 +1005,7 @@ class CarHomePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               for (var i = 0;
-                              i < cardetail.length;
+                              i < cardetail!.length;
                               i++) ...[
                                 Text(
                                   cardetail[i].toString(),
@@ -814,7 +1022,7 @@ class CarHomePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               for (var i = 0;
-                              i < cardetailinfo.length;
+                              i < cardetailinfo!.length;
                               i++) ...[
                                 Text(
                                   cardetailinfo[i].toString(),
@@ -1277,7 +1485,7 @@ class CarHomePage extends StatelessWidget {
                             ),
                           ),
                           //
-                          for (var i = 0; i < extraservices.length; i++) ...[
+                          for (var i = 0; i < extraservices!.length; i++) ...[
                             Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 15),
                               child: Container(
@@ -1309,7 +1517,7 @@ class CarHomePage extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      "\$${extraservicesCharges[i].toString()}",
+                                      "\$${extraservicesCharges![i].toString()}",
                                       style: TextStyle(
                                           fontSize: Get.width * 0.04),
                                     )
@@ -1379,33 +1587,124 @@ class CarHomePage extends StatelessWidget {
         },
         child: Card(
           elevation: 10,
-          child: Container(
-            width: Get.width * 0.7,
-            height: 600,
-            decoration: BoxDecoration(
-              //  color: Colors.orange,
-              image: DecorationImage(
-                image: NetworkImage(carImage.toString()),
-                fit: BoxFit.cover,
-              ),
-
-              borderRadius: const BorderRadius.all(
-                Radius.circular(5),
-              ),
-            ),
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  carName,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: Get.width * 0.05),
+          child: Column(
+            children: [
+              Container(
+                width: Get.width * 0.7,
+                height: 100,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(carImage.toString()),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(5),
+                  ),
                 ),
               ),
-            ),
+              SizedBox(
+                height: 100,
+                width: Get.width,
+                child: Column(
+                  children: [
+                    Text(
+                      carName,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12),
+                    ),
+                    Text(
+                      "0 reviews",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 10),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Row(
+                        children: const [
+                          Icon(
+                            Icons.calendar_month,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "2015",
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
+                          ),
+                          Spacer(),
+                          Icon(
+                            Icons.calendar_month,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "Petrol",
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Row(
+                        children: const [
+                          Icon(
+                            Icons.flutter_dash,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "Tiptronic",
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
+                          ),
+                          Spacer(),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Row(
+                        children: const [
+                          Icon(
+                            Icons.flutter_dash,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "2500 cc",
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
+                          ),
+                          Spacer(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
         ),
       ),
