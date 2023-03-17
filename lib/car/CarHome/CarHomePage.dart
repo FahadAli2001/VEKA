@@ -339,7 +339,7 @@ class CarHomePage extends StatelessWidget {
               Obx(
                 () => (car.rent.value == true)
                     ? FutureBuilder(
-                        future: car.rentProduct(),
+                        future:  car.rentProduct(),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
                             return const Text("has error");
@@ -351,51 +351,48 @@ class CarHomePage extends StatelessWidget {
                               ),
                             );
                           }
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Expanded(
-                              child: GridView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: (itemWidth / itemHeight),
-                                ),
-                                itemCount: snapshot.data!.length,
-
-                                itemBuilder: (BuildContext context, int index) {
-                                  return product(
-                                      car.rentData![index]["images"][0]["src"]
-                                          .toString(),
-                                      car.rentData![index]["name"].toString(),
-                                      car.rentData![index]["price"].toString(),
-                                      snapshot.data![index]["short_description"]
-                                          .toString(),
-                                      snapshot.data![index]["meta_data"][3]
-                                          ["value"],
-                                      snapshot.data![index]["meta_data"][5]
-                                          ["value"],
-                                      snapshot.data![index]["meta_data"][11]
-                                          ["value"],
-                                      snapshot.data![index]["meta_data"][10]
-                                          ["value"],
-                                      snapshot.data![index]["meta_data"][12]
-                                          ["value"],
-                                      snapshot.data![index]["meta_data"][20]
-                                          ["value"],
-                                      snapshot.data![index]["id"],
-                                      rbmc,
-                                      bsc,
-                                      rxisSelected,
-                                      color);
-                                },
-
-                                // child: ListView.builder(
-                                //   itemCount: snapshot.data!.length,
-                                //   scrollDirection: Axis.horizontal,
-                                //   itemBuilder: (context, index) {
+                          return Expanded(
+                            child: GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: (itemWidth / itemHeight),
                               ),
+                              itemCount: snapshot.data!.length,
+
+                              itemBuilder: (BuildContext context, int index) {
+                                return product(
+                                    car.rentData![index]["images"][0]["src"]
+                                        .toString(),
+                                    car.rentData![index]["name"].toString(),
+                                    car.rentData![index]["price"].toString(),
+                                    snapshot.data![index]["short_description"]
+                                        .toString(),
+                                    snapshot.data![index]["meta_data"][3]
+                                        ["value"],
+                                    snapshot.data![index]["meta_data"][5]
+                                        ["value"],
+                                    snapshot.data![index]["meta_data"][11]
+                                        ["value"],
+                                    snapshot.data![index]["meta_data"][10]
+                                        ["value"],
+                                    snapshot.data![index]["meta_data"][12]
+                                        ["value"],
+                                    snapshot.data![index]["meta_data"][20]
+                                        ["value"],
+                                    snapshot.data![index]["id"],
+                                    rbmc,
+                                    bsc,
+                                    rxisSelected,
+                                    color);
+                              },
+
+                              // child: ListView.builder(
+                              //   itemCount: snapshot.data!.length,
+                              //   scrollDirection: Axis.horizontal,
+                              //   itemBuilder: (context, index) {
                             ),
                           );
                         },
@@ -416,34 +413,31 @@ class CarHomePage extends StatelessWidget {
                           }
                           //
                           //
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Expanded(
-                              child: GridView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: (itemWidth / itemHeight),
-                                ),
-                                itemCount: car.selldata!.length, //
-
-                                itemBuilder: (BuildContext context, int index) {
-                                  return products(
-                                      car.selldata[index]["images"][0]["src"]
-                                          .toString(),
-                                      car.selldata[index]["name"].toString(),
-                                      car.selldata[index]["price"].toString(),
-                                      snapshot.data![index]["meta_data"][20]
-                                          ["value"],
-                                      snapshot.data[index]["meta_data"][11]
-                                          ["value"],
-                                      snapshot.data![index]["meta_data"][10]
-                                          ["value"],
-                                      snapshot.data[index]["id"]);
-                                },
+                          return Expanded(
+                            child: GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: (itemWidth / itemHeight),
                               ),
+                              itemCount: car.selldata!.length, //
+
+                              itemBuilder: (BuildContext context, int index) {
+                                return products(
+                                    car.selldata[index]["images"][0]["src"]
+                                        .toString(),
+                                    car.selldata[index]["name"].toString(),
+                                    car.selldata[index]["price"].toString(),
+                                    snapshot.data![index]["meta_data"][20]
+                                        ["value"],
+                                    snapshot.data[index]["meta_data"][11]
+                                        ["value"],
+                                    snapshot.data![index]["meta_data"][10]
+                                        ["value"],
+                                    snapshot.data[index]["id"]);
+                              },
                             ),
                           );
                         },
@@ -803,7 +797,8 @@ class CarHomePage extends StatelessWidget {
                             body: Center(child: CircularProgressIndicator()),
                           );
                         }
-                        rxisSelected = RxList.generate(extraservices!.length, (_) => false);
+                        rxisSelected = RxList.generate(
+                            extraservices!.length, (_) => false);
                         return ListView(
                           children: [
                             Padding(
@@ -880,15 +875,13 @@ class CarHomePage extends StatelessWidget {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Expanded(
-                                        child: Text(
-                                          carName.toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                              fontSize: Get.height * 0.02),
-                                          softWrap: true,
-                                        ),
+                                      Text(
+                                        carName.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            fontSize: Get.height * 0.02),
+                                        softWrap: true,
                                       ),
                                       Text(
                                         "\$${carprice.toString()}",
@@ -961,7 +954,9 @@ class CarHomePage extends StatelessWidget {
                               child: ListView(
                                 scrollDirection: Axis.horizontal,
                                 children: [
-                                  for (var i = 0; i < carspecs!.length; i++) ...[
+                                  for (var i = 0;
+                                      i < carspecs!.length;
+                                      i++) ...[
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 12),
@@ -1058,7 +1053,7 @@ class CarHomePage extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                   // print(extraservices);
+                                    // print(extraservices);
                                     Get.bottomSheet(
                                         Container(
                                             height: Get.height * 0.9,
@@ -1402,165 +1397,222 @@ class CarHomePage extends StatelessWidget {
                                                               ),
                                                               //
                                                               Padding(
-                                                                padding: const EdgeInsets.only(left: 8),
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            8),
                                                                 child: Align(
-                                                                  alignment: Alignment.topLeft,
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .topLeft,
                                                                   child: Text(
                                                                     "Payment",
                                                                     style: TextStyle(
-                                                                        color: Colors.green,
-                                                                        fontSize: Get.width * 0.04),
+                                                                        color: Colors
+                                                                            .green,
+                                                                        fontSize:
+                                                                            Get.width *
+                                                                                0.04),
                                                                   ),
                                                                 ),
                                                               ),
                                                               Padding(
-                                                                padding: const EdgeInsets.all(8.0),
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        8.0),
                                                                 child: Align(
-                                                                  alignment: Alignment.topLeft,
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .topLeft,
                                                                   child: Obx(
-                                                                        () =>
-                                                                        Card(
-                                                                          elevation: 2,
-                                                                          child: Container(
-                                                                            color: color,
-                                                                            width: Get.width / 2.2,
-                                                                            height: Get.height * 0.07,
-                                                                            child: Padding(
-                                                                              padding: const EdgeInsets.all(8.0),
-                                                                              child: DropdownButton(
-                                                                                  value:
-                                                                                  bsc.paymenttypevalue.value
-                                                                                      .toString(),
-                                                                                  icon: const Icon(
-                                                                                    Icons.keyboard_arrow_down,
-                                                                                    color: Colors.black,
-                                                                                  ),
-                                                                                  items: bsc.paymenttype.map((
-                                                                                      String items) {
-                                                                                    return DropdownMenuItem(
-                                                                                      value: items,
-                                                                                      child: Text(items),
-                                                                                    );
-                                                                                  }).toList(),
-                                                                                  onChanged: (val) {
-                                                                                    bsc.paymentTypeSelected(
-                                                                                        val.toString());
-                                                                                  }),
-                                                                            ),
-                                                                          ),
+                                                                    () => Card(
+                                                                      elevation:
+                                                                          2,
+                                                                      child:
+                                                                          Container(
+                                                                        color:
+                                                                            color,
+                                                                        width: Get.width /
+                                                                            2.2,
+                                                                        height: Get.height *
+                                                                            0.07,
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(8.0),
+                                                                          child: DropdownButton(
+                                                                              value: bsc.paymenttypevalue.value.toString(),
+                                                                              icon: const Icon(
+                                                                                Icons.keyboard_arrow_down,
+                                                                                color: Colors.black,
+                                                                              ),
+                                                                              items: bsc.paymenttype.map((String items) {
+                                                                                return DropdownMenuItem(
+                                                                                  value: items,
+                                                                                  child: Text(items),
+                                                                                );
+                                                                              }).toList(),
+                                                                              onChanged: (val) {
+                                                                                bsc.paymentTypeSelected(val.toString());
+                                                                              }),
                                                                         ),
+                                                                      ),
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),
                                                               //
                                                               Padding(
-                                                                padding: const EdgeInsets.all(10),
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(10),
                                                                 child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
                                                                   children: [
                                                                     Text(
                                                                       "Extra Service",
                                                                       style: TextStyle(
-                                                                          fontWeight: FontWeight.bold,
-                                                                          color: Colors.black,
-                                                                          fontSize: Get.width * 0.05),
+                                                                          fontWeight: FontWeight
+                                                                              .bold,
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              Get.width * 0.05),
                                                                     ),
                                                                     Text(
                                                                       "Charges",
                                                                       style: TextStyle(
-                                                                          fontWeight: FontWeight.bold,
-                                                                          color: Colors.black,
-                                                                          fontSize: Get.width * 0.05),
+                                                                          fontWeight: FontWeight
+                                                                              .bold,
+                                                                          color: Colors
+                                                                              .black,
+                                                                          fontSize:
+                                                                              Get.width * 0.05),
                                                                     )
                                                                   ],
                                                                 ),
                                                               ),
                                                               //extraservices!.length
-                                                              for (var i = 0; i <extraservices!.length ; i++) ...[
+                                                              for (var i = 0;
+                                                                  i <
+                                                                      extraservices
+                                                                          .length;
+                                                                  i++) ...[
                                                                 Padding(
-                                                                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                                                                  child: Container(
-                                                                    width: Get.width,
+                                                                  padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                      horizontal:
+                                                                          15),
+                                                                  child:
+                                                                      Container(
+                                                                    width: Get
+                                                                        .width,
                                                                     child: Row(
-                                                                      mainAxisAlignment: MainAxisAlignment
-                                                                          .spaceBetween,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
                                                                       children: [
                                                                         SizedBox(
-                                                                          width: Get.width * 0.5,
-                                                                          child: 
-                                                                                Obx(()=>
-                                                                                   ListTile(
-                                                                                    title: Text(
-                                                                                      extraservices[i].toString(),
-                                                                                      style:
-                                                                                      TextStyle(
-                                                                                          fontSize: Get.width * 0.04),
-                                                                                    ),
-                                                                                    leading: Checkbox(
-                                                                                        value: rxisSelected![i],
-                                                                                        onChanged: (val) {
-                                                                                           print(val);
-                                                                                          rxisSelected![i] = val!;
-                                                                                          /*print(val);
+                                                                          width:
+                                                                              Get.width * 0.5,
+                                                                          child:
+                                                                              Obx(
+                                                                            () =>
+                                                                                ListTile(
+                                                                              title: Text(
+                                                                                extraservices[i].toString(),
+                                                                                style: TextStyle(fontSize: Get.width * 0.04),
+                                                                              ),
+                                                                              leading: Checkbox(
+                                                                                  value: rxisSelected![i],
+                                                                                  onChanged: (val) {
+                                                                                    print(val);
+                                                                                    rxisSelected![i] = val!;
+                                                                                    /*print(val);
                                                                                                                                                             bsc.handleRadioValueChanged(val);*/
-                                                                                        }),
-                                                                                  ),
-                                                                                ),
-                                                                          
+                                                                                  }),
+                                                                            ),
+                                                                          ),
                                                                         ),
                                                                         Text(
                                                                           "\$${extraservicesCharges![i].toString()}",
-                                                                          style: TextStyle(
-                                                                              fontSize: Get.width * 0.04),
+                                                                          style:
+                                                                              TextStyle(fontSize: Get.width * 0.04),
                                                                         )
                                                                       ],
                                                                     ),
                                                                   ),
                                                                 ),
                                                               ]
-                                                         
                                                             ],
                                                           ),
                                                         );
                                                       }),
 
-                                                       Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onTap: () {
-              // print( bsc.totalcarPrice(rxisSelected.toList(), data["extraservicescharges"], data["carprice"]));
-              //bsc.pricewidget(rxisSelected.toList(), data!["extraservicescharges"], data!["extraservices"]);
-              //print(data["extraservices"]);
-              Get.to(const reviewsubmission(), arguments: {
-                "carimage": carImage.toString(),
-                "carname": carName.toString(),
-                "carprice": carprice.toString(),
-                "carqnty": bsc.carqntyvalue.value,
-                "totalprice": bsc.totalcarPrice(rxisSelected!.toList(),
-                    extraservicesCharges!, carprice),
-                "extraservices": extraservices,
-                "charges": bsc.pricewidget(rxisSelected,
-                   extraservicesCharges,extraservices),
-                "id": id,
-                "rxisSelected": rxisSelected
-              });
-            },
-            child: Container(
-              width: Get.width / 1.4,
-              height: Get.height * 0.06,
-              color: Colors.green,
-              child: Center(
-                child: Text(
-                  "Next",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: Get.width * 0.05),
-                ),
-              ),
-            ),
-          ),
-        ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        // print( bsc.totalcarPrice(rxisSelected.toList(), data["extraservicescharges"], data["carprice"]));
+                                                        //bsc.pricewidget(rxisSelected.toList(), data!["extraservicescharges"], data!["extraservices"]);
+                                                        //print(data["extraservices"]);
+                                                        Get.to(
+                                                            const reviewsubmission(),
+                                                            arguments: {
+                                                              "carimage": carImage
+                                                                  .toString(),
+                                                              "carname": carName
+                                                                  .toString(),
+                                                              "carprice": carprice
+                                                                  .toString(),
+                                                              "carqnty": bsc
+                                                                  .carqntyvalue
+                                                                  .value,
+                                                              "totalprice": bsc
+                                                                  .totalcarPrice(
+                                                                      rxisSelected!
+                                                                          .toList(),
+                                                                      extraservicesCharges!,
+                                                                      carprice),
+                                                              "extraservices":
+                                                                  extraservices,
+                                                              "charges": bsc.pricewidget(
+                                                                  rxisSelected,
+                                                                  extraservicesCharges,
+                                                                  extraservices),
+                                                              "id": id,
+                                                              "rxisSelected":
+                                                                  rxisSelected
+                                                            });
+                                                      },
+                                                      child: Container(
+                                                        width: Get.width / 1.4,
+                                                        height:
+                                                            Get.height * 0.06,
+                                                        color: Colors.green,
+                                                        child: Center(
+                                                          child: Text(
+                                                            "Next",
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize:
+                                                                    Get.width *
+                                                                        0.05),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             )),

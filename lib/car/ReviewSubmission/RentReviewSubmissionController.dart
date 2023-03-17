@@ -36,7 +36,7 @@ class RentReviewSubmissionController extends GetxController {
         {
           "product_id": carid,
           "quantity": bsc.carqntyvalue.value.toString(),
-          "total": bsc.total.value.toString(),
+          
           "meta_data": [
             {
               "key": "ovacrs_pickup_date",
