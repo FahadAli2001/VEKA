@@ -10,7 +10,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:veka/car/CarHome/CarHomePageController.dart';
 
-import '../RentCarDetails/RentCarDetails.dart';
+import '../Mybookmark/rents/rentBookmarkController.dart';
+import 'package:html/parser.dart';
 import '../bookingScreen/bookingScreen.dart';
 
 class CarHomePage extends StatelessWidget {
@@ -19,6 +20,7 @@ class CarHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CarHomePageController car = Get.put(CarHomePageController());
+    rentBookmarkController rbmc = Get.put(rentBookmarkController());
 
     return Scaffold(
         appBar: AppBar(
@@ -275,6 +277,7 @@ class CarHomePage extends StatelessWidget {
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   return product(
+
                                       car.rentData![index]["images"][0]["src"]
                                           .toString(),
                                       car.rentData![index]["name"].toString(),
@@ -293,7 +296,9 @@ class CarHomePage extends StatelessWidget {
                                           ["value"],
                                       snapshot.data![index]["meta_data"][20]
                                           ["value"],
-                                      snapshot.data![index]["id"]);
+                                      snapshot.data![index]["id"],
+                                    rbmc
+                                  );
                                 },
                               ),
                             ),
@@ -552,25 +557,315 @@ class CarHomePage extends StatelessWidget {
       List cardetailinfo,
       List cardeatailicon,
       carspecs,
-      id) {
+      id,
+      rbmc
+      ) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
+          Get.bottomSheet(
+
+            Container(
+              height: Get.height * 0.9,
+              width: Get.width,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(50),topLeft: Radius.circular(50)),
+              ),
+              child: FutureBuilder(
+                future: rbmc.getsharekeybyId(false, pid: id.toString(), isWishlist: true),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Scaffold(
+                      body: Center(child: CircularProgressIndicator()),
+                    );
+                  }
+                return ListView(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            icon: const Icon(CupertinoIcons.back),
+                            color: Colors.black,
+                          ),
+                          //
+                          Obx(
+                                () => Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              child: IconButton(
+                                onPressed: () {// yhn iint thi id
+                                  if (rbmc.wishListId.containsValue(id)) {
+
+                                    rbmc.removeBookmark(
+                                        rbmc.wishListId["itemId"]);
+                                  } else {
+                                    rbmc.getsharekeybyId(false, pid: id);
+                                  }
+                                },
+                                icon: Icon(Icons.favorite,
+                                    color: rbmc.BookmarkId.contains(id)
+                                        ? Colors.red
+                                        : Colors.grey),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    CarouselSlider.builder(
+                      itemCount: 2,
+                      itemBuilder: (BuildContext context, int itemIndex,
+                          int pageViewIndex) =>
+                          Container(
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                              //color: Colors.orange,
+                                image: DecorationImage(
+                                    image: NetworkImage(carImage.toString()),
+                                    filterQuality: FilterQuality.high,
+                                    fit: BoxFit.cover)),
+                          ),
+                      options: CarouselOptions(
+                          autoPlay: false,
+                          enlargeCenterPage: true,
+                          //height: Get.height * 0.1,
+                          aspectRatio: 18 / 8,
+                          onPageChanged: (index, reason) {}),
+                    ),
+                    //-------
+                    Container(
+                      // color: Colors.pinkAccent,
+                      width: Get.width,
+                      height: Get.height * 0.1,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 6, horizontal: 8),
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  carName.toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      fontSize: Get.height * 0.02),
+                                  softWrap: true,
+                                ),
+                              ),
+                              Text(
+                                "\$${carprice.toString()}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.green,
+                                    fontSize: Get.height * 0.02),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    //----------------
+                    //--
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10),
+                        child: Text(
+                          "About",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: Get.height * 0.02),
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        //data!["cardescription"].toString()
+
+                        child: Text(
+                          cardescription.toString(),
+                          style: TextStyle(
+                              color: Colors.grey.shade700,
+                              fontSize: Get.height * 0.02),
+                        ),
+                        /*Text(  description.toString(),
+                        style: TextStyle(
+                            color: Colors.grey.shade700,
+                            fontSize: Get.height * 0.02
+                        ),
+                      ),*/
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 10),
+                        child: Text(
+                          "Car Specs",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: Get.height * 0.02),
+                        ),
+                      ),
+                    ),
+                    //
+                    Container(
+                      width: Get.width,
+                      height: Get.height * 0.05,
+                      //color: Colors.red,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          for (var i = 0; i < carspecs.length; i++) ...[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5),
+                              child: Container(
+                                color: Colors.grey.shade300,
+                                child: Padding(
+                                  padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                                  child: Center(
+                                    child: Text(
+                                      carspecs[i].toString(),
+                                      softWrap: true,
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ]
+                        ],
+                      ),
+                    ),
+                    //
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 10),
+                        child: Text(
+                          "Car Info",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: Get.height * 0.025),
+                        ),
+                      ),
+                    ),
+                    //
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          //
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              for (var i = 0;
+                              i < cardetail.length;
+                              i++) ...[
+                                Text(
+                                  cardetail[i].toString(),
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: Get.width * 0.045),
+                                ),
+                              ]
+                            ],
+                          ),
+                          //
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              for (var i = 0;
+                              i < cardetailinfo.length;
+                              i++) ...[
+                                Text(
+                                  cardetailinfo[i].toString(),
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: Get.width * 0.045),
+                                )
+                              ]
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          //print(data["extraservices"][1].toString());
+                          Get.to(bookingScreen(), arguments: {
+                            "carimage": carImage.toString(),
+                            "carname": carName.toString(),
+                            "carprice": carprice.toString(),
+                            "extraservices":extraservices,
+                            "extraservicescharges": extraservicesCharges,
+                            "id": id
+                          });
+                        },
+                        child: Container(
+                          width: Get.width * 0.5,
+                          height: Get.height * 0.06,
+                          color: Colors.green,
+                          child: Center(
+                            child: Text(
+                              "Next",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontSize: Get.width * 0.05),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  ],
+                );
+                }
+              )
+            ),
+            isScrollControlled: true
+          );
           // print(extraservices[1]);
-          Get.to(const RentCarDetails(), arguments: {
-            "carname": carName,
-            "carimage": carImage,
-            "carprice": carprice,
-            "cardescription": cardescription,
-            "extraservices": extraservices,
-            "extraservicescharges": extraservicesCharges,
-            "cardetail": cardetail,
-            "cardetailinfo": cardetailinfo,
-            "cardetailicon": cardeatailicon,
-            "carspecs": carspecs,
-            "id": id
-          });
+          // Get.to(const RentCarDetails(), arguments: {
+          //   "carname": carName,
+          //   "carimage": carImage,
+          //   "carprice": carprice,
+          //   "cardescription": cardescription,
+          //   "extraservices": extraservices,
+          //   "extraservicescharges": extraservicesCharges,
+          //   "cardetail": cardetail,
+          //   "cardetailinfo": cardetailinfo,
+          //   "cardetailicon": cardeatailicon,
+          //   "carspecs": carspecs,
+          //   "id": id
+          // });
         },
         child: Card(
           elevation: 10,

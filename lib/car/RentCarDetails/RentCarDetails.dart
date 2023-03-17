@@ -1,18 +1,13 @@
-import 'dart:async';
-import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:favorite_button/favorite_button.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:html/parser.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 import '../Mybookmark/rents/rentBookmarkController.dart';
 import '../SignIn/SignInController.dart';
