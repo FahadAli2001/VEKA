@@ -1343,7 +1343,7 @@ class CarHomePage extends StatelessWidget {
                                                                                 child: TimePickerSpinnerPopUp(
                                                                                   mode: CupertinoDatePickerMode.date,
                                                                                   minTime: bsc.dropOfdate.value.add(Duration(days: 2)),
-                                                                                  initTime:bsc.dropOfdate.value.add(Duration(days: 2))fa,
+                                                                                  initTime:bsc.dropOfdate.value.add(Duration(days: 2)),
                                                                                   barrierColor: Colors.black12,
                                                                                   onChange: (dateTime) {
                                                                                     bsc.dropOfdate.value = dateTime;
