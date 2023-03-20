@@ -73,7 +73,7 @@ class rentPaymentController extends GetxController {
 
   int totalhomePrice(List isSelected, List charges, homeprice) {
     var difference = checkOutdate.value.difference(checkIndate.value).obs;
-    var nofdays = difference.value.inDays;
+    var nofdays = difference.value.inDays + 1;
 
     total.value = int.parse(homeprice) * nofdays;
     print(nofdays);

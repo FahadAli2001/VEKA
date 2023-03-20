@@ -49,7 +49,7 @@ class _bookingScreenState extends State<bookingScreen> {
               // print( bsc.totalcarPrice(rxisSelected.toList(), data["extraservicescharges"], data["carprice"]));
               //bsc.pricewidget(rxisSelected.toList(), data!["extraservicescharges"], data!["extraservices"]);
               //print(data["extraservices"]);
-              Get.to(reviewsubmission(), arguments: {
+              Get.to(ReviewSubmission(), arguments: {
                 "carimage": data!["carimage"].toString(),
                 "carname": data!["carname"].toString(),
                 "carprice": data!["carprice"].toString(),

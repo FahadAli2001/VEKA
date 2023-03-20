@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../SignIn/SignInController.dart';
 import '../Token/AccessToken.dart';
 
-class SignUpController extends GetxController{
-
+class SignUpController extends GetxController {
   TextEditingController username = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -25,67 +24,63 @@ class SignUpController extends GetxController{
   var accessToken;
 
   var Value = false.obs;
-  void handleRadioValueChanged(val) {
-    Value.value = !val;
+  handleRadioValueChanged(val) {
+    Value.value = val;
     print(Value.value);
   }
 
-  void checkIsAgree (){
-    if(Value.value == false){
+  void checkIsAgree() {
+    if (Value.value == false) {
       Get.defaultDialog(
-        buttonColor: Colors.black,
-        title: "",
-        middleText: "Please agree with our terms and condition",
-        textConfirm: "Ok",
-        onConfirm: (){
-          Get.back();
-
-        }
-      );
-    }else{
+          buttonColor: Colors.black,
+          title: "",
+          middleText: "Please agree with our terms and condition",
+          textConfirm: "Ok",
+          onConfirm: () {
+            Get.back();
+          });
+    } else {
       SignUp();
 
       Value.value = false;
-
     }
   }
 
-  void SignUp()async{
-    SharedPreferences signupshared =await SharedPreferences.getInstance();
+  void SignUp() async {
+    SharedPreferences signupshared = await SharedPreferences.getInstance();
     String _username = username.text.toString();
     String _email = email.text.toString();
     String _password = password.text.toString();
     String _conpassword = confirmpassword.text.toString();
 
-    try{
+    try {
       getAcessToken();
       //print(accessToken);
       var response = await http.post(
-          Uri.parse("https://vekaautomobile.technopreneurssoftware.com/wp-json/wp/v2/users"),
+          Uri.parse(
+              "https://vekaautomobile.technopreneurssoftware.com/wp-json/wp/v2/users"),
           headers: {
-            'Authorization':
-            'Bearer $accessToken',
+            'Authorization': 'Bearer $accessToken',
           },
           body: {
-            "username":_username,
-            "email":_email,
-            "password":_password
-          }
-      );
+            "username": _username,
+            "email": _email,
+            "password": _password
+          });
       print("method called");
-      if(response.statusCode==201){
-       // SignUpWithFirebase();
+      if (response.statusCode == 201) {
+        // SignUpWithFirebase();
         clearFileds();
         var data = jsonDecode(response.body.toString());
-      //  name = data["username"].toString();
+        //  name = data["username"].toString();
         signupshared.setString("username", _username);
         signupshared.setString("email", _email);
         print("user created");
-        Get.snackbar("","User Created Successfully",
+        Get.snackbar("", "User Created Successfully",
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.grey,
-            colorText: Colors.black);//print(_email);
-      }else {
+            colorText: Colors.black); //print(_email);
+      } else {
         Map<String, dynamic> error = jsonDecode(response.body);
         String errorCode = error["code"];
         if (errorCode == "existing_user_login") {
@@ -93,48 +88,46 @@ class SignUpController extends GetxController{
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);
-        }else if (errorCode == "existing_user_email"){
+        } else if (errorCode == "existing_user_email") {
           Get.snackbar("Error", "Sorry, that email address is already used!",
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.grey,
               colorText: Colors.black);
-        }else if (errorCode == "jwt_auth_invalid_token"){
+        } else if (errorCode == "jwt_auth_invalid_token") {
           print("invalid token");
-
         }
       }
-    }catch (e){
-      print(e.toString()+"errorr");
-      Get.snackbar("","SomeThing went wrong",
+    } catch (e) {
+      print(e.toString() + "errorr");
+      Get.snackbar("", "SomeThing went wrong",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.grey,
-          colorText: Colors.black);//print(_email);
+          colorText: Colors.black); //print(_email);
     }
-
   }
-  Future getAcessToken ()async{
-    try{
-      var response =await http.post(
-          Uri.parse("https://vekaautomobile.technopreneurssoftware.com/wp-json/jwt-auth/v1/token"),
+
+  Future getAcessToken() async {
+    try {
+      var response = await http.post(
+          Uri.parse(
+              "https://vekaautomobile.technopreneurssoftware.com/wp-json/jwt-auth/v1/token"),
           body: {
-            "username":acessTokenclass.username,
-            "password":acessTokenclass.password
-          }
-      );
-      if(response.statusCode == 200){
+            "username": acessTokenclass.username,
+            "password": acessTokenclass.password
+          });
+      if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
         accessToken = data["data"]['token'];
-       // print(accessToken);
+        // print(accessToken);
 
       }
-    }catch (e){
+    } catch (e) {
       print("access token" + e.toString());
     }
     return accessToken;
   }
 
-
-  void clearFileds(){
+  void clearFileds() {
     username.clear();
     email.clear();
     password.clear();
@@ -169,8 +162,3 @@ class SignUpController extends GetxController{
     }*/
 
 }
-
-
-
-
-

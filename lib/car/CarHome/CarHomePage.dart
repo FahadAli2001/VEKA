@@ -1277,8 +1277,8 @@ class CarHomePage extends StatelessWidget {
                                                                                 height: Get.height * 0.07,
                                                                                 child: TimePickerSpinnerPopUp(
                                                                                   mode: CupertinoDatePickerMode.date,
-                                                                                  minTime: bsc.dropOfdate.value.add(Duration(days: 2)),
-                                                                                  initTime: bsc.dropOfdate.value.add(Duration(days: 2)),
+                                                                                  minTime: bsc.dropOfdate.value.add(Duration(days: 1)),
+                                                                                  initTime: bsc.dropOfdate.value.add(Duration(days: 1)),
                                                                                   barrierColor: Colors.black12,
                                                                                   onChange: (dateTime) {
                                                                                     bsc.dropOfdate.value = dateTime;
@@ -1494,11 +1494,9 @@ class CarHomePage extends StatelessWidget {
                                                             8.0),
                                                     child: GestureDetector(
                                                       onTap: () {
-                                                        // print( bsc.totalcarPrice(rxisSelected.toList(), data["extraservicescharges"], data["carprice"]));
-                                                        //bsc.pricewidget(rxisSelected.toList(), data!["extraservicescharges"], data!["extraservices"]);
-                                                        //print(data["extraservices"]);
                                                         Get.to(
-                                                            const reviewsubmission(),
+                                                            () =>
+                                                                const ReviewSubmission(),
                                                             arguments: {
                                                               "carimage": carImage
                                                                   .toString(),
@@ -1552,16 +1550,6 @@ class CarHomePage extends StatelessWidget {
                                               ),
                                             )),
                                         isScrollControlled: true);
-
-                                    //print(data["extraservices"][1].toString());
-                                    // Get.to(bookingScreen(), arguments: {
-                                    //   "carimage": carImage.toString(),
-                                    //   "carname": carName.toString(),
-                                    //   "carprice": carprice.toString(),
-                                    //   "extraservices":extraservices,
-                                    //   "extraservicescharges": extraservicesCharges,
-                                    //   "id": id
-                                    // });
                                   },
                                   child: Container(
                                     width: Get.width * 0.4,
@@ -1584,20 +1572,6 @@ class CarHomePage extends StatelessWidget {
                         );
                       })),
               isScrollControlled: true);
-          // print(extraservices[1]);
-          // Get.to(const RentCarDetails(), arguments: {
-          //   "carname": carName,
-          //   "carimage": carImage,
-          //   "carprice": carprice,
-          //   "cardescription": cardescription,
-          //   "extraservices": extraservices,
-          //   "extraservicescharges": extraservicesCharges,
-          //   "cardetail": cardetail,
-          //   "cardetailinfo": cardetailinfo,
-          //   "cardetailicon": cardeatailicon,
-          //   "carspecs": carspecs,
-          //   "id": id
-          // });
         },
         child: Card(
           elevation: 10,

@@ -105,7 +105,7 @@ class RentHome extends StatelessWidget {
                           onTap: () {
                             //print(snapshot.data![index]["meta_data"][12]["value"]);
                             // print(snapshot.data[index]["meta_data"][18]["value"][0].toString());
-                            Get.to(const detailScreen(), arguments: {
+                            Get.to(() => const detailScreen(), arguments: {
                               "totalrooms": snapshot.data![index]["meta_data"]
                                       [18]["value"][0]
                                   .toString(),

@@ -15,7 +15,7 @@ class RetReviewSubmission extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Step> step = [
       Step(
-        title: Text(""),
+        title: const Text(""),
         content: SingleChildScrollView(
           child: SingleChildScrollView(
             child: Column(
@@ -114,7 +114,7 @@ class RetReviewSubmission extends StatelessWidget {
                                 ),
                               ),
                               //
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               //
@@ -144,7 +144,7 @@ class RetReviewSubmission extends StatelessWidget {
                                 ),
                               ),
                               //
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               //
@@ -266,8 +266,8 @@ class RetReviewSubmission extends StatelessWidget {
           ),
         ),
       ),
-      Step(title: Text(""), content: Text("")),
-      Step(title: Text(""), content: Text(""), isActive: true),
+      const Step(title: Text(""), content: Text("")),
+      const Step(title: Text(""), content: Text(""), isActive: true),
     ];
     return Scaffold(
       appBar: AppBar(
@@ -277,7 +277,7 @@ class RetReviewSubmission extends StatelessWidget {
           onPressed: () {
             Get.back();
           },
-          icon: Icon(CupertinoIcons.back),
+          icon: const Icon(CupertinoIcons.back),
           color: Colors.black,
         ),
       ),
@@ -296,7 +296,7 @@ class RetReviewSubmission extends StatelessWidget {
             width: Get.width,
             height: Get.height * 0.06,
             decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-            child: Center(
+            child: const Center(
               child: Text("BOOKED"),
             ),
           ),
@@ -306,7 +306,7 @@ class RetReviewSubmission extends StatelessWidget {
         data: ThemeData(
             accentColor: Colors.red,
             primaryColor: Colors.red,
-            colorScheme: ColorScheme.light(primary: Colors.red)),
+            colorScheme: const ColorScheme.light(primary: Colors.red)),
         child: Stepper(
           type: StepperType.horizontal,
           steps: step,

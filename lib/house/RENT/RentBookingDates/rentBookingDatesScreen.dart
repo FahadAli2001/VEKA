@@ -26,9 +26,10 @@ class rentBookingDatesScreen extends StatelessWidget {
       required this.id})
       : super(key: key);
 
+  rentPaymentController rpc = Get.put(rentPaymentController());
+
   @override
   Widget build(BuildContext context) {
-    rentPaymentController rpc = Get.put(rentPaymentController());
     RxList<dynamic> rxisSelected = [].obs;
     rxisSelected.value = RxList.generate(extraservices.length, (_) => false);
 

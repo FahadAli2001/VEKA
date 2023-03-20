@@ -1,12 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:veka/car/SignUp/SignupController.dart';
-
-
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -16,51 +11,44 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  var groupvalue = true.obs;
+  bool isSignUp = false;
+  var width = Get.width;
+  var SocialAppIconSize = Get.height * 0.03;
+  SignUpController suc = Get.put(SignUpController());
   @override
   Widget build(BuildContext context) {
-    var groupvalue = true.obs;
-    bool isSignUp = false;
-    var width = Get.width;
-    var SocialAppIconSize = Get.height * 0.03;
-    SignUpController suc = Get.put(SignUpController());
     final _formKey = GlobalKey<FormState>();
 
     return Container(
-      child : SingleChildScrollView(
+      child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           child: Form(
             key: _formKey,
-            child: Column
-              (
+            child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   child: TextFormField(
                     controller: suc.username,
-                    style: TextStyle(
-                        height: 0.5
-                    ),
+                    style: TextStyle(height: 0.5),
                     decoration: InputDecoration(
-                        errorStyle: TextStyle(
-                            color: Colors.red
-                        ),
-                        hintText: "User Name",
-                        labelText: "User Name",
-
-                        suffixIcon: Icon(CupertinoIcons.person_alt,
-                        color: Colors.black,),
-                        border: OutlineInputBorder(),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black)
-                        ),
-                      labelStyle: TextStyle(
-                          color: Colors.black
+                      errorStyle: TextStyle(color: Colors.red),
+                      hintText: "User Name",
+                      labelText: "User Name",
+                      suffixIcon: Icon(
+                        CupertinoIcons.person_alt,
+                        color: Colors.black,
                       ),
+                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black)),
+                      labelStyle: TextStyle(color: Colors.black),
                     ),
-
-                    validator: (val){
-                      if(val!.isEmpty){
+                    validator: (val) {
+                      if (val!.isEmpty) {
                         return "Please enter User-name";
                       }
                     },
@@ -69,90 +57,76 @@ class _SignUpState extends State<SignUp> {
                 //
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   child: TextFormField(
-
-                    validator: (val){
+                    validator: (val) {
                       /* if(val!= EmailValidator.validate(val.toString())){
                         return "Enter valid email";
                       }*/
-                      if(val == ""){
+                      if (val == "") {
                         return "Enter email";
                       }
                     },
                     controller: suc.email,
-                    style: TextStyle(
-                        height: 0.5
-                    ),
+                    style: TextStyle(height: 0.5),
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black)
+                          borderSide: BorderSide(color: Colors.black)),
+                      labelStyle: TextStyle(color: Colors.black),
+                      errorStyle: TextStyle(color: Colors.red),
+                      hintText: "Email",
+                      labelText: "Email",
+                      suffixIcon: Icon(
+                        CupertinoIcons.mail,
+                        color: Colors.black,
                       ),
-                      labelStyle: TextStyle(
-                          color: Colors.black
-                      ),
-                        errorStyle: TextStyle(
-                            color: Colors.red
-                        ),
-
-                        hintText: "Email",
-                        labelText: "Email",
-                        suffixIcon: Icon(CupertinoIcons.mail,color: Colors.black,
-                        ),
-                        border: OutlineInputBorder(),
-
+                      border: OutlineInputBorder(),
                     ),
                   ),
-
                 ),
                 //
                 Obx(
-                      ()=> Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                  () => Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
                     child: TextFormField(
                         obscureText: suc.isHidepass.value,
-                        validator: (String? val){
-                          if(val!.isEmpty){
+                        validator: (String? val) {
+                          if (val!.isEmpty) {
                             return "Enter password";
-                          }else if (val!.length < 8){
+                          } else if (val!.length < 8) {
                             return "Enter mini 8 digit password";
                           }
                         },
                         controller: suc.password,
-                        style: TextStyle(
-                            height: 0.5
-                        ),
+                        style: TextStyle(height: 0.5),
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black)
-                          ),
-                          labelStyle: TextStyle(
-                              color: Colors.black
-                          ),
-                            errorStyle: TextStyle(
-                                color: Colors.red
-                            ),
-
-                            hintText: "Password",
-                            labelText: "Password",
-                            suffixIcon: GestureDetector(
-                                onTap: (){
-                                  if(suc.isHidepass.value == true){
-                                    suc.isHidepass.value = false;
-                                  }else{
-                                    suc.isHidepass.value = true;
-                                  }
-                                },
-                                child: (suc.isHidepass.value == true)?Icon(CupertinoIcons.eye_slash_fill,
-                                  color: Colors.black,
-                                ):Icon(CupertinoIcons.eye,
-                                  color: Colors.black,
-                                  )
-                            ),
-                            border: OutlineInputBorder(),
-
-                        )
-                    ),
+                              borderSide: BorderSide(color: Colors.black)),
+                          labelStyle: TextStyle(color: Colors.black),
+                          errorStyle: TextStyle(color: Colors.red),
+                          hintText: "Password",
+                          labelText: "Password",
+                          suffixIcon: GestureDetector(
+                              onTap: () {
+                                if (suc.isHidepass.value == true) {
+                                  suc.isHidepass.value = false;
+                                } else {
+                                  suc.isHidepass.value = true;
+                                }
+                              },
+                              child: (suc.isHidepass.value == true)
+                                  ? Icon(
+                                      CupertinoIcons.eye_slash_fill,
+                                      color: Colors.black,
+                                    )
+                                  : Icon(
+                                      CupertinoIcons.eye,
+                                      color: Colors.black,
+                                    )),
+                          border: OutlineInputBorder(),
+                        )),
                   ),
                 ),
                 //
@@ -162,53 +136,54 @@ class _SignUpState extends State<SignUp> {
                     height: Get.height * 0.06,
                     width: Get.width,
                     //color: Colors.red,
-                    child:  Row(
-                        children: [
-                          Obx(
-                        ()=> Theme(
-                          data: ThemeData(
-                            toggleableActiveColor: Colors.black, // set the toggleableActiveColor to blue
+                    child: Row(
+                      children: [
+                        Obx(
+                          () => Radio(
+                            value: true,
+                            groupValue: suc.Value.value,
+                            onChanged: (bool? val) =>
+                                suc.handleRadioValueChanged(val),
+                            activeColor: Colors.black,
                           ),
-                          child: Radio(
-                            value: suc.Value.value,
-                            onChanged: suc.handleRadioValueChanged,
-                            groupValue: "SignUp",
-                          ),
-                        )
-                          ), //
-                          //
-                          Text("I agree with Terms & Conditions",
-                            style: TextStyle(
-                                fontSize: width * 0.04
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                        //
+                        Text(
+                          "I agree with Terms & Conditions",
+                          style: TextStyle(fontSize: width * 0.04),
+                        ),
+                      ],
                     ),
                   ),
+                ),
 
                 //
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                   child: SizedBox(
                     width: Get.width,
                     child: CupertinoButton(
                         color: Colors.black,
-                        child:(isSignUp == true)?CircularProgressIndicator(color: Colors.white,): Text("Sign - Up",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: width * 0.05
-                          ),),
-                        onPressed: (){
-
-                          if(_formKey.currentState!.validate()){
-                            if(isSignUp!=true){
+                        child: (isSignUp == true)
+                            ? CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Text(
+                                "Sign - Up",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: width * 0.05),
+                              ),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            if (isSignUp != true) {
                               suc.checkIsAgree();
                             }
                             setState(() {
                               isSignUp = true;
                             });
-                            if(!mounted){
+                            if (!mounted) {
                               isSignUp = false;
                             }
 
@@ -218,7 +193,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 //
-               /* Align(
+                /* Align(
                   alignment: Alignment.center,
                   child: Text("or login with ",
                     style: TextStyle(
@@ -253,7 +228,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                 ),*/
-               /* Padding(
+                /* Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: RichText(
                     text: TextSpan(

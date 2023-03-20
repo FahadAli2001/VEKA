@@ -2,42 +2,35 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:veka/car/Dashboard/dashboardScreen.dart';
 import 'package:veka/car/bookingScreen/bookingScreenController.dart';
-
-import '../../ChooseOption.dart';
 import 'RentReviewSubmissionController.dart';
 
-class reviewsubmission extends StatefulWidget {
-  const reviewsubmission({Key? key}) : super(key: key);
+class ReviewSubmission extends StatefulWidget {
+  const ReviewSubmission({Key? key}) : super(key: key);
 
   @override
-  State<reviewsubmission> createState() => _reviewsubmissionState();
+  State<ReviewSubmission> createState() => _ReviewSubmissionState();
 }
 
-class _reviewsubmissionState extends State<reviewsubmission> {
-
+class _ReviewSubmissionState extends State<ReviewSubmission> {
   bool isDone = false;
   RentReviewSubmissionController rrsc =
-  Get.put(RentReviewSubmissionController());
+      Get.put(RentReviewSubmissionController());
   bookingScreenController bsc = Get.put(bookingScreenController());
 
   @override
   Widget build(BuildContext context) {
-
     var data = Get.arguments;
 
     var totalprice =
         int.parse(data["carprice"]) * int.parse(bsc.carqntyvalue.value);
     return Scaffold(
       appBar: AppBar(
-        title:Image.asset(
-            "assets/Veka-Green.png",
-            height: 180,
-            width: 150,
-          ),
+        title: Image.asset(
+          "assets/Veka-Green.png",
+          height: 180,
+          width: 150,
+        ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white12,
@@ -51,7 +44,6 @@ class _reviewsubmissionState extends State<reviewsubmission> {
             size: Get.height * 0.04,
           ),
         ),
-       
       ),
       bottomNavigationBar: Container(
         width: Get.width,
@@ -67,13 +59,17 @@ class _reviewsubmissionState extends State<reviewsubmission> {
               });
               rrsc.postRentOrder(data["id"], data["rxisSelected"]);
             },
-            child: isDone ? const CircularProgressIndicator(color: Colors.black,) : Text(
-              "Done",
-              style: TextStyle(
-                  fontSize: Get.width * 0.04,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
+            child: isDone
+                ? const CircularProgressIndicator(
+                    color: Colors.black,
+                  )
+                : Text(
+                    "Done",
+                    style: TextStyle(
+                        fontSize: Get.width * 0.04,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
           ),
         ),
       ),
@@ -159,7 +155,7 @@ class _reviewsubmissionState extends State<reviewsubmission> {
                               data["carname"],
                               maxLines: 2,
                               softWrap: true,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 //  fontSize: Get.width * 0.04
                               ),
@@ -311,7 +307,7 @@ class _reviewsubmissionState extends State<reviewsubmission> {
                           //-------
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
                                 "+ Add notes",
@@ -319,7 +315,7 @@ class _reviewsubmissionState extends State<reviewsubmission> {
                                     color: Colors.green,
                                     fontSize: Get.width * 0.04),
                               ),
-                              Radio(
+                              const Radio(
                                   value: 0, groupValue: null, onChanged: null),
                             ],
                           ),

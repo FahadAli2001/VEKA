@@ -106,7 +106,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       children: [
                         Obx(
                           () => Radio(
-                            value: false,
+                            value: true,
                             groupValue: sic.isRem.value,
                             onChanged: (bool? val) =>
                                 sic.handleRadioValueChanged(val),

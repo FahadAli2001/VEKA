@@ -9,7 +9,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../Dashboard/dashboardScreen.dart';
 
-
 class SignInController extends GetxController {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -20,11 +19,11 @@ class SignInController extends GetxController {
 
   var isRem = false.obs;
 
-   handleRadioValueChanged(val) {
+  handleRadioValueChanged(val) {
+    print(val);
     isRem.value = val;
     print(isRem.value);
   }
-
 
   Future SignIn() async {
     SharedPreferences sigin = await SharedPreferences.getInstance();
@@ -85,7 +84,7 @@ class SignInController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.grey,
           colorText: Colors.black);
-    rethrow;
+      rethrow;
     }
   }
 

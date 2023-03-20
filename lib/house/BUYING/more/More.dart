@@ -39,7 +39,7 @@ class More extends StatelessWidget {
                 homesignin.remove("Email");
                 homesignin.remove("password");
                 homesignin.remove("realStateUserId");
-                Get.offAll(const loginSxreen());
+                Get.offAll(loginSxreen());
               },
               child: Container(
                 width: Get.width * 0.4,
@@ -83,13 +83,11 @@ class More extends StatelessWidget {
                 ],
               ))
         ],
-
         elevation: 0,
         backgroundColor: Colors.white12,
         leading: null,
-
       ),
-      body:  Padding(
+      body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,12 +131,12 @@ class More extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
                                 child: Text(
                                   "Order Details",
                                   style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: textSize),
+                                      color: Colors.black, fontSize: textSize),
                                 ),
                               ),
                             ],
@@ -147,13 +145,14 @@ class More extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 25,left: 325),
+                      padding: const EdgeInsets.only(top: 25, left: 325),
                       child: CircleAvatar(
-                          radius: Get.width *0.04,
+                          radius: Get.width * 0.04,
                           backgroundColor: boxColor,
-                          child: Icon(Icons.arrow_forward_ios_outlined,
-                            color: Colors.grey.shade500,)
-                      ),
+                          child: Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            color: Colors.grey.shade500,
+                          )),
                     )
                   ],
                 )
@@ -161,7 +160,7 @@ class More extends StatelessWidget {
             ),
             //
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Get.to(const RealStateBookmark());
               },
               child: Row(
@@ -189,7 +188,8 @@ class More extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "My Book Marks",
                                     style: TextStyle(
@@ -203,13 +203,14 @@ class More extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 25,left: 325),
+                        padding: const EdgeInsets.only(top: 25, left: 325),
                         child: CircleAvatar(
-                            radius: Get.width *0.04,
+                            radius: Get.width * 0.04,
                             backgroundColor: boxColor,
-                            child: Icon(Icons.arrow_forward_ios_outlined,
-                              color: Colors.grey.shade500,)
-                        ),
+                            child: Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              color: Colors.grey.shade500,
+                            )),
                       )
                     ],
                   )
@@ -218,9 +219,7 @@ class More extends StatelessWidget {
             ),
             //--------
             GestureDetector(
-              onTap: (){
-
-              },
+              onTap: () {},
               child: Row(
                 children: [
                   Stack(
@@ -246,7 +245,8 @@ class More extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Service Mode",
                                     style: TextStyle(
@@ -260,13 +260,14 @@ class More extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 25,left: 325),
+                        padding: const EdgeInsets.only(top: 25, left: 325),
                         child: CircleAvatar(
-                            radius: Get.width *0.04,
+                            radius: Get.width * 0.04,
                             backgroundColor: boxColor,
-                            child: Icon(Icons.arrow_forward_ios_outlined,
-                              color: Colors.grey.shade500,)
-                        ),
+                            child: Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              color: Colors.grey.shade500,
+                            )),
                       )
                     ],
                   )
@@ -275,8 +276,8 @@ class More extends StatelessWidget {
             ),
             //--------about us
             GestureDetector(
-              onTap: (){
-                Get.to(() =>const aboutUs());
+              onTap: () {
+                Get.to(() => const aboutUs());
               },
               child: Row(
                 children: [
@@ -303,7 +304,8 @@ class More extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "About Us",
                                     style: TextStyle(
@@ -317,13 +319,14 @@ class More extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 25,left: 325),
+                        padding: const EdgeInsets.only(top: 25, left: 325),
                         child: CircleAvatar(
-                            radius: Get.width *0.04,
+                            radius: Get.width * 0.04,
                             backgroundColor: boxColor,
-                            child: Icon(Icons.arrow_forward_ios_outlined,
-                              color: Colors.grey.shade500,)
-                        ),
+                            child: Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              color: Colors.grey.shade500,
+                            )),
                       )
                     ],
                   )
@@ -331,7 +334,6 @@ class More extends StatelessWidget {
               ),
             ),
             //--------
-
           ],
         ),
       ),

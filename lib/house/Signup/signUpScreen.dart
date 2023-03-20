@@ -1,21 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:veka/car/SignUp/SignupController.dart';
 import 'package:veka/house/login/loginScreen.dart';
 import 'SignUpController.dart';
 
 class signUpscreen extends StatelessWidget {
-  const signUpscreen({Key? key}) : super(key: key);
-
+  signUpscreen({Key? key}) : super(key: key);
+  var SocialAppIconSize = Get.height * 0.03;
+  final _formKey = GlobalKey<FormState>();
+  HouseSignUpController hsp = Get.put(HouseSignUpController());
   @override
   Widget build(BuildContext context) {
-    var SocialAppIconSize = Get.height * 0.03;
-    final _formKey = GlobalKey<FormState>();
-    HouseSignUpController hsp = Get.put(HouseSignUpController());
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -26,7 +21,7 @@ class signUpscreen extends StatelessWidget {
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 60,left: 15),
+                    padding: const EdgeInsets.only(top: 60, left: 15),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -40,7 +35,8 @@ class signUpscreen extends StatelessWidget {
                   ),
                   //---
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 15),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -51,7 +47,7 @@ class signUpscreen extends StatelessWidget {
                     ),
                   ),
                   //----
-                  SizedBox(
+                  const SizedBox(
                     height: 80,
                   ),
                   //--
@@ -60,8 +56,8 @@ class signUpscreen extends StatelessWidget {
                         horizontal: 15, vertical: 10),
                     child: TextFormField(
                       controller: hsp.username,
-                      style: TextStyle(height: 0.5),
-                      decoration: InputDecoration(
+                      style: const TextStyle(height: 0.5),
+                      decoration: const InputDecoration(
                           errorStyle: TextStyle(color: Colors.red),
                           hintText: "User Name",
                           labelText: "User Name",
@@ -84,8 +80,8 @@ class signUpscreen extends StatelessWidget {
                           }
                         },
                         controller: hsp.email,
-                        style: TextStyle(height: 0.5),
-                        decoration: InputDecoration(
+                        style: const TextStyle(height: 0.5),
+                        decoration: const InputDecoration(
                             errorStyle: TextStyle(color: Colors.red),
                             hintText: "Email",
                             labelText: "Email",
@@ -121,35 +117,30 @@ class signUpscreen extends StatelessWidget {
                                     }
                                   },
                                   child: (hsp.isHidepass.value == true)
-                                      ? Icon(CupertinoIcons.eye_slash_fill)
-                                      : Icon(CupertinoIcons.eye)),
-                              border: OutlineInputBorder())),
+                                      ? const Icon(
+                                          CupertinoIcons.eye_slash_fill)
+                                      : const Icon(CupertinoIcons.eye)),
+                              border: const OutlineInputBorder())),
                     ),
                   ),
                   //
 
                   //
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Container(
-                      height: Get.height * 0.06,
-                      width: Get.width,
-                      //color: Colors.red,
-                      child: Obx(
-                        () => Row(
-                          children: [
-                            Checkbox(
-                                value: hsp.Value.value,
-                                onChanged: hsp.handleRadioValueChanged), //Ch
-                            Text(
-                              "I agree with Terms & Conditions",
-                              style: TextStyle(fontSize: Get.width * 0.04),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   height: Get.height * 0.06,
+                  //   width: Get.width,
+                  //   //color: Colors.red,
+                  //   child: Obx(() => RadioListTile(
+                  //       activeColor: Colors.black,
+                  //       title: Text(
+                  //         "I agree with Terms & Conditions",
+                  //       ),
+                  //       value: true,
+                  //       groupValue: hsp.Value.value,
+                  //       onChanged: ((bool? value) =>
+                  //           hsp.handleRadioValueChanged(value)))),
+                  // ),
+
                   //
 
                   Padding(
@@ -167,8 +158,7 @@ class signUpscreen extends StatelessWidget {
                           ),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              print("tapppppp");
-                              hsp.checkIsAgree();
+                              hsp.SignUp();
                               //hsp.SignUp();
                             }
                           }),
@@ -217,7 +207,7 @@ class signUpscreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 50),
                     child: InkWell(
                       onTap: () {
-                        Get.to(loginSxreen());
+                        Get.to(() => loginSxreen());
                       },
                       child: RichText(
                         text: TextSpan(
