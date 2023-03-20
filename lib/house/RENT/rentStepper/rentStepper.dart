@@ -1,25 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 
 import '../RentBookingDates/rentBookingDatesController.dart';
 import '../RentBookingDates/rentBookingDatesScreen.dart';
-import '../rentPayment/rentPaymnet.dart';
 
 class rentStepper extends StatelessWidget {
   const rentStepper({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    RentBookingDatesController rbdc  = Get.put(RentBookingDatesController());
+    RentBookingDatesController rbdc = Get.put(RentBookingDatesController());
     var data = Get.arguments;
     List<Step> step = [
       Step(
         isActive: true,
         title: Text(""),
         content: rentBookingDatesScreen(
+            houseName: data["housename"],
+            houseImage: data["houseimage"],
             extraservices: data["extraservices"],
             extraservicescharges: data["extraservicescharges"],
             houseprice: data["houseprice"],

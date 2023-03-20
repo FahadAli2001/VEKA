@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 import '../ReviewSubmission/reviewsubmission.dart';
 import 'bookingScreenController.dart';
@@ -22,7 +20,8 @@ class _bookingScreenState extends State<bookingScreen> {
     bookingScreenController bsc = Get.put(bookingScreenController());
 
     RxList<dynamic> rxisSelected = [].obs;
-    rxisSelected.value = RxList.generate(data!["extraservices"].length, (_) => false);
+    rxisSelected.value =
+        RxList.generate(data!["extraservices"].length, (_) => false);
 
     return Scaffold(
         appBar: AppBar(
@@ -478,7 +477,7 @@ class _bookingScreenState extends State<bookingScreen> {
                                 child: Obx(
                                   () => ListTile(
                                     title: Text(
-                                     "saad",// data["extraservices"][i]!.toString()
+                                      "saad", // data["extraservices"][i]!.toString()
                                       style:
                                           TextStyle(fontSize: Get.width * 0.04),
                                     ),
@@ -494,7 +493,7 @@ class _bookingScreenState extends State<bookingScreen> {
                                 ),
                               ),
                               Text(
-                                "Yo",//\$${data["extraservicescharges"][i]!.toString()}
+                                "Yo", //\$${data["extraservicescharges"][i]!.toString()}
                                 style: TextStyle(fontSize: Get.width * 0.04),
                               )
                             ],

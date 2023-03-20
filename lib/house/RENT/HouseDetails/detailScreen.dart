@@ -49,6 +49,8 @@ class detailScreen extends StatelessWidget {
               onTap: () {
                 //print(data["houseprice"]);
                 Get.to(rentStepper(), arguments: {
+                  "housename": data["housename"],
+                  "houseimage": data["houseimage"],
                   "houseprice": data["houseprice"],
                   "extraservices": data["extraservices"],
                   "extraservicescharges": data["extraservicescharges"],

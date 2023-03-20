@@ -18,29 +18,29 @@ class RentHome extends StatelessWidget {
         Get.put(RealStateRentBookmarkController());
     return Scaffold(
       appBar: AppBar(
-        title:  Image.asset(
+        title: Image.asset(
           "assets/Veka-Red.png",
           height: 180,
           width: 150,
         ),
         actions: [
-            Padding(
-                padding: const EdgeInsets.only(top: 5, right: 20),
-                child: Column(
-                  children: const [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
-                      radius: 18,
-                    ),
-                    // SizedBox(height: 5,),
-                    Text(
-                      "Hi, Belly",
-                      style: TextStyle(color: Colors.black, fontSize: 10),
-                    ),
-                  ],
-                ))
-          ],
+          Padding(
+              padding: const EdgeInsets.only(top: 5, right: 20),
+              child: Column(
+                children: const [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
+                    radius: 18,
+                  ),
+                  // SizedBox(height: 5,),
+                  Text(
+                    "Hi, Belly",
+                    style: TextStyle(color: Colors.black, fontSize: 10),
+                  ),
+                ],
+              ))
+        ],
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white70,
@@ -54,7 +54,6 @@ class RentHome extends StatelessWidget {
         //     size: Get.height * 0.04,
         //   ),
         // ),
-       
       ),
       //--------
       body: SafeArea(
@@ -88,14 +87,17 @@ class RentHome extends StatelessWidget {
               itemBuilder: (context, index) {
                 return FutureBuilder(
                     future: realStateRentcontroller.getsharekeybyId(false,
-                        pid: snapshot.data[index]["id"].toString(),isWishlist: true),
+                        pid: snapshot.data[index]["id"].toString(),
+                        isWishlist: true),
                     builder: (context, data) {
-                      if(!data.hasData){
-                        return index == 0 ? const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.grey,
-                          ),
-                        ) : const SizedBox.shrink();
+                      if (!data.hasData) {
+                        return index == 0
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.grey,
+                                ),
+                              )
+                            : const SizedBox.shrink();
                       }
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -103,7 +105,7 @@ class RentHome extends StatelessWidget {
                           onTap: () {
                             //print(snapshot.data![index]["meta_data"][12]["value"]);
                             // print(snapshot.data[index]["meta_data"][18]["value"][0].toString());
-                            Get.to(Get.to(const detailScreen(), arguments: {
+                            Get.to(const detailScreen(), arguments: {
                               "totalrooms": snapshot.data![index]["meta_data"]
                                       [18]["value"][0]
                                   .toString(),
@@ -123,7 +125,7 @@ class RentHome extends StatelessWidget {
                               "extraservicescharges": snapshot.data![index]
                                   ["meta_data"][12]["value"],
                               "id": snapshot.data![index]["id"]
-                            }));
+                            });
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -171,22 +173,30 @@ class RentHome extends StatelessWidget {
                                                 ),
                                               ),
                                               FavoriteButton(
-                                                isFavorite: realStateRentcontroller.wishListId.values.contains(snapshot.data[index]["id"]) ? true : false,
+                                                isFavorite:
+                                                    realStateRentcontroller
+                                                            .wishListId.values
+                                                            .contains(snapshot
+                                                                    .data[index]
+                                                                ["id"])
+                                                        ? true
+                                                        : false,
                                                 iconSize: 30,
                                                 valueChanged: (value) {
-                                                if (value) {
-                                              realStateRentcontroller
-                                                  .getsharekeybyId(true,
-                                                      pid: snapshot.data[index]
-                                                              ["id"]
-                                                          .toString());
-                                            } else {
-                                              realStateRentcontroller
-                                                  .removeBookmark(
-                                                      realStateRentcontroller
-                                                              .wishListId[
-                                                          "itemId"]);
-                                            }
+                                                  if (value) {
+                                                    realStateRentcontroller
+                                                        .getsharekeybyId(true,
+                                                            pid: snapshot
+                                                                .data[index]
+                                                                    ["id"]
+                                                                .toString());
+                                                  } else {
+                                                    realStateRentcontroller
+                                                        .removeBookmark(
+                                                            realStateRentcontroller
+                                                                    .wishListId[
+                                                                "itemId"]);
+                                                  }
                                                 },
                                               ),
                                             ],

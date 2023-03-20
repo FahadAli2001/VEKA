@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
 
 import '../../../car/Token/AccessToken.dart';
 import '../../BUYING/home/homeScreen.dart';
 import '../../login/LoginController.dart';
-import '../dashboard/dashboard.dart';
 
 class rentPaymentController extends GetxController {
   AcessToken acessToken = Get.put(AcessToken());
@@ -20,6 +18,19 @@ class rentPaymentController extends GetxController {
   var adultCount = 1.obs;
   var childrenCount = 1.obs;
   var infantCount = 1.obs;
+  String? name;
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    getName();
+  }
+
+  void getName() async {
+    SharedPreferences homesignin = await SharedPreferences.getInstance();
+    name = homesignin.getString("name");
+  }
 
   void addAdults() {
     adultCount.value++;
@@ -65,6 +76,7 @@ class rentPaymentController extends GetxController {
     var nofdays = difference.value.inDays;
 
     total.value = int.parse(homeprice) * nofdays;
+    print(nofdays);
     // total.value = total.value * nofdays;
     //print(total.value);
     for (var entry in isSelected.asMap().entries) {

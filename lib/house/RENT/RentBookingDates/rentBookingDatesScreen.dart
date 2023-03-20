@@ -1,23 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 import 'package:veka/house/RENT/rentPayment/rentPaymnet.dart';
 
 import '../rentPayment/rentPatmentController.dart';
-import 'rentBookingDatesController.dart';
 
 class rentBookingDatesScreen extends StatelessWidget {
   var extraservices;
   var extraservicescharges;
   var houseprice;
   var id;
+
+  var houseImage;
+
+  var houseName;
   rentBookingDatesScreen(
       {Key? key,
+      required this.houseName,
+      required this.houseImage,
       required this.extraservices,
       required this.extraservicescharges,
       required this.houseprice,
@@ -29,8 +31,6 @@ class rentBookingDatesScreen extends StatelessWidget {
     rentPaymentController rpc = Get.put(rentPaymentController());
     RxList<dynamic> rxisSelected = [].obs;
     rxisSelected.value = RxList.generate(extraservices.length, (_) => false);
-
-
 
     return Container(
       child: Column(children: [
@@ -123,8 +123,10 @@ class rentBookingDatesScreen extends StatelessWidget {
                     color: Colors.grey.shade400,
                     child: TimePickerSpinnerPopUp(
                       mode: CupertinoDatePickerMode.date,
-                      //initTime: rpc.checkOutdate.value.add(Duration(days: 3)),
-                      //minTime:  rpc.checkOutdate.value.add(Duration(days: 3)),
+                      initTime:
+                          rpc.checkOutdate.value.add(const Duration(days: 1)),
+                      minTime:
+                          rpc.checkOutdate.value.add(const Duration(days: 1)),
                       barrierColor:
                           Colors.black12, //Barrier Color when pop up show
                       onChange: (dateTime) {
@@ -196,7 +198,10 @@ class rentBookingDatesScreen extends StatelessWidget {
               // print(houseprice);
               // print(;
               // print(rpc.total.value);
-              Get.to(rentPayment(), arguments: {
+              Get.to(() => const rentPayment(), arguments: {
+                "houseprice": houseprice,
+                "housename": houseName,
+                "houseimage": houseImage,
                 "isSelected": rxisSelected.value,
                 "totalprice": rpc
                     .totalhomePrice(
@@ -210,7 +215,7 @@ class rentBookingDatesScreen extends StatelessWidget {
               width: Get.width,
               height: Get.height * 0.06,
               decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-              child: Center(
+              child: const Center(
                 child: Text("NEXT"),
               ),
             ),
