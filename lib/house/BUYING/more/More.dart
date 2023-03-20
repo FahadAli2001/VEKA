@@ -46,7 +46,7 @@ class More extends StatelessWidget {
               child: Container(
                 width: Get.width * 0.4,
                 height: Get.height * 0.8,
-                color: Colors.green,
+                color: Colors.red.shade300,
                 child: Center(
                   child: Text(
                     "LogOut",
@@ -109,8 +109,10 @@ class More extends StatelessWidget {
             ),
             //
             GestureDetector(
-              onTap: (){
-                Get.to(RealStateOrderdetails(isRent: isRent,));
+              onTap: () {
+                Get.to(RealStateOrderdetails(
+                  isRent: isRent,
+                ));
               },
               child: Row(
                 children: [
@@ -137,7 +139,8 @@ class More extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Order Details",
                                     style: TextStyle(
@@ -151,13 +154,14 @@ class More extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 25,left: 325),
+                        padding: const EdgeInsets.only(top: 25, left: 325),
                         child: CircleAvatar(
-                            radius: Get.width *0.04,
+                            radius: Get.width * 0.04,
                             backgroundColor: boxColor,
-                            child: Icon(Icons.arrow_forward_ios_outlined,
-                              color: Colors.grey.shade500,)
-                        ),
+                            child: Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              color: Colors.grey.shade500,
+                            )),
                       )
                     ],
                   )

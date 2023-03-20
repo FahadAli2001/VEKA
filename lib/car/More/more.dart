@@ -79,11 +79,9 @@ class more extends StatelessWidget {
                   ],
                 ))
           ],
-
           elevation: 0,
           backgroundColor: Colors.white12,
           leading: null,
-
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -105,8 +103,8 @@ class more extends StatelessWidget {
               ),
               //
               InkWell(
-                onTap: (){
-                  Get.to(Orderdetails());
+                onTap: () {
+                  Get.to(() => Orderdetails());
                 },
                 child: Row(
                   children: [
@@ -119,7 +117,8 @@ class more extends StatelessWidget {
                             width: Get.width * 0.85,
                             height: boxheight,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               child: Row(
                                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -133,7 +132,8 @@ class more extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
                                     child: Text(
                                       "Order Details",
                                       style: TextStyle(
@@ -147,13 +147,14 @@ class more extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 25,left: 325),
+                          padding: const EdgeInsets.only(top: 25, left: 325),
                           child: CircleAvatar(
-                              radius: Get.width *0.04,
+                              radius: Get.width * 0.04,
                               backgroundColor: boxColor,
-                              child: Icon(Icons.arrow_forward_ios_outlined,
-                                color: Colors.grey.shade500,)
-                          ),
+                              child: Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                color: Colors.grey.shade500,
+                              )),
                         )
                       ],
                     )
@@ -162,7 +163,7 @@ class more extends StatelessWidget {
               ),
               //
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.to(const MyBookmark());
                 },
                 child: Row(
@@ -176,7 +177,8 @@ class more extends StatelessWidget {
                             width: Get.width * 0.85,
                             height: boxheight,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               child: Row(
                                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -190,7 +192,8 @@ class more extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
                                     child: Text(
                                       "My Book Marks",
                                       style: TextStyle(
@@ -204,13 +207,14 @@ class more extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 25,left: 325),
+                          padding: const EdgeInsets.only(top: 25, left: 325),
                           child: CircleAvatar(
-                              radius: Get.width *0.04,
+                              radius: Get.width * 0.04,
                               backgroundColor: boxColor,
-                              child: Icon(Icons.arrow_forward_ios_outlined,
-                                color: Colors.grey.shade500,)
-                          ),
+                              child: Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                color: Colors.grey.shade500,
+                              )),
                         )
                       ],
                     )
@@ -219,7 +223,7 @@ class more extends StatelessWidget {
               ),
               //--------
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.to(const serviceMode());
                 },
                 child: Row(
@@ -233,7 +237,8 @@ class more extends StatelessWidget {
                             width: Get.width * 0.85,
                             height: boxheight,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               child: Row(
                                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -247,7 +252,8 @@ class more extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
                                     child: Text(
                                       "Service Mode",
                                       style: TextStyle(
@@ -261,13 +267,14 @@ class more extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 25,left: 325),
+                          padding: const EdgeInsets.only(top: 25, left: 325),
                           child: CircleAvatar(
-                              radius: Get.width *0.04,
+                              radius: Get.width * 0.04,
                               backgroundColor: boxColor,
-                              child: Icon(Icons.arrow_forward_ios_outlined,
-                                color: Colors.grey.shade500,)
-                          ),
+                              child: Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                color: Colors.grey.shade500,
+                              )),
                         )
                       ],
                     )
@@ -276,8 +283,8 @@ class more extends StatelessWidget {
               ),
               //--------about us
               GestureDetector(
-                onTap: (){
-                  Get.to(() =>const aboutUs());
+                onTap: () {
+                  Get.to(() => const aboutUs());
                 },
                 child: Row(
                   children: [
@@ -290,7 +297,8 @@ class more extends StatelessWidget {
                             width: Get.width * 0.85,
                             height: boxheight,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               child: Row(
                                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -304,7 +312,8 @@ class more extends StatelessWidget {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
                                     child: Text(
                                       "About Us",
                                       style: TextStyle(
@@ -318,13 +327,14 @@ class more extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 25,left: 325),
+                          padding: const EdgeInsets.only(top: 25, left: 325),
                           child: CircleAvatar(
-                              radius: Get.width *0.04,
+                              radius: Get.width * 0.04,
                               backgroundColor: boxColor,
-                              child: Icon(Icons.arrow_forward_ios_outlined,
-                                color: Colors.grey.shade500,)
-                          ),
+                              child: Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                color: Colors.grey.shade500,
+                              )),
                         )
                       ],
                     )
@@ -332,7 +342,6 @@ class more extends StatelessWidget {
                 ),
               ),
               //--------
-
             ],
           ),
         ),

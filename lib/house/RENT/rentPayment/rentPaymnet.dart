@@ -15,7 +15,7 @@ class rentPayment extends StatelessWidget {
   Widget build(BuildContext context) {
     rentPaymentController rpc = Get.put(rentPaymentController());
 
-    var payment = "cash".obs;
+    var payment = "Cash On Delivery".obs;
 
     var _value = false.obs;
     void _handleRadioValueChanged(val) {

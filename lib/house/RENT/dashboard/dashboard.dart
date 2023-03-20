@@ -13,19 +13,21 @@ class dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      var _selectedIndex = 0.obs;
+    var _selectedIndex = 0.obs;
     const TextStyle optionStyle =
-    TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
-     List<Widget> _widgetOptions = <Widget>[
+        TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
+    List<Widget> _widgetOptions = <Widget>[
       const RentHome(),
-      More(isRent: isRent,)
-
-
+      More(
+        isRent: isRent,
+      )
     ];
     return Scaffold(
-      body: Obx(() => Center(
-        child: _widgetOptions.elementAt(_selectedIndex.value),
-      ),),
+      body: Obx(
+        () => Center(
+          child: _widgetOptions.elementAt(_selectedIndex.value),
+        ),
+      ),
       bottomNavigationBar: Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -36,39 +38,40 @@ class dashboard extends StatelessWidget {
               )
             ],
           ),
-          child: Obx(() => SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-              child: GNav(
-                selectedIndex: _selectedIndex.value,
-                rippleColor: Colors.grey[300]!,
-                hoverColor: Colors.grey[100]!,
-                gap: 8,
-                activeColor: Colors.black,
-                iconSize: 24,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                duration: Duration(milliseconds: 400),
-                tabBackgroundColor: Colors.grey[500]!,
-                color: Colors.black,
-                tabs: [
-                  GButton(
-                    icon: CupertinoIcons.home,
-                    text: 'Home',
-                  ),
-                  GButton(
-                    icon: CupertinoIcons.settings,
-                    text: 'More',
-                  ),
-
-                ],
-                //selectedIndex: _selectedIndex.obs,
-                onTabChange: (index) {
-                  _selectedIndex.value = index;
-                },
+          child: Obx(
+            () => SafeArea(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                child: GNav(
+                  selectedIndex: _selectedIndex.value,
+                  rippleColor: Colors.grey[300]!,
+                  hoverColor: Colors.grey[100]!,
+                  gap: 8,
+                  activeColor: Colors.black,
+                  iconSize: 24,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  duration: Duration(milliseconds: 400),
+                  tabBackgroundColor: Colors.red,
+                  color: Colors.black,
+                  tabs: [
+                    GButton(
+                      icon: CupertinoIcons.home,
+                      text: 'Home',
+                    ),
+                    GButton(
+                      icon: CupertinoIcons.settings,
+                      text: 'More',
+                    ),
+                  ],
+                  //selectedIndex: _selectedIndex.obs,
+                  onTabChange: (index) {
+                    _selectedIndex.value = index;
+                  },
+                ),
               ),
             ),
-          ),)
-      ),
+          )),
     );
   }
 }

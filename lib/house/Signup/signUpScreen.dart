@@ -4,11 +4,22 @@ import 'package:get/get.dart';
 import 'package:veka/house/login/loginScreen.dart';
 import 'SignUpController.dart';
 
-class signUpscreen extends StatelessWidget {
+class signUpscreen extends StatefulWidget {
   signUpscreen({Key? key}) : super(key: key);
+
+  @override
+  State<signUpscreen> createState() => _signUpscreenState();
+}
+
+class _signUpscreenState extends State<signUpscreen> {
+  bool isSignUp = false;
+
   var SocialAppIconSize = Get.height * 0.03;
+
   final _formKey = GlobalKey<FormState>();
+
   HouseSignUpController hsp = Get.put(HouseSignUpController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,15 +161,28 @@ class signUpscreen extends StatelessWidget {
                       width: Get.width,
                       child: CupertinoButton(
                           color: Colors.black,
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: Get.width * 0.05),
-                          ),
+                          child: (isSignUp == true)
+                              ? CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  "Sign Up",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: Get.width * 0.05),
+                                ),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
+                              setState(() {
+                                isSignUp = true;
+                              });
                               hsp.SignUp();
+                              if (!mounted) {
+                                setState(() {
+                                  isSignUp = false;
+                                });
+                              }
+
                               //hsp.SignUp();
                             }
                           }),

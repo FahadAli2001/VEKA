@@ -244,74 +244,74 @@ class CarHomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 26),
-                child: SizedBox(
-                  height: Get.height * 0.055,
-                  width: Get.width,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      SizedBox(
-                        width: 80,
-                        child: Card(
-                          color: Colors.white,
-                          child: Center(
-                            child: Text(
-                              "AUDI",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 80,
-                        child: Card(
-                          color: Colors.black,
-                          child: Center(
-                            child: Text(
-                              "LEXUS",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 80,
-                        child: Card(
-                          color: Colors.white,
-                          child: Center(
-                            child: Text(
-                              "PORSCHE",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 80,
-                        child: Card(
-                          color: Colors.white,
-                          child: Center(
-                            child: Text(
-                              "BMW",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 26),
+              //   child: SizedBox(
+              //     height: Get.height * 0.055,
+              //     width: Get.width,
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //       children: const [
+              //         SizedBox(
+              //           width: 80,
+              //           child: Card(
+              //             color: Colors.white,
+              //             child: Center(
+              //               child: Text(
+              //                 "AUDI",
+              //                 style: TextStyle(
+              //                     color: Colors.black,
+              //                     fontWeight: FontWeight.bold),
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //         SizedBox(
+              //           width: 80,
+              //           child: Card(
+              //             color: Colors.black,
+              //             child: Center(
+              //               child: Text(
+              //                 "LEXUS",
+              //                 style: TextStyle(
+              //                     color: Colors.white,
+              //                     fontWeight: FontWeight.bold),
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //         SizedBox(
+              //           width: 80,
+              //           child: Card(
+              //             color: Colors.white,
+              //             child: Center(
+              //               child: Text(
+              //                 "PORSCHE",
+              //                 style: TextStyle(
+              //                     color: Colors.black,
+              //                     fontWeight: FontWeight.bold),
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //         SizedBox(
+              //           width: 80,
+              //           child: Card(
+              //             color: Colors.white,
+              //             child: Center(
+              //               child: Text(
+              //                 "BMW",
+              //                 style: TextStyle(
+              //                     color: Colors.black,
+              //                     fontWeight: FontWeight.bold),
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
 
               // //--------------------------------
               Obx(() => FutureBuilder(

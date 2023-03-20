@@ -7,7 +7,8 @@ import '../order_details_controller.dart';
 
 // ignore: must_be_immutable
 class AutoMobileRent extends StatelessWidget {
-  const AutoMobileRent({Key? key,required this.orderDetailsController}) : super(key: key);
+  const AutoMobileRent({Key? key, required this.orderDetailsController})
+      : super(key: key);
 
   final OrderDetailsController orderDetailsController;
 
@@ -41,7 +42,9 @@ class MyOrders extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         child: ListView.builder(
-            itemCount: orderDetailsController.isRent.value ? orderDetailsController.ordersRent.length : orderDetailsController.ordersBuy.length,
+            itemCount: orderDetailsController.isRent.value
+                ? orderDetailsController.ordersRent.length
+                : orderDetailsController.ordersBuy.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(4),
@@ -54,23 +57,29 @@ class MyOrders extends StatelessWidget {
                     children: [
                       SizedBox(
                         width: Get.width * 0.5,
-                        child:  ListTile(
+                        child: ListTile(
                           leading: CircleAvatar(
-                            backgroundImage: orderDetailsController.isRent.value ? NetworkImage(orderDetailsController.ordersRent[index]["image"]) : NetworkImage(orderDetailsController.ordersBuy[index]["image"]),
+                            backgroundImage: orderDetailsController.isRent.value
+                                ? NetworkImage(orderDetailsController
+                                    .ordersRent[index]["image"])
+                                : NetworkImage(orderDetailsController
+                                    .ordersBuy[index]["image"]),
                             radius: 30,
                             backgroundColor: Colors.black54,
                           ),
-                          title: orderDetailsController.isRent.value ? Text(orderDetailsController.ordersRent[index]['name']) : Text(orderDetailsController.ordersBuy[index]['name']),
-                          subtitle: Text(orderDetailsController.isRent.value ?  
-                            "\$${orderDetailsController.ordersRent[index]['price']}" : "\$${orderDetailsController.ordersBuy[index]['price']}",
+                          title: orderDetailsController.isRent.value
+                              ? Text(orderDetailsController.ordersRent[index]
+                                  ['name'])
+                              : Text(orderDetailsController.ordersBuy[index]
+                                  ['name']),
+                          subtitle: Text(
+                            orderDetailsController.isRent.value
+                                ? "\$${orderDetailsController.ordersRent[index]['price']}"
+                                : "\$${orderDetailsController.ordersBuy[index]['price']}",
                             style: const TextStyle(color: Colors.green),
                           ),
                         ),
                       ),
-                      const Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        color: Colors.black,
-                      )
                     ],
                   ),
                 ),
