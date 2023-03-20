@@ -106,7 +106,7 @@ class more extends StatelessWidget {
               //
               InkWell(
                 onTap: (){
-                  Get.to(const Orderdetails());
+                  Get.to(Orderdetails());
                 },
                 child: Row(
                   children: [

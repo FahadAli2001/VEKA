@@ -6,6 +6,7 @@ import 'package:veka/house/BUYING/home/homeScreen.dart';
 import 'package:veka/house/RENT/dashboard/dashboard.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
 
+import '../Dashboard/dashboardScreen.dart';
 import '../SignIn/SignInController.dart';
 import '../SignUp/SignupController.dart';
 import '../Token/AccessToken.dart';
@@ -63,7 +64,7 @@ class BuyReviewController extends GetxController {
           middleText:
               "Your booking has been successfully completed ",
           onConfirm: () {
-            Get.offAll(const dashboard());
+            Get.offAll(const DashboardScreen());
             //Get.to(DashboardScreen());
           });
     } catch (e) {

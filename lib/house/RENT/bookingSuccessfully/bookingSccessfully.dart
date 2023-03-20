@@ -5,9 +5,10 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
 import '../../BUYING/dashboard/houseDashboard.dart';
+import '../../BUYING/home/homeScreen.dart';
 
 class bookingSucessfully extends StatefulWidget {
-   bookingSucessfully({Key? key}) : super(key: key);
+  bookingSucessfully({Key? key}) : super(key: key);
 
   @override
   State<bookingSucessfully> createState() => _bookingSucessfullyState();
@@ -18,26 +19,22 @@ class _bookingSucessfullyState extends State<bookingSucessfully> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 4),
-            ()=>Get.to(
-            houseDashboard()
-        )
-    );
+    Timer(Duration(seconds: 4), () => Get.offAll(const homeScreen()));
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 90),
         child: Column(
-
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.check_circle,
+            Icon(
+              Icons.check_circle,
               size: 100,
-              color: Colors.red,),
+              color: Colors.red,
+            ),
             Text("Your booking is successfully done")
           ],
         ),

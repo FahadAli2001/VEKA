@@ -14,7 +14,7 @@ class homeScreen extends StatelessWidget {
         body: SafeArea(
       child: Stack(
         children: [
-          Container(
+          SizedBox(
             width: Get.width,
             height: Get.height,
             //  color: Colors.green,
@@ -22,7 +22,7 @@ class homeScreen extends StatelessWidget {
           Container(
             width: Get.width,
             height: Get.height * 0.59,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage("assets/house.jpg"),
                     fit: BoxFit.cover,
@@ -48,7 +48,7 @@ class homeScreen extends StatelessWidget {
                         color: Colors.white,
                         fontSize: Get.width * 0.04),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   )
                 ],
@@ -58,7 +58,7 @@ class homeScreen extends StatelessWidget {
           Positioned(
             top: 450,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(50),
@@ -87,7 +87,7 @@ class homeScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 20),
-                      child: Container(
+                      child: SizedBox(
                         width: Get.width,
                         height: Get.height * 0.28,
                         //color: Colors.blue,
@@ -99,13 +99,13 @@ class homeScreen extends StatelessWidget {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    Get.to(() => houseDashboard());
+                                    Get.to(() => const houseDashboard(isRent: false,));
                                   },
                                   child: Container(
                                     width: Get.width * 0.4,
                                     height: Get.height * 0.18,
                                     decoration: BoxDecoration(
-                                        image: DecorationImage(
+                                        image: const DecorationImage(
                                             image:
                                                 AssetImage("assets/home.png"),
                                             fit: BoxFit.fill),
@@ -128,7 +128,9 @@ class homeScreen extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    Get.to(() => dashboard());
+                                    Get.to(() => const dashboard(
+                                      isRent: true,
+                                    ));
                                   },
                                   child: Container(
                                     width: Get.width * 0.4,
@@ -136,7 +138,7 @@ class homeScreen extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       //color: Colors.green,
                                       borderRadius: BorderRadius.circular(20),
-                                      image: DecorationImage(
+                                      image: const DecorationImage(
                                           image: AssetImage("assets/rent.jpg"),
                                           fit: BoxFit.cover,
                                           filterQuality: FilterQuality.high),

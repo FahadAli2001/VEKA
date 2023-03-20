@@ -9,16 +9,17 @@ import '../more/More.dart';
 
 
 class houseDashboard extends StatelessWidget {
-  const houseDashboard({Key? key}) : super(key: key);
+  final bool isRent;
+  const houseDashboard({Key? key, required this.isRent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var _selectedIndex = 0.obs;
     const TextStyle optionStyle =
     TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
-    const List<Widget> _widgetOptions = <Widget>[
-      houseHome(),
-      More()
+     List<Widget> _widgetOptions = <Widget>[
+      const houseHome(),
+      More(isRent: isRent,)
 
     ];
     return Scaffold(

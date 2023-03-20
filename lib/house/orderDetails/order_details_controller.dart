@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import '../Token/AccessToken.dart';
+import '../../car/Token/AccessToken.dart';
 
-class OrderDetailsController extends GetxController {
+class RealStateOrderDetailsController extends GetxController {
   AcessToken acessToken = Get.put(AcessToken());
   RxList ordersRent = [].obs;
   RxList ordersBuy = [].obs;
@@ -20,8 +20,7 @@ class OrderDetailsController extends GetxController {
 
   Future<void> getOrders() async {
     String url =
-        "https://vekaautomobile.technopreneurssoftware.com/wp-json/wc/v3/orders";
-
+        "https://vekarealestate.technopreneurssoftware.com/wp-json/wc/v3/orders";
     isOrderGet.value = true;
 
     try {
@@ -29,25 +28,24 @@ class OrderDetailsController extends GetxController {
         Uri.parse(url),
         headers: {
           'Authorization':
-              'Basic ${base64Encode(utf8.encode('ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6'))}',
-          'wc-authentication':
-              'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6',
+              'Basic ${base64Encode(utf8.encode('${acessToken.HouseCK}:${acessToken.HouseCS}'))}',
+          'wc-authentication': '${acessToken.HouseCK}:${acessToken.HouseCS}',
         },
       );
       if (response.statusCode == 200) {
         List<dynamic> data = jsonDecode(response.body);
-
         for (var element in data) {
           getProductById(element['line_items'][0]['product_id'].toString())
               .then((value) {
-            if (value['type'] == "ovacrs_car_rental") {
+            String temp = value['type'];
+            if (temp == "ovacrs_car_rental") {
               ordersRent.add({
                 'name': element['line_items'][0]['name'].toString(),
                 'price': element['line_items'][0]['price'].toString(),
                 'image': element['line_items'][0]['image']['src'].toString(),
                 'product_id': element['line_items'][0]['product_id'].toString(),
               });
-            } else {
+            } else if (temp == "simple") {
               ordersBuy.add({
                 'name': element['line_items'][0]['name'].toString(),
                 'price': element['line_items'][0]['price'].toString(),
@@ -57,10 +55,9 @@ class OrderDetailsController extends GetxController {
             }
           });
         }
-          isOrderGet.value = false;
+        isOrderGet.value = false;
       } else {
-          isOrderGet.value = false;
-
+        isOrderGet.value = false;
       }
     } catch (e) {
       isOrderGet.value = false;
@@ -70,16 +67,15 @@ class OrderDetailsController extends GetxController {
 
   Future<dynamic> getProductById(String id) async {
     String url =
-        "https://vekaautomobile.technopreneurssoftware.com/wp-json/wc/v3/products/$id";
+        "https://vekarealestate.technopreneurssoftware.com/wp-json/wc/v3/products/$id";
 
     try {
       http.Response response = await http.get(
         Uri.parse(url),
         headers: {
           'Authorization':
-              'Basic ${base64Encode(utf8.encode('ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6'))}',
-          'wc-authentication':
-              'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6',
+              'Basic ${base64Encode(utf8.encode('${acessToken.HouseCK}:${acessToken.HouseCS}'))}',
+          'wc-authentication': '${acessToken.HouseCK}:${acessToken.HouseCS}',
         },
       );
       if (response.statusCode == 200) {

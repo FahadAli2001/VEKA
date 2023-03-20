@@ -6,10 +6,10 @@ import 'package:get/get_navigation/get_navigation.dart';
 import '../order_details_controller.dart';
 
 // ignore: must_be_immutable
-class AutoMobileRent extends StatelessWidget {
-  const AutoMobileRent({Key? key,required this.orderDetailsController}) : super(key: key);
+class RealStateRent extends StatelessWidget {
+  final RealStateOrderDetailsController orderDetailsController;
+  const RealStateRent({Key? key, required this.orderDetailsController}) : super(key: key);
 
-  final OrderDetailsController orderDetailsController;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class AutoMobileRent extends StatelessWidget {
 }
 
 class MyOrders extends StatelessWidget {
-  final OrderDetailsController orderDetailsController;
+  final RealStateOrderDetailsController orderDetailsController;
   const MyOrders({super.key, required this.orderDetailsController});
 
   @override
