@@ -22,7 +22,7 @@ class Orderdetails extends StatelessWidget {
             onPressed: (){
               Get.back();
             },
-            icon: Icon(CupertinoIcons.back),
+            icon: const Icon(CupertinoIcons.back),
             color: Colors.black,
           ),
           title: Text("Order Details",
@@ -31,7 +31,7 @@ class Orderdetails extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 fontSize: Get.width * 0.05
             ),),
-          actions: [
+          actions: const [
             Padding(
               padding: EdgeInsets.only(right: 20),
               child: CircleAvatar(
@@ -41,7 +41,7 @@ class Orderdetails extends StatelessWidget {
               ),
             )
           ],
-          bottom: TabBar(
+          bottom: const TabBar(
             indicatorColor: Colors.black,
 
             tabs: [
@@ -52,8 +52,8 @@ class Orderdetails extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            rent(),
-            buyingdetails()
+            AutoMobileRent(isRent: true),
+            AutoMobileRent(isRent: false)
           ],
         ),
       ),

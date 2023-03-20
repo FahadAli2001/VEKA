@@ -9,8 +9,8 @@ import 'package:veka/SplashScreen.dart';
 import 'dart:ui';
 void main() async{
   ErrorWidget.builder = (FlutterErrorDetails details) => Container();
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

@@ -79,6 +79,7 @@ class CarHomePage extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
                 padding:
@@ -127,30 +128,7 @@ class CarHomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              //-------
-              /*Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 25),
-                child: TextField(
-                  style: TextStyle(
-                    height:  0.5
-                  ),
-                  decoration: InputDecoration(
 
-                      prefixIcon: Icon(CupertinoIcons.search),
-                      prefixIconColor: Colors.grey,
-                      hintText: "Find any car",
-                      helperStyle: TextStyle(
-                          color: Colors.grey
-                      ),
-                      border: OutlineInputBorder(
-
-                      ),
-                      fillColor: Colors.grey.shade100,
-                      filled: true
-                  ),
-                ),
-              ),*/
-              //-------------
               FutureBuilder(
                   future: car.allproducts(),
                   builder: (context, snapshot) {
@@ -335,115 +313,73 @@ class CarHomePage extends StatelessWidget {
                 ),
               ),
 
-              //--------------------------------
-              Obx(
-                () => (car.rent.value == true)
-                    ? FutureBuilder(
-                        future:  car.rentProduct(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasError) {
-                            return const Text("has error");
-                          } else if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.grey,
-                              ),
-                            );
-                          }
-                          return Expanded(
-                            child: GridView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: (itemWidth / itemHeight),
-                              ),
-                              itemCount: snapshot.data!.length,
+              // //--------------------------------
+              Obx(() => FutureBuilder(
+                    future: car.rent.value == true
+                        ? car.rentProduct()
+                        : car.sellProduct(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const Text("has error");
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.grey,
+                          ),
+                        );
+                      }
 
-                              itemBuilder: (BuildContext context, int index) {
-                                return product(
-                                    car.rentData![index]["images"][0]["src"]
-                                        .toString(),
-                                    car.rentData![index]["name"].toString(),
-                                    car.rentData![index]["price"].toString(),
-                                    snapshot.data![index]["short_description"]
-                                        .toString(),
-                                    snapshot.data![index]["meta_data"][3]
-                                        ["value"],
-                                    snapshot.data![index]["meta_data"][5]
-                                        ["value"],
-                                    snapshot.data![index]["meta_data"][11]
-                                        ["value"],
-                                    snapshot.data![index]["meta_data"][10]
-                                        ["value"],
-                                    snapshot.data![index]["meta_data"][12]
-                                        ["value"],
-                                    snapshot.data![index]["meta_data"][20]
-                                        ["value"],
-                                    snapshot.data![index]["id"],
-                                    rbmc,
-                                    bsc,
-                                    rxisSelected,
-                                    color);
-                              },
-
-                              // child: ListView.builder(
-                              //   itemCount: snapshot.data!.length,
-                              //   scrollDirection: Axis.horizontal,
-                              //   itemBuilder: (context, index) {
-                            ),
-                          );
+                      return GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: (itemWidth / itemHeight),
+                        ),
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return car.rent.value == true
+                              ? product(
+                                  car.rentData![index]["images"][0]["src"]
+                                      .toString(),
+                                  car.rentData![index]["name"].toString(),
+                                  car.rentData![index]["price"].toString(),
+                                  snapshot.data![index]["short_description"]
+                                      .toString(),
+                                  snapshot.data![index]["meta_data"][3]
+                                      ["value"],
+                                  snapshot.data![index]["meta_data"][5]
+                                      ["value"],
+                                  snapshot.data![index]["meta_data"][11]
+                                      ["value"],
+                                  snapshot.data![index]["meta_data"][10]
+                                      ["value"],
+                                  snapshot.data![index]["meta_data"][12]
+                                      ["value"],
+                                  snapshot.data![index]["meta_data"][20]
+                                      ["value"],
+                                  snapshot.data![index]["id"],
+                                  rbmc,
+                                  bsc,
+                                  rxisSelected,
+                                  color)
+                              : products(
+                                  car.selldata[index]["images"][0]["src"]
+                                      .toString(),
+                                  car.selldata[index]["name"].toString(),
+                                  car.selldata[index]["price"].toString(),
+                                  snapshot.data![index]["meta_data"][20]
+                                      ["value"],
+                                  snapshot.data[index]["meta_data"][11]
+                                      ["value"],
+                                  snapshot.data![index]["meta_data"][10]
+                                      ["value"],
+                                  snapshot.data[index]["id"]);
                         },
-                      )
-                    : //--------------
-                    FutureBuilder(
-                        future: car.sellProduct(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasError) {
-                            return const Text("has error");
-                          } else if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.grey,
-                              ),
-                            );
-                          }
-                          //
-                          //
-                          return Expanded(
-                            child: GridView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: (itemWidth / itemHeight),
-                              ),
-                              itemCount: car.selldata!.length, //
-
-                              itemBuilder: (BuildContext context, int index) {
-                                return products(
-                                    car.selldata[index]["images"][0]["src"]
-                                        .toString(),
-                                    car.selldata[index]["name"].toString(),
-                                    car.selldata[index]["price"].toString(),
-                                    snapshot.data![index]["meta_data"][20]
-                                        ["value"],
-                                    snapshot.data[index]["meta_data"][11]
-                                        ["value"],
-                                    snapshot.data![index]["meta_data"][10]
-                                        ["value"],
-                                    snapshot.data[index]["id"]);
-                              },
-                            ),
-                          );
-                        },
-                      ),
-              )
-              //--------------------
+                      );
+                    },
+                  ))
             ],
           ),
         ));
@@ -1205,7 +1141,6 @@ class CarHomePage extends StatelessWidget {
                                                                                 height: Get.height * 0.07,
                                                                                 child: TimePickerSpinnerPopUp(
                                                                                   mode: CupertinoDatePickerMode.date,
-                                                                                  
                                                                                   initTime: bsc.pickupdate.value,
                                                                                   barrierColor: Colors.black12,
                                                                                   onChange: (dateTime) {
@@ -1343,7 +1278,7 @@ class CarHomePage extends StatelessWidget {
                                                                                 child: TimePickerSpinnerPopUp(
                                                                                   mode: CupertinoDatePickerMode.date,
                                                                                   minTime: bsc.dropOfdate.value.add(Duration(days: 2)),
-                                                                                  initTime:bsc.dropOfdate.value.add(Duration(days: 2)),
+                                                                                  initTime: bsc.dropOfdate.value.add(Duration(days: 2)),
                                                                                   barrierColor: Colors.black12,
                                                                                   onChange: (dateTime) {
                                                                                     bsc.dropOfdate.value = dateTime;
