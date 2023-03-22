@@ -41,7 +41,7 @@ class rentStepper extends StatelessWidget {
           onPressed: () {
             Get.back();
           },
-          icon: Icon(CupertinoIcons.back),
+          icon: const Icon(CupertinoIcons.back),
           color: Colors.black,
         ),
       ),
