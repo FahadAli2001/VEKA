@@ -112,8 +112,8 @@ class SignUpController extends GetxController {
           Uri.parse(
               "https://vekaautomobile.technopreneurssoftware.com/wp-json/jwt-auth/v1/token"),
           body: {
-            "username": acessTokenclass.username,
-            "password": acessTokenclass.password
+            "username": acessTokenclass.AutoMobileusername,
+            "password": acessTokenclass.AutoMobilepassword
           });
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());

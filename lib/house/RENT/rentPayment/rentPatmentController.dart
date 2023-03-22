@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:woocommerce_api/woocommerce_api.dart';
-
+import 'package:http/http.dart' as http;
 import '../../../car/Token/AccessToken.dart';
 import '../../BUYING/home/homeScreen.dart';
 import '../../login/LoginController.dart';
@@ -14,7 +16,7 @@ class rentPaymentController extends GetxController {
   var checkIndate = DateTime.now().obs;
   var checkOutdate = DateTime.now().obs;
   var total = 0.obs;
-
+  RxList eventDates = [].obs;
   var adultCount = 1.obs;
   var childrenCount = 1.obs;
   var infantCount = 1.obs;
@@ -24,7 +26,40 @@ class rentPaymentController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+
     getName();
+  }
+
+  Future<String> getOrders() async {
+    String url =
+        "https://vekarealestate.technopreneurssoftware.com/wp-json/wc/v3/orders";
+
+    try {
+      http.Response response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization':
+              'Basic ${base64Encode(utf8.encode('${acessToken.HouseCK}:${acessToken.HouseCS}'))}',
+          'wc-authentication': '${acessToken.HouseCK}:${acessToken.HouseCS}',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> data = jsonDecode(response.body);
+
+        for (var element in data) {
+          if (element['line_items'][0]["meta_data"] != []) {
+            DateTime temp = DateTime.parse(
+                element["line_items"][0]['meta_data'][0]['value']);
+            eventDates.add("${temp.day}:${temp.month}:${temp.year}");
+          }
+        }
+        return "Success";
+      } else {}
+    } catch (e) {
+      return e.toString();
+    }
+    throw "Something went wrong";
   }
 
   void getName() async {
@@ -164,7 +199,6 @@ class rentPaymentController extends GetxController {
       // print(response);
       //Get.to(meetingSuccessScreen());
       //print("done");
-
     } catch (e) {
       print("erorr${e.toString()}");
     }

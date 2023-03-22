@@ -32,6 +32,7 @@ class rentBookingDatesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     RxList<dynamic> rxisSelected = [].obs;
     rxisSelected.value = RxList.generate(extraservices.length, (_) => false);
+    TimePickerSpinnerController controller = TimePickerSpinnerController();
 
     return Container(
       child: Column(children: [
@@ -46,16 +47,40 @@ class rentBookingDatesScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
           child: Container(
-              width: Get.width * 0.9,
-              color: Colors.grey.shade100,
-              child: Padding(
+            width: Get.width * 0.9,
+            color: Colors.grey.shade100,
+            child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TableCalendar(
-                  firstDay: DateTime.now(),
-                  lastDay: DateTime.utc(2040, 12, 31),
-                  focusedDay: DateTime.now(),
-                ),
-              )),
+                child: FutureBuilder(
+                    future: rpc.getOrders(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      return TableCalendar(
+                        calendarStyle: const CalendarStyle(
+                          markersAlignment: Alignment.bottomCenter,
+                        ),
+                        calendarBuilders: CalendarBuilders(
+                            markerBuilder: (context, day, events) {
+                          return rpc.eventDates.contains(
+                                  "${day.day}:${day.month}:${day.year}")
+                              ? Container(
+                                  width: 10,
+                                  height: 10,
+                                  alignment: Alignment.center,
+                                  decoration: const BoxDecoration(
+                                      color: Colors.black,
+                                      shape: BoxShape.circle),
+                                )
+                              : null;
+                        }),
+                        firstDay: DateTime.now(),
+                        lastDay: DateTime.utc(2040, 12, 31),
+                        focusedDay: DateTime.now(),
+                      );
+                    })),
+          ),
         ),
         //
         Align(
@@ -92,13 +117,53 @@ class rentBookingDatesScreen extends StatelessWidget {
                     height: Get.height * 0.06,
                     color: Colors.grey.shade400,
                     child: TimePickerSpinnerPopUp(
+                      controller: controller,
                       mode: CupertinoDatePickerMode.date,
                       initTime: rpc.checkIndate.value,
                       barrierColor:
                           Colors.black12, //Barrier Color when pop up show
+                      timeWidgetBuilder: (val) {
+                        return GestureDetector(
+                          onTap: () {
+                            controller.showMenu();
+                          },
+                          child: Obx(() =>  Container(
+                            width: Get.width / 2.8,
+                            height: Get.height * 0.06,
+                            color: Colors.grey.shade400,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.calendar_month,
+                                  color: Colors.grey,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "${rpc.checkIndate.value.day}/${rpc.checkIndate.value.month}/${rpc.checkIndate.value.year}"
+                                      ,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: Get.width * 0.035),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ));
+                      },
                       onChange: (dateTime) {
-                        // Implement your logic with select dateTime
-                        rpc.checkIndate.value = dateTime;
+                        if (rpc.eventDates.contains(
+                            "${dateTime.day}:${dateTime.month}:${dateTime.year}")) {
+                              controller.menuIsShowing = false;
+                          Get.snackbar("Error",
+                              "This date is not available Please select another date",
+                              snackPosition: SnackPosition.BOTTOM);
+                        } else {
+                          rpc.checkIndate.value = dateTime;
+                          controller.menuIsShowing = false;
+                        }
                       },
                     ),
                   ),
