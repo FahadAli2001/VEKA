@@ -16,7 +16,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     var width = Get.width;
-    var SocialAppIconSize = Get.height * 0.03;
+    //var SocialAppIconSize = Get.height * 0.03;
 
     SignInController sic = Get.put(SignInController());
     final _formKey = GlobalKey<FormState>();
@@ -33,8 +33,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                   child: TextFormField(
                       controller: sic.username,
-                      style: TextStyle(height: 0.5),
-                      decoration: InputDecoration(
+                      style: const TextStyle(height: 0.5),
+                      decoration: const InputDecoration(
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.black)),
                           errorStyle: TextStyle(color: Colors.red),
@@ -69,13 +69,13 @@ class _SignInScreenState extends State<SignInScreen> {
                         },
                         controller: sic.password,
                         decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
+                            focusedBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.black)),
                             focusColor: Colors.black,
-                            errorStyle: TextStyle(color: Colors.red),
+                            errorStyle: const TextStyle(color: Colors.red),
                             hintText: "Password",
                             labelText: "Password",
-                            labelStyle: TextStyle(color: Colors.black),
+                            labelStyle: const TextStyle(color: Colors.black),
                             suffixIcon: InkWell(
                                 onTap: () {
                                   if (sic.isHidepass.value == true) {
@@ -85,20 +85,20 @@ class _SignInScreenState extends State<SignInScreen> {
                                   }
                                 },
                                 child: (sic.isHidepass.value == true)
-                                    ? Icon(
+                                    ? const Icon(
                                         CupertinoIcons.eye_slash_fill,
                                         color: Colors.black,
                                       )
-                                    : Icon(
+                                    : const Icon(
                                         CupertinoIcons.eye,
                                         color: Colors.black,
                                       )),
-                            border: OutlineInputBorder())),
+                            border: const OutlineInputBorder())),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Container(
+                  child: SizedBox(
                     height: Get.height * 0.06,
                     width: Get.width,
                     //color: Colors.red,

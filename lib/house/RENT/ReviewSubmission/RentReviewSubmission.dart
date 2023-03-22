@@ -5,11 +5,19 @@ import 'package:get/get.dart';
 
 import '../rentPayment/rentPatmentController.dart';
 
-class RetReviewSubmission extends StatelessWidget {
+class RetReviewSubmission extends StatefulWidget {
   RetReviewSubmission({Key? key}) : super(key: key);
 
+  @override
+  State<RetReviewSubmission> createState() => _RetReviewSubmissionState();
+}
+
+class _RetReviewSubmissionState extends State<RetReviewSubmission> {
   rentPaymentController rpc = Get.put(rentPaymentController());
+
   var data = Get.arguments;
+
+  bool requestSend = false;
 
   @override
   Widget build(BuildContext context) {
@@ -285,19 +293,28 @@ class RetReviewSubmission extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
         child: GestureDetector(
           onTap: () {
-            print("tapp");
-            //print(data["isSelected"]);
-            rpc.requestForBuyHouse(data["id"], data["isSelected"]);
-            //print(data["id"]);
-            //print(data["totalprice"]);
-            //  Get.to(bookingSucessfully());
+            if (requestSend != true) {
+              rpc.requestForBuyHouse(data["id"], data["isSelected"]);
+            }
+            setState(() {
+              requestSend = true;
+            });
+            if (mounted) {
+              setState(() {
+                requestSend = false;
+              });
+            }
           },
           child: Container(
             width: Get.width,
             height: Get.height * 0.06,
             decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-            child: const Center(
-              child: Text("BOOKED"),
+            child: Center(
+              child: requestSend == true
+                  ? const CircularProgressIndicator(
+                      color: Colors.white,
+                    )
+                  : const Text("BOOKED"),
             ),
           ),
         ),

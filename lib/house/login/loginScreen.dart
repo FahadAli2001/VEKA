@@ -144,7 +144,7 @@ class _loginSxreenState extends State<loginSxreen> {
                     ),
                   ),
                   //
-                  Container(
+                  SizedBox(
                     height: Get.height * 0.06,
                     width: Get.width,
                     //color: Colors.red,

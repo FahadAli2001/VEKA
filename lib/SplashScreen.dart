@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:page_transition/page_transition.dart';
 
 import 'ChooseOption.dart';
@@ -13,17 +14,17 @@ class SplashScreen extends StatelessWidget {
       splash: Column(
         children: const [
           CircleAvatar(
-            radius: 100,  
+            radius: 100,
             backgroundColor: Colors.white,
-            backgroundImage:AssetImage("assets/Veka-Green.png") ,
+            backgroundImage: AssetImage("assets/Veka-Green.png"),
           ),
           CircleAvatar(
             radius: 100,
             backgroundColor: Colors.white,
-            backgroundImage:AssetImage("assets/Veka-Red.png") ,
+            backgroundImage: AssetImage("assets/Veka-Red.png"),
           )
-         // Image.asset("assets/Veka-Green.png"),
-         // Image.asset("assets/Veka-Red.png")
+          // Image.asset("assets/Veka-Green.png"),
+          // Image.asset("assets/Veka-Red.png")
         ],
       ),
       nextScreen: const ChooseOption(),

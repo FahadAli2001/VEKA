@@ -33,8 +33,8 @@ class _SignUpState extends State<SignUp> {
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   child: TextFormField(
                     controller: suc.username,
-                    style: TextStyle(height: 0.5),
-                    decoration: InputDecoration(
+                    style: const TextStyle(height: 0.5),
+                    decoration: const InputDecoration(
                       errorStyle: TextStyle(color: Colors.red),
                       hintText: "User Name",
                       labelText: "User Name",
@@ -69,8 +69,8 @@ class _SignUpState extends State<SignUp> {
                       }
                     },
                     controller: suc.email,
-                    style: TextStyle(height: 0.5),
-                    decoration: InputDecoration(
+                    style: const TextStyle(height: 0.5),
+                    decoration: const InputDecoration(
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.black)),
                       labelStyle: TextStyle(color: Colors.black),
@@ -100,12 +100,12 @@ class _SignUpState extends State<SignUp> {
                           }
                         },
                         controller: suc.password,
-                        style: TextStyle(height: 0.5),
+                        style: const TextStyle(height: 0.5),
                         decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
+                          focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.black)),
-                          labelStyle: TextStyle(color: Colors.black),
-                          errorStyle: TextStyle(color: Colors.red),
+                          labelStyle: const TextStyle(color: Colors.black),
+                          errorStyle: const TextStyle(color: Colors.red),
                           hintText: "Password",
                           labelText: "Password",
                           suffixIcon: GestureDetector(
@@ -117,15 +117,15 @@ class _SignUpState extends State<SignUp> {
                                 }
                               },
                               child: (suc.isHidepass.value == true)
-                                  ? Icon(
+                                  ? const Icon(
                                       CupertinoIcons.eye_slash_fill,
                                       color: Colors.black,
                                     )
-                                  : Icon(
+                                  : const Icon(
                                       CupertinoIcons.eye,
                                       color: Colors.black,
                                     )),
-                          border: OutlineInputBorder(),
+                          border: const OutlineInputBorder(),
                         )),
                   ),
                 ),
@@ -166,7 +166,7 @@ class _SignUpState extends State<SignUp> {
                     child: CupertinoButton(
                         color: Colors.black,
                         child: (isSignUp == true)
-                            ? CircularProgressIndicator(
+                            ? const CircularProgressIndicator(
                                 color: Colors.white,
                               )
                             : Text(

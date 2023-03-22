@@ -50,16 +50,17 @@ class houseDashboard extends StatelessWidget {
                   gap: 8,
                   activeColor: Colors.black,
                   iconSize: 24,
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  duration: Duration(milliseconds: 400),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  duration: const Duration(milliseconds: 400),
                   tabBackgroundColor: Colors.red,
                   color: Colors.black,
                   tabs: [
-                    GButton(
+                    const GButton(
                       icon: CupertinoIcons.home,
                       text: 'Home',
                     ),
-                    GButton(
+                    const GButton(
                       icon: CupertinoIcons.settings,
                       text: 'More',
                     ),

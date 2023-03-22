@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:veka/car/AboutUs/aboutUs.dart';
+import 'package:veka/car/EditProfile/Edit_Profile.dart';
 import 'package:veka/car/orderDetails/orderdetails.dart';
 import 'package:veka/car/serviceMode/serviceMode.dart';
 
-import '../../ChooseOption.dart';
 import '../Mybookmark/myBookmark.dart';
 import '../Profile/ProfileController.dart';
 
@@ -64,20 +62,25 @@ class more extends StatelessWidget {
           ),
           centerTitle: true,
           actions: [
-            Padding(
-                padding: const EdgeInsets.only(top: 5, right: 20),
-                child: Column(
-                  children: const [
-                    CircleAvatar(
-                      radius: 18,
-                    ),
-                    // SizedBox(height: 5,),
-                    Text(
-                      "Hi, Belly",
-                      style: TextStyle(color: Colors.black, fontSize: 10),
-                    ),
-                  ],
-                ))
+            GestureDetector(
+              onTap: () {
+                Get.to(() => const EditProfileScreen());
+              },
+              child: Padding(
+                  padding: const EdgeInsets.only(top: 5, right: 20),
+                  child: Column(
+                    children: const [
+                      CircleAvatar(
+                        radius: 18,
+                      ),
+                      // SizedBox(height: 5,),
+                      Text(
+                        "Hi, Belly",
+                        style: TextStyle(color: Colors.black, fontSize: 10),
+                      ),
+                    ],
+                  )),
+            )
           ],
           elevation: 0,
           backgroundColor: Colors.white12,

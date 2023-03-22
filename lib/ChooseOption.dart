@@ -15,27 +15,23 @@ class ChooseOption extends StatefulWidget {
 }
 
 class _ChooseOptionState extends State<ChooseOption> {
-
   @override
   void initState() {
     super.initState();
-    
+
     SharedPreferences.getInstance().then((value) {
-      if(value.getInt("realStateUserId")!=null){
+      if (value.getInt("realStateUserId") != null) {
         Get.off(() => const homeScreen());
-      }
-      else if(value.getString("userId")!=null){
+      } else if (value.getString("userId") != null) {
         Get.off(() => const DashboardScreen());
       }
     });
-
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     // appBar: AppBar(),
+      // appBar: AppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         //crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,10 +39,11 @@ class _ChooseOptionState extends State<ChooseOption> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: InkWell(
-              onTap: () async{
-                SharedPreferences sp =await SharedPreferences.getInstance();
-                (sp.getString("username")!=null)?Get.to(() => DashboardScreen()): Get.to(welcomeScreen());
-
+              onTap: () async {
+                SharedPreferences sp = await SharedPreferences.getInstance();
+                (sp.getString("username") != null)
+                    ? Get.to(() => const DashboardScreen())
+                    : Get.to(const welcomeScreen());
               },
               child: Center(
                 child: Container(
@@ -55,7 +52,7 @@ class _ChooseOptionState extends State<ChooseOption> {
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.green),
                       //color: Colors.green,
-                      image: DecorationImage(
+                      image: const DecorationImage(
                           image: AssetImage("assets/Veka-Green.png"),
                           filterQuality: FilterQuality.high,
                           fit: BoxFit.cover)),
@@ -66,9 +63,12 @@ class _ChooseOptionState extends State<ChooseOption> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 2),
             child: InkWell(
-              onTap: ()async {
-               SharedPreferences homesp = await SharedPreferences.getInstance();
-               (homesp.getString("email")!=null)?Get.to(homeScreen()):Get.to(loginSxreen());
+              onTap: () async {
+                SharedPreferences homesp =
+                    await SharedPreferences.getInstance();
+                (homesp.getString("email") != null)
+                    ? Get.to(const homeScreen())
+                    : Get.to(loginSxreen());
               },
               child: Center(
                 child: Container(
@@ -77,7 +77,7 @@ class _ChooseOptionState extends State<ChooseOption> {
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.red),
                       //  color: Colors.red,
-                      image: DecorationImage(
+                      image: const DecorationImage(
                           image: AssetImage("assets/Veka-Red.png"),
                           filterQuality: FilterQuality.high,
                           fit: BoxFit.cover)),

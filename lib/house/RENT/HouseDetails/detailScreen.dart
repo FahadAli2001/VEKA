@@ -48,7 +48,7 @@ class detailScreen extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 //print(data["houseprice"]);
-                Get.to(rentStepper(), arguments: {
+                Get.to(() => const rentStepper(), arguments: {
                   "housename": data["housename"],
                   "houseimage": data["houseimage"],
                   "houseprice": data["houseprice"],
@@ -105,7 +105,7 @@ class detailScreen extends StatelessWidget {
                 child: SmoothPageIndicator(
                   controller: _pageController, // PageController
                   count: 3,
-                  effect: ExpandingDotsEffect(
+                  effect: const ExpandingDotsEffect(
                       dotHeight: 10,
                       dotColor: Colors.grey,
                       activeDotColor: Colors.black), // your preferred effect
@@ -120,7 +120,7 @@ class detailScreen extends StatelessWidget {
                   children: [
                     AutoSizeText(
                       data["housename"],
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
@@ -173,7 +173,7 @@ class detailScreen extends StatelessWidget {
                       color: Colors.grey.shade300,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
+                        children: const [
                           Icon(
                             Icons.bathtub_rounded,
                             color: Colors.red,
@@ -190,7 +190,7 @@ class detailScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.bed_sharp,
                             color: Colors.red,
                             size: 25,
@@ -205,7 +205,7 @@ class detailScreen extends StatelessWidget {
                       color: Colors.grey.shade300,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
+                        children: const [
                           Icon(
                             Icons.scale,
                             color: Colors.red,
@@ -247,7 +247,7 @@ class detailScreen extends StatelessWidget {
                       trimMode: TrimMode.Line,
                       trimCollapsedText: 'Show more',
                       trimExpandedText: 'Show less',
-                      moreStyle: TextStyle(
+                      moreStyle: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Colors.red),
@@ -272,7 +272,7 @@ class detailScreen extends StatelessWidget {
               for (var i = 0; i < data["facilities"].length; i++) ...[
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       CupertinoIcons.check_mark,
                       color: Colors.grey,
                     ),

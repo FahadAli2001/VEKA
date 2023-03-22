@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/get_core.dart';
-import 'package:get/get_navigation/get_navigation.dart';
 import 'package:time_picker_spinner_pop_up/time_picker_spinner_pop_up.dart';
 
 import 'buyingMeetingController.dart';
@@ -15,25 +13,23 @@ class buyingMeeting extends StatefulWidget {
 }
 
 class _buyingMeetingState extends State<buyingMeeting> {
-
   buyingMeetingController bmc = Get.put(buyingMeetingController());
   bool isDone = false;
 
   @override
   Widget build(BuildContext context) {
-
     var data = Get.arguments;
 
     return Scaffold(
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         width: Get.width,
         height: Get.height * 0.09,
         // color: Colors.teal,
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: InkWell(
-              onTap: (){
+              onTap: () {
                 setState(() {
                   isDone = true;
                 });
@@ -41,27 +37,26 @@ class _buyingMeetingState extends State<buyingMeeting> {
                   setState(() {
                     isDone = false;
                   });
-                }).catchError((onError){
+                }).catchError((onError) {
                   setState(() {
                     isDone = false;
                   });
                 });
               },
               child: Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Colors.grey
-                    )
-                ),
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.grey)),
                 width: Get.width,
                 height: Get.height,
                 child: Center(
-                  child: isDone ? const CircularProgressIndicator(
-                    color: Colors.black,
-                  ) : Text("DONE",
-                    style: TextStyle(
-                        fontSize: Get.width * 0.05
-                    ),),
+                  child: isDone
+                      ? const CircularProgressIndicator(
+                          color: Colors.black,
+                        )
+                      : Text(
+                          "DONE",
+                          style: TextStyle(fontSize: Get.width * 0.05),
+                        ),
                 ),
               ),
             ),
@@ -69,23 +64,23 @@ class _buyingMeetingState extends State<buyingMeeting> {
         ),
       ),
       appBar: AppBar(
-        title: Text("buy meeting",
-        style: TextStyle(
-          color: Colors.black
-        ),),
+        title: const Text(
+          "buy meeting",
+          style: TextStyle(color: Colors.black),
+        ),
         elevation: 0,
         backgroundColor: Colors.white70,
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             Get.back();
           },
-          icon: Icon(CupertinoIcons.back),
+          icon: const Icon(CupertinoIcons.back),
           color: Colors.black,
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 7,horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -101,11 +96,11 @@ class _buyingMeetingState extends State<buyingMeeting> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Choose your meeting date",
+                        child: Text(
+                          "Choose your meeting date",
                           style: TextStyle(
-                              color: Colors.white,
-                            fontSize: Get.width * 0.05
-                          ),),
+                              color: Colors.white, fontSize: Get.width * 0.05),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -113,19 +108,18 @@ class _buyingMeetingState extends State<buyingMeeting> {
                           width: Get.width * 0.4,
                           color: Colors.white,
                           height: Get.height * 0.05,
-                          child:TimePickerSpinnerPopUp(
-
+                          child: TimePickerSpinnerPopUp(
                             mode: CupertinoDatePickerMode.date,
-                          //  minTime: DateTime.now(),
+                            //  minTime: DateTime.now(),
                             minTime: bmc.meetingdate.value,
                             initTime: DateTime.now(),
 
-                            barrierColor: Colors.black12, //Barrier Color when pop up show
+                            barrierColor:
+                                Colors.black12, //Barrier Color when pop up show
                             onChange: (dateTime) {
                               // Implement your logic with select dateTime
                               bmc.meetingdate.value = dateTime;
                             },
-
                           ),
                         ),
                       )
@@ -145,11 +139,11 @@ class _buyingMeetingState extends State<buyingMeeting> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Choose your meeting Time",
+                        child: Text(
+                          "Choose your meeting Time",
                           style: TextStyle(
-                              color: Colors.white,
-                            fontSize: Get.width * 0.05
-                          ),),
+                              color: Colors.white, fontSize: Get.width * 0.05),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -160,13 +154,13 @@ class _buyingMeetingState extends State<buyingMeeting> {
                           child: TimePickerSpinnerPopUp(
                             mode: CupertinoDatePickerMode.time,
                             initTime: DateTime.now(),
-                            minTime:  bmc.meetingtime.value,
-                            barrierColor: Colors.black12, //Barrier Color when pop up show
+                            minTime: bmc.meetingtime.value,
+                            barrierColor:
+                                Colors.black12, //Barrier Color when pop up show
                             onChange: (dateTime) {
                               // Implement your logic with select dateTime
                               bmc.meetingtime.value = dateTime;
                             },
-
                           ),
                         ),
                       )
@@ -181,6 +175,3 @@ class _buyingMeetingState extends State<buyingMeeting> {
     );
   }
 }
-
-
-

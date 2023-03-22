@@ -1,16 +1,12 @@
-
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:html/parser.dart';
 
-
 import '../Mybookmark/rents/rentBookmarkController.dart';
-import '../SignIn/SignInController.dart';
 import '../bookingScreen/bookingScreen.dart';
 
 class RentCarDetails extends StatelessWidget {
@@ -18,7 +14,6 @@ class RentCarDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var data = Get.arguments;
     rentBookmarkController rbmc = Get.put(rentBookmarkController());
 
@@ -52,9 +47,7 @@ class RentCarDetails extends StatelessWidget {
                       child: IconButton(
                         onPressed: () {
                           if (rbmc.wishListId.containsValue(int.parse(pid))) {
-                            
-                            rbmc.removeBookmark(
-                                rbmc.wishListId["itemId"]);
+                            rbmc.removeBookmark(rbmc.wishListId["itemId"]);
                           } else {
                             rbmc.getsharekeybyId(false, pid: pid);
                           }
@@ -72,7 +65,7 @@ class RentCarDetails extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   //print(data["extraservices"][1].toString());
-                  Get.to(bookingScreen(), arguments: {
+                  Get.to(const bookingScreen(), arguments: {
                     "carimage": data!["carimage"].toString(),
                     "carname": data!["carname"].toString(),
                     "carprice": data!["carprice"].toString(),
@@ -100,7 +93,7 @@ class RentCarDetails extends StatelessWidget {
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: ListView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 children: [
                   CarouselSlider.builder(
                     itemCount: 2,
@@ -123,7 +116,7 @@ class RentCarDetails extends StatelessWidget {
                         onPageChanged: (index, reason) {}),
                   ),
                   //-------
-                  Container(
+                  SizedBox(
                     // color: Colors.pinkAccent,
                     width: Get.width,
                     height: Get.height * 0.1,
@@ -209,7 +202,7 @@ class RentCarDetails extends StatelessWidget {
                     ),
                   ),
                   //
-                  Container(
+                  SizedBox(
                     width: Get.width,
                     height: Get.height * 0.05,
                     //color: Colors.red,
@@ -228,7 +221,7 @@ class RentCarDetails extends StatelessWidget {
                                   child: Text(
                                     data!["carspecs"][i].toString(),
                                     softWrap: true,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),

@@ -162,7 +162,7 @@ class _signUpscreenState extends State<signUpscreen> {
                       child: CupertinoButton(
                           color: Colors.black,
                           child: (isSignUp == true)
-                              ? CircularProgressIndicator(
+                              ? const CircularProgressIndicator(
                                   color: Colors.white,
                                 )
                               : Text(

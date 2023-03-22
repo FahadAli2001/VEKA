@@ -1,17 +1,11 @@
-import 'dart:developer';
-
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:readmore/readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:veka/car/orderDetails/buying/buyingdetails.dart';
 
 import '../../login/LoginController.dart';
 import '../BuyingMeeting/buyingMeeting.dart';
@@ -33,32 +27,13 @@ class buyhouseDetails extends StatelessWidget {
     // String desc = parsedstring.trim();
     // log(parsedstring);
 
-    var des =
-        """[log] Across from Frere Hall and Park, the 5-star Karachi House offers modern and luxurious rooms with a flat-screen cable TV. It features 3 dining options, spa and outdoor swimming pool.
-      The air-conditioned and fully carpeted rooms each have their own private bathroom, which include free toiletries, shower, hairdryer and slippers. An electric kettle and minibar can be found in each room.
-      KarachiHouse is 302 m from the Hockey Club of Pakistan and less than half a kilometer from Holy Trinity Cathedral. National Museum of Pakistan is 2.4 km away. Karachi Jinnah International Airport is 14.5 km from the hotel.
-      Guests have access to a 24-hour business center while those staying on the executive level can use a private lounge. In the hotel, guests will find a drugstore, florist and currency exchange. Laundry and dry cleaning services are available for an extra fee.
-      Nadia Coffee Shop -Coffee House features a menu with European and Pakistani cuisine. Dumpukht Restaurant offers barbecue dishes and live cooking demonstrations. Order Chinese dishes at Suzie Wong Restaurant.
-      
-      
-      Couples in particular like the location – they rated it 8.2 for a two-person trip.
-      Most popular facilities
-      Outdoor swimming pool
-      Airport shuttle (free)
-      Room service
-      Fitness center
-      Restaurant
-      Non-smoking rooms
-      Free parking
-      Bar
-      Good Breakfast""";
     //log(des);
     var pid = data["id"];
     //print(parsedstring);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "buy",
           style: TextStyle(color: Colors.black),
         ),
@@ -68,7 +43,7 @@ class buyhouseDetails extends StatelessWidget {
           onPressed: () {
             Get.back();
           },
-          icon: Icon(CupertinoIcons.back),
+          icon: const Icon(CupertinoIcons.back),
           color: Colors.black,
         ),
       ),
@@ -82,7 +57,7 @@ class buyhouseDetails extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 //print(data["id"].toString());
-                Get.to(buyingMeeting(), arguments: {"id": data!["id"]});
+                Get.to(const buyingMeeting(), arguments: {"id": data!["id"]});
                 print(data["id"]);
               },
               child: Container(
@@ -133,7 +108,7 @@ class buyhouseDetails extends StatelessWidget {
                   child: SmoothPageIndicator(
                     controller: _pageController, // PageController
                     count: 3,
-                    effect: ExpandingDotsEffect(
+                    effect: const ExpandingDotsEffect(
                         dotHeight: 10,
                         dotColor: Colors.grey,
                         activeDotColor: Colors.black), // your preferred effect
@@ -148,7 +123,7 @@ class buyhouseDetails extends StatelessWidget {
                     children: [
                       AutoSizeText(
                         data!["housename"],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           //fontSize: Get.width * 0.06
@@ -202,12 +177,12 @@ class buyhouseDetails extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.bathtub_rounded,
                               color: Colors.red,
                               size: 25,
                             ),
-                            Text("4")
+                            const Text("4")
                           ],
                         ),
                       ),
@@ -218,7 +193,7 @@ class buyhouseDetails extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.bed_sharp,
                               color: Colors.red,
                               size: 25,
@@ -234,12 +209,12 @@ class buyhouseDetails extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.scale,
                               color: Colors.red,
                               size: 25,
                             ),
-                            Text("1000sqY")
+                            const Text("1000sqY")
                           ],
                         ),
                       ),
@@ -275,7 +250,7 @@ class buyhouseDetails extends StatelessWidget {
                         trimMode: TrimMode.Line,
                         trimCollapsedText: 'Show more',
                         trimExpandedText: 'Show less',
-                        moreStyle: TextStyle(
+                        moreStyle: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: Colors.red),
@@ -300,7 +275,7 @@ class buyhouseDetails extends StatelessWidget {
                 for (var i = 0; i < data["facilities"].length; i++) ...[
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         CupertinoIcons.check_mark,
                         color: Colors.grey,
                       ),

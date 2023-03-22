@@ -104,7 +104,7 @@ class _ReviewSubmissionState extends State<ReviewSubmission> {
                           backgroundImage:
                               NetworkImage(data["carimage"].toString()),
                         ),
-                        Container(
+                        SizedBox(
                             width: Get.width * 0.6,
                             child: Align(
                               alignment: Alignment.topLeft,
@@ -277,7 +277,7 @@ class _ReviewSubmissionState extends State<ReviewSubmission> {
                 //
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 7),
-                  child: Container(
+                  child: SizedBox(
                     height: Get.height * 0.12,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

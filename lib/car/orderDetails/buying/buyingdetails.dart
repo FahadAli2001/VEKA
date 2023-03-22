@@ -10,10 +10,10 @@ class buyingdetails extends StatelessWidget {
     return Scaffold(
       body: Container(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           child: ListView.builder(
             itemCount: 4,
-            itemBuilder: (context,index){
+            itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(4),
                 child: Container(
@@ -25,22 +25,23 @@ class buyingdetails extends StatelessWidget {
                     children: [
                       SizedBox(
                         width: Get.width * 0.5,
-                        child: ListTile(
+                        child: const ListTile(
                           leading: CircleAvatar(
                             backgroundImage: AssetImage("assets/car.png"),
                             radius: 30,
                             backgroundColor: Colors.black54,
                           ),
                           title: Text("AUDI A3"),
-                          subtitle: Text("\$450",
-                            style: TextStyle(
-                                color: Colors.green
-                            ),),
+                          subtitle: Text(
+                            "\$450",
+                            style: TextStyle(color: Colors.green),
+                          ),
                         ),
                       ),
-                      Icon(Icons.arrow_forward_ios_outlined,
-                        color: Colors.black
-                        ,)
+                      const Icon(
+                        Icons.arrow_forward_ios_outlined,
+                        color: Colors.black,
+                      )
                     ],
                   ),
                 ),

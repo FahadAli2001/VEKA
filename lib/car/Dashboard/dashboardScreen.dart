@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:veka/car/CarHome/CarHomePage.dart';
@@ -46,11 +45,12 @@ class DashboardScreen extends StatelessWidget {
                   gap: 8,
                   activeColor: Colors.black,
                   iconSize: 24,
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  duration: Duration(milliseconds: 400),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  duration: const Duration(milliseconds: 400),
                   tabBackgroundColor: Colors.green,
                   color: Colors.black,
-                  tabs: [
+                  tabs: const [
                     GButton(
                       icon: CupertinoIcons.home,
                       text: 'Home',
