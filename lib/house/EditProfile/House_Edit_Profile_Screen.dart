@@ -2,19 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../Dashboard/dashboardScreen.dart';
-import 'Edit_Profile_Controller.dart';
+import '../BUYING/dashboard/houseDashboard.dart';
+import '../RENT/dashboard/dashboard.dart';
+import 'home_edit_profile_controller.dart';
 
-class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+class HouseEditProfileScreen extends StatelessWidget {
+  bool isRent;
+  HouseEditProfileScreen({super.key, required this.isRent});
 
-  @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
-}
+  HomeEditProfileController homeEditProfileController =
+      Get.put(HomeEditProfileController());
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
-  EditProfileController editProfileController =
-      Get.put(EditProfileController());
+  RxBool isUpdated = false.obs;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,7 +29,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
               onPressed: () {
-                editProfileController.getAcessToken();
+                print("tap");
+                // isUpdated.value = true;
+                homeEditProfileController.getAcessToken();
+                // isUpdated.value = false;
               }),
         ),
         appBar: AppBar(
@@ -37,7 +40,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           backgroundColor: Colors.white12,
           leading: IconButton(
               onPressed: () {
-                Get.off(() => const DashboardScreen());
+                this.isRent == true
+                    ? Get.off(() => dashboard(
+                          isRent: true,
+                        ))
+                    : Get.off(() => houseDashboard(
+                          isRent: false,
+                        ));
               },
               icon: const Icon(
                 Icons.arrow_back,
@@ -96,7 +105,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               //     ],
               //   ),
               // ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Padding(
@@ -105,7 +114,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: SizedBox(
                   height: 50,
                   child: TextField(
-                    controller: editProfileController.firstName,
+                    controller: homeEditProfileController.firstName,
                     decoration: const InputDecoration(
                         focusColor: Colors.black,
                         focusedBorder: OutlineInputBorder(
@@ -121,7 +130,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: SizedBox(
                   height: 50,
                   child: TextField(
-                    controller: editProfileController.lastName,
+                    controller: homeEditProfileController.lastName,
                     decoration: const InputDecoration(
                         focusColor: Colors.black,
                         focusedBorder: OutlineInputBorder(
@@ -137,7 +146,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: SizedBox(
                   height: 50,
                   child: TextField(
-                    controller: editProfileController.address,
+                    controller: homeEditProfileController.address,
                     decoration: const InputDecoration(
                         focusColor: Colors.black,
                         focusedBorder: OutlineInputBorder(
@@ -153,7 +162,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: SizedBox(
                   height: 50,
                   child: TextField(
-                    controller: editProfileController.country,
+                    controller: homeEditProfileController.country,
                     decoration: const InputDecoration(
                         focusColor: Colors.black,
                         focusedBorder: OutlineInputBorder(
@@ -169,7 +178,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: SizedBox(
                   height: 50,
                   child: TextField(
-                    controller: editProfileController.city,
+                    controller: homeEditProfileController.city,
                     decoration: const InputDecoration(
                         focusColor: Colors.black,
                         focusedBorder: OutlineInputBorder(
@@ -185,7 +194,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: SizedBox(
                   height: 50,
                   child: TextField(
-                    controller: editProfileController.contact,
+                    controller: homeEditProfileController.contact,
                     decoration: const InputDecoration(
                         focusColor: Colors.black,
                         focusedBorder: OutlineInputBorder(

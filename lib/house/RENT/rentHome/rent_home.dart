@@ -3,6 +3,7 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:veka/house/EditProfile/House_Edit_Profile_Screen.dart';
 import 'package:veka/house/RENT/rentHome/rentHomeController.dart';
 import '../../BUYING/home/homeScreen.dart';
 import '../../Bookmarks/rents/rent_bookmark_controller.dart';
@@ -24,22 +25,27 @@ class RentHome extends StatelessWidget {
           width: 150,
         ),
         actions: [
-          Padding(
-              padding: const EdgeInsets.only(top: 5, right: 20),
-              child: Column(
-                children: const [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
-                    radius: 18,
-                  ),
-                  // SizedBox(height: 5,),
-                  Text(
-                    "Hi, Belly",
-                    style: TextStyle(color: Colors.black, fontSize: 10),
-                  ),
-                ],
-              ))
+          GestureDetector(
+            onTap: () {
+              Get.to(() => HouseEditProfileScreen(isRent: true));
+            },
+            child: Padding(
+                padding: const EdgeInsets.only(top: 5, right: 20),
+                child: Column(
+                  children: const [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
+                      radius: 18,
+                    ),
+                    // SizedBox(height: 5,),
+                    Text(
+                      "Hi, Belly",
+                      style: TextStyle(color: Colors.black, fontSize: 10),
+                    ),
+                  ],
+                )),
+          )
         ],
         centerTitle: true,
         elevation: 0,

@@ -6,6 +6,7 @@ import 'package:veka/car/BuyingCarsDetails/BuyingCarsDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:veka/car/CarHome/CarHomePageController.dart';
+import '../EditProfile/Edit_Profile.dart';
 import '../Mybookmark/rents/rentBookmarkController.dart';
 import 'package:html/parser.dart';
 import '../ReviewSubmission/reviewsubmission.dart';
@@ -55,22 +56,27 @@ class CarHomePage extends StatelessWidget {
           //   ),
           // ),
           actions: [
-            Padding(
-                padding: const EdgeInsets.only(top: 5, right: 20),
-                child: Column(
-                  children: const [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
-                      radius: 18,
-                    ),
-                    // SizedBox(height: 5,),
-                    Text(
-                      "Hi, Belly",
-                      style: TextStyle(color: Colors.black, fontSize: 10),
-                    ),
-                  ],
-                ))
+            GestureDetector(
+              onTap: () {
+                Get.to(() => const EditProfileScreen());
+              },
+              child: Padding(
+                  padding: const EdgeInsets.only(top: 5, right: 20),
+                  child: Column(
+                    children: const [
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
+                        radius: 18,
+                      ),
+                      // SizedBox(height: 5,),
+                      Text(
+                        "Hi, Belly",
+                        style: TextStyle(color: Colors.black, fontSize: 10),
+                      ),
+                    ],
+                  )),
+            )
           ],
         ),
         body: SingleChildScrollView(

@@ -1,13 +1,12 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../Token/AccessToken.dart';
 
-class EditProfileController extends GetxController {
+import '../../car/Token/AccessToken.dart';
+
+class HomeEditProfileController extends GetxController {
   AcessToken acessTokenclass = Get.put(AcessToken());
 
   TextEditingController firstName = TextEditingController();
@@ -27,19 +26,23 @@ class EditProfileController extends GetxController {
   String? userContact;
 
   Future getAcessToken() async {
+    print("getaccess token");
     try {
       var response = await http.post(
           Uri.parse(
-              "https://vekaautomobile.technopreneurssoftware.com/wp-json/jwt-auth/v1/token"),
+              "https://vekarealestate.technopreneurssoftware.com/wp-json/jwt-auth/v1/token"),
           body: {
-            "username": acessTokenclass.AutoMobileusername,
-            "password": acessTokenclass.AutoMobilepassword
+            "username": acessTokenclass.RealStateusername,
+            "password": acessTokenclass.RealStatepassword
           });
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
         accessToken = data["data"]['token'];
         // print(accessToken);
         getUserData(accessToken!);
+      } else {
+        print("acess token ${response.statusCode}");
+        print(response.body.toString());
       }
     } catch (e) {
       Get.snackbar("Error", "Something went wrong",
@@ -51,13 +54,13 @@ class EditProfileController extends GetxController {
   }
 
   Future getUserData(String accessToken) async {
-    SharedPreferences sigin = await SharedPreferences.getInstance();
-    String? userId = sigin.getString("userId");
+    SharedPreferences homesignin = await SharedPreferences.getInstance();
+    String? userId = homesignin.getInt("realStateUserId").toString();
     print(userId);
     try {
       final response = await http.get(
         Uri.parse(
-            "https://vekaautomobile.technopreneurssoftware.com/wp-json/wc/v3/customers/$userId"),
+            "https://vekarealestate.technopreneurssoftware.com/wp-json/wc/v3/customers/$userId"),
         headers: {'Authorization': 'Bearer $accessToken'},
       );
       if (response.statusCode == 200) {
@@ -87,14 +90,15 @@ class EditProfileController extends GetxController {
   }
 
   Future UpdateUserData(String accessToken) async {
+    SharedPreferences homesignin = await SharedPreferences.getInstance();
+    String? userId = homesignin.getInt("realStateUserId").toString();
     String _firstName = firstName.toString();
     String _lastName = lastName.toString();
     String _country = country.toString();
     String _city = city.toString();
     String _contact = contact.toString();
     String _address = address.text.toString();
-    SharedPreferences sigin = await SharedPreferences.getInstance();
-    String? userId = sigin.getString("userId");
+
     var body = json.encode({
       "first_name": _firstName,
       "last_name": _lastName,
@@ -115,7 +119,7 @@ class EditProfileController extends GetxController {
     try {
       var response = await http.put(
           Uri.parse(
-              "https://vekaautomobile.technopreneurssoftware.com/wp-json/wc/v3/customers/$userId"),
+              "https://vekarealestate.technopreneurssoftware.com/wp-json/wc/v3/customers/$userId"),
           headers: {'Authorization': 'Bearer $accessToken'},
           body: body);
       print("after try");

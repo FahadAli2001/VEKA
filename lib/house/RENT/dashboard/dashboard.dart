@@ -19,7 +19,7 @@ class dashboard extends StatelessWidget {
     List<Widget> _widgetOptions = <Widget>[
       const RentHome(),
       More(
-        isRent: isRent,
+        isRent: true,
       )
     ];
     return Scaffold(

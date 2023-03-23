@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:veka/car/AboutUs/aboutUs.dart';
 import '../../Bookmarks/realstate_bookmark.dart';
-import '../../login/LoginController.dart';
+import '../../EditProfile/House_Edit_Profile_Screen.dart';
 import '../../login/loginScreen.dart';
 import '../../orderDetails/orderdetails.dart';
 
@@ -70,20 +69,25 @@ class More extends StatelessWidget {
         ),
         centerTitle: true,
         actions: [
-          Padding(
-              padding: const EdgeInsets.only(top: 5, right: 20),
-              child: Column(
-                children: const [
-                  CircleAvatar(
-                    radius: 18,
-                  ),
-                  // SizedBox(height: 5,),
-                  Text(
-                    "Hi, Belly",
-                    style: TextStyle(color: Colors.black, fontSize: 10),
-                  ),
-                ],
-              ))
+          GestureDetector(
+            onTap: () {
+              Get.to(() => HouseEditProfileScreen(isRent: this.isRent));
+            },
+            child: Padding(
+                padding: const EdgeInsets.only(top: 5, right: 20),
+                child: Column(
+                  children: const [
+                    CircleAvatar(
+                      radius: 18,
+                    ),
+                    // SizedBox(height: 5,),
+                    Text(
+                      "Hi, Belly",
+                      style: TextStyle(color: Colors.black, fontSize: 10),
+                    ),
+                  ],
+                )),
+          )
         ],
         elevation: 0,
         backgroundColor: Colors.white12,

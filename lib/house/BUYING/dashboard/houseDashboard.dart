@@ -17,9 +17,9 @@ class houseDashboard extends StatelessWidget {
     const TextStyle optionStyle =
         TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
     List<Widget> _widgetOptions = <Widget>[
-      const houseHome(),
+      houseHome(),
       More(
-        isRent: isRent,
+        isRent: false,
       )
     ];
     return Scaffold(
