@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -157,7 +158,9 @@ class EditProfileController extends GetxController {
     contact.clear();
   }
 
+  // ignore: non_constant_identifier_names
   Future UploadImage(String accessToken) async {
+    // ignore: deprecated_member_use
     final imageFile = await ImagePicker().getImage(source: ImageSource.gallery);
 
     var request = http.MultipartRequest(
@@ -176,10 +179,10 @@ class EditProfileController extends GetxController {
     // Check if the request was successful
     if (response.statusCode == 200) {
       // Image upload was successful, do something with the response
-      print('Image uploaded!');
+      log('Image uploaded!');
     } else {
       // Image upload failed, handle the error
-      print('Image upload failed with status code ${response.statusCode}');
+      log('Image upload failed with status code ${response.statusCode}');
     }
   }
 }

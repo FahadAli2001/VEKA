@@ -95,7 +95,7 @@ class _SignUpState extends State<SignUp> {
                         validator: (String? val) {
                           if (val!.isEmpty) {
                             return "Enter password";
-                          } else if (val!.length < 8) {
+                          } else if (val.length < 8) {
                             return "Enter mini 8 digit password";
                           }
                         },

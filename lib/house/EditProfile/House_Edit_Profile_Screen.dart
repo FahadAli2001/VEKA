@@ -40,11 +40,11 @@ class HouseEditProfileScreen extends StatelessWidget {
           backgroundColor: Colors.white12,
           leading: IconButton(
               onPressed: () {
-                this.isRent == true
-                    ? Get.off(() => dashboard(
+                isRent == true
+                    ? Get.off(() => const dashboard(
                           isRent: true,
                         ))
-                    : Get.off(() => houseDashboard(
+                    : Get.off(() => const houseDashboard(
                           isRent: false,
                         ));
               },
@@ -71,43 +71,46 @@ class HouseEditProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              // SizedBox(
-              //   //    color: Colors.amber,
-              //   width: Get.width * 0.5,
-              //   height: Get.height * 0.2,
-              //   child: Stack(
-              //     children: [
-              //       Padding(
-              //         padding: const EdgeInsets.symmetric(
-              //             vertical: 20, horizontal: 35),
-              //         child: CircleAvatar(
-              //           radius: 60,
-              //           backgroundColor: Colors.grey.shade300,
-              //           child: const Icon(
-              //             Icons.person,
-              //             color: Colors.green,
-              //             size: 50,
-              //           ),
-              //         ),
-              //       ),
-              //       const Positioned(
-              //         top: 90,
-              //         left: 120,
-              //         child: CircleAvatar(
-              //           backgroundColor: Colors.white,
-              //           child: Icon(
-              //             Icons.edit,
-              //             color: Colors.green,
-              //             size: 30,
-              //           ),
-              //         ),
-              //       )
-              //     ],
-              //   ),
-              // ),
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                //    color: Colors.amber,
+                width: Get.width * 0.5,
+                height: Get.height * 0.2,
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 35),
+                      child: CircleAvatar(
+                        radius: 60,
+                        backgroundColor: Colors.grey.shade300,
+                        child: const Icon(
+                          Icons.person,
+                          color: Colors.green,
+                          size: 50,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Positioned(
+                        top: 90,
+                        left: 120,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.green,
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
+              // const SizedBox(
+              //   height: 30,
+              // ),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
