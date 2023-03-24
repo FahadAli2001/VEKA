@@ -3,7 +3,7 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:veka/house/EditProfile/House_Edit_Profile_Screen.dart';
+import 'package:veka/house/EditProfile/house_edit_profile_screen.dart';
 import 'package:veka/house/RENT/rentHome/rentHomeController.dart';
 import '../../BUYING/home/homeScreen.dart';
 import '../../Bookmarks/rents/rent_bookmark_controller.dart';

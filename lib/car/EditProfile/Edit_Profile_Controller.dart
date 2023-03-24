@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,7 +31,7 @@ class EditProfileController extends GetxController {
   String? userContact;
   bool getUserdata = false;
 
-  Future getAcessToken(bool getUserdata) async {
+  Future getAcessToken({File? image}) async {
     try {
       var response = await http.post(
           Uri.parse(
@@ -42,10 +44,10 @@ class EditProfileController extends GetxController {
         var data = jsonDecode(response.body.toString());
         accessToken = data["data"]['token'];
         // print(accessToken);
-        if (getUserdata == true) {
+        if (image == null) {
           getUserData(accessToken!);
         } else {
-          UploadImage(accessToken!);
+          UploadImage(image, accessToken!);
         }
       }
     } catch (e) {
@@ -93,6 +95,40 @@ class EditProfileController extends GetxController {
     }
   }
 
+  Future updateProfile(String imageUrl, String accessToken) async {
+    SharedPreferences sigin = await SharedPreferences.getInstance();
+    String? userId = sigin.getString("userId");
+    print(userId);
+    print(imageUrl);
+    var body = json.encode({
+      "meta_data": [
+        {"key": "my_url", "value": imageUrl}
+      ]
+    });
+    var response = await http.put(
+        Uri.parse(
+            "https://vekaautomobile.technopreneurssoftware.com/wp-json/wc/v3/customers/$userId"),
+        headers: {'Authorization': 'Bearer $accessToken', 'Cookie': 'tinvwl_wishlists_data_counter=0'},
+        body: body);
+
+    if (response.statusCode == 200) {
+
+      print("user updated");
+      print(response.statusCode);
+      Get.snackbar("Success Message ", "User updated successfully",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.white,
+          colorText: Colors.black);
+          
+    } else {
+      print("error ${response.body}");
+      Get.snackbar("Error", "Something went wrong",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.white,
+          colorText: Colors.black);
+    }
+  }
+
   Future UpdateUserData(String accessToken) async {
     String _firstName = firstName.toString();
     String _lastName = lastName.toString();
@@ -117,7 +153,7 @@ class EditProfileController extends GetxController {
         "state": "",
         "email": "",
         "phone": _contact
-      }
+      },
     });
     try {
       var response = await http.put(
@@ -159,30 +195,29 @@ class EditProfileController extends GetxController {
   }
 
   // ignore: non_constant_identifier_names
-  Future UploadImage(String accessToken) async {
-    // ignore: deprecated_member_use
-    final imageFile = await ImagePicker().getImage(source: ImageSource.gallery);
+  Future UploadImage(File image, String accessToken) async {
+    var headers = {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer $accessToken',
+    };
 
     var request = http.MultipartRequest(
-      'POST',
-      Uri.parse(
-          'https://vekaautomobile.technopreneurssoftware.com/wp-json/wp/v2/media'),
-    );
+        'POST',
+        Uri.parse(
+            'https://vekaautomobile.technopreneurssoftware.com/wp-json/wp/v2/media'));
+    request.files.add(await http.MultipartFile.fromPath('file', image.path));
+    request.headers.addAll(headers);
 
-    request.headers['Authorization'] = 'Bearer $accessToken';
+    http.StreamedResponse response = await request.send();
 
-    request.files
-        .add(await http.MultipartFile.fromPath('image', imageFile!.path));
-
-    var response = await request.send();
-
-    // Check if the request was successful
-    if (response.statusCode == 200) {
-      // Image upload was successful, do something with the response
-      log('Image uploaded!');
+    if (response.statusCode == 201) {
+      String byte = await response.stream.bytesToString();
+      var temp = jsonDecode(byte);
+      String profilePicUrl = temp['guid']['raw'];
+      updateProfile(profilePicUrl, accessToken);
     } else {
-      // Image upload failed, handle the error
-      log('Image upload failed with status code ${response.statusCode}');
+      print(response.statusCode);
+      print(response.reasonPhrase);
     }
   }
 }

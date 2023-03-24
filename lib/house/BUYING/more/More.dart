@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:veka/car/AboutUs/aboutUs.dart';
 import '../../Bookmarks/realstate_bookmark.dart';
-import '../../EditProfile/House_Edit_Profile_Screen.dart';
+import '../../EditProfile/house_edit_profile_screen.dart';
 import '../../login/loginScreen.dart';
 import '../../orderDetails/orderdetails.dart';
 

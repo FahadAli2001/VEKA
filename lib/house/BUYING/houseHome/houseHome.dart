@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:veka/house/BUYING/houseHome/sellHomeController.dart';
-import 'package:veka/house/EditProfile/House_Edit_Profile_Screen.dart';
+import 'package:veka/house/EditProfile/house_edit_profile_screen.dart';
 import '../../Bookmarks/rents/rent_bookmark_controller.dart';
 import '../../login/LoginController.dart';
 import '../HouseDetails/houseDetails.dart';
@@ -30,7 +30,7 @@ class houseHome extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () {
-              Get.to(() => HouseEditProfileScreen(isRent: false));
+              Get.to(() => const HouseEditProfileScreen(isRent: false));
             },
             child: Padding(
                 padding: const EdgeInsets.only(top: 5, right: 20),

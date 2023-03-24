@@ -117,7 +117,7 @@ class SignUpController extends GetxController {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
         accessToken = data["data"]['token'];
-        // print(accessToken);
+        print(accessToken);
 
       }
     } catch (e) {
