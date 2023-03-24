@@ -29,7 +29,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
               onPressed: () {
-                editProfileController.getAcessToken();
+                editProfileController.getAcessToken(true);
               }),
         ),
         appBar: AppBar(
@@ -62,43 +62,48 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 ),
               ),
-              // SizedBox(
-              //   //    color: Colors.amber,
-              //   width: Get.width * 0.5,
-              //   height: Get.height * 0.2,
-              //   child: Stack(
-              //     children: [
-              //       Padding(
-              //         padding: const EdgeInsets.symmetric(
-              //             vertical: 20, horizontal: 35),
-              //         child: CircleAvatar(
-              //           radius: 60,
-              //           backgroundColor: Colors.grey.shade300,
-              //           child: const Icon(
-              //             Icons.person,
-              //             color: Colors.green,
-              //             size: 50,
-              //           ),
-              //         ),
-              //       ),
-              //       const Positioned(
-              //         top: 90,
-              //         left: 120,
-              //         child: CircleAvatar(
-              //           backgroundColor: Colors.white,
-              //           child: Icon(
-              //             Icons.edit,
-              //             color: Colors.green,
-              //             size: 30,
-              //           ),
-              //         ),
-              //       )
-              //     ],
-              //   ),
-              // ),
               SizedBox(
-                height: 30,
+                //    color: Colors.amber,
+                width: Get.width * 0.5,
+                height: Get.height * 0.2,
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 35),
+                      child: CircleAvatar(
+                        radius: 60,
+                        backgroundColor: Colors.grey.shade300,
+                        child: const Icon(
+                          Icons.person,
+                          color: Colors.green,
+                          size: 50,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        editProfileController.getAcessToken(false);
+                      },
+                      child: const Positioned(
+                        top: 90,
+                        left: 120,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.green,
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
+              // SizedBox(
+              //   height: 30,
+              // ),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

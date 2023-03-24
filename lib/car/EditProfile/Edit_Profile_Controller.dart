@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Token/AccessToken.dart';
 
@@ -25,8 +26,9 @@ class EditProfileController extends GetxController {
   String? userCountry;
   String? userCity;
   String? userContact;
+  bool getUserdata = false;
 
-  Future getAcessToken() async {
+  Future getAcessToken(bool getUserdata) async {
     try {
       var response = await http.post(
           Uri.parse(
@@ -39,7 +41,11 @@ class EditProfileController extends GetxController {
         var data = jsonDecode(response.body.toString());
         accessToken = data["data"]['token'];
         // print(accessToken);
-        getUserData(accessToken!);
+        if (getUserdata == true) {
+          getUserData(accessToken!);
+        } else {
+          UploadImage(accessToken!);
+        }
       }
     } catch (e) {
       Get.snackbar("Error", "Something went wrong",
@@ -120,9 +126,6 @@ class EditProfileController extends GetxController {
           body: body);
       print("after try");
       if (response.statusCode == 200) {
-        //var data = jsonDecode(response.body);
-//print(data);
-        //print(data.toString());
         ClearTextField();
         print("user updated");
         Get.snackbar("Success Message ", "User updated successfully",
@@ -152,5 +155,31 @@ class EditProfileController extends GetxController {
     city.clear();
     country.clear();
     contact.clear();
+  }
+
+  Future UploadImage(String accessToken) async {
+    final imageFile = await ImagePicker().getImage(source: ImageSource.gallery);
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse(
+          'https://vekaautomobile.technopreneurssoftware.com/wp-json/wp/v2/media'),
+    );
+
+    request.headers['Authorization'] = 'Bearer $accessToken';
+
+    request.files
+        .add(await http.MultipartFile.fromPath('image', imageFile!.path));
+
+    var response = await request.send();
+
+    // Check if the request was successful
+    if (response.statusCode == 200) {
+      // Image upload was successful, do something with the response
+      print('Image uploaded!');
+    } else {
+      // Image upload failed, handle the error
+      print('Image upload failed with status code ${response.statusCode}');
+    }
   }
 }
