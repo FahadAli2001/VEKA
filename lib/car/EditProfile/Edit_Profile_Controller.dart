@@ -72,15 +72,18 @@ class EditProfileController extends GetxController {
       );
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
-        print(data.toString());
+        
         firstName.text = data["first_name"];
         lastName.text = data["last_name"];
         address.text = data["billing"]["address_1"];
         country.text = data["billing"]["country"];
         city.text = data["billing"]["city"];
         contact.text = data["billing"]["phone"];
-        image.value = data["meta_data"][1]["value"];
-        print(image.value);
+        data["meta_data"].forEach((element) {
+          if (element["key"] == "my_url") {
+            image.value = element["value"];
+          }
+        });
       } else {
         print("error ${response.statusCode}");
         Get.snackbar("Error", "Something went wrong",

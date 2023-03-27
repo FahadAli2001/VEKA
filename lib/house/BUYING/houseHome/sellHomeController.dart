@@ -34,7 +34,6 @@ class sellHomeController extends GetxController {
       buyproducts = await wooCommerceAPI
           .getAsync("products?type=simple"); //?type=ovacrs_car_rental
       // print(rentproducts);
-
     } catch (e) {
       Get.snackbar("Error", e.toString(),
           snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.grey);
@@ -46,18 +45,21 @@ class sellHomeController extends GetxController {
   getData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userId = pref.getInt("realStateUserId").toString();
-    log(userId.toString());
+
     isLoad.value = true;
     allProduct = await buyProduct();
     isLoad.value = false;
-    if (pref.getString("username") != null) {
-      userName.value = pref.getString("username")!;
-      log("user name ${userName.value}");
-      image.value = pref.getString("image")!;
-    } else {
-      userName.value = "nothing";
-      getAcessToken(userId!);
-    }
+    // if (pref.getString("image") != null) {
+    //   print("working");
+    //   print("image");
+    //   userName.value = pref.getString("username")!;
+    //   image.value = pref.getString("image")!;
+    //   print(image.value);
+    //   print(userName.value);
+    // } else {
+    userName.value = "Guest";
+    getAcessToken(userId);
+    // }
 
     userName.value = pref.getString("username")!;
   }
@@ -87,7 +89,6 @@ class sellHomeController extends GetxController {
   }
 
   Future getUserData(String accessToken, String userId) async {
-    print(userId);
     try {
       final response = await http.get(
         Uri.parse(
@@ -97,19 +98,16 @@ class sellHomeController extends GetxController {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
         SharedPreferences pref = await SharedPreferences.getInstance();
-        //print(data.toString());
+
         userName.value = data["username"];
-        image.value = data["meta_data"][1]['value'];
-        print(userName.value);
-        log(image.value);
+        data["meta_data"].forEach((element) {
+          if (element["key"] == "my_url") {
+            image.value = element["value"];
+          }
+        });
+
         pref.setString("username", userName.value);
         pref.setString("image", image.value);
-        // userLastName = data["billing"]["last_name"];
-        // userAddress = data["billing"]["address_1"];
-        // userCountry = data["billing"]["country"];
-        // userCity = data["billing"]["city"];
-        // userContact = data["billing"]["phone"];
-        log(userName.value);
       } else {
         print("error ${response.statusCode}");
         Get.snackbar("Error", "Something went wrong",

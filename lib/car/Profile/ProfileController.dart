@@ -8,12 +8,13 @@ import '../../ChooseOption.dart';
 class profileController extends GetxController {
   void signOut() async {
     SharedPreferences sigin = await SharedPreferences.getInstance();
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    sp.remove("username");
-    sp.remove("password");
-    sigin.remove("name");
-    sigin.remove("email");
-    sigin.remove("userId");
+  
+    // sp.remove("username");
+    // sp.remove("password");
+    // sigin.remove("name");
+    // sigin.remove("email");
+    // sigin.remove("userId");
+    sigin.clear();
     Get.offAll(const ChooseOption());
   }
 }
