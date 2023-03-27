@@ -4,30 +4,35 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:veka/house/BUYING/houseHome/sellHomeController.dart';
+import 'package:veka/house/EditProfile/house_edit_profile_screen.dart';
 import '../../Bookmarks/rents/rent_bookmark_controller.dart';
 import '../../login/LoginController.dart';
 import '../HouseDetails/houseDetails.dart';
 import '../home/homeScreen.dart';
 
 class houseHome extends StatelessWidget {
-  const houseHome({Key? key}) : super(key: key);
+  houseHome({Key? key}) : super(key: key);
+
+  sellHomeController shc = Get.put(sellHomeController());
+  loginController lgc = Get.put(loginController());
+  RealStateRentBookmarkController realStateRentcontroller =
+      Get.put(RealStateRentBookmarkController());
 
   @override
   Widget build(BuildContext context) {
-    sellHomeController shc = Get.put(sellHomeController());
-    loginController lgc = Get.put(loginController());
-    RealStateRentBookmarkController realStateRentcontroller =
-        Get.put(RealStateRentBookmarkController());
     return Scaffold(
       appBar: AppBar(
-
         title: Image.asset(
           "assets/Veka-Red.png",
           height: 180,
           width: 150,
         ),
         actions: [
-            Padding(
+          GestureDetector(
+            onTap: () {
+              Get.to(() => const HouseEditProfileScreen(isRent: false));
+            },
+            child: Padding(
                 padding: const EdgeInsets.only(top: 5, right: 20),
                 child: Column(
                   children: const [
@@ -42,8 +47,9 @@ class houseHome extends StatelessWidget {
                       style: TextStyle(color: Colors.black, fontSize: 10),
                     ),
                   ],
-                ))
-          ],
+                )),
+          )
+        ],
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white70,

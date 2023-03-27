@@ -5,50 +5,35 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../Dashboard/dashboardScreen.dart';
-import 'Edit_Profile_Controller.dart';
+import '../BUYING/dashboard/houseDashboard.dart';
+import '../RENT/dashboard/dashboard.dart';
+import 'home_edit_profile_controller.dart';
 
-class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+// ignore: must_be_immutable
+class HouseEditProfileScreen extends StatefulWidget {
+  final bool isRent;
+  const HouseEditProfileScreen({super.key, required this.isRent});
 
   @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
+  State<HouseEditProfileScreen> createState() => _HouseEditProfileScreenState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
-  EditProfileController editProfileController =
-      Get.put(EditProfileController());
+class _HouseEditProfileScreenState extends State<HouseEditProfileScreen> {
 
+  HomeEditProfileController homeEditProfileController =
+      Get.put(HomeEditProfileController());
   final ImagePicker _picker = ImagePicker();
   File? imageFile;
 
   void getImage() async {
     await _picker.pickImage(source: ImageSource.gallery).then((value) {
-      isImageSizeWithinLimit(File(value!.path)).then((val) {
-        if (val == false) {
-          Get.snackbar("Error", "Image size should be less than 1MB",
-              snackPosition: SnackPosition.BOTTOM,
-             
-              colorText: Colors.black);
-        } else {
-          setState(() {
-            imageFile = File(value.path);
-          });
-        }
+      setState(() {
+        imageFile = File(value!.path);
       });
     });
   }
 
-  Future<bool> isImageSizeWithinLimit(File imageFile) async {
-    const maxSize = 500000; // 2 MB in bytes
-    final fileSize = await imageFile.length();
-    
-    if (fileSize > maxSize) {
-      return false;
-    } else {
-      return true;
-    }
-  }
+  RxBool isUpdated = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -56,18 +41,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: CupertinoButton(
-            color: Colors.green,
+            color: Colors.red,
             child: const Text(
               "Save",
               style:
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             onPressed: () {
-              if (imageFile != null) {
-                editProfileController.getAcessToken(image: imageFile);
-              } else {
-                Get.snackbar("Error", "Please select an image");
-              }
+              // isUpdated.value = true;
+              homeEditProfileController.getAcessToken();
+              // isUpdated.value = false;
             }),
       ),
       appBar: AppBar(
@@ -75,7 +58,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         backgroundColor: Colors.white12,
         leading: IconButton(
             onPressed: () {
-              Get.off(() => const DashboardScreen());
+              widget.isRent == true
+                  ? Get.off(() => const dashboard(
+                        isRent: true,
+                      ))
+                  : Get.off(() => const houseDashboard(
+                        isRent: false,
+                      ));
             },
             icon: const Icon(
               Icons.arrow_back,
@@ -101,7 +90,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
             ),
             SizedBox(
-              //    color: Colors.amber,
+              //  color: Colors.amber,
               width: Get.width * 0.5,
               height: Get.height * 0.2,
               child: Stack(
@@ -128,7 +117,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 image: Image.network(
                                         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
                                     .image,
-                                fit: BoxFit.scaleDown,
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
@@ -153,7 +142,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ],
               ),
             ),
-            // SizedBox(
+            // const SizedBox(
             //   height: 30,
             // ),
             Padding(
@@ -161,7 +150,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: SizedBox(
                 height: 50,
                 child: TextField(
-                  controller: editProfileController.firstName,
+                  controller: homeEditProfileController.firstName,
                   decoration: const InputDecoration(
                       focusColor: Colors.black,
                       focusedBorder: OutlineInputBorder(
@@ -176,7 +165,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: SizedBox(
                 height: 50,
                 child: TextField(
-                  controller: editProfileController.lastName,
+                  controller: homeEditProfileController.lastName,
                   decoration: const InputDecoration(
                       focusColor: Colors.black,
                       focusedBorder: OutlineInputBorder(
@@ -191,7 +180,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: SizedBox(
                 height: 50,
                 child: TextField(
-                  controller: editProfileController.address,
+                  controller: homeEditProfileController.address,
                   decoration: const InputDecoration(
                       focusColor: Colors.black,
                       focusedBorder: OutlineInputBorder(
@@ -206,7 +195,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: SizedBox(
                 height: 50,
                 child: TextField(
-                  controller: editProfileController.country,
+                  controller: homeEditProfileController.country,
                   decoration: const InputDecoration(
                       focusColor: Colors.black,
                       focusedBorder: OutlineInputBorder(
@@ -221,7 +210,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: SizedBox(
                 height: 50,
                 child: TextField(
-                  controller: editProfileController.city,
+                  controller: homeEditProfileController.city,
                   decoration: const InputDecoration(
                       focusColor: Colors.black,
                       focusedBorder: OutlineInputBorder(
@@ -236,7 +225,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: SizedBox(
                 height: 50,
                 child: TextField(
-                  controller: editProfileController.contact,
+                  controller: homeEditProfileController.contact,
                   decoration: const InputDecoration(
                       focusColor: Colors.black,
                       focusedBorder: OutlineInputBorder(
