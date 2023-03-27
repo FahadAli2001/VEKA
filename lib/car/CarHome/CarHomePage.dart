@@ -63,16 +63,22 @@ class CarHomePage extends StatelessWidget {
               child: Padding(
                   padding: const EdgeInsets.only(top: 5, right: 20),
                   child: Column(
-                    children: const [
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
-                        radius: 18,
+                    children: [
+                      Obx(
+                        () => CircleAvatar(
+                          backgroundImage: NetworkImage(car.image.value != ""
+                              ? car.image.value
+                              : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
+                          radius: 18,
+                        ),
                       ),
                       // SizedBox(height: 5,),
-                      Text(
-                        "Hi, Belly",
-                        style: TextStyle(color: Colors.black, fontSize: 10),
+                      Obx(
+                        () => Text(
+                          "Hi, ${car.userName}",
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 10),
+                        ),
                       ),
                     ],
                   )),

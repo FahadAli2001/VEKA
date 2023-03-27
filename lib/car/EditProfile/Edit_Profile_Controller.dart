@@ -23,14 +23,17 @@ class EditProfileController extends GetxController {
   TextEditingController contact = TextEditingController();
 
   String? accessToken;
+  var image = "".obs;
 
-  String? userFirstName;
-  String? userLastName;
-  String? userAddress;
-  String? userCountry;
-  String? userCity;
-  String? userContact;
+
   bool getUserdata = false;
+
+
+  @override
+  void onInit() {
+    getAcessToken();
+    super.onInit();
+  }
 
   Future getAcessToken({File? image}) async {
     try {
@@ -73,12 +76,14 @@ class EditProfileController extends GetxController {
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
         //print(data.toString());
-        userFirstName = data["billing"]["first_name"];
-        userLastName = data["billing"]["last_name"];
-        userAddress = data["billing"]["address_1"];
-        userCountry = data["billing"]["country"];
-        userCity = data["billing"]["city"];
-        userContact = data["billing"]["phone"];
+        firstName.text = data["first_name"];
+        lastName.text = data["last_name"];
+        address.text = data["billing"]["address_1"];
+        country.text = data["billing"]["country"];
+        city.text = data["billing"]["city"];
+        contact.text = data["billing"]["phone"];
+        image.value = data["meta_data"][1]["value"];
+        print(image.value);
       } else {
         print("error ${response.statusCode}");
         Get.snackbar("Error", "Something went wrong",

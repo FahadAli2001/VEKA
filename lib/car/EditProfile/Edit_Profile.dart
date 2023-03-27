@@ -27,9 +27,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       isImageSizeWithinLimit(File(value!.path)).then((val) {
         if (val == false) {
           Get.snackbar("Error", "Image size should be less than 1MB",
-              snackPosition: SnackPosition.BOTTOM,
-             
-              colorText: Colors.black);
+              snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
         } else {
           setState(() {
             imageFile = File(value.path);
@@ -42,7 +40,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Future<bool> isImageSizeWithinLimit(File imageFile) async {
     const maxSize = 500000; // 2 MB in bytes
     final fileSize = await imageFile.length();
-    
+
     if (fileSize > maxSize) {
       return false;
     } else {
@@ -120,15 +118,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ),
                             ),
                           )
-                        : Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade300,
-                              borderRadius: BorderRadius.circular(100),
-                              image: DecorationImage(
-                                image: Image.network(
-                                        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
-                                    .image,
-                                fit: BoxFit.scaleDown,
+                        : Obx(
+                            () => Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade300,
+                                borderRadius: BorderRadius.circular(100),
+                                image: DecorationImage(
+                                  image: Image.network(editProfileController
+                                                  .image.value !=
+                                              ""
+                                          ? editProfileController.image.value
+                                          : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+                                      .image,
+                                  fit: BoxFit.scaleDown,
+                                ),
                               ),
                             ),
                           ),

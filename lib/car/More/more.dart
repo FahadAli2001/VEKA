@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:veka/car/AboutUs/aboutUs.dart';
+import 'package:veka/car/CarHome/CarHomePageController.dart';
 import 'package:veka/car/EditProfile/Edit_Profile.dart';
 import 'package:veka/car/orderDetails/orderdetails.dart';
 import 'package:veka/car/serviceMode/serviceMode.dart';
@@ -21,6 +22,7 @@ class more extends StatelessWidget {
     var boxheight = Get.height * 0.08;
     var textSize = Get.width * 0.045;
     profileController pc = Get.put(profileController());
+    CarHomePageController car = CarHomePageController();
 
     return SafeArea(
       child: Scaffold(
@@ -62,21 +64,29 @@ class more extends StatelessWidget {
           ),
           centerTitle: true,
           actions: [
-            GestureDetector(
+           GestureDetector(
               onTap: () {
                 Get.to(() => const EditProfileScreen());
               },
               child: Padding(
                   padding: const EdgeInsets.only(top: 5, right: 20),
                   child: Column(
-                    children: const [
-                      CircleAvatar(
-                        radius: 18,
+                    children: [
+                      Obx(
+                        () => CircleAvatar(
+                          backgroundImage: NetworkImage(car.image.value != ""
+                              ? car.image.value
+                              : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
+                          radius: 18,
+                        ),
                       ),
                       // SizedBox(height: 5,),
-                      Text(
-                        "Hi, Belly",
-                        style: TextStyle(color: Colors.black, fontSize: 10),
+                      Obx(
+                        () => Text(
+                          "Hi, ${car.userName}",
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 10),
+                        ),
                       ),
                     ],
                   )),
