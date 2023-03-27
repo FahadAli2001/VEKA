@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../CarHome/CarHomePage.dart';
 import '../Token/AccessToken.dart';
 
 class EditProfileController extends GetxController {
@@ -78,7 +79,6 @@ class EditProfileController extends GetxController {
         userCountry = data["billing"]["country"];
         userCity = data["billing"]["city"];
         userContact = data["billing"]["phone"];
-        UpdateUserData(accessToken);
       } else {
         print("error ${response.statusCode}");
         Get.snackbar("Error", "Something went wrong",
@@ -98,28 +98,31 @@ class EditProfileController extends GetxController {
   Future updateProfile(String imageUrl, String accessToken) async {
     SharedPreferences sigin = await SharedPreferences.getInstance();
     String? userId = sigin.getString("userId");
+
     print(userId);
     print(imageUrl);
+
     var body = json.encode({
       "meta_data": [
         {"key": "my_url", "value": imageUrl}
       ]
     });
-    var response = await http.put(
+    print(body);
+    var response = await http.patch(
         Uri.parse(
             "https://vekaautomobile.technopreneurssoftware.com/wp-json/wc/v3/customers/$userId"),
-        headers: {'Authorization': 'Bearer $accessToken', 'Cookie': 'tinvwl_wishlists_data_counter=0'},
+        headers: {'Authorization': 'Bearer $accessToken'},
         body: body);
 
     if (response.statusCode == 200) {
-
       print("user updated");
       print(response.statusCode);
+      print(response.body);
+
       Get.snackbar("Success Message ", "User updated successfully",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.white,
           colorText: Colors.black);
-          
     } else {
       print("error ${response.body}");
       Get.snackbar("Error", "Something went wrong",
@@ -129,21 +132,23 @@ class EditProfileController extends GetxController {
     }
   }
 
-  Future UpdateUserData(String accessToken) async {
-    String _firstName = firstName.toString();
-    String _lastName = lastName.toString();
-    String _country = country.toString();
-    String _city = city.toString();
-    String _contact = contact.toString();
+  Future UpdateUserData(String accessToken, String profilePicture) async {
+    String _firstName = firstName.text;
+    String _lastName = lastName.text;
+    String _country = country.text;
+    String _city = city.text;
+    String _contact = contact.text;
     String _address = address.text.toString();
+
     SharedPreferences sigin = await SharedPreferences.getInstance();
     String? userId = sigin.getString("userId");
+    String? email = sigin.getString("email");
     var body = json.encode({
       "first_name": _firstName,
       "last_name": _lastName,
       "billing": {
-        "first_name": "",
-        "last_name": "",
+        "first_name": _firstName,
+        "last_name": _lastName,
         "company": "",
         "address_1": _country,
         "address_2": "",
@@ -151,33 +156,42 @@ class EditProfileController extends GetxController {
         "postcode": "",
         "country": "",
         "state": "",
-        "email": "",
+        "email": email,
         "phone": _contact
       },
+      "meta_data": [
+        {"key": "my_url", "value": profilePicture}
+      ]
     });
+
+    String url =
+        "https://vekaautomobile.technopreneurssoftware.com/wp-json/wc/v3/customers/$userId";
+
     try {
-      var response = await http.put(
-          Uri.parse(
-              "https://vekaautomobile.technopreneurssoftware.com/wp-json/wc/v3/customers/$userId"),
-          headers: {'Authorization': 'Bearer $accessToken'},
+      var response = await http.put(Uri.parse(url),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6'))}',
+            'wc-authentication':
+                'ck_35efc60387133919ea7a6e22c34a2201af711f47:cs_650113cb966d76d8f9f926b41f9a894186e2dcd6',
+          },
           body: body);
-      print("after try");
+
       if (response.statusCode == 200) {
-        ClearTextField();
-        print("user updated");
+        clearTextField();
+        Get.offAll(() => CarHomePage());
         Get.snackbar("Success Message ", "User updated successfully",
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.white,
             colorText: Colors.black);
       } else {
-        print("error ${response.body}");
         Get.snackbar("Error", "Something went wrong",
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.white,
             colorText: Colors.black);
       }
     } catch (e) {
-      print("catch error post : $e");
       Get.snackbar("Error", "Something went wrong",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.white,
@@ -185,7 +199,7 @@ class EditProfileController extends GetxController {
     }
   }
 
-  ClearTextField() {
+  void clearTextField() {
     firstName.clear();
     lastName.clear();
     address.clear();
@@ -214,7 +228,9 @@ class EditProfileController extends GetxController {
       String byte = await response.stream.bytesToString();
       var temp = jsonDecode(byte);
       String profilePicUrl = temp['guid']['raw'];
-      updateProfile(profilePicUrl, accessToken);
+
+      UpdateUserData(accessToken, profilePicUrl);
+
     } else {
       print(response.statusCode);
       print(response.reasonPhrase);

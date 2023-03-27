@@ -70,11 +70,11 @@ class SignUpController extends GetxController {
       if (response.statusCode == 201) {
         // SignUpWithFirebase();
         clearFileds();
-        var data = jsonDecode(response.body.toString());
+       
         //  name = data["username"].toString();
         signupshared.setString("username", _username);
         signupshared.setString("email", _email);
-        print("user created");
+        
         Get.snackbar("", "User Created Successfully",
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.grey,
