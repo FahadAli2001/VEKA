@@ -1,18 +1,23 @@
 import 'dart:convert';
-import 'dart:developer';
+
 import 'dart:io';
 
-import 'package:dio/dio.dart' as dio;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import '../CarHome/CarHomePage.dart';
 import '../Token/AccessToken.dart';
 
 class EditProfileController extends GetxController {
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    getAcessToken();
+  }
+
   AcessToken acessTokenclass = Get.put(AcessToken());
 
   TextEditingController firstName = TextEditingController();
@@ -230,7 +235,6 @@ class EditProfileController extends GetxController {
       String profilePicUrl = temp['guid']['raw'];
 
       UpdateUserData(accessToken, profilePicUrl);
-
     } else {
       print(response.statusCode);
       print(response.reasonPhrase);
