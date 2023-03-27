@@ -19,7 +19,6 @@ class HouseEditProfileScreen extends StatefulWidget {
 }
 
 class _HouseEditProfileScreenState extends State<HouseEditProfileScreen> {
-
   HomeEditProfileController homeEditProfileController =
       Get.put(HomeEditProfileController());
   final ImagePicker _picker = ImagePicker();
@@ -27,10 +26,28 @@ class _HouseEditProfileScreenState extends State<HouseEditProfileScreen> {
 
   void getImage() async {
     await _picker.pickImage(source: ImageSource.gallery).then((value) {
-      setState(() {
-        imageFile = File(value!.path);
+      isImageSizeWithinLimit(File(value!.path)).then((val) {
+        if (val == false) {
+          Get.snackbar("Error", "Image size should be less than 1MB",
+              snackPosition: SnackPosition.BOTTOM, colorText: Colors.black);
+        } else {
+          setState(() {
+            imageFile = File(value.path);
+          });
+        }
       });
     });
+  }
+
+  Future<bool> isImageSizeWithinLimit(File imageFile) async {
+    const maxSize = 500000; // 2 MB in bytes
+    final fileSize = await imageFile.length();
+
+    if (fileSize > maxSize) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   RxBool isUpdated = false.obs;
@@ -48,9 +65,11 @@ class _HouseEditProfileScreenState extends State<HouseEditProfileScreen> {
                   TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             onPressed: () {
-              // isUpdated.value = true;
-              homeEditProfileController.getAcessToken();
-              // isUpdated.value = false;
+              if (imageFile != null) {
+                homeEditProfileController.getAcessToken(image: imageFile);
+              } else {
+                Get.snackbar("Error", "Please select an image");
+              }
             }),
       ),
       appBar: AppBar(

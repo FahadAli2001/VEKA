@@ -1,18 +1,23 @@
 import 'dart:convert';
-import 'dart:developer';
+
 import 'dart:io';
 
-import 'package:dio/dio.dart' as dio;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import '../CarHome/CarHomePage.dart';
 import '../Token/AccessToken.dart';
 
 class EditProfileController extends GetxController {
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    getAcessToken();
+  }
+
   AcessToken acessTokenclass = Get.put(AcessToken());
 
   TextEditingController firstName = TextEditingController();
@@ -25,15 +30,7 @@ class EditProfileController extends GetxController {
   String? accessToken;
   var image = "".obs;
 
-
   bool getUserdata = false;
-
-
-  @override
-  void onInit() {
-    getAcessToken();
-    super.onInit();
-  }
 
   Future getAcessToken({File? image}) async {
     try {
@@ -75,7 +72,7 @@ class EditProfileController extends GetxController {
       );
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
-        //print(data.toString());
+        print(data.toString());
         firstName.text = data["first_name"];
         lastName.text = data["last_name"];
         address.text = data["billing"]["address_1"];
@@ -235,7 +232,6 @@ class EditProfileController extends GetxController {
       String profilePicUrl = temp['guid']['raw'];
 
       UpdateUserData(accessToken, profilePicUrl);
-
     } else {
       print(response.statusCode);
       print(response.reasonPhrase);

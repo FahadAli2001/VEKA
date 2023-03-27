@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:veka/house/BUYING/houseHome/sellHomeController.dart';
-import 'package:veka/house/EditProfile/house_edit_profile_screen.dart';
 import '../../Bookmarks/rents/rent_bookmark_controller.dart';
+import '../../EditProfile/House_Edit_Profile_Screen.dart';
+import '../../EditProfile/home_edit_profile_controller.dart';
 import '../../login/LoginController.dart';
 import '../HouseDetails/houseDetails.dart';
-import '../home/homeScreen.dart';
 
 class houseHome extends StatelessWidget {
   houseHome({Key? key}) : super(key: key);
@@ -17,6 +17,9 @@ class houseHome extends StatelessWidget {
   loginController lgc = Get.put(loginController());
   RealStateRentBookmarkController realStateRentcontroller =
       Get.put(RealStateRentBookmarkController());
+
+  HomeEditProfileController homeEditProfileController =
+      Get.put(HomeEditProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +33,29 @@ class houseHome extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () {
-              Get.to(() => const HouseEditProfileScreen(isRent: false));
+              // Get.to(() => HouseEditProfileScreen(isRent: false));
+              //print("btn");
+              shc.getData();
             },
             child: Padding(
                 padding: const EdgeInsets.only(top: 5, right: 20),
                 child: Column(
-                  children: const [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
-                      radius: 18,
+                  children: [
+                    Obx(
+                      () => CircleAvatar(
+                        backgroundImage: NetworkImage(shc.image.value != ""
+                            ? shc.image.value
+                            : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
+                        radius: 18,
+                      ),
                     ),
                     // SizedBox(height: 5,),
-                    Text(
-                      "Hi, Belly",
-                      style: TextStyle(color: Colors.black, fontSize: 10),
+                    Obx(
+                      () => Text(
+                        "Hi, ${shc.userName.value}",
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 10),
+                      ),
                     ),
                   ],
                 )),
@@ -91,7 +102,7 @@ class houseHome extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(Get.to(const buyhouseDetails(), arguments: {
+                      Get.to(Get.to(buyhouseDetails(), arguments: {
                         "totalrooms": snapshot.data[index]["attributes"][0]
                                 ["options"][0]
                             .toString(),

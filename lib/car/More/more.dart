@@ -11,19 +11,19 @@ import '../Mybookmark/myBookmark.dart';
 import '../Profile/ProfileController.dart';
 
 class more extends StatelessWidget {
-  const more({Key? key}) : super(key: key);
+  more({Key? key}) : super(key: key);
+
+  Color boxColor = Colors.grey.shade300;
+  Color circleColor = Colors.grey.shade400;
+  var icon = Get.width * 0.05;
+  var circle = Get.width * 0.05;
+  var boxheight = Get.height * 0.08;
+  var textSize = Get.width * 0.045;
+  profileController pc = Get.put(profileController());
+  CarHomePageController car = CarHomePageController();
 
   @override
   Widget build(BuildContext context) {
-    Color boxColor = Colors.grey.shade300;
-    Color circleColor = Colors.grey.shade400;
-    var icon = Get.width * 0.05;
-    var circle = Get.width * 0.05;
-    var boxheight = Get.height * 0.08;
-    var textSize = Get.width * 0.045;
-    profileController pc = Get.put(profileController());
-    CarHomePageController car = CarHomePageController();
-
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: Padding(
@@ -64,7 +64,7 @@ class more extends StatelessWidget {
           ),
           centerTitle: true,
           actions: [
-           GestureDetector(
+            GestureDetector(
               onTap: () {
                 Get.to(() => const EditProfileScreen());
               },

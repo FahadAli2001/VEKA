@@ -5,18 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:veka/house/EditProfile/house_edit_profile_screen.dart';
 import 'package:veka/house/RENT/rentHome/rentHomeController.dart';
-import '../../BUYING/home/homeScreen.dart';
+import '../../BUYING/houseHome/sellHomeController.dart';
 import '../../Bookmarks/rents/rent_bookmark_controller.dart';
 import '../HouseDetails/detailScreen.dart';
 
 class RentHome extends StatelessWidget {
-  const RentHome({Key? key}) : super(key: key);
+  RentHome({Key? key}) : super(key: key);
+
+  sellHomeController shc = Get.put(sellHomeController());
+  rentHomeController rhc = Get.put(rentHomeController());
+  RealStateRentBookmarkController realStateRentcontroller =
+      Get.put(RealStateRentBookmarkController());
 
   @override
   Widget build(BuildContext context) {
-    rentHomeController rhc = Get.put(rentHomeController());
-    RealStateRentBookmarkController realStateRentcontroller =
-        Get.put(RealStateRentBookmarkController());
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -32,16 +34,23 @@ class RentHome extends StatelessWidget {
             child: Padding(
                 padding: const EdgeInsets.only(top: 5, right: 20),
                 child: Column(
-                  children: const [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
-                      radius: 18,
+                  children: [
+                    Obx(
+                      () => CircleAvatar(
+                        backgroundImage: NetworkImage(shc.image.value != ""
+                            ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                            //shc.image.value
+                            : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
+                        radius: 18,
+                      ),
                     ),
                     // SizedBox(height: 5,),
-                    Text(
-                      "Hi, Belly",
-                      style: TextStyle(color: Colors.black, fontSize: 10),
+                    Obx(
+                      () => Text(
+                        "Hi, ${shc.userName.value}",
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 10),
+                      ),
                     ),
                   ],
                 )),

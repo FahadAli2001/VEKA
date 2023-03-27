@@ -17,7 +17,7 @@ class dashboard extends StatelessWidget {
     const TextStyle optionStyle =
         TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
     List<Widget> _widgetOptions = <Widget>[
-      const RentHome(),
+      RentHome(),
       More(
         isRent: true,
       )
