@@ -8,20 +8,22 @@ import '../../Bookmarks/realstate_bookmark.dart';
 import '../../EditProfile/house_edit_profile_screen.dart';
 import '../../login/loginScreen.dart';
 import '../../orderDetails/orderdetails.dart';
+import '../houseHome/sellHomeController.dart';
 
 class More extends StatelessWidget {
   final bool isRent;
-  const More({Key? key, required this.isRent}) : super(key: key);
+  More({Key? key, required this.isRent}) : super(key: key);
+
+  sellHomeController shc = Get.put(sellHomeController());
+  Color boxColor = Colors.grey.shade300;
+  Color circleColor = Colors.grey.shade400;
+  var icon = Get.width * 0.05;
+  var circle = Get.width * 0.05;
+  var boxheight = Get.height * 0.08;
+  var textSize = Get.width * 0.045;
 
   @override
   Widget build(BuildContext context) {
-    Color boxColor = Colors.grey.shade300;
-    Color circleColor = Colors.grey.shade400;
-    var icon = Get.width * 0.05;
-    var circle = Get.width * 0.05;
-    var boxheight = Get.height * 0.08;
-    var textSize = Get.width * 0.045;
-
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -76,14 +78,23 @@ class More extends StatelessWidget {
             child: Padding(
                 padding: const EdgeInsets.only(top: 5, right: 20),
                 child: Column(
-                  children: const [
-                    CircleAvatar(
-                      radius: 18,
+                  children: [
+                    Obx(
+                      () => CircleAvatar(
+                        backgroundImage: NetworkImage(shc.image.value != ""
+                            ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                            //shc.image.value
+                            : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
+                        radius: 18,
+                      ),
                     ),
                     // SizedBox(height: 5,),
-                    Text(
-                      "Hi, Belly",
-                      style: TextStyle(color: Colors.black, fontSize: 10),
+                    Obx(
+                      () => Text(
+                        "Hi, ${shc.userName.value}",
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 10),
+                      ),
                     ),
                   ],
                 )),

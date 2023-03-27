@@ -12,14 +12,14 @@ import '../BuyingMeeting/buyingMeeting.dart';
 import '../houseHome/sellHomeController.dart';
 
 class buyhouseDetails extends StatelessWidget {
-  const buyhouseDetails({Key? key}) : super(key: key);
+  buyhouseDetails({Key? key}) : super(key: key);
+
+  sellHomeController shc = Get.put(sellHomeController());
+  loginController lgc = Get.put(loginController());
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
-    sellHomeController shc = Get.put(sellHomeController());
-    loginController lgc = Get.put(loginController());
-    final PageController _pageController = PageController();
-
     var data = Get.arguments;
     var description = parse(data["description"]);
     String parsedstring = description.documentElement!.text;

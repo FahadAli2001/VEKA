@@ -46,9 +46,6 @@ class _bookingScreenState extends State<bookingScreen> {
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () {
-              // print( bsc.totalcarPrice(rxisSelected.toList(), data["extraservicescharges"], data["carprice"]));
-              //bsc.pricewidget(rxisSelected.toList(), data!["extraservicescharges"], data!["extraservices"]);
-              //print(data["extraservices"]);
               Get.to(ReviewSubmission(), arguments: {
                 "carimage": data!["carimage"].toString(),
                 "carname": data!["carname"].toString(),

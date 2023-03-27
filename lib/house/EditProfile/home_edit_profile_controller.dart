@@ -1,15 +1,25 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../car/Token/AccessToken.dart';
+import '../BUYING/houseHome/sellHomeController.dart';
 
 class HomeEditProfileController extends GetxController {
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    getAcessToken();
+  }
+
   AcessToken acessTokenclass = Get.put(AcessToken());
+
+  sellHomeController sellController = Get.put(sellHomeController());
 
   TextEditingController firstName = TextEditingController();
   TextEditingController lastName = TextEditingController();
@@ -20,6 +30,10 @@ class HomeEditProfileController extends GetxController {
 
   String? accessToken;
   var image = "".obs;
+  RxBool isLoad = false.obs; //for checking data is load
+  var userName = "".obs;
+
+  var allProduct;
   Future getAcessToken({File? image}) async {
     print("getaccess token");
     try {
@@ -63,14 +77,15 @@ class HomeEditProfileController extends GetxController {
       );
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
-        //print(data.toString());
-        firstName.text = data["billing"]["first_name"];
-        lastName.text = data["billing"]["last_name"];
+        log(data.toString());
+        firstName.text = data["first_name"];
+        lastName.text = data["last_name"];
         address.text = data["billing"]["address_1"];
         country.text = data["billing"]["country"];
         city.text = data["billing"]["city"];
         contact.text = data["billing"]["phone"];
         image.value = data["meta_data"][1]["value"];
+        print(data["billing"]["first_name"]);
       } else {
         print("error ${response.statusCode}");
         Get.snackbar("Error", "Something went wrong",
@@ -90,20 +105,20 @@ class HomeEditProfileController extends GetxController {
   Future UpdateUserData(String accessToken, String profilePicture) async {
     SharedPreferences homesignin = await SharedPreferences.getInstance();
     String? userId = homesignin.getInt("realStateUserId").toString();
-    String? email = homesignin.getString("email");
-    String _firstName = firstName.toString();
-    String _lastName = lastName.toString();
-    String _country = country.toString();
-    String _city = city.toString();
-    String _contact = contact.toString();
-    String _address = address.text.toString();
+    String? email = homesignin.getString("Email");
+    String _firstName = firstName.text;
+    String _lastName = lastName.text;
+    String _country = country.text;
+    String _city = city.text;
+    String _contact = contact.text;
+    String _address = address.text;
 
     var body = json.encode({
       "first_name": _firstName,
       "last_name": _lastName,
       "billing": {
-        "first_name": "",
-        "last_name": "",
+        "first_name": _firstName,
+        "last_name": _lastName,
         "company": "",
         "address_1": _country,
         "address_2": "",
@@ -111,7 +126,7 @@ class HomeEditProfileController extends GetxController {
         "postcode": "",
         "country": "",
         "state": "",
-        "email": email,
+        "email": email.toString(),
         "phone": _contact
       },
       "meta_data": [
@@ -122,12 +137,18 @@ class HomeEditProfileController extends GetxController {
       var response = await http.put(
           Uri.parse(
               "https://vekarealestate.technopreneurssoftware.com/wp-json/wc/v3/customers/$userId"),
-          headers: {'Authorization': 'Bearer $accessToken'},
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization':
+                'Basic ${base64Encode(utf8.encode('${acessTokenclass.HouseCK}:${acessTokenclass.HouseCS}'))}',
+            'wc-authentication':
+                '${acessTokenclass.HouseCK}:${acessTokenclass.HouseCS}',
+          },
           body: body);
       print("after try");
       if (response.statusCode == 200) {
-        //var data = jsonDecode(response.body);
-//print(data);
+        var data = jsonDecode(response.body);
+        log("after updated ${data}");
         //print(data.toString());
         ClearTextField();
         print("user updated");

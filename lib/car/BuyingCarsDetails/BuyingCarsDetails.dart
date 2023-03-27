@@ -7,13 +7,14 @@ import '../SignIn/SignInController.dart';
 import '../buyReviewSubmission/buyRevuewSubmission.dart';
 
 class BuyingCarsDetails extends StatelessWidget {
-  const BuyingCarsDetails({Key? key}) : super(key: key);
+  BuyingCarsDetails({Key? key}) : super(key: key);
+
+  SignInController sic = Get.put(SignInController());
+  var data = Get.arguments;
+  BuyingBookmarkController bbmc = Get.put(BuyingBookmarkController());
 
   @override
   Widget build(BuildContext context) {
-    SignInController sic = Get.put(SignInController());
-    var data = Get.arguments;
-    BuyingBookmarkController bbmc = Get.put(BuyingBookmarkController());
     var pid = data["id"].toString();
     return Scaffold(
       appBar: AppBar(

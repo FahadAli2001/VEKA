@@ -30,15 +30,7 @@ class EditProfileController extends GetxController {
   String? accessToken;
   var image = "".obs;
 
-
   bool getUserdata = false;
-
-
-  @override
-  void onInit() {
-    getAcessToken();
-    super.onInit();
-  }
 
   Future getAcessToken({File? image}) async {
     try {
@@ -80,7 +72,7 @@ class EditProfileController extends GetxController {
       );
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
-        //print(data.toString());
+        print(data.toString());
         firstName.text = data["first_name"];
         lastName.text = data["last_name"];
         address.text = data["billing"]["address_1"];

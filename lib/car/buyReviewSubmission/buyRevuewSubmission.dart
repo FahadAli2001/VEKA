@@ -18,13 +18,12 @@ class buyReviewSubmission extends StatefulWidget {
 }
 
 class _buyReviewSubmissionState extends State<buyReviewSubmission> {
-
-  bool isDone  = false;
+  bool isDone = false;
+  BuyReviewController brc = Get.put(BuyReviewController());
+  SignInController sic = Get.put(SignInController());
 
   @override
   Widget build(BuildContext context) {
-    BuyReviewController brc = Get.put(BuyReviewController());
-    SignInController sic = Get.put(SignInController());
     var data = Get.arguments;
     return Scaffold(
       appBar: AppBar(
@@ -51,25 +50,26 @@ class _buyReviewSubmissionState extends State<buyReviewSubmission> {
           child: CupertinoButton(
             color: Colors.green,
             onPressed: () {
-             
               setState(() {
                 isDone = true;
               });
               brc.postProduct(data["id"], data["carprice"]).then((value) {
                 setState(() {
-                isDone = false;
-              });
+                  isDone = false;
+                });
               });
             },
-            child: isDone ? const CircularProgressIndicator(
-              color: Colors.black,
-            ) : Text(
-              "Done",
-              style: TextStyle(
-                  fontSize: Get.width * 0.04,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
+            child: isDone
+                ? const CircularProgressIndicator(
+                    color: Colors.black,
+                  )
+                : Text(
+                    "Done",
+                    style: TextStyle(
+                        fontSize: Get.width * 0.04,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
           ),
         ),
       ),

@@ -15,7 +15,7 @@ class DashboardScreen extends StatelessWidget {
         TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
     List<Widget> _widgetOptions = <Widget>[
       CarHomePage(),
-      const more(),
+      more(),
     ];
     return Scaffold(
       body: Obx(

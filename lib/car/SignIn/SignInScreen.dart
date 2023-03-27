@@ -12,14 +12,14 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   bool isSignIn = false;
+  var width = Get.width;
+  //var SocialAppIconSize = Get.height * 0.03;
+
+  SignInController sic = Get.put(SignInController());
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    var width = Get.width;
-    //var SocialAppIconSize = Get.height * 0.03;
-
-    SignInController sic = Get.put(SignInController());
-    final _formKey = GlobalKey<FormState>();
     return Container(
       child: SingleChildScrollView(
         child: Padding(

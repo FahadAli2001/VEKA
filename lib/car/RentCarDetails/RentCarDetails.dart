@@ -10,12 +10,13 @@ import '../Mybookmark/rents/rentBookmarkController.dart';
 import '../bookingScreen/bookingScreen.dart';
 
 class RentCarDetails extends StatelessWidget {
-  const RentCarDetails({Key? key}) : super(key: key);
+  RentCarDetails({Key? key}) : super(key: key);
+
+  rentBookmarkController rbmc = Get.put(rentBookmarkController());
 
   @override
   Widget build(BuildContext context) {
     var data = Get.arguments;
-    rentBookmarkController rbmc = Get.put(rentBookmarkController());
 
     var description = parse(data["cardescription"]);
     String parsedstring = description.documentElement!.text;
