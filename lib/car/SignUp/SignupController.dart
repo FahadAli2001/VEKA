@@ -39,13 +39,13 @@ class SignUpController extends GetxController {
             Get.back();
           });
     } else {
-      SignUp();
+      getAcessToken();
 
       Value.value = false;
     }
   }
 
-  void SignUp() async {
+  void SignUp(String accessToken) async {
     SharedPreferences signupshared = await SharedPreferences.getInstance();
     String _username = username.text.toString();
     String _email = email.text.toString();
@@ -53,7 +53,7 @@ class SignUpController extends GetxController {
     String _conpassword = confirmpassword.text.toString();
 
     try {
-      getAcessToken();
+      //getAcessToken();
       //print(accessToken);
       var response = await http.post(
           Uri.parse(
@@ -70,11 +70,11 @@ class SignUpController extends GetxController {
       if (response.statusCode == 201) {
         // SignUpWithFirebase();
         clearFileds();
-       
+
         //  name = data["username"].toString();
         signupshared.setString("username", _username);
         signupshared.setString("email", _email);
-        
+
         Get.snackbar("", "User Created Successfully",
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: Colors.grey,
@@ -118,12 +118,11 @@ class SignUpController extends GetxController {
         var data = jsonDecode(response.body.toString());
         accessToken = data["data"]['token'];
         print(accessToken);
-
+        SignUp(accessToken);
       }
     } catch (e) {
       print("access token" + e.toString());
     }
-    return accessToken;
   }
 
   void clearFileds() {

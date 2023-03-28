@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,6 @@ class rentBookmarkController extends GetxController {
   var pid;
   var data;
   List<Map<String, dynamic>> products = [];
-
 
   getsharekeybyId(bool isBuy, {String? pid, bool? isWishlist}) async {
     SharedPreferences sigin = await SharedPreferences.getInstance();
@@ -39,7 +39,7 @@ class rentBookmarkController extends GetxController {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body.toString());
       String sharekey = data[0]["share_key"];
-      
+
       if (pid != null) {
         if (isWishlist != null) {
           return await getBookmark(sharekey);
@@ -48,8 +48,7 @@ class rentBookmarkController extends GetxController {
         }
       } else {
         final products = await getBookmarksData(sharekey, isBuy);
-       
-     
+
         return products;
       }
     } else {}
@@ -77,7 +76,6 @@ class rentBookmarkController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-      
         final List<dynamic> wishlistItems = jsonDecode(response.body);
 
         for (final item in wishlistItems) {
@@ -87,6 +85,7 @@ class rentBookmarkController extends GetxController {
           wishListId.putIfAbsent("productId", () => productId);
           BookmarkId.add(item['product_id']);
         }
+        log("bookmark added");
         return BookmarkId;
       } else {
         throw Exception('Failed to fetch product IDs');
@@ -112,7 +111,7 @@ class rentBookmarkController extends GetxController {
       );
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body.toString());
-     
+
         BookmarkId.clear();
 
         for (final product in data) {
@@ -123,13 +122,12 @@ class rentBookmarkController extends GetxController {
           BookmarkId.add(productId);
         }
 
-        
         products = await allBookmark(isBuy: isBuy);
 
         return products;
       } else {
         var data = jsonDecode(response.body.toString());
-     
+
         print("bookmarks get api ${response.statusCode}");
       }
     } catch (e) {
@@ -203,7 +201,6 @@ class rentBookmarkController extends GetxController {
     } else {
       throw Exception('Failed to fetch products');
     }
-   
   }
 
   removeBookmark(int bookMarkId) async {
@@ -226,7 +223,7 @@ class rentBookmarkController extends GetxController {
       wishListId.removeWhere((key, value) => value == bookMarkId);
       products.removeWhere((element) => element["id"] == bookMarkId);
       BookmarkId.remove(wishListId["productId"]);
-      
+
       return "Succesfully removed";
     } else {
       return "Something went wrong";

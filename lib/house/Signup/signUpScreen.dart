@@ -69,6 +69,9 @@ class _signUpscreenState extends State<signUpscreen> {
                       controller: hsp.username,
                       style: const TextStyle(height: 0.5),
                       decoration: const InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black)),
+                          labelStyle: TextStyle(color: Colors.black),
                           errorStyle: TextStyle(color: Colors.red),
                           hintText: "User Name",
                           labelText: "User Name",
@@ -93,6 +96,9 @@ class _signUpscreenState extends State<signUpscreen> {
                         controller: hsp.email,
                         style: const TextStyle(height: 0.5),
                         decoration: const InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black)),
+                            labelStyle: TextStyle(color: Colors.black),
                             errorStyle: TextStyle(color: Colors.red),
                             hintText: "Email",
                             labelText: "Email",
@@ -117,6 +123,9 @@ class _signUpscreenState extends State<signUpscreen> {
                           style: const TextStyle(height: 0.5),
                           controller: hsp.password,
                           decoration: InputDecoration(
+                              focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black)),
+                              labelStyle: const TextStyle(color: Colors.black),
                               hintText: "Password",
                               labelText: "Password",
                               suffixIcon: InkWell(
@@ -129,8 +138,11 @@ class _signUpscreenState extends State<signUpscreen> {
                                   },
                                   child: (hsp.isHidepass.value == true)
                                       ? const Icon(
-                                          CupertinoIcons.eye_slash_fill)
-                                      : const Icon(CupertinoIcons.eye)),
+                                          CupertinoIcons.eye_slash_fill,
+                                          color: Colors.black,
+                                        )
+                                      : const Icon(CupertinoIcons.eye,
+                                          color: Colors.black)),
                               border: const OutlineInputBorder())),
                     ),
                   ),

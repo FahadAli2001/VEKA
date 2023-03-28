@@ -16,6 +16,7 @@ class _SignUpState extends State<SignUp> {
   var width = Get.width;
   var SocialAppIconSize = Get.height * 0.03;
   SignUpController suc = Get.put(SignUpController());
+
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
@@ -183,7 +184,7 @@ class _SignUpState extends State<SignUp> {
                             setState(() {
                               isSignUp = true;
                             });
-                            if (!mounted) {
+                            if (mounted) {
                               isSignUp = false;
                             }
 

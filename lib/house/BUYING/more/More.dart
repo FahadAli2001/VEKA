@@ -37,17 +37,18 @@ class More extends StatelessWidget {
               onTap: () async {
                 SharedPreferences homesignin =
                     await SharedPreferences.getInstance();
-                homesignin.remove("email");
-                homesignin.remove("name");
-                homesignin.remove("Email");
-                homesignin.remove("password");
-                homesignin.remove("realStateUserId");
+                homesignin.clear();
+                // homesignin.remove("email");
+                // homesignin.remove("name");
+                // homesignin.remove("Email");
+                // homesignin.remove("password");
+                // homesignin.remove("realStateUserId");
                 Get.offAll(loginSxreen());
               },
               child: Container(
                 width: Get.width * 0.4,
                 height: Get.height * 0.8,
-                color: Colors.red.shade300,
+                color: Colors.red,
                 child: Center(
                   child: Text(
                     "LogOut",

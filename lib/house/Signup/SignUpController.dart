@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -49,9 +50,13 @@ class HouseSignUpController extends GetxController {
   //https://vekarealestate.technopreneurssoftware.com/wp-json/wp/v2/users
   void SignUp() async {
     SharedPreferences homesignup = await SharedPreferences.getInstance();
+    // ignore: no_leading_underscores_for_local_identifiers
     String _username = username.text.toString();
+    // ignore: no_leading_underscores_for_local_identifiers
     String _email = email.text.toString();
+    // ignore: no_leading_underscores_for_local_identifiers
     String _password = password.text.toString();
+    // ignore: no_leading_underscores_for_local_identifiers, unused_local_variable
     String _conpassword = confirmpassword.text.toString();
 
     try {
@@ -78,7 +83,7 @@ class HouseSignUpController extends GetxController {
 
       if (response.statusCode == 201) {
         // SignUpWithFirebase();
-       
+
         var data = jsonDecode(response.body.toString());
         homesignup.setString("username", _username);
         homesignup.setString("email", _email);
@@ -109,7 +114,7 @@ class HouseSignUpController extends GetxController {
         }
       }
     } catch (e) {
-      print(e.toString() + "errorrrrrrrrrrrrrrrrrrrrrrrr");
+      log(e.toString() + "errorrrrrrrrrrrrrrrrrrrrrrrr");
       Get.snackbar("Error", "SomeThing went wrong",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.grey,
