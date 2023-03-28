@@ -14,6 +14,7 @@ class OrderDetailsController extends GetxController {
 
   @override
   void onInit() {
+    isRent.value = true;
     getOrders();
     super.onInit();
   }

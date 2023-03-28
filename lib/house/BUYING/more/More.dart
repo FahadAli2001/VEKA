@@ -37,12 +37,11 @@ class More extends StatelessWidget {
               onTap: () async {
                 SharedPreferences homesignin =
                     await SharedPreferences.getInstance();
-                homesignin.clear();
-                // homesignin.remove("email");
-                // homesignin.remove("name");
-                // homesignin.remove("Email");
-                // homesignin.remove("password");
-                // homesignin.remove("realStateUserId");
+                homesignin.remove("email");
+                homesignin.remove("name");
+                homesignin.remove("Email");
+                homesignin.remove("password");
+                homesignin.remove("realStateUserId");
                 Get.offAll(loginSxreen());
               },
               child: Container(

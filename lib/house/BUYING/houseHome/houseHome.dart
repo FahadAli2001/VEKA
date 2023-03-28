@@ -33,9 +33,7 @@ class houseHome extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () {
-              // Get.to(() => HouseEditProfileScreen(isRent: false));
-              //print("btn");
-              shc.getData();
+              Get.to(() => const HouseEditProfileScreen(isRent: false));
             },
             child: Padding(
                 padding: const EdgeInsets.only(top: 5, right: 20),
