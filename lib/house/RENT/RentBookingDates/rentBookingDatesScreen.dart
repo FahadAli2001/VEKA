@@ -106,7 +106,7 @@ class rentBookingDatesScreen extends StatelessWidget {
                     child: Text(
                       "CheckInDate",
                       style: TextStyle(
-                          color: Colors.grey.shade900,
+                          color: Colors.grey.shade900(),
                           fontWeight: FontWeight.bold,
                           fontSize: Get.width * 0.04),
                     ),
@@ -124,39 +124,39 @@ class rentBookingDatesScreen extends StatelessWidget {
                           Colors.black12, //Barrier Color when pop up show
                       timeWidgetBuilder: (val) {
                         return GestureDetector(
-                          onTap: () {
-                            controller.showMenu();
-                          },
-                          child: Obx(() =>  Container(
-                            width: Get.width / 2.8,
-                            height: Get.height * 0.06,
-                            color: Colors.grey.shade400,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.calendar_month,
-                                  color: Colors.grey,
+                            onTap: () {
+                              controller.showMenu();
+                            },
+                            child: Obx(
+                              () => Container(
+                                width: Get.width / 2.8,
+                                height: Get.height * 0.06,
+                                color: Colors.grey.shade400,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.calendar_month,
+                                      color: Colors.grey,
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "${rpc.checkIndate.value.day}/${rpc.checkIndate.value.month}/${rpc.checkIndate.value.year}",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: Get.width * 0.035),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  "${rpc.checkIndate.value.day}/${rpc.checkIndate.value.month}/${rpc.checkIndate.value.year}"
-                                      ,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: Get.width * 0.035),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ));
+                              ),
+                            ));
                       },
                       onChange: (dateTime) {
                         if (rpc.eventDates.contains(
                             "${dateTime.day}:${dateTime.month}:${dateTime.year}")) {
-                              controller.menuIsShowing = false;
+                          controller.menuIsShowing = false;
                           Get.snackbar("Error",
                               "This date is not available Please select another date",
                               snackPosition: SnackPosition.BOTTOM);
@@ -177,7 +177,7 @@ class rentBookingDatesScreen extends StatelessWidget {
                     child: Text(
                       "CheckOutDate",
                       style: TextStyle(
-                          color: Colors.grey.shade900,
+                          color: Colors.grey.shade900(),
                           fontWeight: FontWeight.bold,
                           fontSize: Get.width * 0.04),
                     ),
