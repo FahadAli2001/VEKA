@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:veka/car/Mybookmark/rents/rents.dart';
+
 
 import '../ReviewSubmission/RentReviewSubmission.dart';
 import 'rentPatmentController.dart';
@@ -390,7 +388,7 @@ class rentPayment extends StatelessWidget {
       ),
       body: Theme(
         data: ThemeData(
-            accentColor: Colors.red,
+            hintColor: Colors.red,
             primaryColor: Colors.red,
             colorScheme: ColorScheme.light(primary: Colors.red)),
         child: Stepper(

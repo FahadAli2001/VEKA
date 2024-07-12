@@ -321,7 +321,7 @@ class _RetReviewSubmissionState extends State<RetReviewSubmission> {
       ),
       body: Theme(
         data: ThemeData(
-            accentColor: Colors.red,
+            hintColor: Colors.red,
             primaryColor: Colors.red,
             colorScheme: const ColorScheme.light(primary: Colors.red)),
         child: Stepper(

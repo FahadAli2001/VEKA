@@ -7,6 +7,7 @@ import 'package:veka/house/RENT/rentPayment/rentPaymnet.dart';
 
 import '../rentPayment/rentPatmentController.dart';
 
+// ignore: must_be_immutable
 class rentBookingDatesScreen extends StatelessWidget {
   var extraservices;
   var extraservicescharges;
@@ -106,7 +107,7 @@ class rentBookingDatesScreen extends StatelessWidget {
                     child: Text(
                       "CheckInDate",
                       style: TextStyle(
-                          color: Colors.grey.shade900(),
+                          color: Colors.grey.shade900,
                           fontWeight: FontWeight.bold,
                           fontSize: Get.width * 0.04),
                     ),
@@ -177,7 +178,7 @@ class rentBookingDatesScreen extends StatelessWidget {
                     child: Text(
                       "CheckOutDate",
                       style: TextStyle(
-                          color: Colors.grey.shade900(),
+                          color: Colors.grey.shade900,
                           fontWeight: FontWeight.bold,
                           fontSize: Get.width * 0.04),
                     ),
@@ -268,6 +269,7 @@ class rentBookingDatesScreen extends StatelessWidget {
                 "houseprice": houseprice,
                 "housename": houseName,
                 "houseimage": houseImage,
+                // ignore: invalid_use_of_protected_member
                 "isSelected": rxisSelected.value,
                 "totalprice": rpc
                     .totalhomePrice(

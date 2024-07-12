@@ -10,7 +10,7 @@ class rentStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RentBookingDatesController rbdc = Get.put(RentBookingDatesController());
+    Get.put(RentBookingDatesController());
     var data = Get.arguments;
     List<Step> step = [
       Step(
@@ -47,7 +47,7 @@ class rentStepper extends StatelessWidget {
       ),
       body: Theme(
         data: ThemeData(
-            accentColor: Colors.red,
+            hintColor: Colors.red,
             primaryColor: Colors.red,
             colorScheme: ColorScheme.light(primary: Colors.red)),
         child: Stepper(
