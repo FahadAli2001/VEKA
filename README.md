@@ -1,16 +1,15 @@
-# veka
+**🚗🏠 Veka App – Rent Houses & Cars with Ease!**
+Welcome to Veka App, your all-in-one solution for renting houses and cars. Whether you're looking for a cozy home or a convenient ride, Veka makes it easy to browse, book, and enjoy the best rental options – all in one app.
 
-A new Flutter project.
+Built with Flutter for a smooth and responsive cross-platform experience, and powered by WooCommerce API for seamless backend integration, Veka App delivers a fast, intuitive, and secure platform for all your rental needs.
 
-## Getting Started
+**🌟 Key Features:**
+🏡 House Rentals: Browse a wide range of available houses for rent, complete with detailed descriptions, photos, and booking options.
+🚗 Car Rentals: Search and book rental cars with ease – from economy to luxury vehicles, we've got you covered.
+📱 Cross-Platform Access: Available on both iOS and Android, ensuring you can manage your rentals anytime, anywhere.
 
-This project is a starting point for a Flutter application.
+**🛠 Technologies Used:**
+Frontend: Developed with Flutter, providing a seamless user experience on both iOS and Android.
+Backend: Powered by the WooCommerce API, handling user authentication, payments, and rental data.
+Real-Time Sync: WooCommerce API keeps everything updated in real-time – from availability to bookings and payments.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
